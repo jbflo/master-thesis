@@ -50,18 +50,27 @@ public class PluginGui extends JFrame {
 
 
             JPanel centerPanel = new JPanel();
+<<<<<<< HEAD
 
             JLabel text1 =new JLabel();
             JLabel text2 =new JLabel();
             try {
                 text1.setText(core.getDeviceName(core.getCameraDevice().toString()));
                 text2.setText(core.getDeviceName(core.getGalvoDevice().toString()));
+=======
+            JLabel text1 =new JLabel();
+            try {
+                text1.setText(core.getDeviceName(core.getCameraDevice().toString()));
+>>>>>>> c8b0fee38d5fc71d5f4a987d665cef62e5d135e1
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             centerPanel.add(text1);
+<<<<<<< HEAD
             centerPanel.add(text2);
+=======
+>>>>>>> c8b0fee38d5fc71d5f4a987d665cef62e5d135e1
            // centerPanel.setBackground(Color.CYAN);
 
             JPanel rightPanel = new JPanel();
