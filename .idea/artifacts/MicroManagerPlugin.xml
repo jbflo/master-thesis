@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MicroManagerPlugin">
+    <output-path>C:/Program Files/Micro-Manager-1.4/mmplugins</output-path>
+    <root id="archive" name="MicroManagerPlugin.jar">
+      <element id="module-output" name="MicroManagerPlugin" />
+      <element id="library" level="project" name="Micro-Manager" />
+      <element id="library" level="project" name="ij" />
+    </root>
+  </artifact>
+</component>
