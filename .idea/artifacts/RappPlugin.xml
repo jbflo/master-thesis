@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RappPlugin">
+    <output-path>C:/Program Files/Micro-Manager-1.4/mmplugins</output-path>
+    <root id="archive" name="RappPlugin.jar">
+      <element id="module-output" name="RappPlugin" />
+      <element id="library" level="project" name="ij" />
+      <element id="library" level="project" name="Micro-Manager" />
+    </root>
+  </artifact>
+</component>

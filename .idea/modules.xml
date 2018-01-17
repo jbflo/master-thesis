@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MicroManagerPlugin.iml" filepath="$PROJECT_DIR$/MicroManagerPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RappPlugin.iml" filepath="$PROJECT_DIR$/RappPlugin.iml" />
     </modules>
   </component>
 </project>

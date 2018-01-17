@@ -91,11 +91,7 @@ public class RappPlugin implements MMPlugin  {
             if (core_.getCameraDevice().length()==0 && core_.getGalvoDevice().length()==0 ) {
                 ReportingUtils.showMessage("Please load a Camera Devices " +
                         "or a Galvo-based phototargeting device " +
-<<<<<<< HEAD
-                        "before using the Rapp plugin.");
-=======
                         "before using the Projector plugin.");
->>>>>>> c8b0fee38d5fc71d5f4a987d665cef62e5d135e1
                 return;
             }
 
@@ -120,7 +116,7 @@ public class RappPlugin implements MMPlugin  {
             ex.printStackTrace();
         } // end of Try Catch
 
-         new PluginGui(core_, app_);
+        new PluginGui(core_, app_);
         //gui_.getContentPane().add( );
     }
 
