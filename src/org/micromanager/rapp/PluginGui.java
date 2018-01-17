@@ -13,6 +13,8 @@ import javax.swing.*;
  */
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -46,31 +48,33 @@ public class PluginGui extends JFrame {
             JButton shootButton = new JButton("Shoot");shootButton.setMaximumSize(new Dimension(145, 50));
             box.add(shootButton);
 
+            shootButton.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
+                {
+
+                 //   d.setVisible(true);
+                }
+            });
 
 
 
             JPanel centerPanel = new JPanel();
-<<<<<<< HEAD
 
             JLabel text1 =new JLabel();
             JLabel text2 =new JLabel();
             try {
                 text1.setText(core.getDeviceName(core.getCameraDevice().toString()));
                 text2.setText(core.getDeviceName(core.getGalvoDevice().toString()));
-=======
-            JLabel text1 =new JLabel();
-            try {
+
+
                 text1.setText(core.getDeviceName(core.getCameraDevice().toString()));
->>>>>>> c8b0fee38d5fc71d5f4a987d665cef62e5d135e1
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             centerPanel.add(text1);
-<<<<<<< HEAD
             centerPanel.add(text2);
-=======
->>>>>>> c8b0fee38d5fc71d5f4a987d665cef62e5d135e1
            // centerPanel.setBackground(Color.CYAN);
 
             JPanel rightPanel = new JPanel();
