@@ -34,6 +34,7 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 public class RappPlugin implements MMPlugin  {
 
+    private RappGui form_;
     public static final String menuName = "Rapp control";
     public static final String tooltipDescription = "Automated cell recognition for killing and sorting ";
     //private MMStudioMainFrame app_;
@@ -42,7 +43,7 @@ public class RappPlugin implements MMPlugin  {
     private CMMCore core_;
     private MMStudio mgui_;
     private MMStudio.DisplayImageRoutine displayImageRoutine_;
-    private PluginGui gui_;
+    private RappGui gui_;
     private AcquisitionEngine acq_;
     private final String ACQ_NAME = "Rapp control";
     private int multiChannelCameraNrCh_;
@@ -52,9 +53,17 @@ public class RappPlugin implements MMPlugin  {
         return engineWrapper;
     }
 
+    public static CMMCore getMMcore(){
+        CMMCore core1_  = getMMcore();
+        return  core1_;
+    }
+
 
     @Override // MM
     public void dispose() {
+        if (form_ != null) {
+            form_.dispose();
+        }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -116,7 +125,8 @@ public class RappPlugin implements MMPlugin  {
             ex.printStackTrace();
         } // end of Try Catch
 
-        new PluginGui(core_, app_);
+        //new RappGui(core_, app_);
+        form_ = RappGui.showAppInterface(core_, app_);
         //gui_.getContentPane().add( );
     }
 
