@@ -86,6 +86,16 @@ public class RappPlugin implements MMPlugin  {
 
     }
 
+    public void shootL(){
+        String galvo_ = core_.getGalvoDevice();
+        try {
+           // core_.setGalvoIlluminationState(galvo_, true);
+           // core_.pointGalvoAndFire(galvo_, 900, 900, 500000);
+        } catch (Exception ex) {
+            ReportingUtils.logError(ex);
+        }
+    }
+
 
     @Override // MM
     public void show() {

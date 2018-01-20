@@ -7,6 +7,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3bd16c0-5336-44c0-8d6f-2b586ae6e16d" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$1.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$10.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$11.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$12.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$2.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$3.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$4.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$5.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$6.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$7.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$8.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$9.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$1$1.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$1.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$2$1.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$2.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$3.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappDevice.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$1.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$2.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$3.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SLM.class" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Utils.class" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController.class" />
       <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappPlugin$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappPlugin$1.class" />
@@ -37,8 +63,8 @@
       <file leaf-file-name="RappGui.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="146" column="41" lean-forward="true" selection-start-line="146" selection-start-column="41" selection-end-line="146" selection-end-column="41" />
+            <state relative-caret-position="287">
+              <caret line="142" column="61" lean-forward="false" selection-start-line="142" selection-start-column="20" selection-end-line="143" selection-end-column="69" />
               <folding>
                 <element signature="e#6014#6015#0" expanded="true" />
                 <element signature="e#6082#6083#0" expanded="true" />
@@ -106,7 +132,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="100" />
     <option name="y" value="20" />
     <option name="width" value="1400" />
@@ -313,7 +339,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <frame x="-8" y="-8" width="2576" height="1416" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -494,8 +520,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="146" column="41" lean-forward="true" selection-start-line="146" selection-start-column="41" selection-end-line="146" selection-end-column="41" />
+        <state relative-caret-position="287">
+          <caret line="142" column="61" lean-forward="false" selection-start-line="142" selection-start-column="20" selection-end-line="143" selection-end-column="69" />
           <folding>
             <element signature="e#6014#6015#0" expanded="true" />
             <element signature="e#6082#6083#0" expanded="true" />

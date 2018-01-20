@@ -23,7 +23,11 @@ import javax.swing.JPanel;
 
 public class RappGui extends JFrame {
     private static RappGui appInterface_;
+    private  static RappPlugin rappP_;
     private  static  RappController rappController_ref;
+    String galvo_;
+    CMMCore core_;
+
 
 
     JPanel leftPanel = new JPanel();
@@ -33,6 +37,7 @@ public class RappGui extends JFrame {
     Box right_box2_shoot = Box.createVerticalBox();
     JLabel lbl_menu_name = new JLabel(" Menu ", JLabel.CENTER);
     JLabel text1 = new JLabel();
+    JLabel text2 = new JLabel();
     JLabel lbl_btn_onoff = new JLabel("Toggles calibration mode", SwingConstants.CENTER);
     JButton setupButton = new JButton("Setup");
     JButton learnButton = new JButton("Learning");
@@ -107,9 +112,12 @@ public class RappGui extends JFrame {
 
 
 
+
         centerPanel.add(text1);
+        centerPanel.add(text2);
         try {
             text1.setText(core.getDeviceName(core.getCameraDevice().toString()));
+            text2.setText(core.getDeviceName(core.getGalvoDevice().toString()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,7 +138,16 @@ public class RappGui extends JFrame {
         pointAndShootOnButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 centerPanel.setBackground(Color.green);
-                pointAndShootOnButtonActionPerformed(e);
+                String galvo_ = core.getGalvoDevice();
+                try {
+                    core.setGalvoIlluminationState(galvo_, true);
+                    core.pointGalvoAndFire(galvo_, 900, 900, 500000);
+                } catch (Exception ex) {
+                    ReportingUtils.logError(ex);
+                    ex.printStackTrace();
+                }
+               // rappP_.shootL();
+             //  pointAndShootOnButtonActionPerformed(e);
             }
         } );
 
@@ -230,12 +247,21 @@ public class RappGui extends JFrame {
     }//GEN-LAST:event_pointAndShootOffButtonActionPerformed
 
     private void pointAndShootOnButtonActionPerformed(java.awt.event.ActionEvent e) {//GEN-FIRST:event_pointAndShootOnButtonActionPerformed
-        offButtonActionPerformed(null);
+        //offButtonActionPerformed(null);
+        String galvo_ = core_.getGalvoDevice();
         try {
+             core_.setGalvoIlluminationState(galvo_, true);
+             core_.pointGalvoAndFire(galvo_, 900, 900, 500000);
+        } catch (Exception ex) {
+            ReportingUtils.logError(ex);
+        }
+
+
+       /* try {
             updatePointAndShoot(true);
         } catch (RuntimeException ex) {
             ReportingUtils.showError(ex);
-        }
+        }*/
     }
 
 }
