@@ -16,6 +16,8 @@ package org.micromanager.rapp;
 
 import javax.swing.*;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /////////////////  Micro-Manager Package ////////////////////////
 
 import mmcorej.CMMCore;
@@ -43,7 +45,7 @@ public class RappPlugin implements MMPlugin  {
     private CMMCore core_;
     private MMStudio mgui_;
     private MMStudio.DisplayImageRoutine displayImageRoutine_;
-    private RappGui gui_;
+  //  private RappGui gui_;
     private AcquisitionEngine acq_;
     private final String ACQ_NAME = "Rapp control";
     private int multiChannelCameraNrCh_;
@@ -127,8 +129,8 @@ public class RappPlugin implements MMPlugin  {
             long depth = core_.getBytesPerPixel();
             long bitDepth = core_.getImageBitDepth();
 
-            mgui_.initializeAcquisition(ACQ_NAME, (int) width,(int) height, (int) depth, (int)bitDepth);
-            mgui_.runDisplayThread(imageQueue_, displayImageRoutine_);
+         //   mgui_.initializeAcquisition(ACQ_NAME, (int) width,(int) height, (int) depth, (int)bitDepth);
+          //  mgui_.runDisplayThread(imageQueue_, displayImageRoutine_);
 
         }
         catch (Exception ex) {
@@ -138,6 +140,19 @@ public class RappPlugin implements MMPlugin  {
         //new RappGui(core_, app_);
         form_ = RappGui.showAppInterface(core_, app_);
         //gui_.getContentPane().add( );
+    }
+
+    public void setLive(Boolean on){
+        if (on == true){
+            Object img = null;
+            try {
+                core_.snapImage();
+                img = core_.getImage();
+            } catch (Exception ex) {
+                Logger.getLogger(RappGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            mgui_.displayImage(img);
+        }
     }
 
 
