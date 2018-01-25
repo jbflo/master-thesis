@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.Point2D;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -237,8 +238,10 @@ public class RappGui extends JFrame {
                 if (pointAndShootOnOffButton.isSelected() == true ){
                     pointAndShootOnOffButton.setText("OFF");
                     try {
-                        core.setGalvoIlluminationState(galvo_, true);
-                        core.pointGalvoAndFire(galvo_, 900, 900, 500000);
+                       // core.setGalvoIlluminationState(galvo_, true);
+                        Point2D ppos=core.getGalvoPosition(galvo_); System.out.println(ppos);
+                       // Point2D newppos = null;  newppos.setLocation( ppos.getX() +100, ppos.getY() +100); //core.setGalvoPosition(galvo_, newppos.getX(), newppos.getY());
+                        core.pointGalvoAndFire(galvo_,25264.0, 24494.0, 500000);
                     } catch (Exception ex) {
                         ReportingUtils.logError(ex);
                         ex.printStackTrace();
@@ -247,7 +250,8 @@ public class RappGui extends JFrame {
                 }else {
                     pointAndShootOnOffButton.setText("ON");
                     try {
-                        core.setGalvoIlluminationState(galvo_, false);
+                       // core.setGalvoIlluminationState(galvo_, false);
+                        core.pointGalvoAndFire(galvo_,40000.0, 40000.0, 500000);
                        // core.pointGalvoAndFire(galvo_, 900, 900, 500000);
                     } catch (Exception ex) {
                         ReportingUtils.logError(ex);
