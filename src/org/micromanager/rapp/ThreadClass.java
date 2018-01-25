@@ -1,5 +1,7 @@
 package org.micromanager.rapp;
 
+import org.micromanager.utils.MMScriptException;
+
 public class ThreadClass  implements Runnable{
     //private RappGui frame_;
     private RappGui rappController_ref;
@@ -11,6 +13,10 @@ public class ThreadClass  implements Runnable{
     @Override
     public void run() {
         // rappController_ref = new RappController();
-        rappController_ref.liveDisplayThread();
+        try {
+            rappController_ref.liveDisplayThread();
+        } catch (MMScriptException e) {
+            e.printStackTrace();
+        }
     }
 }

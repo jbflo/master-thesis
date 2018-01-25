@@ -5,9 +5,7 @@ import loci.formats.CoreMetadata;
 import mmcorej.CMMCore;
 import org.micromanager.MMStudio;
 import org.micromanager.api.ScriptInterface;
-import org.micromanager.utils.GUIUtils;
-import org.micromanager.utils.MMFrame;
-import org.micromanager.utils.MMListenerAdapter;
+import org.micromanager.utils.*;
 
 import java.awt.*;
 import java.awt.event.AWTEventListener;
@@ -74,12 +72,8 @@ import org.json.JSONException;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
 import org.micromanager.utils.GUIUtils;
-import org.micromanager.utils.ImageUtils;
-import org.micromanager.utils.JavaUtils;
 import org.micromanager.utils.MMFrame;
 import org.micromanager.utils.MMListenerAdapter;
-import org.micromanager.utils.MathFunctions;
-import org.micromanager.utils.ReportingUtils;
 
 
 /**
@@ -106,7 +100,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         frame_= RappGui.getInstance();
     }
 
-    public void setLive(Boolean on){
+    public void setLive(Boolean on) throws MMScriptException {
         if (on == true){
             Object img = null;
             try {
@@ -116,8 +110,12 @@ public class RappController extends  MMFrame implements OnStateListener {
                 Logger.getLogger(RappGui.class.getName()).log(Level.SEVERE, null, ex);
             }
             gui_.displayImage(img);
+            gui_.setXYStagePosition(32.0, 32.0);
+            //frame_.lbl_btn_onoff.add(img);
         }
     }
+
+
 
     public void getROIs() {
         ImagePlus image = IJ.getImage();

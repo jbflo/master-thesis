@@ -6,6 +6,7 @@ import mmcorej.CMMCore;
 import org.micromanager.MMStudio;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.GUIUtils;
+import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
 
 import java.awt.*;
@@ -26,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
 
 public class RappGui extends JFrame {
     private static RappGui appInterface_;
@@ -45,7 +47,6 @@ public class RappGui extends JFrame {
     Box right_box_setup = Box.createVerticalBox();
     Box right_box_learning  = Box.createVerticalBox();
     Box right_box_shoot = Box.createVerticalBox();
-    JLabel lbl_menu_name = new JLabel(" Menu ", JLabel.CENTER);
     JLabel text1 = new JLabel();
     JLabel text2 = new JLabel();
     JLabel lbl_btn_onoff = new JLabel("Toggles calibration mode", SwingConstants.CENTER);
@@ -66,6 +67,7 @@ public class RappGui extends JFrame {
     JPanel rightPanel = new JPanel();
     JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
     JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
+
 
     /**
      * Constructor. Creates the main window for the Projector plugin.
@@ -93,13 +95,16 @@ public class RappGui extends JFrame {
         // we use this Class for the main interface
         this.setLayout(new BorderLayout());
 
+        ///////////// Left Panel Content ////////////////////////////
+        leftPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        leftPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Menu"));
+
         // we put all the component from the left into a Box , and the Box into the Left Panel
         leftPanel.add(left_box);
-        left_box.setPreferredSize(new Dimension(150, 300));   // vertical box
+        left_box.setPreferredSize(new Dimension(150, 400));   // vertical box
         //left_box.setBackground(Color.BLUE);
 
-        left_box.add(lbl_menu_name);
-        lbl_menu_name.setPreferredSize(new Dimension(100, 20));  lbl_menu_name.setHorizontalAlignment(JLabel.CENTER); //lbl_menu_name.setHorizontalTextPosition(60);
         left_box.add(Box.createVerticalStrut(10));
 
         // SETUP BUTTON, OPEN THE BOX OPTION TO MANAGE SETUP
@@ -108,7 +113,8 @@ public class RappGui extends JFrame {
         setupButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 right_box_setup.setVisible(true);
-                showbox();
+                right_box_shoot.setVisible(false);
+                right_box_learning.setVisible(false);
             }
         } );
 
@@ -121,7 +127,8 @@ public class RappGui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 right_box_learning.setVisible(true);
-                showbox();
+                right_box_shoot.setVisible(false);
+                right_box_setup.setVisible(false);
             }
         });
 
@@ -133,12 +140,13 @@ public class RappGui extends JFrame {
         shootButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 right_box_shoot.setVisible(true);
-                showbox();
+                right_box_setup.setVisible(false);
+                right_box_learning.setVisible(false);
 
             }
         } );
 
-
+        left_box.add(Box.createVerticalStrut(5));
 
         // Start or Stop the the Live Mode
         LiveModeButton.setMaximumSize(new Dimension(145, 50));
@@ -154,6 +162,7 @@ public class RappGui extends JFrame {
             }
         } );
 
+        left_box.add(Box.createVerticalStrut(5));
 
         // Illuminate the center of the photo targeting device's range
         showCenterSpotButton.setMaximumSize((new Dimension(145, 50)));
@@ -166,8 +175,10 @@ public class RappGui extends JFrame {
 
 
 
-
-
+        /////////////////////////// Center Panel ////////////// ////////
+        centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        centerPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "View"));
         centerPanel.add(text1);
         centerPanel.add(text2);
         try {
@@ -176,8 +187,13 @@ public class RappGui extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        /////////////////// Mange Right panel an Content here  /////////////////////////////////////
+        rightPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        rightPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Options"));
         ////////////////////////////////  right_box_Settings Content //////////////////////////////////
-        // Mange Right panel an Content here
+
         rightPanel.add(right_box_setup);
         right_box_setup.setPreferredSize(new Dimension(150, 150));   // vertical box
         right_box_setup.setVisible(false);
@@ -190,7 +206,7 @@ public class RappGui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (lightOnOffButton.isSelected() == true ){
-                    lightOnOffButton.setText("OFF Light");
+                    lightOnOffButton.setText("Off Light");
                     //LiveModeButton.col
                 }else lightOnOffButton.setText("Open Light");
             }
@@ -217,24 +233,36 @@ public class RappGui extends JFrame {
         right_box_shoot.add( pointAndShootOnOffButton);
         pointAndShootOnOffButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
+                String galvo_ = core.getGalvoDevice();
                 if (pointAndShootOnOffButton.isSelected() == true ){
                     pointAndShootOnOffButton.setText("OFF");
+                    try {
+                        core.setGalvoIlluminationState(galvo_, true);
+                        core.pointGalvoAndFire(galvo_, 900, 900, 500000);
+                    } catch (Exception ex) {
+                        ReportingUtils.logError(ex);
+                        ex.printStackTrace();
+                    }
                     //LiveModeButton.col
-                }else pointAndShootOnOffButton.setText("ON");
-
-
-                String galvo_ = core.getGalvoDevice();
-                try {
-                    core.setGalvoIlluminationState(galvo_, true);
-                    core.pointGalvoAndFire(galvo_, 900, 900, 500000);
-                } catch (Exception ex) {
-                    ReportingUtils.logError(ex);
-                    ex.printStackTrace();
+                }else {
+                    pointAndShootOnOffButton.setText("ON");
+                    try {
+                        core.setGalvoIlluminationState(galvo_, false);
+                       // core.pointGalvoAndFire(galvo_, 900, 900, 500000);
+                    } catch (Exception ex) {
+                        ReportingUtils.logError(ex);
+                        ex.printStackTrace();
+                    }
                 }
+
+
+
                 // rappP_.shootL();
                 //  pointAndShootOnButtonActionPerformed(e);
             }
         } );
+
+        right_box_shoot.add(Box.createVerticalStrut(5));
 
         right_box_shoot.add(readRoisButton);
         readRoisButton.setMaximumSize(new Dimension(80, 20));
@@ -245,6 +273,7 @@ public class RappGui extends JFrame {
             }
         });
 
+        right_box_shoot.add(Box.createVerticalStrut(5));
         right_box_shoot.add(loadImage);
         loadImage.setMaximumSize(new Dimension(80, 20));
         loadImage.addActionListener(new ActionListener() {
@@ -294,25 +323,8 @@ public class RappGui extends JFrame {
         else  GUIUtils.recallPosition(appInterface_);
     }
 
-    public void showbox(){
-        if (  right_box_shoot.isVisible()){
-            right_box_setup.setVisible(false);
-            right_box_learning.setVisible(false);
-        }
-
-        if (right_box_setup.isVisible()){
-            right_box_shoot.setVisible(false);
-            right_box_learning.setVisible(false);
-        }
-
-        if (right_box_learning.isVisible()){
-            right_box_shoot.setVisible(false);
-            right_box_setup.setVisible(false);
-        }
 
 
-
-    }
 
     /**
      * Shows the GUI, which is a singleton.
@@ -330,7 +342,7 @@ public class RappGui extends JFrame {
         return appInterface_;
     }
 
-    public void liveDisplayThread(){
+    public void liveDisplayThread() throws MMScriptException {
         while(LiveModeButton.isSelected()){
            rappController_ref.setLive(LiveModeButton.isSelected());
         }
