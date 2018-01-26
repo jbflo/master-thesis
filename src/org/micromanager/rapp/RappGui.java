@@ -39,8 +39,8 @@ public class RappGui extends JFrame {
     private  static  RappController rappController_ref;
     private MMStudio gui_;
     String galvo_;
-    public Thread SnapDisplayImage;
-    URL default_path = this.getClass().getResource("");
+    private Thread SnapDisplayImage;
+    private URL default_path = this.getClass().getResource("");
     String path = default_path.toString().substring(6);
 
     JPanel leftPanel = new JPanel();
@@ -48,6 +48,9 @@ public class RappGui extends JFrame {
     Box right_box_setup = Box.createVerticalBox();
     Box right_box_learning  = Box.createVerticalBox();
     Box right_box_shoot = Box.createVerticalBox();
+    SpinnerModel model = new SpinnerNumberModel(100, 0, 100000, 0.1);
+    JSpinner spinner = new JSpinner(model);
+    JSpinner delayField_ = new JSpinner(model);
     JLabel text1 = new JLabel();
     JLabel text2 = new JLabel();
     JLabel lbl_btn_onoff = new JLabel("Toggles calibration mode", SwingConstants.CENTER);
@@ -60,7 +63,7 @@ public class RappGui extends JFrame {
     JToggleButton pointAndShootOnOffButton = new JToggleButton("ON");
     JToggleButton LiveModeButton = new JToggleButton("Start Live View");
     JButton showCenterSpotButton = new JButton("Show Center Spot");
-    JButton calibrateButton = new JButton("Calibration");
+    JButton calibrateButton = new JButton("Start Calibration!");
     JButton setAddRoisButton = new JButton("Set / Add Rois");
     JButton readRoisButton = new JButton("Read Mark Rois");
     JButton loadImage = new JButton("Load An Image");
@@ -78,13 +81,7 @@ public class RappGui extends JFrame {
 
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
         this.setTitle("Rapp UGA-42 Control");
@@ -111,9 +108,13 @@ public class RappGui extends JFrame {
         // SETUP BUTTON, OPEN THE BOX OPTION TO MANAGE SETUP
         setupButton.setMaximumSize(new Dimension(145, 50));
         left_box.add(setupButton);
+
         setupButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 right_box_setup.setVisible(true);
+                setupButton.setBackground(Color.cyan);
+                shootButton.setBackground(Color.white);
+                learnButton.setBackground(Color.white);
                 right_box_shoot.setVisible(false);
                 right_box_learning.setVisible(false);
             }
@@ -128,6 +129,9 @@ public class RappGui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 right_box_learning.setVisible(true);
+                setupButton.setBackground(Color.white);
+                shootButton.setBackground(Color.white);
+                learnButton.setBackground(Color.cyan);
                 right_box_shoot.setVisible(false);
                 right_box_setup.setVisible(false);
             }
@@ -141,6 +145,9 @@ public class RappGui extends JFrame {
         shootButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 right_box_shoot.setVisible(true);
+                setupButton.setBackground(Color.white);
+                shootButton.setBackground(Color.cyan);
+                learnButton.setBackground(Color.white);
                 right_box_setup.setVisible(false);
                 right_box_learning.setVisible(false);
 
@@ -154,7 +161,7 @@ public class RappGui extends JFrame {
         left_box.add(LiveModeButton);
         LiveModeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (LiveModeButton.isSelected() == true ){
+                if (LiveModeButton.isSelected() ){
                     LiveModeButton.setText("Stop Live View");
                     //LiveModeButton.col
                 }else LiveModeButton.setText("Start Live View");
@@ -183,8 +190,8 @@ public class RappGui extends JFrame {
         centerPanel.add(text1);
         centerPanel.add(text2);
         try {
-            text1.setText(core.getDeviceName(core.getCameraDevice().toString()));
-            text2.setText(core.getDeviceName(core.getGalvoDevice().toString()));
+            text1.setText(core.getDeviceName(core.getCameraDevice()));
+            text2.setText(core.getDeviceName(core.getGalvoDevice()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -198,25 +205,48 @@ public class RappGui extends JFrame {
         rightPanel.add(right_box_setup);
         right_box_setup.setPreferredSize(new Dimension(150, 150));   // vertical box
         right_box_setup.setVisible(false);
-        right_box_setup.add(lbl_btn_onoff); //lbl_btn_onoff.setHorizontalTextPosition(50);
+
+        right_box_setup.add("Set Exposure TIme: ", spinner);
+        spinner.setMaximumSize(new Dimension(100, 30));
         right_box_setup.add(Box.createVerticalStrut(10));
 
+
+        right_box_setup.add(lbl_btn_onoff); //lbl_btn_onoff.setHorizontalTextPosition(50);
         lightOnOffButton.setMaximumSize(new Dimension(80, 20));
-        right_box_setup.add( lightOnOffButton);
+        right_box_setup.add("Illuminate :", lightOnOffButton);
         lightOnOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (lightOnOffButton.isSelected() == true ){
+                if (lightOnOffButton.isSelected()){
                     lightOnOffButton.setText("Off Light");
                     //LiveModeButton.col
                 }else lightOnOffButton.setText("Open Light");
             }
         });
 
+
         right_box_setup.add(Box.createVerticalStrut(10));
 
         calibrateButton.setMaximumSize(new Dimension(80, 20));
         right_box_setup.add(calibrateButton);
+        calibrateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    boolean running = rappController_ref.isCalibrating();
+                    if (running) {
+                        rappController_ref.stopCalibration();
+                        calibrateButton.setText("is Calibrate");
+                    } else {
+                        rappController_ref.runCalibration();
+                        calibrateButton.setText("Stop calibration");
+                    }
+                } catch (Exception ex) {
+                    ReportingUtils.showError(e);
+                }
+            }
+        });
+        right_box_setup.add("Calibration Delay" ,delayField_);
 
         // Right Box Setup Content
 
