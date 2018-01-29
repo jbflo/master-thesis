@@ -115,8 +115,8 @@ public class RappPlugin implements MMPlugin  {
 
             if (core_.getCameraDevice().length()==0 && core_.getGalvoDevice().length()==0 ) {
                 ReportingUtils.showMessage("Please load a Camera Devices " +
-                        "or a Galvo-based phototargeting device " +
-                        "before using the Projector plugin.");
+                        "And a Galvo-based phototargeting device : Rapp UGA-42  " +
+                        "before using the RappPlugin plugin.");
                 return;
             }
 

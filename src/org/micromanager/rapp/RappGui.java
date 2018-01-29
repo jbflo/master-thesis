@@ -49,8 +49,9 @@ public class RappGui extends JFrame {
     Box right_box_learning  = Box.createVerticalBox();
     Box right_box_shoot = Box.createVerticalBox();
     SpinnerModel model = new SpinnerNumberModel(100, 0, 100000, 0.1);
+    SpinnerModel model2 = new SpinnerNumberModel(0, 0, 100, 1);
     JSpinner spinner = new JSpinner(model);
-    JSpinner delayField_ = new JSpinner(model);
+    JSpinner delayField_ = new JSpinner(model2);
     JLabel text1 = new JLabel();
     JLabel text2 = new JLabel();
     JLabel lbl_btn_onoff = new JLabel("Toggles calibration mode", SwingConstants.CENTER);
@@ -77,7 +78,8 @@ public class RappGui extends JFrame {
      * Constructor. Creates the main window for the Projector plugin.
      */
     public RappGui(CMMCore core, ScriptInterface app) {
-        rappController_ref =  RappController.getInstance();
+        new RappController(core, app);
+        rappController_ref =  new RappController(core, app); ;
 
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
@@ -177,7 +179,7 @@ public class RappGui extends JFrame {
         left_box.add(showCenterSpotButton);
         showCenterSpotButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                rappController_ref.displayCenterSpot();
             }
         } );
 
@@ -219,8 +221,12 @@ public class RappGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (lightOnOffButton.isSelected()){
                     lightOnOffButton.setText("Off Light");
+                    rappController_ref.setOnState(true);
                     //LiveModeButton.col
-                }else lightOnOffButton.setText("Open Light");
+                }else {
+                    lightOnOffButton.setText("Open Light");
+                    rappController_ref.setOnState(false);
+                }
             }
         });
 
@@ -267,33 +273,7 @@ public class RappGui extends JFrame {
         right_box_shoot.add( pointAndShootOnOffButton);
         pointAndShootOnOffButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                String galvo_ = core.getGalvoDevice();
-                if (pointAndShootOnOffButton.isSelected() == true ){
-                    pointAndShootOnOffButton.setText("OFF");
-                    try {
-                       // core.setGalvoIlluminationState(galvo_, true);
-                        Point2D ppos=core.getGalvoPosition(galvo_); System.out.println(ppos);
-                       // Point2D newppos = null;  newppos.setLocation( ppos.getX() +100, ppos.getY() +100); //core.setGalvoPosition(galvo_, newppos.getX(), newppos.getY());
-                        core.pointGalvoAndFire(galvo_,25264.0, 24494.0, 500000);
-                    } catch (Exception ex) {
-                        ReportingUtils.logError(ex);
-                        ex.printStackTrace();
-                    }
-                    //LiveModeButton.col
-                }else {
-                    pointAndShootOnOffButton.setText("ON");
-                    try {
-                       // core.setGalvoIlluminationState(galvo_, false);
-                        core.pointGalvoAndFire(galvo_,40000.0, 40000.0, 500000);
-                       // core.pointGalvoAndFire(galvo_, 900, 900, 500000);
-                    } catch (Exception ex) {
-                        ReportingUtils.logError(ex);
-                        ex.printStackTrace();
-                    }
-                }
-
-
-
+                updatePointAndShoot();
                 // rappP_.shootL();
                 //  pointAndShootOnButtonActionPerformed(e);
             }
@@ -355,6 +335,7 @@ public class RappGui extends JFrame {
         int n = JOptionPane.showConfirmDialog(appInterface_,
                 "Quit: are you sure to quit?", "Quit", JOptionPane.YES_NO_OPTION);
         if (n == JOptionPane.YES_OPTION) {
+            LiveModeButton.setSelected(false);
             dispose();
         }
         else  GUIUtils.recallPosition(appInterface_);
@@ -388,12 +369,32 @@ public class RappGui extends JFrame {
 
     /**
      * Sets the Point and Shoot "On and Off" buttons to a given state.
-     * @param turnedOn true = Point and Shoot is ON
      */
-    public void updatePointAndShoot(boolean turnedOn) {
-        pointAndShootOnOffButton.setSelected(turnedOn);
-       // pointAndShootOffButton.setSelected(!turnedOn);
-      // rappController_ref.enablePointAndShootMode(turnedOn);
+    public void updatePointAndShoot() {
+        //String galvo_ = core.getGalvoDevice();
+        if (pointAndShootOnOffButton.isSelected()){
+            pointAndShootOnOffButton.setText("OFF");
+            try {
+                rappController_ref.enablePointAndShootMode(true);
+                // core.setGalvoIlluminationState(galvo_, true);
+               // Point2D ppos=core.getGalvoPosition(galvo_); System.out.println(ppos);
+                // Point2D newppos = null;  newppos.setLocation( ppos.getX() +100, ppos.getY() +100); //core.setGalvoPosition(galvo_, newppos.getX(), newppos.getY());
+               // core.pointGalvoAndFire(galvo_,25264.0, 24494.0, 500000);
+            } catch (Exception ex) {
+                ReportingUtils.logError(ex);
+                ex.printStackTrace();
+            }
+            //LiveModeButton.col
+        }else {
+            pointAndShootOnOffButton.setText("ON");
+            try {
+                rappController_ref.enablePointAndShootMode(false);
+            } catch (Exception ex) {
+                ReportingUtils.logError(ex);
+                ex.printStackTrace();
+            }
+        }
+
     }
 
     private void LiveModeButton(java.awt.event.ActionEvent evt) {
@@ -403,41 +404,6 @@ public class RappGui extends JFrame {
 
     }
 
-    private void onButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onButtonActionPerformed
-        //rappController_ref.setOnState(true);
-        pointAndShootOffButtonActionPerformed(null);
-    }//GEN-LAST:event_onButtonActionPerformed
 
-    private void offButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_offButtonActionPerformed
-      ///  rappController_ref.setOnState(false);
-    }//GEN-LAST:event_offButtonActionPerformed
-
-
-    private void centerButtonActionPerformed(java.awt.event.ActionEvent e) {//GEN-FIRST:event_centerButtonActionPerformed
-        offButtonActionPerformed(null);
-       // rappController_ref.displayCenterSpot();
-    }//GEN-LAST:event_centerButtonActionPerformed
-
-    private void pointAndShootOffButtonActionPerformed(java.awt.event.ActionEvent e) {//GEN-FIRST:event_pointAndShootOffButtonActionPerformed
-        updatePointAndShoot(false);
-    }//GEN-LAST:event_pointAndShootOffButtonActionPerformed
-
-    private void pointAndShootOnButtonActionPerformed(java.awt.event.ActionEvent e) {//GEN-FIRST:event_pointAndShootOnButtonActionPerformed
-        //offButtonActionPerformed(null);
-      /*  String galvo_ = core_.getGalvoDevice();
-        try {
-             core_.setGalvoIlluminationState(galvo_, true);
-             core_.pointGalvoAndFire(galvo_, 900, 900, 500000);
-        } catch (Exception ex) {
-            ReportingUtils.logError(ex);
-        }
-*/
-
-       /* try {
-            updatePointAndShoot(true);
-        } catch (RuntimeException ex) {
-            ReportingUtils.showError(ex);
-        }*/
-    }
 
 }

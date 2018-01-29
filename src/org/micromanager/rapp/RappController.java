@@ -75,6 +75,9 @@ import org.micromanager.utils.GUIUtils;
 import org.micromanager.utils.MMFrame;
 import org.micromanager.utils.MMListenerAdapter;
 
+import static org.micromanager.rapp.RappPlugin.getApp_;
+import static org.micromanager.rapp.RappPlugin.getMMcore;
+
 
 /**
  * This Class is approximately use as a Controller for the Rapp plugin. Contains logic for calibration,
@@ -84,10 +87,10 @@ import org.micromanager.utils.MMListenerAdapter;
 public class RappController extends  MMFrame implements OnStateListener {
     private final RappDevice  dev_;
     private static RappPlugin rappPlugin = new RappPlugin() ;
-    //private final MouseListener pointAndShootMouseListener;
+    private final MouseListener pointAndShootMouseListener;
     private final AtomicBoolean pointAndShooteModeOn_ = new AtomicBoolean(false);
     private final CMMCore core_;
-    private static ScriptInterface app_ = rappPlugin.getApp_() ;
+    private final ScriptInterface app_  ;
     private final boolean isSLM_;
     private Roi[] individualRois_ = {};
     private Map<Polygon, AffineTransform> mapping_ = null;
@@ -103,18 +106,17 @@ public class RappController extends  MMFrame implements OnStateListener {
     private RappGui frame_;
     public boolean bleechingComp=false;
     public  Point roiPointClick = new Point();
-    private static final RappController fINSTANCE =  new RappController();
+    //private static final RappController fINSTANCE =  new RappController(core_, app_);
 
-    public static RappController getInstance() {
-        return fINSTANCE;
-    }
+//    public static RappController getInstance() {
+//        return fINSTANCE;
+//    }
 
 
-
-    public RappController( ) {
-        //app_ =  rappPlugin.getApp_() ;
+    public RappController( CMMCore core, ScriptInterface app) {
+        app_ = app;
         gui_ = MMStudio.getInstance();
-        core_ = gui_.getCore();
+        core_ = core;
         frame_= RappGui.getInstance();
         String slm = core_.getSLMDevice();
         String galvo = core_.getGalvoDevice();
@@ -128,7 +130,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
 
         loadMapping();
-        //pointAndShootMouseListener = createPointAndShootMouseListenerInstance();
+        pointAndShootMouseListener = createPointAndShootMouseListenerInstance();
 
         Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
             @Override
@@ -188,8 +190,146 @@ public class RappController extends  MMFrame implements OnStateListener {
         return new Point2D.Double(pt.x, pt.y);
      }
 
+    // ## Methods for handling targeting channel and shutter
 
-     /////////////////////////////////////////////////// Calibration ///////////////////////////////////////////////////
+    /**
+     * Reads the available channels from Micro-Manager Channel Group
+     * and populates the targeting channel drop-down menu.
+     */
+   /* final void populateChannelComboBox(String initialChannel) {
+        if (initialChannel == null) {
+            initialChannel = (String) channelComboBox.getSelectedItem();
+        }
+        channelComboBox.removeAllItems();
+        channelComboBox.addItem("");
+        // try to avoid crash on shutdown
+        if (core_ != null) {
+            for (String preset : core_.getAvailableConfigs(core_.getChannelGroup())) {
+                channelComboBox.addItem(preset);
+            }
+            channelComboBox.setSelectedItem(initialChannel);
+        }
+    }
+
+    *//**
+     * Reads the available shutters from Micro-Manager and
+     * lists them in the targeting shutter drop-down menu.
+     *//*
+    final void populateShutterComboBox(String initialShutter) {
+        if (initialShutter == null) {
+            initialShutter = (String) shutterComboBox.getSelectedItem();
+        }
+        shutterComboBox.removeAllItems();
+        shutterComboBox.addItem("");
+        // trying to avoid crashes on shutdown
+        if (core_ != null) {
+            for (String shutter : core_.getLoadedDevicesOfType(DeviceType.ShutterDevice)) {
+                shutterComboBox.addItem(shutter);
+            }
+            shutterComboBox.setSelectedItem(initialShutter);
+        }
+    }*/
+
+    /**
+     * Sets the targeting channel. channelName should be
+     * a channel from the current ChannelGroup.
+     */
+    void setTargetingChannel(String channelName) {
+        targetingChannel_ = channelName;
+        if (channelName != null) {
+            Preferences.userNodeForPackage(this.getClass()).put("channel", channelName);
+        }
+    }
+
+    /**
+     * Sets the targeting shutter.
+     * Should be the name of a loaded Shutter device.
+     */
+    void setTargetingShutter(String shutterName) {
+        targetingShutter_ = shutterName;
+        if (shutterName != null) {
+            Preferences.userNodeForPackage(this.getClass()).put("shutter", shutterName);
+        }
+    }
+
+    /**
+     * Sets the Channel Group to the targeting channel, if it exists.
+     * @return
+     */
+    public Configuration prepareChannel() {
+        Configuration originalConfig = null;
+        String channelGroup = core_.getChannelGroup();
+        try {
+            if (targetingChannel_ != null && targetingChannel_.length() > 0) {
+                originalConfig = core_.getConfigGroupState(channelGroup);
+                if (!originalConfig.isConfigurationIncluded(core_.getConfigData(channelGroup, targetingChannel_))) {
+                    if (app_.isAcquisitionRunning()) {
+                        app_.setPause(true);
+                    }
+                    core_.setConfig(channelGroup, targetingChannel_);
+                }
+            }
+        } catch (Exception ex) {
+            ReportingUtils.logError(ex);
+        }
+        return originalConfig;
+    }
+
+    /**
+     * Should be called with the value returned by prepareChannel.
+     * Returns Channel Group to its original settings, if needed.
+     * @param originalConfig value returned by prepareChannel
+     */
+    public void returnChannel(Configuration originalConfig) {
+        if (originalConfig != null) {
+            try {
+                core_.setSystemState(originalConfig);
+                if (app_.isAcquisitionRunning() && app_.isPaused()) {
+                    app_.setPause(false);
+                }
+            } catch (Exception ex) {
+                ReportingUtils.logError(ex);
+            }
+        }
+    }
+
+    /**
+     * Opens the targeting shutter, if it has been specified.
+     * @return true if it was already open
+     */
+    public boolean prepareShutter() {
+        try {
+            if (targetingShutter_ != null && targetingShutter_.length() > 0) {
+                boolean originallyOpen = core_.getShutterOpen(targetingShutter_);
+                if (!originallyOpen) {
+                    core_.setShutterOpen(targetingShutter_, true);
+                    core_.waitForDevice(targetingShutter_);
+                }
+                return originallyOpen;
+            }
+        } catch (Exception ex) {
+            ReportingUtils.logError(ex);
+        }
+        return true; // by default, say it was already open
+    }
+
+    /**
+     * Closes a targeting shutter if it exists and if it was originally closed.
+     * Should be called with the value returned by prepareShutter.
+     * @param originallyOpen - whether or not the shutter was originally open
+     */
+    public void returnShutter(boolean originallyOpen) {
+        try {
+            if (targetingShutter_ != null &&
+                    (targetingShutter_.length() > 0) &&
+                    !originallyOpen) {
+                core_.setShutterOpen(targetingShutter_, false);
+                core_.waitForDevice(targetingShutter_);
+            }
+        } catch (Exception ex) {
+            ReportingUtils.logError(ex);
+        }
+    }
 
     // ## Simple methods for device control.
 
@@ -209,7 +349,7 @@ public class RappController extends  MMFrame implements OnStateListener {
      * Turns the projection device on or off.
      * @param onState on=true
      */
-    private void setOnState(boolean onState) {
+     public   void setOnState(boolean onState) {
         if (onState) {
             dev_.turnOn();
         } else {
@@ -237,6 +377,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         dev_.displaySpot(x, y);
     }
 
+    //// ################### ## Calibration #################################
     // ## Generating, loading and saving calibration mappings
 
     /**
@@ -326,7 +467,7 @@ public class RappController extends  MMFrame implements OnStateListener {
             // if we add "dev_.waitForDevice(), then the RAPP UGA-40 will already have ended
             // its exposure before returning control
             // For now, wait for a user specified delay
-            int delayMs = Integer.parseInt(frame_.delayField_.getValue().toString());
+            int delayMs = Integer.parseInt(RappGui.getInstance().delayField_.getValue().toString());
             Thread.sleep(delayMs);
             core_.snapImage();
             // NS: just make sure to wait until the spot is no longer displayed
@@ -550,7 +691,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                     } finally {
                         isRunning_.set(false);
                         stopRequested_.set(false);
-                        frame_.calibrateButton.setText("Calibrate");
+                        RappGui.getInstance().calibrateButton.setText("Calibrate");
                     }
                 }
             };
@@ -634,7 +775,126 @@ public class RappController extends  MMFrame implements OnStateListener {
         return transformPoint(mapping, pOffscreen);
     }
 
-     // Methode for opening the Live Windows
+
+
+     // ################### Part 2: ## Point and shoot #################################
+
+    // Creates a MouseListener instance for future use with Point and Shoot
+    // mode. When the MouseListener is attached to an ImageJ window, any
+    // clicks will result in a spot being illuminated.
+    private MouseListener createPointAndShootMouseListenerInstance() {
+        return new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.isShiftDown()) {
+                    Point p = e.getPoint();
+                    ImageCanvas canvas = (ImageCanvas) e.getSource();
+                    Point pOffscreen = new Point(canvas.offScreenX(p.x), canvas.offScreenY(p.y));
+                    final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), canvas.getImage(),
+                            new Point2D.Double(pOffscreen.x, pOffscreen.y));
+                    final Configuration originalConfig = prepareChannel();
+                    final boolean originalShutterState = prepareShutter();
+                    makeRunnableAsync(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        if (devP != null) {
+                                            displaySpot(devP.x, devP.y);
+                                        }
+                                        returnShutter(originalShutterState);
+                                        returnChannel(originalConfig);
+                                    } catch (Exception e) {
+                                        ReportingUtils.showError(e);
+                                    }
+                                }
+                            }).run();
+
+                }
+            }
+        };
+    }
+
+    // Turn on/off point and shoot mode.
+    public void enablePointAndShootMode(boolean on) {
+        if (on && (mapping_ == null)) {
+            ReportingUtils.showError("Please calibrate the phototargeting device first, using the Setup tab.");
+            throw new RuntimeException("Please calibrate the phototargeting device first, using the Setup tab.");
+        }
+        pointAndShooteModeOn_.set(on);
+        ImageWindow window = WindowManager.getCurrentWindow();
+        if (window != null) {
+            ImageCanvas canvas = window.getCanvas();
+            if (on) {
+                if (canvas != null) {
+                    boolean found = false;
+                    for (MouseListener listener : canvas.getMouseListeners()) {
+                        if (listener == pointAndShootMouseListener) {
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        canvas.addMouseListener(pointAndShootMouseListener);
+                    }
+                }
+            } else {
+                for (MouseListener listener : canvas.getMouseListeners()) {
+                    if (listener == pointAndShootMouseListener) {
+                        canvas.removeMouseListener(listener);
+                    }
+                }
+            }
+        }
+    }
+
+
+    // Generates a runnable that runs the selected ROIs.
+    private Runnable phototargetROIsRunnable(final String runnableName) {
+        return new Runnable() {
+            @Override
+            public void run() {
+               // runRois();
+            }
+            @Override
+            public String toString() {
+                return runnableName;
+            }
+        };
+    }
+
+    /**
+     * Converts a Runnable to one that runs asynchronously.
+     * @param runnable synchronous Runnable
+     * @return asynchronously running Runnable
+     */
+    public static Runnable makeRunnableAsync(final Runnable runnable) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        runnable.run();
+                    }
+                }.start();
+            }
+        };
+    }
+
+    // Sleep until the designated clock time.
+    private static void sleepUntil(long clockTimeMillis) {
+        long delta = clockTimeMillis - System.currentTimeMillis();
+        if (delta > 0) {
+            try {
+                Thread.sleep(delta);
+            } catch (InterruptedException ex) {
+                ReportingUtils.logError(ex);
+            }
+        }
+    }
+
+
+    //#################################  Methode for opening the Live Windows ###############################################
      public void setLive(Boolean on) throws MMScriptException {
          if (on == true){
              Object img = null;
@@ -645,7 +905,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                  Logger.getLogger(RappGui.class.getName()).log(Level.SEVERE, null, ex);
              }
              gui_.displayImage(img);
-             gui_.setXYStagePosition(32.0, 32.0);
+           //  gui_.setXYStagePosition(32.0, 32.0);
              //frame_.lbl_btn_onoff.add(img);
          }
      }
