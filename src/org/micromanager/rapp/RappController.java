@@ -83,10 +83,11 @@ import org.micromanager.utils.MMListenerAdapter;
 
 public class RappController extends  MMFrame implements OnStateListener {
     private final RappDevice  dev_;
+    private static RappPlugin rappPlugin = new RappPlugin() ;
     //private final MouseListener pointAndShootMouseListener;
     private final AtomicBoolean pointAndShooteModeOn_ = new AtomicBoolean(false);
     private final CMMCore core_;
-    private static ScriptInterface app_;
+    private static ScriptInterface app_ = rappPlugin.getApp_() ;
     private final boolean isSLM_;
     private Roi[] individualRois_ = {};
     private Map<Polygon, AffineTransform> mapping_ = null;
@@ -111,7 +112,7 @@ public class RappController extends  MMFrame implements OnStateListener {
 
 
     public RappController( ) {
-       // app_ = app;
+        //app_ =  rappPlugin.getApp_() ;
         gui_ = MMStudio.getInstance();
         core_ = gui_.getCore();
         frame_= RappGui.getInstance();

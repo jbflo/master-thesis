@@ -88,6 +88,10 @@ public class RappPlugin implements MMPlugin  {
 
     }
 
+    public static ScriptInterface getApp_() {
+        return app_;
+    }
+
     public void shootL(){
         String galvo_ = core_.getGalvoDevice();
         try {
@@ -137,7 +141,7 @@ public class RappPlugin implements MMPlugin  {
             ex.printStackTrace();
         } // end of Try Catch
 
-        //new RappGui(core_, app_);
+
         form_ = RappGui.showAppInterface(core_, app_);
         //gui_.getContentPane().add( );
     }

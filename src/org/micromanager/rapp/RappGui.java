@@ -237,11 +237,14 @@ public class RappGui extends JFrame {
                     if (running) {
                         rappController_ref.stopCalibration();
                         calibrateButton.setText("is Calibrate");
+                        System.out.println("You run");
                     } else {
                         rappController_ref.runCalibration();
                         calibrateButton.setText("Stop calibration");
+                        System.out.println("You do not run");
                     }
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     ReportingUtils.showError(e);
                 }
             }

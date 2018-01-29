@@ -8,19 +8,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e3bd16c0-5336-44c0-8d6f-2b586ae6e16d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$10.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$10.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$2.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$3.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$3.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$5.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$5.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$6.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$6.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$7.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$7.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$8.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$8.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$9.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$9.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,7 +28,7 @@
       <file leaf-file-name="RappDevice.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappDevice.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
+            <state relative-caret-position="0">
               <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
               <folding />
             </state>
@@ -48,24 +38,19 @@
       <file leaf-file-name="Galvo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/Galvo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
+            <state relative-caret-position="380">
               <caret line="43" column="4" lean-forward="false" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RappGui.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RappGui.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="243" column="40" lean-forward="true" selection-start-line="243" selection-start-column="40" selection-end-line="243" selection-end-column="40" />
-              <folding>
-                <element signature="e#12545#12546#0" expanded="true" />
-                <element signature="e#12605#12606#0" expanded="true" />
-                <element signature="e#13783#13974#0" expanded="true" />
-                <element signature="e#13973#13974#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-3900">
+              <caret line="78" column="51" lean-forward="false" selection-start-line="78" selection-start-column="51" selection-end-line="78" selection-end-column="51" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -73,37 +58,10 @@
       <file leaf-file-name="RappController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="125" column="24" lean-forward="false" selection-start-line="125" selection-start-column="24" selection-end-line="125" selection-end-column="24" />
+            <state relative-caret-position="280">
+              <caret line="89" column="57" lean-forward="false" selection-start-line="89" selection-start-column="57" selection-end-line="89" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3430#3431#0" expanded="true" />
-                <element signature="e#3462#3463#0" expanded="true" />
-                <element signature="e#4526#4527#0" expanded="true" />
-                <element signature="e#4568#4569#0" expanded="true" />
-                <element signature="e#5535#5536#0" expanded="true" />
-                <element signature="e#5609#5610#0" expanded="true" />
-                <element signature="e#5766#5767#0" expanded="true" />
-                <element signature="e#5820#5821#0" expanded="true" />
-                <element signature="e#13520#13552#0" expanded="true" />
-                <element signature="e#19345#19371#0" expanded="true" />
-                <element signature="e#19873#19905#0" expanded="true" />
-                <element signature="e#23432#23433#0" expanded="true" />
-                <element signature="e#23471#23472#0" expanded="true" />
-                <element signature="e#23592#23593#0" expanded="true" />
-                <element signature="e#23632#23633#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReportingUtils.class" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/utils/ReportingUtils.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="194" column="0" lean-forward="false" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
-              <folding>
-                <element signature="e#5915#5916#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -112,7 +70,7 @@
       <file leaf-file-name="ThreadClass.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/ThreadClass.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
+            <state relative-caret-position="220">
               <caret line="13" column="23" lean-forward="false" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
               <folding>
                 <element signature="e#238#239#0" expanded="true" />
@@ -125,21 +83,23 @@
       <file leaf-file-name="RappPlugin.iml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RappPlugin.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
+            <state relative-caret-position="260">
               <caret line="13" column="8" lean-forward="false" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RappPlugin.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RappPlugin.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="43" column="32" lean-forward="false" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="32" />
+            <state relative-caret-position="262">
+              <caret line="148" column="36" lean-forward="true" selection-start-line="148" selection-start-column="36" selection-end-line="148" selection-end-column="36" />
               <folding>
-                <element signature="e#5543#5544#0" expanded="true" />
-                <element signature="e#5596#5597#0" expanded="true" />
+                <element signature="e#3075#3076#0" expanded="true" />
+                <element signature="e#3102#3103#0" expanded="true" />
+                <element signature="e#5582#5583#0" expanded="true" />
+                <element signature="e#5635#5636#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -171,16 +131,16 @@
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/PluginGui.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/ThreadClass.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="4" />
+    <option name="y" value="3" />
     <option name="width" value="1616" />
-    <option name="height" value="876" />
+    <option name="height" value="1097" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -197,7 +157,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -222,6 +181,7 @@
       </pane>
       <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -383,55 +343,37 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <frame x="4" y="3" width="1616" height="1097" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43512452" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39231548" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3604194" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958984" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.130625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Learn" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3975535" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39802957" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3975535" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43512452" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25917432" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958984" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295107" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Learn" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -456,18 +398,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
           <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/lang/Thread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14616">
-          <caret line="751" column="7" lean-forward="true" selection-start-line="751" selection-start-column="7" selection-end-line="751" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/lang/Thread.java" />
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappDevice.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
@@ -489,8 +423,10 @@
         <state relative-caret-position="-295">
           <caret line="74" column="33" lean-forward="false" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="33" />
           <folding>
-            <element signature="e#5543#5544#0" expanded="true" />
-            <element signature="e#5596#5597#0" expanded="true" />
+            <element signature="e#3075#3076#0" expanded="true" />
+            <element signature="e#3102#3103#0" expanded="true" />
+            <element signature="e#5582#5583#0" expanded="true" />
+            <element signature="e#5635#5636#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -501,21 +437,6 @@
           <caret line="116" column="0" lean-forward="true" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3430#3431#0" expanded="true" />
-            <element signature="e#3462#3463#0" expanded="true" />
-            <element signature="e#4526#4527#0" expanded="true" />
-            <element signature="e#4568#4569#0" expanded="true" />
-            <element signature="e#5535#5536#0" expanded="true" />
-            <element signature="e#5609#5610#0" expanded="true" />
-            <element signature="e#5766#5767#0" expanded="true" />
-            <element signature="e#5820#5821#0" expanded="true" />
-            <element signature="e#13520#13552#0" expanded="true" />
-            <element signature="e#19345#19371#0" expanded="true" />
-            <element signature="e#19873#19905#0" expanded="true" />
-            <element signature="e#23432#23433#0" expanded="true" />
-            <element signature="e#23471#23472#0" expanded="true" />
-            <element signature="e#23592#23593#0" expanded="true" />
-            <element signature="e#23632#23633#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -524,12 +445,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
           <caret line="346" column="37" lean-forward="false" selection-start-line="346" selection-start-column="37" selection-end-line="346" selection-end-column="37" />
-          <folding>
-            <element signature="e#12545#12546#0" expanded="true" />
-            <element signature="e#12605#12606#0" expanded="true" />
-            <element signature="e#13783#13974#0" expanded="true" />
-            <element signature="e#13973#13974#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -564,12 +480,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4900">
           <caret line="266" column="1" lean-forward="true" selection-start-line="266" selection-start-column="1" selection-end-line="266" selection-end-column="1" />
-          <folding>
-            <element signature="e#12545#12546#0" expanded="true" />
-            <element signature="e#12605#12606#0" expanded="true" />
-            <element signature="e#13783#13974#0" expanded="true" />
-            <element signature="e#13973#13974#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -579,21 +490,6 @@
           <caret line="116" column="0" lean-forward="true" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3430#3431#0" expanded="true" />
-            <element signature="e#3462#3463#0" expanded="true" />
-            <element signature="e#4526#4527#0" expanded="true" />
-            <element signature="e#4568#4569#0" expanded="true" />
-            <element signature="e#5535#5536#0" expanded="true" />
-            <element signature="e#5609#5610#0" expanded="true" />
-            <element signature="e#5766#5767#0" expanded="true" />
-            <element signature="e#5820#5821#0" expanded="true" />
-            <element signature="e#13520#13552#0" expanded="true" />
-            <element signature="e#19345#19371#0" expanded="true" />
-            <element signature="e#19873#19905#0" expanded="true" />
-            <element signature="e#23432#23433#0" expanded="true" />
-            <element signature="e#23471#23472#0" expanded="true" />
-            <element signature="e#23592#23593#0" expanded="true" />
-            <element signature="e#23632#23633#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -611,8 +507,10 @@
         <state relative-caret-position="1020">
           <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
           <folding>
-            <element signature="e#5543#5544#0" expanded="true" />
-            <element signature="e#5596#5597#0" expanded="true" />
+            <element signature="e#3075#3076#0" expanded="true" />
+            <element signature="e#3102#3103#0" expanded="true" />
+            <element signature="e#5582#5583#0" expanded="true" />
+            <element signature="e#5635#5636#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -633,8 +531,10 @@
         <state relative-caret-position="187">
           <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
           <folding>
-            <element signature="e#5543#5544#0" expanded="true" />
-            <element signature="e#5596#5597#0" expanded="true" />
+            <element signature="e#3075#3076#0" expanded="true" />
+            <element signature="e#3102#3103#0" expanded="true" />
+            <element signature="e#5582#5583#0" expanded="true" />
+            <element signature="e#5635#5636#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -706,7 +606,7 @@
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/PluginGui.java" />
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/Galvo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
+        <state relative-caret-position="380">
           <caret line="43" column="4" lean-forward="false" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
           <folding />
         </state>
@@ -722,7 +622,7 @@
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/lang/Thread.java" />
     <entry file="file://$PROJECT_DIR$/RappPlugin.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
+        <state relative-caret-position="260">
           <caret line="13" column="8" lean-forward="false" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
           <folding />
         </state>
@@ -730,7 +630,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/ThreadClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
+        <state relative-caret-position="220">
           <caret line="13" column="23" lean-forward="false" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
           <folding>
             <element signature="e#238#239#0" expanded="true" />
@@ -741,67 +641,92 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappDevice.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
+        <state relative-caret-position="0">
           <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java">
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/utils/ReportingUtils.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="43" column="32" lean-forward="false" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="32" />
+        <state relative-caret-position="394">
+          <caret line="194" column="0" lean-forward="false" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
           <folding>
-            <element signature="e#5543#5544#0" expanded="true" />
-            <element signature="e#5596#5597#0" expanded="true" />
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="false" signature="146:635" ph="..." />
+            <marker date="1439569898000" expanded="true" signature="818:825" ph="{}" />
+            <marker date="1439569898000" expanded="false" signature="878:889" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="906:912" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="958:969" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="982:988" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="1038:1049" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="1062:1068" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="1116:1252" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="1305:1447" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="1495:1506" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="1558:1564" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="1630:1641" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="1684:1690" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="1749:2031" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="2077:2088" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2104:2110" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="2155:2166" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2197:2203" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="2281:2980" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3043:3518" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3595:4191" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="4238:4249" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4287:4293" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="4339:4350" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4403:4409" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="4468:4479" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4518:4524" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="4589:4600" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4625:4631" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="4695:4706" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4746:4752" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="4824:5290" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="5341:5672" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="5710:5721" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="5781:5787" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="5836:5847" ph=" { " />
+            <marker date="1439569898000" expanded="true" signature="5910:5916" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="5989:7215" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="6085:6137" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="6221:6240" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="6612:6714" ph="propertyChange(e) → {" />
+            <marker date="1439569898000" expanded="false" signature="6976:6999" ph="}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="125" column="24" lean-forward="false" selection-start-line="125" selection-start-column="24" selection-end-line="125" selection-end-column="24" />
+        <state relative-caret-position="280">
+          <caret line="89" column="57" lean-forward="false" selection-start-line="89" selection-start-column="57" selection-end-line="89" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3430#3431#0" expanded="true" />
-            <element signature="e#3462#3463#0" expanded="true" />
-            <element signature="e#4526#4527#0" expanded="true" />
-            <element signature="e#4568#4569#0" expanded="true" />
-            <element signature="e#5535#5536#0" expanded="true" />
-            <element signature="e#5609#5610#0" expanded="true" />
-            <element signature="e#5766#5767#0" expanded="true" />
-            <element signature="e#5820#5821#0" expanded="true" />
-            <element signature="e#13520#13552#0" expanded="true" />
-            <element signature="e#19345#19371#0" expanded="true" />
-            <element signature="e#19873#19905#0" expanded="true" />
-            <element signature="e#23432#23433#0" expanded="true" />
-            <element signature="e#23471#23472#0" expanded="true" />
-            <element signature="e#23592#23593#0" expanded="true" />
-            <element signature="e#23632#23633#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/utils/ReportingUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="194" column="0" lean-forward="false" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
-          <folding>
-            <element signature="e#5915#5916#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="243" column="40" lean-forward="true" selection-start-line="243" selection-start-column="40" selection-end-line="243" selection-end-column="40" />
+        <state relative-caret-position="-3900">
+          <caret line="78" column="51" lean-forward="false" selection-start-line="78" selection-start-column="51" selection-end-line="78" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="148" column="36" lean-forward="true" selection-start-line="148" selection-start-column="36" selection-end-line="148" selection-end-column="36" />
           <folding>
-            <element signature="e#12545#12546#0" expanded="true" />
-            <element signature="e#12605#12606#0" expanded="true" />
-            <element signature="e#13783#13974#0" expanded="true" />
-            <element signature="e#13973#13974#0" expanded="true" />
+            <element signature="e#3075#3076#0" expanded="true" />
+            <element signature="e#3102#3103#0" expanded="true" />
+            <element signature="e#5582#5583#0" expanded="true" />
+            <element signature="e#5635#5636#0" expanded="true" />
           </folding>
         </state>
       </provider>
