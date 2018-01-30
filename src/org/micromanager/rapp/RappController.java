@@ -1,16 +1,12 @@
 package org.micromanager.rapp;
 
 import ij.measure.Calibration;
-import loci.formats.CoreMetadata;
 import mmcorej.CMMCore;
 import org.micromanager.MMStudio;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.*;
 
-import java.awt.*;
 import java.awt.event.AWTEventListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -18,65 +14,39 @@ import java.util.prefs.Preferences;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.WindowManager;
-import ij.gui.EllipseRoi;
 import ij.gui.ImageCanvas;
 import ij.gui.ImageWindow;
-import ij.gui.OvalRoi;
 import ij.gui.PointRoi;
 import ij.gui.Roi;
-import ij.io.RoiEncoder;
 import ij.plugin.filter.GaussianBlur;
 import ij.plugin.frame.RoiManager;
-import ij.process.FloatPolygon;
 import ij.process.ImageProcessor;
 
 import java.awt.AWTEvent;
 import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.event.AWTEventListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.prefs.Preferences;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import javax.swing.*;
-import javax.swing.text.DefaultFormatter;
 
-import mmcorej.CMMCore;
 import mmcorej.Configuration;
-import mmcorej.DeviceType;
 import mmcorej.TaggedImage;
 
 import org.json.JSONException;
-import org.micromanager.api.ScriptInterface;
 import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
-import org.micromanager.utils.GUIUtils;
 import org.micromanager.utils.MMFrame;
-import org.micromanager.utils.MMListenerAdapter;
-
-import static org.micromanager.rapp.RappPlugin.getApp_;
-import static org.micromanager.rapp.RappPlugin.getMMcore;
 
 
 /**
@@ -105,7 +75,7 @@ public class RappController extends  MMFrame implements OnStateListener {
     private final MMStudio gui_;
     private RappGui frame_;
     public boolean bleechingComp=false;
-    public  Point roiPointClick = new Point();
+    public  List<Point2D.Double> roiPointClick ;
     //private static final RappController fINSTANCE =  new RappController(core_, app_);
 
 //    public static RappController getInstance() {
@@ -691,7 +661,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                     } finally {
                         isRunning_.set(false);
                         stopRequested_.set(false);
-                        RappGui.getInstance().calibrateButton.setText("Calibrate");
+                        RappGui.getInstance().calibrate_btn.setText("Calibrate");
                     }
                 }
             };
@@ -751,9 +721,7 @@ public class RappController extends  MMFrame implements OnStateListener {
             String mirrorString = VirtualAcquisitionDisplay.getDisplay(imgp)
                     .getCurrentMetadata().getString("ImageFlipper-Mirror");
             return (mirrorString.contentEquals("On"));
-        } catch (JSONException e) {
-            return false;
-        } catch (NullPointerException npe) {
+        } catch (JSONException | NullPointerException e) {
             return false;
         }
     }
@@ -804,16 +772,39 @@ public class RappController extends  MMFrame implements OnStateListener {
                                         }
                                         returnShutter(originalShutterState);
                                         returnChannel(originalConfig);
-                                    } catch (Exception e) {
-                                        ReportingUtils.showError(e);
+                                    } catch (Exception e1) {
+                                        ReportingUtils.showError(e1);
                                     }
                                 }
                             }).run();
-
                 }
             }
         };
     }
+
+    public void createMultiPointAndShootFromRoeList() {
+        // Point p = e.getPoint();
+
+        List<Point2D.Double> devP = getListofROIs();
+        final Configuration originalConfig = prepareChannel();
+        final boolean originalShutterState = prepareShutter();
+        makeRunnableAsync(
+                () -> {
+                    try {
+                        if ( devP != null) {
+                            for (Point2D pointxy : devP) {
+                                displaySpot(pointxy.getX(), pointxy.getY());
+                            }
+                        }
+                            returnShutter(originalShutterState);
+                            returnChannel(originalConfig);
+                        } catch(Exception e1){
+                        ReportingUtils.showError(e1);
+                    }
+                }).run();
+    }
+
+
 
     // Turn on/off point and shoot mode.
     public void enablePointAndShootMode(boolean on) {
@@ -912,7 +903,7 @@ public class RappController extends  MMFrame implements OnStateListener {
 
 
 
-     public void getROIs() {
+     public List<Point2D.Double>  getListofROIs() {
          ImagePlus image = IJ.getImage();
          Calibration cal = image.getCalibration();
          String unit = cal.getUnit().toString();
@@ -940,15 +931,18 @@ public class RappController extends  MMFrame implements OnStateListener {
 
          double[] failsArrayX =  new double[xcRoiPosArray.size()];
          double[] failsArrayY =  new double[ycRoiPosArray.size()];
+         Point2D.Double roiTemp = null;
          for (int i = 0; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
 
              failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
              failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
-             roiPointClick.setLocation(failsArrayX[i],  failsArrayY[i]);
+             roiTemp.setLocation(failsArrayX[i],  failsArrayY[i]);
+             roiPointClick.add(roiTemp);
              System.out.println(roiPointClick);
-         }
-//        tableModel_.addWholeData(xcRoiPosArray);
 
+         }
+
+         return  roiPointClick;
     }
 
    /* private boolean containList(float x, float y) {
