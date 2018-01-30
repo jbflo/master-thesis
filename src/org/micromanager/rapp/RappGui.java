@@ -153,7 +153,6 @@ public class RappGui extends JFrame {
                 learnOption_btn.setBackground(Color.white);
                 right_box_setup.setVisible(false);
                 right_box_learning.setVisible(false);
-
             }
         } );
 

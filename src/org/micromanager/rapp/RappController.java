@@ -7,6 +7,7 @@ import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.*;
 
 import java.awt.event.AWTEventListener;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -75,7 +76,8 @@ public class RappController extends  MMFrame implements OnStateListener {
     private final MMStudio gui_;
     private RappGui frame_;
     public boolean bleechingComp=false;
-    public  List<Point2D.Double> roiPointClick ;
+    public List<Point2D.Double> roiPointClick = new ArrayList<>();
+    public Point2D.Double roiTemp  = new Point2D.Double();
     //private static final RappController fINSTANCE =  new RappController(core_, app_);
 
 //    public static RappController getInstance() {
@@ -926,23 +928,22 @@ public class RappController extends  MMFrame implements OnStateListener {
              xcRoiPosArray.add(roiArray[i].getXBase()+Math.round(roiArray[i].getFloatWidth()/2));
              ycRoiPosArray.add(roiArray[i].getYBase()+Math.round(roiArray[i].getFloatHeight()/2));
          }
-         System.out.println(xcRoiPosArray);
-         System.out.println(ycRoiPosArray);
+         //System.out.println(xcRoiPosArray);
+         //System.out.println(ycRoiPosArray);
 
          double[] failsArrayX =  new double[xcRoiPosArray.size()];
          double[] failsArrayY =  new double[ycRoiPosArray.size()];
-         Point2D.Double roiTemp = null;
-         for (int i = 0; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
 
+
+         for (int i = 0; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
              failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
              failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
+
              roiTemp.setLocation(failsArrayX[i],  failsArrayY[i]);
              roiPointClick.add(roiTemp);
              System.out.println(roiPointClick);
-
          }
-
-         return  roiPointClick;
+         return roiPointClick;
     }
 
    /* private boolean containList(float x, float y) {
