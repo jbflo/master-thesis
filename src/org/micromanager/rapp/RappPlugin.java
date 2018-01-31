@@ -15,11 +15,15 @@ package org.micromanager.rapp;
 ///////////////     Java /  Java-swim Import class And Plugin       /////////////
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /////////////////  Micro-Manager Package ////////////////////////
 
+import ij.IJ;
+import ij.plugin.frame.RoiManager;
 import mmcorej.CMMCore;
 import mmcorej.TaggedImage;
 import org.micromanager.MMStudio;
@@ -27,6 +31,7 @@ import org.micromanager.acquisition.AcquisitionEngine;
 import org.micromanager.acquisition.AcquisitionWrapperEngine;
 import org.micromanager.api.MMPlugin;
 import org.micromanager.api.ScriptInterface;
+import org.micromanager.utils.GUIUtils;
 import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
 
@@ -92,16 +97,6 @@ public class RappPlugin implements MMPlugin  {
         return app_;
     }
 
-    public void shootL(){
-        String galvo_ = core_.getGalvoDevice();
-        try {
-           // core_.setGalvoIlluminationState(galvo_, true);
-           // core_.pointGalvoAndFire(galvo_, 900, 900, 500000);
-        } catch (Exception ex) {
-            ReportingUtils.logError(ex);
-        }
-    }
-
 
     @Override // MM
     public void show() {
@@ -142,23 +137,27 @@ public class RappPlugin implements MMPlugin  {
         } // end of Try Catch
 
 
-        form_ = RappGui.showAppInterface(core_, app_);
+        try {
+            form_ = RappGui.showAppInterface(core_, app_);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //gui_.getContentPane().add( );
     }
 
-    public void setLive(Boolean on){
-        if (on == true){
-            Object img = null;
-            try {
-                core_.snapImage();
-                img = core_.getImage();
-            } catch (Exception ex) {
-                Logger.getLogger(RappGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            mgui_.displayImage(img);
-        }
+    // #Show the ImageJ Roi Manager and return a reference to it.
+    public static RoiManager showRoiManager() {
+        IJ.run("ROI Manager...");
+        final RoiManager roiManager = RoiManager.getInstance();
+        GUIUtils.recallPosition(roiManager);
+        // "Get the "Show All" checkbox and make sure it is checked.
+        Checkbox checkbox = (Checkbox) ((Panel) roiManager.getComponent(1)).getComponent(9);
+        checkbox.setState(true);
+        // Simulated click of the "Show All" checkbox to force ImageJ
+        // to show all of the ROIs.
+        roiManager.itemStateChanged(new ItemEvent(checkbox, 0, null, ItemEvent.SELECTED));
+        return roiManager;
     }
-
 
     @Override
     public String getDescription() {

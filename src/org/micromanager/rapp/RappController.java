@@ -85,7 +85,7 @@ public class RappController extends  MMFrame implements OnStateListener {
 //    }
 
 
-    public RappController( CMMCore core, ScriptInterface app) {
+    public RappController( CMMCore core, ScriptInterface app) throws Exception {
         app_ = app;
         gui_ = MMStudio.getInstance();
         core_ = core;
@@ -811,8 +811,8 @@ public class RappController extends  MMFrame implements OnStateListener {
     // Turn on/off point and shoot mode.
     public void enablePointAndShootMode(boolean on) {
         if (on && (mapping_ == null)) {
-            ReportingUtils.showError("Please calibrate the phototargeting device first, using the Setup tab.");
-            throw new RuntimeException("Please calibrate the phototargeting device first, using the Setup tab.");
+            ReportingUtils.showError("Please calibrate the phototargeting device first, using the Settings option.");
+            throw new RuntimeException("Please calibrate the phototargeting device first, using the Settings option");
         }
         pointAndShooteModeOn_.set(on);
         ImageWindow window = WindowManager.getCurrentWindow();
@@ -887,8 +887,8 @@ public class RappController extends  MMFrame implements OnStateListener {
     }
 
 
-    //#################################  Methode for opening the Live Windows ###############################################
-     public void setLive(Boolean on) throws MMScriptException {
+    //#################################  Method for opening the Live Windows ###############################################
+     public void setLive(Boolean on) {
          if (on == true){
              Object img = null;
              try {
@@ -898,11 +898,9 @@ public class RappController extends  MMFrame implements OnStateListener {
                  Logger.getLogger(RappGui.class.getName()).log(Level.SEVERE, null, ex);
              }
              gui_.displayImage(img);
-           //  gui_.setXYStagePosition(32.0, 32.0);
-             //frame_.lbl_btn_onoff.add(img);
+             //  gui_.setXYStagePosition(32.0, 32.0);
          }
      }
-
 
 
      public List<Point2D.Double>  getListofROIs() {

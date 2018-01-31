@@ -35,12 +35,13 @@ public class Galvo implements RappDevice {
    int side_ = 4096;
    ExecutorService galvoExecutor_;
    HashSet<OnStateListener> onStateListeners_ = new HashSet<OnStateListener>();
-   long interval_us_;
+   long interval_us_ ;
 
-   public Galvo(CMMCore mmc) {
+   public Galvo(CMMCore mmc) throws Exception {
       mmc_ = mmc;
       galvo_ = mmc_.getGalvoDevice();
       galvoExecutor_ = Executors.newSingleThreadExecutor();
+      //interval_us_ = mmc_.setExposure(9.0);
    }
 
    @Override
@@ -151,10 +152,7 @@ public class Galvo implements RappDevice {
             ReportingUtils.logError("Unable to get galvo X minimum");
          }
          return result;
-      } catch (InterruptedException ex) {
-         ReportingUtils.logError("Unable to get galvo X minimum");
-         return 0;
-      } catch (ExecutionException ex) {
+      } catch (InterruptedException | ExecutionException ex) {
          ReportingUtils.logError("Unable to get galvo X minimum");
          return 0;
       }
@@ -178,10 +176,7 @@ public class Galvo implements RappDevice {
             ReportingUtils.logError("Unable to get galvo Y minimum");
          }
          return result;
-      } catch (InterruptedException ex) {
-         ReportingUtils.logError("Unable to get galvo Y minimum");
-         return 0;
-      } catch (ExecutionException ex) {
+      } catch (InterruptedException | ExecutionException ex) {
          ReportingUtils.logError("Unable to get galvo Y minimum");
          return 0;
       }
@@ -223,45 +218,42 @@ public class Galvo implements RappDevice {
 
    @Override
    public void loadRois(final List<FloatPolygon> rois) {
-      galvoExecutor_.submit(new Runnable() {
-         @Override
-         public void run() {
-            try {
-               mmc_.deleteGalvoPolygons(galvo_);
-            } catch (Exception ex) {
-               ReportingUtils.logError(ex);
-            }
-            int roiCount = 0;
-            try {
-               for (FloatPolygon poly : rois) {
-                  Point2D lastGalvoPoint = null;
-                  for (int i = 0; i < poly.npoints; ++i) {
-                     Point2D.Double galvoPoint = new Point2D.Double(
-                             poly.xpoints[i], poly.ypoints[i]);
-                     if (i == 0) {
-                        lastGalvoPoint = galvoPoint;
-                     }
-                     mmc_.addGalvoPolygonVertex(galvo_, roiCount, galvoPoint.getX(), 
-                             galvoPoint.getY());
-                     if (poly.npoints == 1) {
-                        ++roiCount;
-                     }
+      galvoExecutor_.submit(() -> {
+         try {
+            mmc_.deleteGalvoPolygons(galvo_);
+         } catch (Exception ex) {
+            ReportingUtils.logError(ex);
+         }
+         int roiCount = 0;
+         try {
+            for (FloatPolygon poly : rois) {
+               Point2D lastGalvoPoint = null;
+               for (int i = 0; i < poly.npoints; ++i) {
+                  Point2D.Double galvoPoint = new Point2D.Double(
+                          poly.xpoints[i], poly.ypoints[i]);
+                  if (i == 0) {
+                     lastGalvoPoint = galvoPoint;
                   }
-                  if (poly.npoints > 1) {
-                     mmc_.addGalvoPolygonVertex(galvo_, roiCount, 
-                             lastGalvoPoint.getX(), lastGalvoPoint.getY());
+                  mmc_.addGalvoPolygonVertex(galvo_, roiCount, galvoPoint.getX(),
+                          galvoPoint.getY());
+                  if (poly.npoints == 1) {
                      ++roiCount;
                   }
                }
-            } catch (Exception e) {
-               ReportingUtils.showError(e);
+               if (poly.npoints > 1) {
+                  mmc_.addGalvoPolygonVertex(galvo_, roiCount,
+                          lastGalvoPoint.getX(), lastGalvoPoint.getY());
+                  ++roiCount;
+               }
             }
+         } catch (Exception e) {
+            ReportingUtils.showError(e);
+         }
 
-            try {
-               mmc_.loadGalvoPolygons(galvo_);
-            } catch (Exception ex) {
-               ReportingUtils.showError(ex);
-            }
+         try {
+            mmc_.loadGalvoPolygons(galvo_);
+         } catch (Exception ex) {
+            ReportingUtils.showError(ex);
          }
       });
    }

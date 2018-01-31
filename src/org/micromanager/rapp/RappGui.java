@@ -24,6 +24,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.net.URL;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -43,20 +44,19 @@ public class RappGui extends JFrame {
     private URL default_path = this.getClass().getResource("");
     String path = default_path.toString().substring(6);
 
-    JPanel leftPanel = new JPanel();
-    Box left_box = Box.createVerticalBox();
-    Box right_box_setup = Box.createVerticalBox();
-    Box right_box_learning  = Box.createVerticalBox();
-    Box right_box_shoot = Box.createVerticalBox();
-    SpinnerModel model = new SpinnerNumberModel(100, 0, 100000, 0.1);
-    SpinnerModel model2 = new SpinnerNumberModel(0, 0, 100, 1);
-    JSpinner spinner = new JSpinner(model);
+    private JPanel leftPanel = new JPanel();
+    private Box left_box = Box.createVerticalBox();
+    private JPanel right_box_setup = new JPanel();
+    private Box right_box_learning  = Box.createVerticalBox();
+    private JPanel right_box_shoot = new JPanel();
+    private FlowLayout experimentLayout;
+    private SpinnerModel model = new SpinnerNumberModel(100, 0, 9999, 1);
+    private SpinnerModel model2 = new SpinnerNumberModel(0, 0, 9999, 1);
+    private JSpinner exposureT_spinner = new JSpinner(model);
     JSpinner delayField_ = new JSpinner(model2);
     JLabel text1 = new JLabel();
     JLabel text2 = new JLabel();
-    JLabel lbl_btn_onoff = new JLabel("Toggles calibration mode", SwingConstants.CENTER);
     JLabel lbl_for_Rois = new JLabel("Rois Settings", SwingConstants.CENTER);
-    JLabel lbl_for_onoff_light = new JLabel("Point And Shoot Mode");
     JButton setupOption_btn = new JButton("Settings");
     JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
     JButton learnOption_btn = new JButton("Learning");
@@ -78,9 +78,9 @@ public class RappGui extends JFrame {
     /**
      * Constructor. Creates the main window for the Projector plugin.
      */
-    public RappGui(CMMCore core, ScriptInterface app) {
+    public RappGui(CMMCore core, ScriptInterface app) throws Exception {
         new RappController(core, app);
-        rappController_ref =  new RappController(core, app); ;
+        rappController_ref =  new RappController(core, app);
 
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
@@ -95,13 +95,13 @@ public class RappGui extends JFrame {
 
         // we use this Class for the main interface
         this.setLayout(new BorderLayout());
-
+        experimentLayout = new FlowLayout();
         ///////////// Left Panel Content ////////////////////////////
         leftPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         leftPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Menu"));
 
-        // we put all the component from the left into a Box , and the Box into the Left Panel
+        ///////////// we put all the component from the left into a Horizontal Box //////////////////////////////////
         leftPanel.add(left_box);
         left_box.setPreferredSize(new Dimension(150, 400));   // vertical box
         //left_box.setBackground(Color.BLUE);
@@ -185,7 +185,7 @@ public class RappGui extends JFrame {
 
 
 
-        /////////////////////////// Center Panel ////////////// ////////
+        /////////////////////////////////// #Center Panel# //////////////////////////////////////////
         centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         centerPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "View"));
@@ -198,134 +198,155 @@ public class RappGui extends JFrame {
             e.printStackTrace();
         }
 
-        /////////////////// Mange Right panel an Content here  /////////////////////////////////////
+        ////////////////////// #Mange Right panel an Content here#  /////////////////////////////////////
         rightPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         rightPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Options"));
+
         ////////////////////////////////  right_box_Settings Content //////////////////////////////////
 
         rightPanel.add(right_box_setup);
-        right_box_setup.setPreferredSize(new Dimension(150, 150));   // vertical box
+        right_box_setup.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.anchor = GridBagConstraints.EAST;
+      //  right_box_setup.setPreferredSize(new Dimension(300, 500));
         right_box_setup.setVisible(false);
 
-        right_box_setup.add("Set Exposure TIme: ", spinner);
-        spinner.setMaximumSize(new Dimension(100, 30));
-        right_box_setup.add(Box.createVerticalStrut(10));
+
+        right_box_setup.add(new JLabel("Set Spot Interval  :"), gbc);
+        gbc.gridy++;
+        right_box_setup.add(new JLabel("Set Illumination   :"), gbc);
+        gbc.gridy++;
+        right_box_setup.add(new JLabel("Set Delays (ms)    :"), gbc);
+        gbc.gridy++;
+        right_box_setup.add(new JLabel("Set Calibration    :"),gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridy = 0;
+        gbc.gridx++;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+
+        right_box_setup.add(exposureT_spinner, gbc);
+            exposureT_spinner.addChangeListener(e -> rappController_ref.setExposure(1000 * Double.parseDouble(exposureT_spinner.getValue().toString()))
+        );
+
+        gbc.gridy++;
 
 
-        right_box_setup.add(lbl_btn_onoff); //lbl_btn_onoff.setHorizontalTextPosition(50);
-        lightOnOff_jbtn.setMaximumSize(new Dimension(80, 20));
-        right_box_setup.add("Illuminate :", lightOnOff_jbtn);
-        lightOnOff_jbtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (lightOnOff_jbtn.isSelected()){
-                    lightOnOff_jbtn.setText("Off Light");
-                    rappController_ref.setOnState(true);
-                    //LiveModeButton.col
-                }else {
-                    lightOnOff_jbtn.setText("Open Light");
-                    rappController_ref.setOnState(false);
+        right_box_setup.add( lightOnOff_jbtn, gbc);
+        lightOnOff_jbtn.setPreferredSize(new Dimension(100, 30));
+        lightOnOff_jbtn.addActionListener(e -> {
+            if (lightOnOff_jbtn.isSelected()){
+                lightOnOff_jbtn.setText("Off Light");
+                rappController_ref.setOnState(true);
+                //LiveModeButton.col
+            }else {
+                lightOnOff_jbtn.setText("Open Light");
+                rappController_ref.setOnState(false);
+            }
+        });
+        gbc.gridy++;
+        right_box_setup.add(delayField_, gbc);
+        gbc.gridy++;
+        calibrate_btn.setPreferredSize(new Dimension(100, 30));
+        right_box_setup.add(calibrate_btn, gbc);
+        calibrate_btn.addActionListener(e -> {
+            try {
+                boolean running = rappController_ref.isCalibrating();
+                if (running) {
+                    rappController_ref.stopCalibration();
+                    calibrate_btn.setText("is Calibrate");
+                    System.out.println("You run");
+                } else {
+                    rappController_ref.runCalibration();
+                    calibrate_btn.setText("Stop calibration");
+                    System.out.println("You do not run");
                 }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                ReportingUtils.showError(e);
             }
         });
 
 
-        right_box_setup.add(Box.createVerticalStrut(10));
-
-        calibrate_btn.setMaximumSize(new Dimension(80, 20));
-        right_box_setup.add(calibrate_btn);
-        calibrate_btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    boolean running = rappController_ref.isCalibrating();
-                    if (running) {
-                        rappController_ref.stopCalibration();
-                        calibrate_btn.setText("is Calibrate");
-                        System.out.println("You run");
-                    } else {
-                        rappController_ref.runCalibration();
-                        calibrate_btn.setText("Stop calibration");
-                        System.out.println("You do not run");
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    ReportingUtils.showError(e);
-                }
-            }
-        });
-        right_box_setup.add("Calibration Delay" ,delayField_);
-
-        // Right Box Setup Content
-
-        right_box_setup.add(Box.createVerticalStrut(10));
-        right_box_setup.add(lbl_for_Rois);
-
-        ////////////////////////////////  right_box_shoot Content //////////////////////////////////
+        ////////////////////////////////  right_box_shoot (SHOOT OPTION) Content //////////////////////////////////
 
         rightPanel.add(right_box_shoot);
-        right_box_shoot.setPreferredSize(new Dimension(150, 150));   // vertical box
         right_box_shoot.setVisible(false);
+        right_box_shoot.setLayout(new GridBagLayout());
+        GridBagConstraints gbc1 = new GridBagConstraints();
+        gbc1.gridx = 0;
+        gbc1.gridy = 0;
+        gbc1.insets = new Insets(8, 8, 8, 8);
+        gbc1.anchor = GridBagConstraints.EAST;
 
+        right_box_shoot.add(new JLabel("Set PointAndShoot Mode :"), gbc1);
+        gbc1.gridy++;
+        right_box_shoot.add(new JLabel("Set Rois Manager       :"), gbc1);
+        gbc1.gridy++;
+        right_box_shoot.add(new JLabel("Read Roi from List     :"), gbc1);
+        gbc1.gridy++;
+        right_box_shoot.add(new JLabel("Load Simulate Image    :"),gbc1);
+        gbc1.gridy++;
+        right_box_shoot.add(new JLabel("Shoot Laser on ROis    :"),gbc1);
+        gbc1.gridy++;
+        right_box_shoot.add(new JLabel("Load Simulate Image    :"),gbc1);
 
-        pointAndShootOnOff_btn.setMaximumSize(new Dimension(100, 30));
-        right_box_shoot.add( pointAndShootOnOff_btn);
-        pointAndShootOnOff_btn.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                updatePointAndShoot();
-                // rappP_.shootL();
-                //  pointAndShootOnButtonActionPerformed(e);
-            }
-        } );
+        gbc1.anchor = GridBagConstraints.WEST;
+        gbc1.gridy = 0;
+        gbc1.gridx++;
+        gbc1.gridwidth = GridBagConstraints.REMAINDER;
 
-        right_box_shoot.add(Box.createVerticalStrut(5));
+        right_box_shoot.add( pointAndShootOnOff_btn, gbc1);
+        pointAndShootOnOff_btn.setPreferredSize(new Dimension(100,30));
+        pointAndShootOnOff_btn.addActionListener(e -> {
+            updatePointAndShoot();
 
-        right_box_shoot.add(readRois_btn);
-        readRois_btn.setMaximumSize(new Dimension(80, 20));
-        readRois_btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rappController_ref.getListofROIs();
-            }
         });
 
-        right_box_shoot.add(Box.createVerticalStrut(5));
-        right_box_shoot.add(loadImage_btn);
-        loadImage_btn.setMaximumSize(new Dimension(100, 30));
-        loadImage_btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ImagePlus image = IJ.openImage(path.concat("Resources/simCell2DPNG.PNG"));
-                image.show();
-            }
+        gbc1.gridy++;
+        right_box_shoot.add(setAddRois_btn, gbc1);
+        setAddRois_btn.setPreferredSize(new Dimension(100,30));
+        setAddRois_btn.addActionListener(e -> {
+            RappPlugin.showRoiManager();
         });
-        ////////////////////////////////////////////////////////////////////
-        right_box_shoot.add(Box.createVerticalStrut(5));
-        right_box_shoot.add(ShootonMarkpoint_btn);
+
+        gbc1.gridy++;
+        right_box_shoot.add(readRois_btn, gbc1);
+        readRois_btn.setPreferredSize(new Dimension(100,30));
+        readRois_btn.addActionListener(e -> rappController_ref.getListofROIs());
+
+        gbc1.gridy++;
+        right_box_shoot.add(loadImage_btn, gbc1);
+        loadImage_btn.setPreferredSize(new Dimension(100,30));
+        loadImage_btn.addActionListener(e -> {
+            ImagePlus image = IJ.openImage(path.concat("Resources/simCell2DPNG.PNG"));
+            image.show();
+        });
+
+        gbc1.gridy++;
+        right_box_shoot.add(ShootonMarkpoint_btn, gbc1);
         ShootonMarkpoint_btn.setPreferredSize(new Dimension(100,30));
-        ShootonMarkpoint_btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rappController_ref.createMultiPointAndShootFromRoeList();
-            }
-        });
+        ShootonMarkpoint_btn.addActionListener(e -> rappController_ref.createMultiPointAndShootFromRoeList());
 
-        //////////////////////////////////////////////////////////////////
+        ///////////////////////////////////# Machine Learning Code # ///////////////////////////////////
         rightPanel.add(right_box_learning);
         right_box_learning.setPreferredSize(new Dimension(150, 150));   // vertical box
         right_box_learning.setVisible(false);
 
 
 
-        sp.setDividerLocation(150);
+        sp.setDividerLocation(170);
 
         sp2.setDividerLocation(600);
 
         this.add(sp2, BorderLayout.CENTER);
         // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.setSize(800, 500);
+        this.setSize(900, 500);
         this.setVisible(true);
 
         /// Avoid all App Close when close the Plugin GUI
@@ -360,7 +381,7 @@ public class RappGui extends JFrame {
      * @param app  ScritpInterface
      * @return singleton instance
      */
-    public static RappGui showAppInterface(CMMCore core, ScriptInterface app) {
+    public static RappGui showAppInterface(CMMCore core, ScriptInterface app) throws Exception {
         if (appInterface_ == null) {
             appInterface_ = new RappGui(core, app);
             // Place window where it was last.
@@ -404,14 +425,12 @@ public class RappGui extends JFrame {
                 ex.printStackTrace();
             }
         }
-
     }
 
     private void LiveModeButton(java.awt.event.ActionEvent evt) {
         // open new Thread for snap Image
         SnapDisplayImage = new Thread(new ThreadClass(this));
         SnapDisplayImage.start();
-
     }
 
 
