@@ -772,9 +772,9 @@ public class RappController extends  MMFrame implements OnStateListener {
                                 public void run() {
                                     try {
                                         if (devP != null) {
-
                                             displaySpot(devP.x, devP.y);
-                                        }
+                                        }else ReportingUtils.showError("Please Try Again! Your click return Null");
+
                                         returnShutter(originalShutterState);
                                         returnChannel(originalConfig);
                                     } catch (Exception e1) {
@@ -791,6 +791,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         ImagePlus image = IJ.getImage();
         List<Point2D.Double> listP = getListofROIs();
         Point2D.Double devP = new Point2D.Double();
+        System.out.println(listP.size());
         for ( Point2D dePT: listP ){
              devP = transformAndMirrorPoint(loadMapping(), image,
                     new Point2D.Double(dePT.getX(), dePT.getY()));
@@ -798,16 +799,18 @@ public class RappController extends  MMFrame implements OnStateListener {
 
         final Configuration originalConfig = prepareChannel();
         final boolean originalShutterState = prepareShutter();
-        Point2D.Double finalDevP = devP;
+
+        Point2D.Double finalDevP1 = devP;
         makeRunnableAsync(
                 () -> {
                     try {
                         if ( listP != null) {
                             for ( int lis =0; lis < listP.size(); lis ++) {
+                                Point2D.Double finalDevP = finalDevP1;
                                 System.out.println(finalDevP);
                                 displaySpot(finalDevP.getX(), finalDevP.getY());
                             }
-                        }
+                        }else ReportingUtils.showError("Please Try Again! Your points return Null");
                             returnShutter(originalShutterState);
                             returnChannel(originalConfig);
                         } catch(Exception e1){
@@ -834,14 +837,18 @@ public class RappController extends  MMFrame implements OnStateListener {
         ArrayList heightRoiPosArray = new ArrayList();
         ArrayList xcRoiPosArray = new ArrayList();
         ArrayList ycRoiPosArray = new ArrayList();
-        for (int i=0; i<roiCount; i++){
-            xRoiPosArray.add(roiArray[i].getXBase());
-            yRoiPosArray.add(roiArray[i].getYBase());
-            widthRoiPosArray.add(roiArray[i].getFloatWidth());
-            heightRoiPosArray.add(roiArray[i].getFloatHeight());
-            xcRoiPosArray.add(roiArray[i].getXBase()+Math.round(roiArray[i].getFloatWidth()/2));
-            ycRoiPosArray.add(roiArray[i].getYBase()+Math.round(roiArray[i].getFloatHeight()/2));
-        }
+        if (roiCount != 0 ){
+            for (int i=0; i<roiCount; i++){
+                xRoiPosArray.add(roiArray[i].getXBase());
+                yRoiPosArray.add(roiArray[i].getYBase());
+                widthRoiPosArray.add(roiArray[i].getFloatWidth());
+                heightRoiPosArray.add(roiArray[i].getFloatHeight());
+                xcRoiPosArray.add(roiArray[i].getXBase()+Math.round(roiArray[i].getFloatWidth()/2));
+                ycRoiPosArray.add(roiArray[i].getYBase()+Math.round(roiArray[i].getFloatHeight()/2));
+            }
+        }else ReportingUtils.showError("Please Try Again! Your points return Null");
+
+
         //System.out.println(xcRoiPosArray);
         //System.out.println(ycRoiPosArray);
 
