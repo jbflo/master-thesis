@@ -183,8 +183,6 @@ public class RappGui extends JFrame {
             }
         } );
 
-
-
         /////////////////////////////////// #Center Panel# //////////////////////////////////////////
         centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         centerPanel.setBorder(BorderFactory.createTitledBorder(
@@ -215,7 +213,6 @@ public class RappGui extends JFrame {
       //  right_box_setup.setPreferredSize(new Dimension(300, 500));
         right_box_setup.setVisible(false);
 
-
         right_box_setup.add(new JLabel("Set Spot Interval  :"), gbc);
         gbc.gridy++;
         right_box_setup.add(new JLabel("Set Illumination   :"), gbc);
@@ -234,7 +231,6 @@ public class RappGui extends JFrame {
         );
 
         gbc.gridy++;
-
 
         right_box_setup.add( lightOnOff_jbtn, gbc);
         lightOnOff_jbtn.setPreferredSize(new Dimension(100, 30));
@@ -270,7 +266,6 @@ public class RappGui extends JFrame {
                 ReportingUtils.showError(e);
             }
         });
-
 
         ////////////////////////////////  right_box_shoot (SHOOT OPTION) Content //////////////////////////////////
 
@@ -337,8 +332,6 @@ public class RappGui extends JFrame {
         right_box_learning.setPreferredSize(new Dimension(150, 150));   // vertical box
         right_box_learning.setVisible(false);
 
-
-
         sp.setDividerLocation(170);
 
         sp2.setDividerLocation(600);
@@ -359,8 +352,9 @@ public class RappGui extends JFrame {
                 confirmQuit();
             }
         });
-
     }
+
+
    //  Avoid user to accidentally close the window by this fonction
     private void confirmQuit() {
         int n = JOptionPane.showConfirmDialog(appInterface_,
