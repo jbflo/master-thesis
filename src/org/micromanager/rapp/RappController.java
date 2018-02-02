@@ -1,3 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////
+//FILE:          RappPlugin.java
+//PROJECT:       Micro-Manager Laser Automated Plugin
+//SUBSYSTEM:     RAPP plugin
+//-----------------------------------------------------------------------------
+//AUTHOR:        FLorial,
+//SOURCE :       ProjectorPlugin, Arthur Edelstein
+//COPYRIGHT:     ZMBH, University of Heidelberg, 2017-2018
+//LICENSE:       This file is distributed under the
+/////////////////////////////////////////////////////////////////////////////////
+
+
 package org.micromanager.rapp;
 
 import ij.measure.Calibration;
@@ -800,13 +812,12 @@ public class RappController extends  MMFrame implements OnStateListener {
         final Configuration originalConfig = prepareChannel();
         final boolean originalShutterState = prepareShutter();
 
-        Point2D.Double finalDevP1 = devP;
+        Point2D.Double finalDevP = devP;
         makeRunnableAsync(
                 () -> {
                     try {
                         if ( listP != null) {
                             for ( int lis =0; lis < listP.size(); lis ++) {
-                                Point2D.Double finalDevP = finalDevP1;
                                 System.out.println(finalDevP);
                                 displaySpot(finalDevP.getX(), finalDevP.getY());
                             }

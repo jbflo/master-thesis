@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////
+//FILE:          RappPlugin.java
+//PROJECT:       Micro-Manager Laser Automated Plugin
+//SUBSYSTEM:     RAPP plugin
+//-----------------------------------------------------------------------------
+//AUTHOR:        FLorial,
+//SOURCE :       ProjectorPlugin, Arthur Edelstein
+//COPYRIGHT:     ZMBH, University of Heidelberg, 2017-2018
+//LICENSE:       This file is distributed under the
+/////////////////////////////////////////////////////////////////////////////////
+
 package org.micromanager.rapp;
 
 import ij.IJ;
@@ -57,25 +68,25 @@ public class RappGui extends JFrame {
     JLabel text1 = new JLabel();
     JLabel text2 = new JLabel();
     JLabel lbl_for_Rois = new JLabel("Rois Settings", SwingConstants.CENTER);
-    JButton setupOption_btn = new JButton("Settings");
-    JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
-    JButton learnOption_btn = new JButton("Learning");
-    JButton shootOption_btn = new JButton("Shoot Option");
-    JToggleButton pointAndShootOnOff_btn = new JToggleButton("ON");
-    JToggleButton LiveMode_btn = new JToggleButton("Start Live View");
-    JButton showCenterSpot_btn = new JButton("Show Center Spot");
+    private JButton setupOption_btn = new JButton("Settings");
+    private JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
+    private JButton learnOption_btn = new JButton("Learning");
+    private JButton shootOption_btn = new JButton("Shoot Option");
+    private JToggleButton pointAndShootOnOff_btn = new JToggleButton("ON");
+    private JToggleButton LiveMode_btn = new JToggleButton("Start Live View");
+    private JButton showCenterSpot_btn = new JButton("Show Center Spot");
     JButton calibrate_btn = new JButton("Start Calibration!");
-    JButton setAddRois_btn = new JButton("Set / Add Rois");
-    JButton readRois_btn = new JButton("Read Mark Rois");
-    JButton loadImage_btn = new JButton("Load An Image");
-    JButton ShootonMarkpoint_btn = new JButton("Shoot on Mark Point ");
-    JPanel centerPanel = new JPanel();
-    JPanel rightPanel = new JPanel();
-    JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
-    JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
+    private JButton setAddRois_btn = new JButton("Set / Add Rois");
+    private JButton readRois_btn = new JButton("Read Mark Rois");
+    private JButton loadImage_btn = new JButton("Load An Image");
+    private JButton ShootonMarkpoint_btn = new JButton("Shoot on Mark Point ");
+    private JPanel centerPanel = new JPanel();
+    private JPanel rightPanel = new JPanel();
+    private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
+    private JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
 
 
-    /**
+     /**
      * Constructor. Creates the main window for the Projector plugin.
      */
     public RappGui(CMMCore core, ScriptInterface app) throws Exception {

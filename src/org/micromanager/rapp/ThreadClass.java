@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////
+//FILE:          RappPlugin.java
+//PROJECT:       Micro-Manager Laser Automated Plugin
+//SUBSYSTEM:     RAPP plugin
+//-----------------------------------------------------------------------------
+//AUTHOR:        FLorial,
+//SOURCE :       ProjectorPlugin, Arthur Edelstein
+//COPYRIGHT:     ZMBH, University of Heidelberg, 2017-2018
+//LICENSE:       This file is distributed under the
+/////////////////////////////////////////////////////////////////////////////////
+
 package org.micromanager.rapp;
 
 import org.micromanager.utils.MMScriptException;

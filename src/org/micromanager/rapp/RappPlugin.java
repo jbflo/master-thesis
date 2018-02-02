@@ -1,9 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 //FILE:          RappPlugin.java
 //PROJECT:       Micro-Manager Laser Automated Plugin
-//SUBSYSTEM:     Projector plugin
+//SUBSYSTEM:     RAPP plugin
 //-----------------------------------------------------------------------------
-//AUTHOR:        FLorial, Source : ProjectorPlugin, Arthur Edelstein
+//AUTHOR:        FLorial,
+//SOURCE :       ProjectorPlugin, Arthur Edelstein
 //COPYRIGHT:     ZMBH, University of Heidelberg, 2017-2018
 //LICENSE:       This file is distributed under the
 /////////////////////////////////////////////////////////////////////////////////
