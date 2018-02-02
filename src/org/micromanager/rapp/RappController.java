@@ -761,6 +761,37 @@ public class RappController extends  MMFrame implements OnStateListener {
 
      // ################### Part 2: ## Point and shoot #################################
 
+     // Turn on/off point and shoot mode.
+     public void enablePointAndShootMode(boolean on) {
+         if (on && (mapping_ == null)) {
+             ReportingUtils.showError("Please calibrate the phototargeting device first, using the Settings option.");
+             throw new RuntimeException("Please calibrate the phototargeting device first, using the Settings option");
+         }
+         pointAndShooteModeOn_.set(on);
+         ImageWindow window = WindowManager.getCurrentWindow();
+         if (window != null) {
+             ImageCanvas canvas = window.getCanvas();
+             if (on) {
+                 if (canvas != null) {
+                     boolean found = false;
+                     for (MouseListener listener : canvas.getMouseListeners()) {
+                         if (listener == pointAndShootMouseListener) {
+                             found = true;
+                         }
+                     }
+                     if (!found) {
+                         canvas.addMouseListener(pointAndShootMouseListener);
+                     }
+                 }
+             } else {
+                 for (MouseListener listener : canvas.getMouseListeners()) {
+                     if (listener == pointAndShootMouseListener) {
+                         canvas.removeMouseListener(listener);
+                     }
+                 }
+             }
+         }
+     }
     // Creates a MouseListener instance for future use with Point and Shoot
     // mode. When the MouseListener is attached to an ImageJ window, any
     // clicks will result in a spot being illuminated.
@@ -772,7 +803,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                     Point p = e.getPoint();
                     ImageCanvas canvas = (ImageCanvas) e.getSource();
                     Point pOffscreen = new Point(canvas.offScreenX(p.x), canvas.offScreenY(p.y));
-                    System.out.println(pOffscreen);
+
                     final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), canvas.getImage(),
                             new Point2D.Double(pOffscreen.x, pOffscreen.y));
                     System.out.println(devP);
@@ -799,39 +830,8 @@ public class RappController extends  MMFrame implements OnStateListener {
         };
     }
 
+    ///////////////////////////////# Read the all The Marked ROis and Shoot on Them #///////////////////////////
     public void createMultiPointAndShootFromRoeList() {
-        ImagePlus image = IJ.getImage();
-        List<Point2D.Double> listP = getListofROIs();
-        Point2D.Double devP = new Point2D.Double();
-        System.out.println(listP.size());
-        for ( Point2D dePT: listP ){
-             devP = transformAndMirrorPoint(loadMapping(), image,
-                    new Point2D.Double(dePT.getX(), dePT.getY()));
-        }
-
-        final Configuration originalConfig = prepareChannel();
-        final boolean originalShutterState = prepareShutter();
-
-        Point2D.Double finalDevP = devP;
-        makeRunnableAsync(
-                () -> {
-                    try {
-                        if ( listP != null) {
-                            for ( int lis =0; lis < listP.size(); lis ++) {
-                                System.out.println(finalDevP);
-                                displaySpot(finalDevP.getX(), finalDevP.getY());
-                            }
-                        }else ReportingUtils.showError("Please Try Again! Your points return Null");
-                            returnShutter(originalShutterState);
-                            returnChannel(originalConfig);
-                        } catch(Exception e1){
-                        ReportingUtils.showError(e1);
-                    }
-                }).run();
-    }
-
-    ///////////////////////////////# Read the all The Marked ROis and Save them into a List #///////////////////////////
-    public List<Point2D.Double>  getListofROIs() {
 
         ImagePlus image = IJ.getImage();
         Calibration cal = image.getCalibration();
@@ -852,63 +852,53 @@ public class RappController extends  MMFrame implements OnStateListener {
             for (int i=0; i<roiCount; i++){
                 xRoiPosArray.add(roiArray[i].getXBase());
                 yRoiPosArray.add(roiArray[i].getYBase());
+
                 widthRoiPosArray.add(roiArray[i].getFloatWidth());
                 heightRoiPosArray.add(roiArray[i].getFloatHeight());
+
                 xcRoiPosArray.add(roiArray[i].getXBase()+Math.round(roiArray[i].getFloatWidth()/2));
                 ycRoiPosArray.add(roiArray[i].getYBase()+Math.round(roiArray[i].getFloatHeight()/2));
             }
-        }else ReportingUtils.showError("Please Try Again! Your points return Null");
-
-
-        //System.out.println(xcRoiPosArray);
-        //System.out.println(ycRoiPosArray);
+        }else ReportingUtils.showError("Please Add some roi point before! Your points return Null");
 
         double[] failsArrayX =  new double[xcRoiPosArray.size()];
         double[] failsArrayY =  new double[ycRoiPosArray.size()];
 
-
+        System.out.println(xcRoiPosArray.size());
         for (int i = 0; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
             failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
             failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
 
-            roiTemp.setLocation(failsArrayX[i],  failsArrayY[i]);
-            roiPointClick.add(roiTemp);
-            System.out.println(roiPointClick);
+            roiTemp.setLocation(transformAndMirrorPoint(loadMapping(), image,
+                    new Point2D.Double(failsArrayX[i], failsArrayY[i])));
+
+            final Configuration originalConfig = prepareChannel();
+            final boolean originalShutterState = prepareShutter();
+            //Point2D.Double finalDevP = devP.get();
+            makeRunnableAsync(
+                    () -> {
+                        try {
+                                //  System.out.println(finalDevP);
+                                displaySpot(roiTemp.getX(), roiTemp.getY());
+                                Thread.sleep(1000); // Do Nothing for 1000 ms (1s)
+                                returnShutter(originalShutterState);
+                                returnChannel(originalConfig);
+                            } catch(Exception e1){
+                                ReportingUtils.showError(e1);
+                            }
+                        }).run();
+
+            System.out.println(roiTemp);
         }
-        return roiPointClick;
+    }
+///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
+
+    public void shootLaseronLearningPoint(List<Point2D.Double> point){
+
+
+
     }
 
-    // Turn on/off point and shoot mode.
-    public void enablePointAndShootMode(boolean on) {
-        if (on && (mapping_ == null)) {
-            ReportingUtils.showError("Please calibrate the phototargeting device first, using the Settings option.");
-            throw new RuntimeException("Please calibrate the phototargeting device first, using the Settings option");
-        }
-        pointAndShooteModeOn_.set(on);
-        ImageWindow window = WindowManager.getCurrentWindow();
-        if (window != null) {
-            ImageCanvas canvas = window.getCanvas();
-            if (on) {
-                if (canvas != null) {
-                    boolean found = false;
-                    for (MouseListener listener : canvas.getMouseListeners()) {
-                        if (listener == pointAndShootMouseListener) {
-                            found = true;
-                        }
-                    }
-                    if (!found) {
-                        canvas.addMouseListener(pointAndShootMouseListener);
-                    }
-                }
-            } else {
-                for (MouseListener listener : canvas.getMouseListeners()) {
-                    if (listener == pointAndShootMouseListener) {
-                        canvas.removeMouseListener(listener);
-                    }
-                }
-            }
-        }
-    }
 
 
     // Generates a runnable that runs the selected ROIs.

@@ -77,7 +77,7 @@ public class RappGui extends JFrame {
     private JButton showCenterSpot_btn = new JButton("Show Center Spot");
     JButton calibrate_btn = new JButton("Start Calibration!");
     private JButton setAddRois_btn = new JButton("Set / Add Rois");
-    private JButton readRois_btn = new JButton("Read Mark Rois");
+    private JButton shootOnLearningP_btn = new JButton("Shoot on Learning Point ");
     private JButton loadImage_btn = new JButton("Load An Image");
     private JButton ShootonMarkpoint_btn = new JButton("Shoot on Mark Point ");
     private JPanel centerPanel = new JPanel();
@@ -289,17 +289,16 @@ public class RappGui extends JFrame {
         gbc1.insets = new Insets(8, 8, 8, 8);
         gbc1.anchor = GridBagConstraints.EAST;
 
-        right_box_shoot.add(new JLabel("Set PointAndShoot Mode :"), gbc1);
+        right_box_shoot.add(new JLabel("PointAndShoot Mode :"), gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("Set Rois Manager       :"), gbc1);
+        right_box_shoot.add(new JLabel("Rois Manager       :"), gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("Read Roi from List     :"), gbc1);
+        right_box_shoot.add(new JLabel("Shoot Laser on ROis  :"),gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("Load Simulate Image    :"),gbc1);
+        right_box_shoot.add(new JLabel("Shoot Laser on Leaning Point   :"), gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("Shoot Laser on ROis    :"),gbc1);
-        gbc1.gridy++;
-        right_box_shoot.add(new JLabel("Load Simulate Image    :"),gbc1);
+        right_box_shoot.add(new JLabel("Load Simulate Image  :"),gbc1);
+
 
         gbc1.anchor = GridBagConstraints.WEST;
         gbc1.gridy = 0;
@@ -321,9 +320,14 @@ public class RappGui extends JFrame {
         });
 
         gbc1.gridy++;
-        right_box_shoot.add(readRois_btn, gbc1);
-        readRois_btn.setPreferredSize(new Dimension(100,30));
-        readRois_btn.addActionListener(e -> rappController_ref.getListofROIs());
+        right_box_shoot.add(ShootonMarkpoint_btn, gbc1);
+        ShootonMarkpoint_btn.setPreferredSize(new Dimension(100,30));
+        ShootonMarkpoint_btn.addActionListener(e -> rappController_ref.createMultiPointAndShootFromRoeList());
+
+        gbc1.gridy++;
+        right_box_shoot.add(shootOnLearningP_btn, gbc1);
+        shootOnLearningP_btn.setPreferredSize(new Dimension(100,30));
+       // shootOnLearningP_btn.addActionListener(e -> rappController_ref.getListofROIs());
 
         gbc1.gridy++;
         right_box_shoot.add(loadImage_btn, gbc1);
@@ -333,10 +337,7 @@ public class RappGui extends JFrame {
             image.show();
         });
 
-        gbc1.gridy++;
-        right_box_shoot.add(ShootonMarkpoint_btn, gbc1);
-        ShootonMarkpoint_btn.setPreferredSize(new Dimension(100,30));
-        ShootonMarkpoint_btn.addActionListener(e -> rappController_ref.createMultiPointAndShootFromRoeList());
+
 
         ///////////////////////////////////# Machine Learning Code # ///////////////////////////////////
         rightPanel.add(right_box_learning);
