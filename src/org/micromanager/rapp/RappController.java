@@ -19,6 +19,7 @@ import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.*;
 
 import java.awt.event.AWTEventListener;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,11 +46,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
@@ -345,10 +341,10 @@ public class RappController extends  MMFrame implements OnStateListener {
      * Illuminate a spot at position x,y.
      */
     private void displaySpot(double x, double y) {
-        if (x >= dev_.getXMinimum() && x < (dev_.getXRange() + dev_.getXMinimum())
-                && y >= dev_.getYMinimum() && y < (dev_.getYRange() + dev_.getYMinimum())) {
+       // if (x >= dev_.getXMinimum() && x < (dev_.getXRange() + dev_.getXMinimum())
+           //     && y >= dev_.getYMinimum() && y < (dev_.getYRange() + dev_.getYMinimum())) {
             dev_.displaySpot(x, y);
-        }
+       // }else System.out.println("not shoot");
     }
 
     /**
@@ -675,7 +671,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                     } finally {
                         isRunning_.set(false);
                         stopRequested_.set(false);
-                        RappGui.getInstance().calibrate_btn.setText("Calibrate");
+                        RappGui.getInstance().calibrate_btn.setText("is Calibrate");
                     }
                 }
             };
@@ -865,31 +861,51 @@ public class RappController extends  MMFrame implements OnStateListener {
         double[] failsArrayY =  new double[ycRoiPosArray.size()];
 
         System.out.println(xcRoiPosArray.size());
-        for (int i = 0; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
+        for (int i =0 ; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
             failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
             failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
+            // System.out.println( failsArrayX[i] + " "  + failsArrayY[i] );
 
-            roiTemp.setLocation(transformAndMirrorPoint(loadMapping(), image,
-                    new Point2D.Double(failsArrayX[i], failsArrayY[i])));
+            final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), image,
+                    new Point2D.Double(failsArrayX[i], failsArrayY[i]));
 
+
+            System.out.println(devP);
             final Configuration originalConfig = prepareChannel();
             final boolean originalShutterState = prepareShutter();
-            //Point2D.Double finalDevP = devP.get();
-            makeRunnableAsync(
-                    () -> {
-                        try {
-                                //  System.out.println(finalDevP);
-                                displaySpot(roiTemp.getX(), roiTemp.getY());
-                                Thread.sleep(1000); // Do Nothing for 1000 ms (1s)
-                                returnShutter(originalShutterState);
-                                returnChannel(originalConfig);
-                            } catch(Exception e1){
-                                ReportingUtils.showError(e1);
-                            }
-                        }).run();
 
-            System.out.println(roiTemp);
-        }
+
+            //  break;
+
+
+            int finalI = i;
+            makeRunnableAsync(
+                () -> {
+
+                    try {
+                         int var = xcRoiPosArray.size();
+                          while ( var > 0) {
+                        //Thread.sleep(300); // Do Nothing for 300 ms (4s)
+//                                displaySpot(43189.72264521697,40961.10792522242);
+//                                displaySpot(26496.08963572053,41034.02703945157);
+//                                displaySpot(43329.56207740805, 23005.495541362456);
+//                                displaySpot(26268.96149020203, 32853.43745064683);
+//                                displaySpot(34713.624581530996,32853.43745064683);
+                         System.out.println(var);
+                         displaySpot(devP.x, devP.y);
+
+
+                        //Thread.sleep(300); // Do Nothing for 300 ms (4s
+                        //returnShutter(originalShutterState);
+                        //returnChannel(originalConfig);
+                        //    var--;
+                    }
+                    } catch (Exception e1) {
+                        ReportingUtils.showError(e1);
+                    }
+                }).run();
+
+       }
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
 

@@ -56,6 +56,7 @@ public class Galvo implements RappDevice {
          public void run() {
             try {
                mmc_.pointGalvoAndFire(galvo_, x, y, Galvo.this.getExposure());
+             //  Thread.sleep(100);
             } catch (Exception ex) {
                ReportingUtils.logError(ex);
             }
