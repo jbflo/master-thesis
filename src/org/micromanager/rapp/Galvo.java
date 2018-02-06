@@ -58,6 +58,9 @@ public class Galvo implements RappDevice {
                mmc_.pointGalvoAndFire(galvo_, x, y, Galvo.this.getExposure());
              //  Thread.sleep(100);
             } catch (Exception ex) {
+               ReportingUtils.showMessage("Please Try Again! "
+                       +"The Device seems busy or not load properly"
+                       + " if it is persisting Close the Pluging and try to open again  "   );
                ReportingUtils.logError(ex);
             }
          }

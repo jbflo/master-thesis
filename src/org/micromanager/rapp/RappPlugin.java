@@ -103,8 +103,7 @@ public class RappPlugin implements MMPlugin  {
     public void show() {
         /// (Try) calling the Interface Class on Package TestGui
         try {
-            // select Look and Feel
-            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 
             if (mgui_.acquisitionExists(ACQ_NAME))
                 mgui_.closeAcquisition(ACQ_NAME);
@@ -141,6 +140,7 @@ public class RappPlugin implements MMPlugin  {
         try {
             form_ = RappGui.showAppInterface(core_, app_);
         } catch (Exception e) {
+            ReportingUtils.showMessage("Please Try Again");
             e.printStackTrace();
         }
         //gui_.getContentPane().add( );

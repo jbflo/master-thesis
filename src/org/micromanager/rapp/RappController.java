@@ -863,7 +863,6 @@ public class RappController extends  MMFrame implements OnStateListener {
                 { //iterate over the elements of the list
                     failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
                     failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
-                    // System.out.println( failsArrayX[i] + " "  + failsArrayY[i] );
                     final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), image,
                                             new Point2D.Double(failsArrayX[i], failsArrayY[i]));
                     System.out.println(devP);

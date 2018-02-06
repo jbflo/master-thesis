@@ -43,6 +43,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 public class RappGui extends JFrame {
+
     private static RappGui appInterface_;
     public static RappGui getInstance() {
         return appInterface_;
@@ -77,9 +78,9 @@ public class RappGui extends JFrame {
     private JButton showCenterSpot_btn = new JButton("Show Center Spot");
     JButton calibrate_btn = new JButton("Start Calibration!");
     private JButton setAddRois_btn = new JButton("Set / Add Rois");
-    private JButton shootOnLearningP_btn = new JButton("Shoot on Learning Point ");
+    private JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
     private JButton loadImage_btn = new JButton("Load An Image");
-    private JButton ShootonMarkpoint_btn = new JButton("Shoot on Mark Point ");
+    private JButton ShootonMarkpoint_btn = new JButton("Shoot on Mark ");
     private JPanel centerPanel = new JPanel();
     private JPanel rightPanel = new JPanel();
     private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
@@ -90,16 +91,18 @@ public class RappGui extends JFrame {
      * Constructor. Creates the main window for the Projector plugin.
      */
     public RappGui(CMMCore core, ScriptInterface app) throws Exception {
+
         new RappController(core, app);
         rappController_ref =  new RappController(core, app);
-
         try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
+           e.printStackTrace();
         }
-        this.setTitle("Rapp UGA-42 Control");
 
+        this.setTitle("Rapp UGA-42 Control");
 
         ImageIcon icon = new ImageIcon(path.concat("Resources/camera.png"));
         this.setIconImage(icon.getImage());
@@ -293,11 +296,11 @@ public class RappGui extends JFrame {
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("Rois Manager       :"), gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("Shoot Laser on ROis  :"),gbc1);
+        right_box_shoot.add(new JLabel("ROis Point  :"),gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("Shoot Laser on Leaning Point   :"), gbc1);
+        right_box_shoot.add(new JLabel("Leaning Point   :"), gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("Load Simulate Image  :"),gbc1);
+        right_box_shoot.add(new JLabel("Load An Image  :"),gbc1);
 
 
         gbc1.anchor = GridBagConstraints.WEST;
