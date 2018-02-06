@@ -829,90 +829,63 @@ public class RappController extends  MMFrame implements OnStateListener {
     ///////////////////////////////# Read the all The Marked ROis and Shoot on Them #///////////////////////////
     public void createMultiPointAndShootFromRoeList() {
 
-        ImagePlus image = IJ.getImage();
-        Calibration cal = image.getCalibration();
-        String unit = cal.getUnit();
-        double width = cal.pixelWidth;
-        double height = cal.pixelHeight;
-
-        RoiManager rm = RoiManager.getInstance();
-        int roiCount = rm.getCount();
-        Roi[] roiArray = rm.getRoisAsArray();
-        ArrayList xRoiPosArray = new ArrayList();
-        ArrayList yRoiPosArray = new ArrayList();
-        ArrayList widthRoiPosArray = new ArrayList();
-        ArrayList heightRoiPosArray = new ArrayList();
-        ArrayList xcRoiPosArray = new ArrayList();
-        ArrayList ycRoiPosArray = new ArrayList();
-        if (roiCount != 0 ){
-            for (int i=0; i<roiCount; i++){
-                xRoiPosArray.add(roiArray[i].getXBase());
-                yRoiPosArray.add(roiArray[i].getYBase());
-
-                widthRoiPosArray.add(roiArray[i].getFloatWidth());
-                heightRoiPosArray.add(roiArray[i].getFloatHeight());
-
-                xcRoiPosArray.add(roiArray[i].getXBase()+Math.round(roiArray[i].getFloatWidth()/2));
-                ycRoiPosArray.add(roiArray[i].getYBase()+Math.round(roiArray[i].getFloatHeight()/2));
-            }
-        }else ReportingUtils.showError("Please Add some roi point before! Your points return Null");
-
-        double[] failsArrayX =  new double[xcRoiPosArray.size()];
-        double[] failsArrayY =  new double[ycRoiPosArray.size()];
-
-        System.out.println(xcRoiPosArray.size());
-        for (int i =0 ; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
-            failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
-            failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
-            // System.out.println( failsArrayX[i] + " "  + failsArrayY[i] );
-
-            final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), image,
-                    new Point2D.Double(failsArrayX[i], failsArrayY[i]));
-
-
-            System.out.println(devP);
-            final Configuration originalConfig = prepareChannel();
-            final boolean originalShutterState = prepareShutter();
-
-
-            //  break;
-
-
-            int finalI = i;
-            makeRunnableAsync(
-                () -> {
-
+        makeRunnableAsync(
+            () -> {
+                ImagePlus image = IJ.getImage();
+                Calibration cal = image.getCalibration();
+                String unit = cal.getUnit();
+                double width = cal.pixelWidth;
+                double height = cal.pixelHeight;
+                RoiManager rm = RoiManager.getInstance();
+                int roiCount = rm.getCount();
+                Roi[] roiArray = rm.getRoisAsArray();
+                ArrayList xRoiPosArray = new ArrayList();
+                ArrayList yRoiPosArray = new ArrayList();
+                ArrayList widthRoiPosArray = new ArrayList();
+                ArrayList heightRoiPosArray = new ArrayList();
+                ArrayList xcRoiPosArray = new ArrayList();
+                ArrayList ycRoiPosArray = new ArrayList();
+                if (roiCount != 0 ){
+                    for (int i=0; i<roiCount; i++){
+                        xRoiPosArray.add(roiArray[i].getXBase());
+                        yRoiPosArray.add(roiArray[i].getYBase());
+                        widthRoiPosArray.add(roiArray[i].getFloatWidth());
+                        heightRoiPosArray.add(roiArray[i].getFloatHeight());
+                        xcRoiPosArray.add(roiArray[i].getXBase()+Math.round(roiArray[i].getFloatWidth()/2));
+                        ycRoiPosArray.add(roiArray[i].getYBase()+Math.round(roiArray[i].getFloatHeight()/2));
+                    }
+                }
+                else ReportingUtils.showError("Please Add some roi point before! Your points return Null");
+                double[] failsArrayX =  new double[xcRoiPosArray.size()];
+                double[] failsArrayY =  new double[ycRoiPosArray.size()];
+                System.out.println(xcRoiPosArray.size());
+                for (int i =0 ; i < xcRoiPosArray.size(); i++)
+                { //iterate over the elements of the list
+                    failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
+                    failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
+                    // System.out.println( failsArrayX[i] + " "  + failsArrayY[i] );
+                    final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), image,
+                                            new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+                    System.out.println(devP);
+                    final Configuration originalConfig = prepareChannel();
+                    final boolean originalShutterState = prepareShutter();
                     try {
-                         int var = xcRoiPosArray.size();
-                          while ( var > 0) {
-                        //Thread.sleep(300); // Do Nothing for 300 ms (4s)
-//                                displaySpot(43189.72264521697,40961.10792522242);
-//                                displaySpot(26496.08963572053,41034.02703945157);
-//                                displaySpot(43329.56207740805, 23005.495541362456);
-//                                displaySpot(26268.96149020203, 32853.43745064683);
-//                                displaySpot(34713.624581530996,32853.43745064683);
-                         System.out.println(var);
-                         displaySpot(devP.x, devP.y);
-
-
-                        //Thread.sleep(300); // Do Nothing for 300 ms (4s
-                        //returnShutter(originalShutterState);
-                        //returnChannel(originalConfig);
-                        //    var--;
+                        displaySpot(devP.x, devP.y);
+                        Thread.sleep(1000); // Do Nothing for 300 ms (4s)
+                    }catch (Exception ec){
+                        ReportingUtils.showError(ec);
                     }
-                    } catch (Exception e1) {
-                        ReportingUtils.showError(e1);
-                    }
-                }).run();
+                }
 
-       }
+        }).run();
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
 
     public void shootLaseronLearningPoint(List<Point2D.Double> point){
+        makeRunnableAsync(
+            () -> {
 
-
-
+            }).run();
     }
 
 
@@ -949,7 +922,6 @@ public class RappController extends  MMFrame implements OnStateListener {
             }
         };
     }
-
     // Sleep until the designated clock time.
     private static void sleepUntil(long clockTimeMillis) {
         long delta = clockTimeMillis - System.currentTimeMillis();

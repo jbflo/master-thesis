@@ -8,28 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e3bd16c0-5336-44c0-8d6f-2b586ae6e16d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$10.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$10.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$11.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$11.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$2.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$3.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$3.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$4.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$4.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$5.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$5.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$6.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$6.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$7.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$7.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$8.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$8.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$9.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo$9.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/Galvo.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$2.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$3$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$3$1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$3.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$3.class" />
       <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$4.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$4.class" />
       <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$5$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$5$1.class" />
       <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$5.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$5.class" />
       <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/Galvo.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/Galvo.java" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -41,7 +23,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/RappPlugin$MM.coverage" NAME="MM Coverage Results" MODIFIED="1516881115029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/RappPlugin$MM.coverage" NAME="MM Coverage Results" MODIFIED="1517922319778" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -58,8 +40,8 @@
       <file leaf-file-name="Galvo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/Galvo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-500">
-              <caret line="208" column="56" lean-forward="false" selection-start-line="208" selection-start-column="56" selection-end-line="208" selection-end-column="56" />
+            <state relative-caret-position="20">
+              <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9888#0" expanded="true" />
               </folding>
@@ -70,7 +52,7 @@
       <file leaf-file-name="RappGui.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="607">
+            <state relative-caret-position="4520">
               <caret line="268" column="20" lean-forward="false" selection-start-line="268" selection-start-column="20" selection-end-line="268" selection-end-column="20" />
               <folding />
             </state>
@@ -80,11 +62,18 @@
       <file leaf-file-name="RappController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="691">
-              <caret line="894" column="25" lean-forward="false" selection-start-line="894" selection-start-column="25" selection-end-line="894" selection-end-column="25" />
+            <state relative-caret-position="640">
+              <caret line="923" column="5" lean-forward="true" selection-start-line="923" selection-start-column="5" selection-end-line="923" selection-end-column="5" />
               <folding>
-                <element signature="e#38666#38667#0" expanded="true" />
-                <element signature="e#38717#38718#0" expanded="true" />
+                <element signature="e#18412#18444#0" expanded="true" />
+                <element signature="e#24237#24263#0" expanded="true" />
+                <element signature="e#24765#24797#0" expanded="true" />
+                <element signature="e#32820#34447#0" expanded="true" />
+                <element signature="e#34446#34447#0" expanded="true" />
+                <element signature="e#38164#38165#0" expanded="true" />
+                <element signature="e#38215#38216#0" expanded="true" />
+                <element signature="e#38576#38740#0" expanded="true" />
+                <element signature="e#38739#38740#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -158,10 +147,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="149" />
-    <option name="y" value="47" />
+    <option name="x" value="296" />
+    <option name="y" value="94" />
     <option name="width" value="1735" />
-    <option name="height" value="1311" />
+    <option name="height" value="1304" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -178,6 +167,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -202,7 +192,6 @@
         </subPane>
       </pane>
       <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -364,7 +353,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="149" y="47" width="1735" height="1311" extended-state="0" />
+    <frame x="296" y="94" width="1735" height="1304" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -375,8 +364,9 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26683292" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26839465" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31879" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -386,14 +376,13 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3975535" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39733997" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958984" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32874617" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -454,8 +443,15 @@
         <state relative-caret-position="840">
           <caret line="116" column="0" lean-forward="true" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
           <folding>
-            <element signature="e#38666#38667#0" expanded="true" />
-            <element signature="e#38717#38718#0" expanded="true" />
+            <element signature="e#18412#18444#0" expanded="true" />
+            <element signature="e#24237#24263#0" expanded="true" />
+            <element signature="e#24765#24797#0" expanded="true" />
+            <element signature="e#32820#34447#0" expanded="true" />
+            <element signature="e#34446#34447#0" expanded="true" />
+            <element signature="e#38164#38165#0" expanded="true" />
+            <element signature="e#38215#38216#0" expanded="true" />
+            <element signature="e#38576#38740#0" expanded="true" />
+            <element signature="e#38739#38740#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -627,6 +623,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4520">
+          <caret line="268" column="20" lean-forward="false" selection-start-line="268" selection-start-column="20" selection-end-line="268" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/Galvo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9888#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappDevice.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="500">
@@ -635,31 +649,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
-          <caret line="268" column="20" lean-forward="false" selection-start-line="268" selection-start-column="20" selection-end-line="268" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/Galvo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-500">
-          <caret line="208" column="56" lean-forward="false" selection-start-line="208" selection-start-column="56" selection-end-line="208" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#9888#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="691">
-          <caret line="894" column="25" lean-forward="false" selection-start-line="894" selection-start-column="25" selection-end-line="894" selection-end-column="25" />
+        <state relative-caret-position="640">
+          <caret line="923" column="5" lean-forward="true" selection-start-line="923" selection-start-column="5" selection-end-line="923" selection-end-column="5" />
           <folding>
-            <element signature="e#38666#38667#0" expanded="true" />
-            <element signature="e#38717#38718#0" expanded="true" />
+            <element signature="e#18412#18444#0" expanded="true" />
+            <element signature="e#24237#24263#0" expanded="true" />
+            <element signature="e#24765#24797#0" expanded="true" />
+            <element signature="e#32820#34447#0" expanded="true" />
+            <element signature="e#34446#34447#0" expanded="true" />
+            <element signature="e#38164#38165#0" expanded="true" />
+            <element signature="e#38215#38216#0" expanded="true" />
+            <element signature="e#38576#38740#0" expanded="true" />
+            <element signature="e#38739#38740#0" expanded="true" />
           </folding>
         </state>
       </provider>
