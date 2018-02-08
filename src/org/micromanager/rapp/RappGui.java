@@ -13,8 +13,10 @@ package org.micromanager.rapp;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.gui.ImageWindow;
 import mmcorej.CMMCore;
 import org.micromanager.MMStudio;
+import org.micromanager.SnapLiveManager;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.GUIUtils;
 import org.micromanager.utils.MMScriptException;
@@ -50,7 +52,8 @@ public class RappGui extends JFrame {
     }
     private  static RappPlugin rappP_;
     private  static  RappController rappController_ref;
-    private MMStudio gui_;
+    private SnapLiveManager SnapLiveManager_;
+    private MMStudio studio_;
     String galvo_;
     private Thread SnapDisplayImage;
     private URL default_path = this.getClass().getResource("");
@@ -82,6 +85,7 @@ public class RappGui extends JFrame {
     private JButton loadImage_btn = new JButton("Load An Image");
     private JButton ShootonMarkpoint_btn = new JButton("Shoot on Mark ");
     private JPanel centerPanel = new JPanel();
+    private JDesktopPane desktop = new JDesktopPane();
     private JPanel rightPanel = new JPanel();
     private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
     private JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
@@ -91,9 +95,11 @@ public class RappGui extends JFrame {
      * Constructor. Creates the main window for the Projector plugin.
      */
     public RappGui(CMMCore core, ScriptInterface app) throws Exception {
-
+        studio_= (MMStudio)  app;
         new RappController(core, app);
         rappController_ref =  new RappController(core, app);
+        SnapLiveManager_ = new SnapLiveManager( studio_, core);
+
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
@@ -181,6 +187,8 @@ public class RappGui extends JFrame {
                     LiveMode_btn.setText("Stop Live View");
                     //LiveModeButton.col
                 }else LiveMode_btn.setText("Start Live View");
+                //MMStudio.getInstance().enableLiveMode(true);
+                createFrame();
                LiveModeButton(e);
 
             }
@@ -201,8 +209,10 @@ public class RappGui extends JFrame {
         centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         centerPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "View"));
-        centerPanel.add(text1);
-        centerPanel.add(text2);
+        //centerPanel.add(text1);
+        //centerPanel.add(text2);
+        centerPanel.add(desktop);
+        desktop.add(text1);
         try {
             text1.setText(core.getDeviceName(core.getCameraDevice()));
             text2.setText(core.getDeviceName(core.getGalvoDevice()));
@@ -381,7 +391,16 @@ public class RappGui extends JFrame {
         else  GUIUtils.recallPosition(appInterface_);
     }
 
+    //Create a new internal frame.
+    protected void createFrame() {
+        ImageWindow window = SnapLiveManager_.getSnapLiveWindow();
 
+        //window.setVisible(true); //necessary as of 1.3
+        desktop.add(window );
+//        try {
+//            window.setSelected(true);
+//        } catch (java.beans.PropertyVetoException e) {}
+    }
 
 
     /**
@@ -402,7 +421,19 @@ public class RappGui extends JFrame {
 
     public void liveDisplayThread() throws MMScriptException {
         while(LiveMode_btn.isSelected()){
-           rappController_ref.setLive(LiveMode_btn.isSelected());
+            new Runnable() {
+                public void run() {
+                    try {
+                        MMStudio.getInstance().enableLiveMode(!MMStudio.getInstance().isLiveModeOn());
+
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }}
+//        SnapDisplayImage = new Thread(new ThreadClass(this));
+//        SnapDisplayImage.start();
+
+            };
+          // rappController_ref.setLive(LiveMode_btn.isSelected());
         }
     }
 
@@ -438,8 +469,17 @@ public class RappGui extends JFrame {
 
     private void LiveModeButton(java.awt.event.ActionEvent evt) {
         // open new Thread for snap Image
-        SnapDisplayImage = new Thread(new ThreadClass(this));
-        SnapDisplayImage.start();
+        new Runnable() {
+            public void run() {
+                try {
+
+                }catch (Exception ex){
+                   ex.printStackTrace();
+            }}
+//        SnapDisplayImage = new Thread(new ThreadClass(this));
+//        SnapDisplayImage.start();
+
+        };
     }
 
 
