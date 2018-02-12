@@ -140,7 +140,7 @@ public class RappPlugin implements MMPlugin  {
         try {
             form_ = RappGui.showAppInterface(core_, app_);
         } catch (Exception e) {
-            ReportingUtils.showMessage("Please Try Again");
+            ReportingUtils.showMessage("Please Try Again! The Gui Couldn't load properly");
             e.printStackTrace();
         }
         //gui_.getContentPane().add( );

@@ -17,6 +17,7 @@ import ij.gui.ImageWindow;
 import mmcorej.CMMCore;
 import org.micromanager.MMStudio;
 import org.micromanager.SnapLiveManager;
+import org.micromanager.acquisition.LiveModeTimer;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.GUIUtils;
 import org.micromanager.utils.MMScriptException;
@@ -55,7 +56,6 @@ public class RappGui extends JFrame {
     private SnapLiveManager SnapLiveManager_;
     private MMStudio studio_;
     String galvo_;
-    private Thread SnapDisplayImage;
     private URL default_path = this.getClass().getResource("");
     String path = default_path.toString().substring(6);
 
@@ -85,7 +85,7 @@ public class RappGui extends JFrame {
     private JButton loadImage_btn = new JButton("Load An Image");
     private JButton ShootonMarkpoint_btn = new JButton("Shoot on Mark ");
     private JPanel centerPanel = new JPanel();
-    private JDesktopPane desktop = new JDesktopPane();
+    private JDesktopPane desktop;
     private JPanel rightPanel = new JPanel();
     private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
     private JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
@@ -100,7 +100,9 @@ public class RappGui extends JFrame {
         rappController_ref =  new RappController(core, app);
         SnapLiveManager_ = new SnapLiveManager( studio_, core);
 
+
         try {
+            setDefaultLookAndFeelDecorated(true);
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
             }
@@ -206,13 +208,44 @@ public class RappGui extends JFrame {
         } );
 
         /////////////////////////////////// #Center Panel# //////////////////////////////////////////
-        centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        centerPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "View"));
-        //centerPanel.add(text1);
+//        centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+//        centerPanel.setBorder(BorderFactory.createTitledBorder(
+//                BorderFactory.createEtchedBorder(), "View"));
+//        centerPanel.add(text1);
         //centerPanel.add(text2);
-        centerPanel.add(desktop);
-        desktop.add(text1);
+
+        //Make dragging a little faster but perhaps uglier.
+        //desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
+        desktop = new JDesktopPane(); //a specialized layered pane
+
+        //createFrame(); //create first "window"
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                SnapLiveWindow window = new SnapLiveWindow();
+                ImageWindow snap =  SnapLiveManager_.getSnapLiveWindow();
+                ImageWindow snapWindow = new ImageWindow("SnapLive");
+///////////////////////////////
+                ImageWindowCopy snap2 =  SnapLiveManager_.getSnapLiveWindow();
+                //ImageWindowCopy snapWindow2 = new ImageWindowCopy("SnapLive");
+                snapWindow2.setVisible(true);
+
+//                Test Demo = new Test Demo. Handle
+
+               // window.setVisible(true); //necessary as of 1.3
+              //  window.setPreferredSize(new Dimension(300, 400));   // vertical box
+                //window.add( SnapLiveManager_.getSnapLiveWindow());
+               // window.add(snapWindow2);
+                centerPanel.add(desktop);
+                centerPanel.add(snapWindow2);
+                try {
+                    window.setSelected(true);
+                } catch (java.beans.PropertyVetoException e) {}
+
+            }
+        });
+
+
+       // setContentPane(desktop);
         try {
             text1.setText(core.getDeviceName(core.getCameraDevice()));
             text2.setText(core.getDeviceName(core.getGalvoDevice()));
@@ -361,8 +394,8 @@ public class RappGui extends JFrame {
 
         sp2.setDividerLocation(600);
 
+
         this.add(sp2, BorderLayout.CENTER);
-        // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setSize(900, 500);
         this.setVisible(true);
@@ -393,10 +426,11 @@ public class RappGui extends JFrame {
 
     //Create a new internal frame.
     protected void createFrame() {
-        ImageWindow window = SnapLiveManager_.getSnapLiveWindow();
-
-        //window.setVisible(true); //necessary as of 1.3
+        SnapLiveWindow window = new SnapLiveWindow();
+       //ImageWindow window =  SnapLiveManager_.getSnapLiveWindow();
+        window.setVisible(true); //necessary as of 1.3
         desktop.add(window );
+
 //        try {
 //            window.setSelected(true);
 //        } catch (java.beans.PropertyVetoException e) {}
@@ -481,7 +515,5 @@ public class RappGui extends JFrame {
 
         };
     }
-
-
 
 }

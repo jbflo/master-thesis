@@ -80,9 +80,10 @@ public class RappController extends  MMFrame implements OnStateListener {
     // private MosaicSequencingFrame mosaicSequencingFrame_;
     private String targetingShutter_;
     private Boolean disposing_ = false;
-
+    private static VirtualAcquisitionDisplay display_;
     private final MMStudio gui_;
     private RappGui frame_;
+    private ImageWindowCopy imcopy ;
     public boolean bleechingComp=false;
     public List<Point2D.Double> roiPointClick = new ArrayList<>();
     public Point2D.Double roiTemp  = new Point2D.Double();
@@ -933,6 +934,13 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
     }
 
+    public VirtualAcquisitionDisplay getSnapLiveDisplay() {
+        return display_;
+    }
+
+    public ImageWindowCopy getSnapLiveWindow() {
+        return display_ != null && display_.getHyperImage() != null ? imcopy : null;
+    }
 
     //#################################  Method for opening the Live Windows ###############################################
      public void setLive(Boolean on) {
