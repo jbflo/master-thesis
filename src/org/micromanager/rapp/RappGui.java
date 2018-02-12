@@ -208,11 +208,11 @@ public class RappGui extends JFrame {
         } );
 
         /////////////////////////////////// #Center Panel# //////////////////////////////////////////
-//        centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-//        centerPanel.setBorder(BorderFactory.createTitledBorder(
-//                BorderFactory.createEtchedBorder(), "View"));
-//        centerPanel.add(text1);
-        //centerPanel.add(text2);
+       centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        centerPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "View"));
+       centerPanel.add(text1);
+       centerPanel.add(text2);
 
         //Make dragging a little faster but perhaps uglier.
         //desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
@@ -224,10 +224,9 @@ public class RappGui extends JFrame {
                 SnapLiveWindow window = new SnapLiveWindow();
                 ImageWindow snap =  SnapLiveManager_.getSnapLiveWindow();
                 ImageWindow snapWindow = new ImageWindow("SnapLive");
-///////////////////////////////
-                ImageWindowCopy snap2 =  SnapLiveManager_.getSnapLiveWindow();
+///////////////////////////////ImageWindowCopy snap2 =  SnapLiveManager_.getSnapLiveWindow();
                 //ImageWindowCopy snapWindow2 = new ImageWindowCopy("SnapLive");
-                snapWindow2.setVisible(true);
+               // snapWindow2.setVisible(true);
 
 //                Test Demo = new Test Demo. Handle
 
@@ -235,11 +234,11 @@ public class RappGui extends JFrame {
               //  window.setPreferredSize(new Dimension(300, 400));   // vertical box
                 //window.add( SnapLiveManager_.getSnapLiveWindow());
                // window.add(snapWindow2);
-                centerPanel.add(desktop);
-                centerPanel.add(snapWindow2);
-                try {
-                    window.setSelected(true);
-                } catch (java.beans.PropertyVetoException e) {}
+              //  centerPanel.add(desktop);
+              //  centerPanel.add(snapWindow2);
+            //    try {
+             //       window.setSelected(true);
+             //   } catch (java.beans.PropertyVetoException e) {}
 
             }
         });
