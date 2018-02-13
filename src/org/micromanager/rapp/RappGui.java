@@ -79,7 +79,7 @@ public class RappGui extends JFrame {
     private JToggleButton pointAndShootOnOff_btn = new JToggleButton("ON");
     private JToggleButton LiveMode_btn = new JToggleButton("Start Live View");
     private JButton showCenterSpot_btn = new JButton("Show Center Spot");
-    JButton calibrate_btn = new JButton("Start Calibration!");
+    private JButton calibrate_btn = new JButton("Start Calibration!");
     private JButton setAddRois_btn = new JButton("Set / Add Rois");
     private JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
     private JButton loadImage_btn = new JButton("Load An Image");
@@ -481,9 +481,9 @@ public class RappGui extends JFrame {
             try {
                 rappController_ref.enablePointAndShootMode(true);
                 // core.setGalvoIlluminationState(galvo_, true);
-               // Point2D ppos=core.getGalvoPosition(galvo_); System.out.println(ppos);
+                // Point2D ppos=core.getGalvoPosition(galvo_); System.out.println(ppos);
                 // Point2D newppos = null;  newppos.setLocation( ppos.getX() +100, ppos.getY() +100); //core.setGalvoPosition(galvo_, newppos.getX(), newppos.getY());
-               // core.pointGalvoAndFire(galvo_,25264.0, 24494.0, 500000);
+                // core.pointGalvoAndFire(galvo_,25264.0, 24494.0, 500000);
             } catch (Exception ex) {
                 ReportingUtils.logError(ex);
                 ex.printStackTrace();
