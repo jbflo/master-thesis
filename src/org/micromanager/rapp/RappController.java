@@ -82,11 +82,12 @@ public class RappController extends  MMFrame implements OnStateListener {
     private Boolean disposing_ = false;
     private static VirtualAcquisitionDisplay display_;
     private final MMStudio gui_;
-    private RappGui frame_;
+
     private ImageWindowCopy imcopy ;
     public boolean bleechingComp=false;
     public List<Point2D.Double> roiPointClick = new ArrayList<>();
     public Point2D.Double roiTemp  = new Point2D.Double();
+
     //private static final RappController fINSTANCE =  new RappController(core_, app_);
 
 //    public static RappController getInstance() {
@@ -98,7 +99,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         app_ = app;
         gui_ = MMStudio.getInstance();
         core_ = core;
-        frame_= RappGui.getInstance();
+
         String slm = core_.getSLMDevice();
         String galvo = core_.getGalvoDevice();
 
@@ -320,6 +321,7 @@ public class RappController extends  MMFrame implements OnStateListener {
      */
     public void setExposure(double intervalUs) {
         long previousExposure = dev_.getExposure();
+        RappGui.getInstance().spiner.setText(String.valueOf(dev_.getExposure()));
         long newExposure = (long) intervalUs;
         if (previousExposure != newExposure) {
             dev_.setExposure(newExposure);

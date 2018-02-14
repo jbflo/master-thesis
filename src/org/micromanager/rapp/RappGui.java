@@ -44,6 +44,8 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class RappGui extends JFrame {
 
@@ -55,10 +57,8 @@ public class RappGui extends JFrame {
     private  static  RappController rappController_ref;
     private SnapLiveManager SnapLiveManager_;
     private MMStudio studio_;
-    String galvo_;
     private URL default_path = this.getClass().getResource("");
-    String path = default_path.toString().substring(6);
-
+    private String path = default_path.toString().substring(6);
     private JPanel leftPanel = new JPanel();
     private Box left_box = Box.createVerticalBox();
     private JPanel right_box_setup = new JPanel();
@@ -67,11 +67,10 @@ public class RappGui extends JFrame {
     private FlowLayout experimentLayout;
     private SpinnerModel model = new SpinnerNumberModel(100, 0, 9999, 1);
     private SpinnerModel model2 = new SpinnerNumberModel(0, 0, 9999, 1);
-    private JSpinner exposureT_spinner = new JSpinner(model);
-    JSpinner delayField_ = new JSpinner(model2);
-    JLabel text1 = new JLabel();
-    JLabel text2 = new JLabel();
-    JLabel lbl_for_Rois = new JLabel("Rois Settings", SwingConstants.CENTER);
+    protected JSpinner exposureT_spinner = new JSpinner(model);
+    protected JSpinner delayField_ = new JSpinner(model2);
+    private JLabel text1 = new JLabel();
+    private JLabel text2 = new JLabel();
     private JButton setupOption_btn = new JButton("Settings");
     private JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
     private JButton learnOption_btn = new JButton("Learning");
@@ -79,16 +78,17 @@ public class RappGui extends JFrame {
     private JToggleButton pointAndShootOnOff_btn = new JToggleButton("ON");
     private JToggleButton LiveMode_btn = new JToggleButton("Start Live View");
     private JButton showCenterSpot_btn = new JButton("Show Center Spot");
-    private JButton calibrate_btn = new JButton("Start Calibration!");
+    protected JButton calibrate_btn = new JButton("Start Calibration!");
     private JButton setAddRois_btn = new JButton("Set / Add Rois");
     private JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
     private JButton loadImage_btn = new JButton("Load An Image");
-    private JButton ShootonMarkpoint_btn = new JButton("Shoot on Mark ");
+    private JButton ShootonMarkpoint_btn = new JButton("Shoot on ROIs");
     private JPanel centerPanel = new JPanel();
     private JDesktopPane desktop;
     private JPanel rightPanel = new JPanel();
     private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
     private JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
+    public  JLabel spiner = new JLabel("nothing");
 
 
      /**
@@ -96,7 +96,7 @@ public class RappGui extends JFrame {
      */
     public RappGui(CMMCore core, ScriptInterface app) throws Exception {
         studio_= (MMStudio)  app;
-        new RappController(core, app);
+        //new RappController(core, app);
         rappController_ref =  new RappController(core, app);
         SnapLiveManager_ = new SnapLiveManager( studio_, core);
 
@@ -214,6 +214,8 @@ public class RappGui extends JFrame {
        centerPanel.add(text1);
        centerPanel.add(text2);
 
+       centerPanel.add(spiner);
+
         //Make dragging a little faster but perhaps uglier.
         //desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
         desktop = new JDesktopPane(); //a specialized layered pane
@@ -221,6 +223,7 @@ public class RappGui extends JFrame {
         //createFrame(); //create first "window"
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+
                 SnapLiveWindow window = new SnapLiveWindow();
                 ImageWindow snap =  SnapLiveManager_.getSnapLiveWindow();
                 ImageWindow snapWindow = new ImageWindow("SnapLive");
@@ -269,7 +272,7 @@ public class RappGui extends JFrame {
       //  right_box_setup.setPreferredSize(new Dimension(300, 500));
         right_box_setup.setVisible(false);
 
-        right_box_setup.add(new JLabel("Set Spot Interval  :"), gbc);
+        right_box_setup.add(new JLabel("Set Exposure Time  :"), gbc);
         gbc.gridy++;
         right_box_setup.add(new JLabel("Set Illumination   :"), gbc);
         gbc.gridy++;
@@ -282,9 +285,13 @@ public class RappGui extends JFrame {
         gbc.gridx++;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
+        /// # Set Exposure Time Event  # ///
         right_box_setup.add(exposureT_spinner, gbc);
-            exposureT_spinner.addChangeListener(e -> rappController_ref.setExposure(1000 * Double.parseDouble(exposureT_spinner.getValue().toString()))
-        );
+        exposureT_spinner.addChangeListener(e -> {
+            rappController_ref.setExposure(1000 * Double.parseDouble(exposureT_spinner.getValue().toString()));
+            System.out.println( exposureT_spinner.getValue().toString());
+
+        });
 
         gbc.gridy++;
 
@@ -336,7 +343,7 @@ public class RappGui extends JFrame {
 
         right_box_shoot.add(new JLabel("PointAndShoot Mode :"), gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("Rois Manager       :"), gbc1);
+        right_box_shoot.add(new JLabel("ROIs Manager       :"), gbc1);
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("ROis Point  :"),gbc1);
         gbc1.gridy++;
