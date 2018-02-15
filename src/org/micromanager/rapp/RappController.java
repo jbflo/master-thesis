@@ -674,7 +674,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                     } finally {
                         isRunning_.set(false);
                         stopRequested_.set(false);
-                        RappGui.getInstance().calibrate_btn.setText("is Calibrate");
+                        RappGui.getInstance().calibrate_btn.setText("Calibrated");
                     }
                 }
             };
@@ -755,8 +755,6 @@ public class RappController extends  MMFrame implements OnStateListener {
         Point2D.Double pOffscreen = mirrorIfNecessary(pt, imgp);
         return transformPoint(mapping, pOffscreen);
     }
-
-
 
      // ################### Part 2: ## Point and shoot #################################
 
@@ -859,6 +857,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                     }
                 }
                 else ReportingUtils.showError("Please Add some roi point before! Your points return Null");
+
                 double[] failsArrayX =  new double[xcRoiPosArray.size()];
                 double[] failsArrayY =  new double[ycRoiPosArray.size()];
                 System.out.println(xcRoiPosArray.size());
@@ -936,13 +935,18 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
     }
 
-    public VirtualAcquisitionDisplay getSnapLiveDisplay() {
-        return display_;
+    public void ChangeFilterToGreen() {
+
     }
 
-    public ImageWindowCopy getSnapLiveWindow() {
-        return display_ != null && display_.getHyperImage() != null ? imcopy : null;
+    public void ChangeFilterToRed() {
+
     }
+
+    public void ChangeFilterToBlue() {
+
+    }
+
 
     //#################################  Method for opening the Live Windows ###############################################
      public void setLive(Boolean on) {

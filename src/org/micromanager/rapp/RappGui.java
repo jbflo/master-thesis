@@ -187,11 +187,15 @@ public class RappGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (LiveMode_btn.isSelected() ){
                     LiveMode_btn.setText("Stop Live View");
+                    MMStudio.getInstance().enableLiveMode(true);
                     //LiveModeButton.col
-                }else LiveMode_btn.setText("Start Live View");
-                //MMStudio.getInstance().enableLiveMode(true);
-                createFrame();
-               LiveModeButton(e);
+                }else {LiveMode_btn.setText("Start Live View");
+                MMStudio.getInstance().enableLiveMode(false);
+                ImageWindow snap =  SnapLiveManager_.getSnapLiveWindow();
+                snap.close();
+                }
+               // createFrame();
+            //   LiveModeButton(e);
 
             }
         } );
@@ -210,11 +214,11 @@ public class RappGui extends JFrame {
         /////////////////////////////////// #Center Panel# //////////////////////////////////////////
        centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         centerPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "View"));
-       centerPanel.add(text1);
-       centerPanel.add(text2);
+               BorderFactory.createEtchedBorder(), "View"));
+       //centerPanel.add(text1);
+       //centerPanel.add(text2);
 
-       centerPanel.add(spiner);
+       //centerPanel.add(spiner);
 
         //Make dragging a little faster but perhaps uglier.
         //desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
@@ -223,25 +227,16 @@ public class RappGui extends JFrame {
         //createFrame(); //create first "window"
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-
                 SnapLiveWindow window = new SnapLiveWindow();
                 ImageWindow snap =  SnapLiveManager_.getSnapLiveWindow();
-                ImageWindow snapWindow = new ImageWindow("SnapLive");
-///////////////////////////////ImageWindowCopy snap2 =  SnapLiveManager_.getSnapLiveWindow();
-                //ImageWindowCopy snapWindow2 = new ImageWindowCopy("SnapLive");
-               // snapWindow2.setVisible(true);
-
-//                Test Demo = new Test Demo. Handle
-
-               // window.setVisible(true); //necessary as of 1.3
-              //  window.setPreferredSize(new Dimension(300, 400));   // vertical box
-                //window.add( SnapLiveManager_.getSnapLiveWindow());
-               // window.add(snapWindow2);
-              //  centerPanel.add(desktop);
-              //  centerPanel.add(snapWindow2);
-            //    try {
-             //       window.setSelected(true);
-             //   } catch (java.beans.PropertyVetoException e) {}
+               // window.add(snap);
+                //desktop.add(window);
+                window.setVisible(true); //necessary as of 1.3
+               window.setPreferredSize(new Dimension(300, 400));
+                centerPanel.add(window);
+                try {
+                    window.setSelected(true);
+                } catch (java.beans.PropertyVetoException e) {}
 
             }
         });
@@ -317,12 +312,12 @@ public class RappGui extends JFrame {
                 boolean running = rappController_ref.isCalibrating();
                 if (running) {
                     rappController_ref.stopCalibration();
-                    calibrate_btn.setText("is Calibrate");
-                    System.out.println("You run");
+                   // calibrate_btn.setText("is Calibrate");
+
                 } else {
                     rappController_ref.runCalibration();
                     calibrate_btn.setText("Stop calibration");
-                    System.out.println("You do not run");
+
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
