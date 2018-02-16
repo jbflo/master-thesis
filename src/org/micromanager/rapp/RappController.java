@@ -935,7 +935,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
     }
 
-    public void ChangeFilterToGreen() {
+    public void ChangeFilterToColor(String filter) {
 
     }
 

@@ -24,10 +24,10 @@ public class ThreadClass  implements Runnable{
     @Override
     public void run() {
         // rappController_ref = new RappController();
-        try {
-            rappGui_ref.liveDisplayThread();
-        } catch (MMScriptException e) {
-            e.printStackTrace();
-        }
+//        try {
+//           /rappGui_ref.liveDisplayThread();
+//        } catch (MMScriptException e) {
+//            e.printStackTrace();
+//        }
     }
 }
