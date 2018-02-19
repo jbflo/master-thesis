@@ -79,8 +79,10 @@ public class RappGui extends JFrame {
     private JButton shootOption_btn = new JButton("Shoot Option");
     private JToggleButton pointAndShootOnOff_btn = new JToggleButton("ON");
     private JToggleButton LiveMode_btn = new JToggleButton("Start Live View");
+    private JButton SnapAndSave_btn = new JButton("Snap And Save Image");
     private JButton showCenterSpot_btn = new JButton("Show Center Spot");
     protected JButton calibrate_btn = new JButton("Start Calibration!");
+    protected JComboBox filterTYpe;
     protected JComboBox chanelFilter_jcb;
     private JButton setAddRois_btn = new JButton("Set / Add Rois");
     private JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
@@ -94,7 +96,7 @@ public class RappGui extends JFrame {
     public  JLabel spiner = new JLabel("nothing");
 
      /**
-     * Constructor. Creates the main window for the Projector plugin.
+     * Constructor. Creates the main window for the Projector plugin. we use this Class for the main interface
      */
     public RappGui(CMMCore core, ScriptInterface app) throws Exception {
         studio_= (MMStudio)  app;
@@ -105,7 +107,7 @@ public class RappGui extends JFrame {
 
         try {
             setDefaultLookAndFeelDecorated(true);
-            UIManager.setLookAndFeel("Nimbus");
+            UIManager.setLookAndFeel("Metal");
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
            e.printStackTrace();
@@ -116,9 +118,10 @@ public class RappGui extends JFrame {
         ImageIcon icon = new ImageIcon(path.concat("Resources/camera.png"));
         this.setIconImage(icon.getImage());
 
-        // we use this Class for the main interface
+
         this.setLayout(new BorderLayout());
         experimentLayout = new FlowLayout();
+
         ///////////// Left Panel Content ////////////////////////////
         leftPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
         leftPanel.setBorder(BorderFactory.createTitledBorder(
@@ -127,7 +130,7 @@ public class RappGui extends JFrame {
         ///////////// we put all the component from the left into a Horizontal Box //////////////////////////////////
         leftPanel.add(left_box);
         left_box.setPreferredSize(new Dimension(150, 400));   // vertical box
-        //left_box.setBackground(Color.BLUE);
+
 
         left_box.add(Box.createVerticalStrut(10));
 
@@ -182,7 +185,10 @@ public class RappGui extends JFrame {
             }
         } );
 
-        left_box.add(Box.createVerticalStrut(5));
+        left_box.add(Box.createVerticalStrut(15));
+        left_box.add( new JSeparator(SwingConstants.HORIZONTAL) , left_box,7);
+        left_box.getComponent(7).setPreferredSize(new Dimension(150,2));
+
 
         // Start or Stop the the Live Mode
         LiveMode_btn.setMaximumSize(new Dimension(145, 50));
@@ -215,6 +221,18 @@ public class RappGui extends JFrame {
         } );
 
         left_box.add(Box.createVerticalStrut(5));
+        // Start or Stop the the Live Mode
+        SnapAndSave_btn.setMaximumSize(new Dimension(145, 50));
+        SnapAndSave_btn.setBackground(Color.decode("#3498db"));
+        SnapAndSave_btn.setForeground(Color.white);
+        left_box.add(SnapAndSave_btn);
+        SnapAndSave_btn.addActionListener(e -> {
+
+
+
+        });
+
+        left_box.add(Box.createVerticalStrut(5));
 
         // Illuminate the center of the photo targeting device's range
         showCenterSpot_btn.setBackground(Color.decode("#3498db"));
@@ -227,10 +245,12 @@ public class RappGui extends JFrame {
         } );
         left_box.setBackground(Color.decode("#34495e"));
         leftPanel.setBackground(Color.decode("#34495e"));
+
         /////////////////////////////////// #Center Panel# //////////////////////////////////////////
        centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
         centerPanel.setBorder(BorderFactory.createTitledBorder(
                BorderFactory.createEtchedBorder(), "View",0,0,Font.getFont("arial"),  Color.white));
+        centerPanel.setBackground(Color.decode("#7f8fa6"));
        //centerPanel.add(text1);
        //centerPanel.add(text2);
 
@@ -247,9 +267,9 @@ public class RappGui extends JFrame {
                 ImageWindow snap =  SnapLiveManager_.getSnapLiveWindow();
                // window.add(snap);
                 //desktop.add(window);
-                window.setVisible(true); //necessary as of 1.3
-               window.setPreferredSize(new Dimension(300, 400));
-                centerPanel.add(window);
+               // window.setVisible(true); //necessary as of 1.3
+                //window.setPreferredSize(new Dimension(300, 400));
+                //centerPanel.add(window);
                 try {
                     window.setSelected(true);
                 } catch (java.beans.PropertyVetoException e) {}
@@ -299,6 +319,8 @@ public class RappGui extends JFrame {
         gbc.gridy++;
         right_box_setup.add( new JSeparator(SwingConstants.HORIZONTAL),  gbc, 1); this.right_box_setup.getComponent(1).setPreferredSize(new Dimension(100,10));
         gbc.gridy++;
+        right_box_setup.add(new JLabel("<html><font color='white'>Choose Filter Types      :</font></html>"),gbc);
+        gbc.gridy++;
         right_box_setup.add(new JLabel("<html><font color='white'>Change Filter View      :</font></html>"),gbc);
 
 
@@ -317,14 +339,19 @@ public class RappGui extends JFrame {
         });
 
         gbc.gridy++;
-
+         /////////////  # Set illumination, Use to Turn On AND Off the Device # //////////////
         right_box_setup.add( lightOnOff_jbtn, gbc);
         lightOnOff_jbtn.setPreferredSize(new Dimension(100, 30));
         lightOnOff_jbtn.setBackground(Color.decode("#68C3A3"));
         lightOnOff_jbtn.addActionListener(e -> {
             if (lightOnOff_jbtn.isSelected()){
                 lightOnOff_jbtn.setText("Off Light");
-                lightOnOff_jbtn.setBackground(Color.decode("#d35400"));
+                lightOnOff_jbtn.setUI(new MetalToggleButtonUI() {
+                    @Override
+                    protected Color getSelectColor() {
+                        return Color.decode("#d35400");
+                    }
+                });
                 rappController_ref.setOnState(true);
                 //LiveModeButton.col
             }else {
@@ -357,19 +384,34 @@ public class RappGui extends JFrame {
             }
         });
         gbc.gridy++;
-        right_box_setup.add( new JSeparator(SwingConstants.HORIZONTAL),  gbc, 7);this.right_box_setup.getComponent(7).setPreferredSize(new Dimension(100,10));
+        right_box_setup.add( new JSeparator(SwingConstants.HORIZONTAL),  gbc, 2);this.right_box_setup.getComponent(2).setPreferredSize(new Dimension(100,10));
+
 
         gbc.gridy++;
-        String comboBoxFilterListe[] = {"DEFAULT","BRIGHT_FIELD", "",
-                "", "", ""}; // Liste of available Filter
+        String comboBoxFilterTypeListe[] = {"emission filter", "excitation filter", "excitation dichroic",
+                "objective"}; // Liste of available Filter
+        chanelFilter_jcb = new JComboBox(comboBoxFilterTypeListe);
+        right_box_setup.add(chanelFilter_jcb, gbc);
+
+        chanelFilter_jcb.setPreferredSize(new Dimension(100, 30));
+
+        chanelFilter_jcb.addActionListener(e -> {
+            String filter = chanelFilter_jcb.getSelectedItem().toString();
+            rappController_ref.ChangeFilterToColor(filter);
+
+        });
+
+        gbc.gridy++;
+        String comboBoxFilterListe[] = {"DEFAULT","BRIGHT_FIELD", "Red",
+                "Green", "Blue", "Orange", "Yellow"}; // Liste of available Filter
         chanelFilter_jcb = new JComboBox(comboBoxFilterListe);
         right_box_setup.add(chanelFilter_jcb,gbc);
 
         chanelFilter_jcb.setPreferredSize(new Dimension(100, 30));
 
         chanelFilter_jcb.addActionListener(e -> {
-
-
+            String filter = chanelFilter_jcb.getSelectedItem().toString();
+           rappController_ref.ChangeFilterToColor(filter);
 
         });
 

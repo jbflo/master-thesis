@@ -14,11 +14,14 @@ package org.micromanager.rapp;
 
 import ij.measure.Calibration;
 import mmcorej.CMMCore;
+import mmcorej.StrVector;
 import org.micromanager.MMStudio;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.*;
 
 import java.awt.event.AWTEventListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
@@ -48,6 +51,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import mmcorej.Configuration;
@@ -83,7 +87,6 @@ public class RappController extends  MMFrame implements OnStateListener {
     private static VirtualAcquisitionDisplay display_;
     private final MMStudio gui_;
 
-    private ImageWindowCopy imcopy ;
     public boolean bleechingComp=false;
     public List<Point2D.Double> roiPointClick = new ArrayList<>();
     public Point2D.Double roiTemp  = new Point2D.Double();
@@ -99,7 +102,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         app_ = app;
         gui_ = MMStudio.getInstance();
         core_ = core;
-
+        String camera = core_.getCameraDevice();
         String slm = core_.getSLMDevice();
         String galvo = core_.getGalvoDevice();
 
@@ -117,7 +120,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
             @Override
             public void eventDispatched(AWTEvent e) {
-               // enablePointAndShootMode(pointAndShooteModeOn_.get());
+                enablePointAndShootMode(pointAndShooteModeOn_.get());
             }
         }, AWTEvent.WINDOW_EVENT_MASK);
         isSLM_ = dev_ instanceof SLM;
@@ -936,28 +939,57 @@ public class RappController extends  MMFrame implements OnStateListener {
     }
 
     public void ChangeFilterToColor(String filter) {
+       String filterName = filter;
+        // list devices
+        try {
+//                StrVector devices = core_.getLoadedDevices();
+//                System.out.println("Device status:");
+//                for (int i=0; i<devices.size(); i++){
+//                    System.out.println(devices.get(i));
+//                    // list device properties
+//                    StrVector properties = core_.getDevicePropertyNames(devices.get(i));
+//                    if (properties.size() == 0)
+//                        System.out.println("   No properties.");
+//                    for (int j=0; j<properties.size(); j++){
+//                        System.out.println("   " + properties.get(j) + " = "
+//                                + core_.getProperty(devices.get(i), properties.get(j)));
+//                        StrVector values = core_.getAllowedPropertyValues(devices.get(i), properties.get(j));
+//                        for (int k=0; k<values.size(); k++){
+//                            System.out.println("      " + values.get(k));
+//                        }
+//                    }
+//                }
+          //  core_.loadDevice()
+
+           if (filterName == "Red") {
+
+           } else if (filterName == "Green") {
+
+           }
+       }catch (Exception e) {
+           System.out.println(e.getMessage());
+           ReportingUtils.showError("Please Try Again! were unable to change filter color");
+           System.exit(1);
+       }
 
     }
 
-    public void ChangeFilterToRed() {
-
-    }
-
-    public void ChangeFilterToBlue() {
-
-    }
 
 
-    //#################################  Method for opening the Live Windows ###############################################
-     public void setLive(Boolean on) {
+    //#################################  Method for Saving Image ###############################################
+     public void SnapAndSaveImage(Boolean on) {
          if (on == true){
              Object img = null;
              try {
                  core_.snapImage();
                  img = core_.getImage();
+                // core_.
+               //  File outputfile = new File("Resources/saved.tif");
+                // ImageIO.write(img, "tif", outputfile);
              } catch (Exception ex) {
                  Logger.getLogger(RappGui.class.getName()).log(Level.SEVERE, null, ex);
              }
+
              gui_.displayImage(img);
              //  gui_.setXYStagePosition(32.0, 32.0);
          }
