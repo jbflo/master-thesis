@@ -67,10 +67,12 @@ public class RappGui extends JFrame {
     private Box right_box_learning  = Box.createVerticalBox();
     private JPanel right_box_shoot = new JPanel();
     private FlowLayout experimentLayout;
-    private SpinnerModel model = new SpinnerNumberModel(100, 0, 9999, 1);
-    private SpinnerModel model2 = new SpinnerNumberModel(0, 0, 9999, 1);
-    protected JSpinner exposureT_spinner = new JSpinner(model);
-    protected JSpinner delayField_ = new JSpinner(model2);
+    private SpinnerModel model_forExposure = new SpinnerNumberModel(100, 0, 9999, 1);
+    private SpinnerModel model_forDelay = new SpinnerNumberModel(0, 0, 9999, 1);
+    private SpinnerModel model_forColorLevel = new SpinnerNumberModel(100, 0, 100, 1);
+    protected JSpinner exposureT_spinner = new JSpinner(model_forExposure);
+    protected JSpinner delayField_ = new JSpinner(model_forDelay);
+    protected JSpinner colorLevel_spinner = new JSpinner(model_forColorLevel);
     private JLabel text1 = new JLabel();
     private JLabel text2 = new JLabel();
     private JButton setupOption_btn = new JButton("Settings");
@@ -82,8 +84,8 @@ public class RappGui extends JFrame {
     private JButton SnapAndSave_btn = new JButton("Snap And Save Image");
     private JButton showCenterSpot_btn = new JButton("Show Center Spot");
     protected JButton calibrate_btn = new JButton("Start Calibration!");
-    protected JComboBox filterTYpe;
-    protected JComboBox chanelFilter_jcb;
+    protected JComboBox Sequence_jcb;
+    protected JComboBox filter_Spect_color_jcb;
     private JButton setAddRois_btn = new JButton("Set / Add Rois");
     private JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
     private JButton loadImage_btn = new JButton("Load An Image");
@@ -322,7 +324,8 @@ public class RappGui extends JFrame {
         right_box_setup.add(new JLabel("<html><font color='white'>Choose Filter Types      :</font></html>"),gbc);
         gbc.gridy++;
         right_box_setup.add(new JLabel("<html><font color='white'>Change Filter View      :</font></html>"),gbc);
-
+        gbc.gridy++;
+        right_box_setup.add(new JLabel("<html><font color='white'>Change Color Level    :</font></html>"),gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridy = 0;
@@ -388,30 +391,41 @@ public class RappGui extends JFrame {
 
 
         gbc.gridy++;
-        String comboBoxFilterTypeListe[] = {"emission filter", "excitation filter", "excitation dichroic",
-                "objective"}; // Liste of available Filter
-        chanelFilter_jcb = new JComboBox(comboBoxFilterTypeListe);
-        right_box_setup.add(chanelFilter_jcb, gbc);
+        String comboBoxSequenceListe[] = {"GFP / BRIGHT_FIELD ", " RFP / BRIGHT_FIELD ", "  ",
+                "BFP / BRIGHT_FIELD"}; // Liste of available Filter
+        Sequence_jcb = new JComboBox(comboBoxSequenceListe);
+        right_box_setup.add(Sequence_jcb, gbc);
 
-        chanelFilter_jcb.setPreferredSize(new Dimension(100, 30));
+        Sequence_jcb.setPreferredSize(new Dimension(100, 30));
 
-        chanelFilter_jcb.addActionListener(e -> {
-            String filter = chanelFilter_jcb.getSelectedItem().toString();
-            rappController_ref.ChangeFilterToColor(filter);
+        Sequence_jcb.addActionListener(e -> {
+            String sequenceName = Sequence_jcb.getSelectedItem().toString();
+            rappController_ref.fluorescenceSequence(sequenceName);
 
         });
 
         gbc.gridy++;
-        String comboBoxFilterListe[] = {"DEFAULT","BRIGHT_FIELD", "Red",
-                "Green", "Blue", "Orange", "Yellow"}; // Liste of available Filter
-        chanelFilter_jcb = new JComboBox(comboBoxFilterListe);
-        right_box_setup.add(chanelFilter_jcb,gbc);
+        String comboBoxFilterListe[] = {"DEFAULT", "BRIGHT_FIELD", "RED",
+                "GREEN", "BLUE", "CYAN", "TEAL", "VIOLET"}; // Liste of available Filter
+        filter_Spect_color_jcb = new JComboBox(comboBoxFilterListe);
+        right_box_setup.add(filter_Spect_color_jcb ,gbc);
 
-        chanelFilter_jcb.setPreferredSize(new Dimension(100, 30));
+        filter_Spect_color_jcb.setPreferredSize(new Dimension(100, 30));
 
-        chanelFilter_jcb.addActionListener(e -> {
-            String filter = chanelFilter_jcb.getSelectedItem().toString();
-           rappController_ref.ChangeFilterToColor(filter);
+        filter_Spect_color_jcb.addActionListener(e -> {
+            String filter = filter_Spect_color_jcb.getSelectedItem().toString();
+            int colorLevel_Spectre = Integer.parseInt(colorLevel_spinner.getValue().toString());
+            rappController_ref.ChangeFilterToColor(filter , colorLevel_Spectre);
+
+        });
+
+        gbc.gridy++;
+        colorLevel_spinner.setPreferredSize(new Dimension(100, 30));
+        right_box_setup.add(colorLevel_spinner, gbc);
+        colorLevel_spinner.addChangeListener(e -> {
+            String filter = filter_Spect_color_jcb.getSelectedItem().toString();
+            int colorLevel_Spectre = Integer.parseInt(colorLevel_spinner.getValue().toString());
+            rappController_ref.ChangeFilterToColor(filter , colorLevel_Spectre);
 
         });
 

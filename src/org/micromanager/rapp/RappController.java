@@ -938,43 +938,84 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
     }
 
-    public void ChangeFilterToColor(String filter) {
-       String filterName = filter;
+    public void ChangeFilterToColor(String filter, int level) {
+       String filterColor = filter;
+       int colorLevel = level;
         // list devices
-        try {
+        if (filterColor != null) {
+            try {
+                // Set Core_Shutter to use Spectra
+                core_.setProperty("Core", "Shutter", "Spectra");
+                Thread.sleep(100); // wait and set  Spectra sate to One
+                core_.setProperty("Spectra", "State", 1);
+
+                if (filter == "BRIGHT_FIELD"){
+                    core_.setProperty("Spectra", "White_Enable", 1);
+                    core_.setProperty("Spectra", "White_Level", colorLevel);
+
+                }
+                else if (filterColor == "RED"){
+                    core_.setProperty("Spectra", "White_Enable", 0);
+                    core_.setProperty("Spectra", "Red_Enable", 1);
+                    core_.setProperty("Spectra", "Blue_Enable", 0);
+                    core_.setProperty("Spectra", "Green_Enable", 0);
+
+                    core_.setProperty("Spectra", "Red_Level", colorLevel);
+                }
+                else if (filterColor == "BLUE") {
+                    core_.setProperty("Spectra", "White_Enable", 0);
+                    core_.setProperty("Spectra", "Blue_Enable", 1);
+                    core_.setProperty("Spectra", "Red_Enable", 0);
+                    core_.setProperty("Spectra", "Green_Enable", 0);
+
+                    core_.setProperty("Spectra", "Blue_Level", colorLevel);
+                }
+                else if (filterColor == "GREEN") {
+                    core_.setProperty("Spectra", "White_Enable", 0);
+                    core_.setProperty("Spectra", "Green_Enable", 1);
+                    core_.setProperty("Spectra", "Red_Enable", 0);
+                    core_.setProperty("Spectra", "Blue_Enable", 0);
+
+                    core_.setProperty("Spectra", "Green_Level", colorLevel);
+                }
+                else if (filterColor == "DEFAULT") {
+                    core_.setProperty("Spectra", "State", 0);
+                }
+
+
                 StrVector devices = core_.getLoadedDevices();
                 System.out.println("Device status:");
-                for (int i=0; i<devices.size(); i++){
+                for (int i = 0; i < devices.size(); i++) {
                     System.out.println(devices.get(i));
                     // list device properties
                     StrVector properties = core_.getDevicePropertyNames(devices.get(i));
                     if (properties.size() == 0)
                         System.out.println("   No properties.");
-                    for (int j=0; j<properties.size(); j++){
+                    for (int j = 0; j < properties.size(); j++) {
                         System.out.println("   " + properties.get(j) + " = "
                                 + core_.getProperty(devices.get(i), properties.get(j)));
                         StrVector values = core_.getAllowedPropertyValues(devices.get(i), properties.get(j));
-                        for (int k=0; k<values.size(); k++){
+                        for (int k = 0; k < values.size(); k++) {
                             System.out.println("      " + values.get(k));
                         }
                     }
                 }
 
 
-           if (filterName == "Red") {
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                ReportingUtils.showError("Please Try Again! were unable to change filter color");
 
-           } else if (filterName == "Green") {
+            }
 
-           }
-       }catch (Exception e) {
-           System.out.println(e.getMessage());
-           ReportingUtils.showError("Please Try Again! were unable to change filter color");
-           System.exit(1);
-       }
-
+        }
     }
 
+    public void fluorescenceSequence(String seq ) {
+        String sequence = seq;
 
+
+    }
 
     //#################################  Method for Saving Image ###############################################
      public void SnapAndSaveImage(Boolean on) {
