@@ -942,24 +942,24 @@ public class RappController extends  MMFrame implements OnStateListener {
        String filterName = filter;
         // list devices
         try {
-//                StrVector devices = core_.getLoadedDevices();
-//                System.out.println("Device status:");
-//                for (int i=0; i<devices.size(); i++){
-//                    System.out.println(devices.get(i));
-//                    // list device properties
-//                    StrVector properties = core_.getDevicePropertyNames(devices.get(i));
-//                    if (properties.size() == 0)
-//                        System.out.println("   No properties.");
-//                    for (int j=0; j<properties.size(); j++){
-//                        System.out.println("   " + properties.get(j) + " = "
-//                                + core_.getProperty(devices.get(i), properties.get(j)));
-//                        StrVector values = core_.getAllowedPropertyValues(devices.get(i), properties.get(j));
-//                        for (int k=0; k<values.size(); k++){
-//                            System.out.println("      " + values.get(k));
-//                        }
-//                    }
-//                }
-          //  core_.loadDevice()
+                StrVector devices = core_.getLoadedDevices();
+                System.out.println("Device status:");
+                for (int i=0; i<devices.size(); i++){
+                    System.out.println(devices.get(i));
+                    // list device properties
+                    StrVector properties = core_.getDevicePropertyNames(devices.get(i));
+                    if (properties.size() == 0)
+                        System.out.println("   No properties.");
+                    for (int j=0; j<properties.size(); j++){
+                        System.out.println("   " + properties.get(j) + " = "
+                                + core_.getProperty(devices.get(i), properties.get(j)));
+                        StrVector values = core_.getAllowedPropertyValues(devices.get(i), properties.get(j));
+                        for (int k=0; k<values.size(); k++){
+                            System.out.println("      " + values.get(k));
+                        }
+                    }
+                }
+
 
            if (filterName == "Red") {
 
