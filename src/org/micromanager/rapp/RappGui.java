@@ -72,9 +72,6 @@ public class RappGui extends JFrame {
     private SpinnerModel model_forColorLevel = new SpinnerNumberModel(100, 0, 100, 1);
     protected JSpinner exposureT_spinner = new JSpinner(model_forExposure);
     protected JSpinner delayField_ = new JSpinner(model_forDelay);
-    protected JSpinner colorLevel_spinner = new JSpinner(model_forColorLevel);
-    private JLabel text1 = new JLabel();
-    private JLabel text2 = new JLabel();
     private JButton setupOption_btn = new JButton("Settings");
     private JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
     private JButton learnOption_btn = new JButton("Learning");
@@ -84,8 +81,9 @@ public class RappGui extends JFrame {
     private JButton SnapAndSave_btn = new JButton("Snap And Save Image");
     private JButton showCenterSpot_btn = new JButton("Show Center Spot");
     protected JButton calibrate_btn = new JButton("Start Calibration!");
-    protected JComboBox Sequence_jcb;
-    protected JComboBox filter_Spect_color_jcb;
+    protected JComboBox presetConfList_jcb ;
+    protected JComboBox Sequence_jcb ;
+    protected JComboBox groupConfList_jcb;
     private JButton setAddRois_btn = new JButton("Set / Add Rois");
     private JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
     private JButton loadImage_btn = new JButton("Load An Image");
@@ -96,6 +94,7 @@ public class RappGui extends JFrame {
     private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
     private JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
     public  JLabel spiner = new JLabel("nothing");
+    String comboBoxPresetList[] = new String[1];
 
      /**
      * Constructor. Creates the main window for the Projector plugin. we use this Class for the main interface
@@ -282,8 +281,8 @@ public class RappGui extends JFrame {
 
        // setContentPane(desktop);
         try {
-            text1.setText(core.getDeviceName(core.getCameraDevice()));
-            text2.setText(core.getDeviceName(core.getGalvoDevice()));
+            new JLabel(core.getDeviceName(core.getCameraDevice()));
+            new JLabel(core.getDeviceName(core.getGalvoDevice()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -321,11 +320,11 @@ public class RappGui extends JFrame {
         gbc.gridy++;
         right_box_setup.add( new JSeparator(SwingConstants.HORIZONTAL),  gbc, 1); this.right_box_setup.getComponent(1).setPreferredSize(new Dimension(100,10));
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font color='white'>Choose Filter Types      :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font color='white'>Choose Group Conf.      :</font></html>"),gbc);
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font color='white'>Change Filter View      :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font color='white'>Set Preset Conf.      :</font></html>"),gbc);
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font color='white'>Change Color Level    :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font color='white'>Apply Sequences     :</font></html>"),gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridy = 0;
@@ -333,7 +332,7 @@ public class RappGui extends JFrame {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
         /// # Set Exposure Time Event  # ///
-        exposureT_spinner.setPreferredSize(new Dimension(100, 30));
+        exposureT_spinner.setPreferredSize(new Dimension(100, 20));
         right_box_setup.add(exposureT_spinner, gbc);
         exposureT_spinner.addChangeListener(e -> {
             rappController_ref.setExposure(1000 * Double.parseDouble(exposureT_spinner.getValue().toString()));
@@ -344,7 +343,7 @@ public class RappGui extends JFrame {
         gbc.gridy++;
          /////////////  # Set illumination, Use to Turn On AND Off the Device # //////////////
         right_box_setup.add( lightOnOff_jbtn, gbc);
-        lightOnOff_jbtn.setPreferredSize(new Dimension(100, 30));
+        lightOnOff_jbtn.setPreferredSize(new Dimension(100, 20));
         lightOnOff_jbtn.setBackground(Color.decode("#68C3A3"));
         lightOnOff_jbtn.addActionListener(e -> {
             if (lightOnOff_jbtn.isSelected()){
@@ -364,10 +363,10 @@ public class RappGui extends JFrame {
             }
         });
         gbc.gridy++;
-        delayField_.setPreferredSize(new Dimension(100, 30));
+        delayField_.setPreferredSize(new Dimension(100, 20));
         right_box_setup.add(delayField_, gbc);
         gbc.gridy++;
-        calibrate_btn.setPreferredSize(new Dimension(100, 30));
+        calibrate_btn.setPreferredSize(new Dimension(100, 20));
         right_box_setup.add(calibrate_btn, gbc); // Calibrate Button Action
         calibrate_btn.addActionListener(e -> {
             try {
@@ -391,43 +390,37 @@ public class RappGui extends JFrame {
 
 
         gbc.gridy++;
-        String comboBoxSequenceListe[] = {"GFP / BRIGHT_FIELD ", " RFP / BRIGHT_FIELD ", "  ",
-                "BFP / BRIGHT_FIELD"}; // Liste of available Filter
-        Sequence_jcb = new JComboBox(comboBoxSequenceListe);
+        String comboBoxConfigGroup[] = rappController_ref.getConfigGroup();
+        // / Liste of available Configurations Settings
+        groupConfList_jcb = new JComboBox(comboBoxConfigGroup);
+        right_box_setup.add(groupConfList_jcb,gbc);
+        groupConfList_jcb.setPreferredSize(new Dimension(100, 20));
+
+        groupConfList_jcb.addActionListener(e -> {
+            String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
+            DefaultComboBoxModel model = new DefaultComboBoxModel(rappController_ref.getConfigPreset(GroupConfN));
+            presetConfList_jcb.setModel(model);
+        });
+
+        gbc.gridy++;
+        presetConfList_jcb = new JComboBox(new DefaultComboBoxModel());
+        right_box_setup.add(presetConfList_jcb, gbc);
+        presetConfList_jcb.setPreferredSize(new Dimension(100, 20));
+        presetConfList_jcb.addActionListener(e -> {
+            String PresetName = presetConfList_jcb.getSelectedItem().toString();
+
+        });
+
+        gbc.gridy++;
+        Sequence_jcb = new JComboBox(new DefaultComboBoxModel());
         right_box_setup.add(Sequence_jcb, gbc);
-
-        Sequence_jcb.setPreferredSize(new Dimension(100, 30));
-
+        Sequence_jcb.setPreferredSize(new Dimension(100, 20));
         Sequence_jcb.addActionListener(e -> {
-            String sequenceName = Sequence_jcb.getSelectedItem().toString();
-            rappController_ref.fluorescenceSequence(sequenceName);
+            String PresetName = Sequence_jcb.getSelectedItem().toString();
 
         });
 
-        gbc.gridy++;
-        String comboBoxFilterListe[] = {"DEFAULT", "BRIGHT_FIELD", "RED",
-                "GREEN", "BLUE", "CYAN", "TEAL", "VIOLET"}; // Liste of available Filter
-        filter_Spect_color_jcb = new JComboBox(comboBoxFilterListe);
-        right_box_setup.add(filter_Spect_color_jcb ,gbc);
 
-        filter_Spect_color_jcb.setPreferredSize(new Dimension(100, 30));
-
-        filter_Spect_color_jcb.addActionListener(e -> {
-            String filter = filter_Spect_color_jcb.getSelectedItem().toString();
-            int colorLevel_Spectre = Integer.parseInt(colorLevel_spinner.getValue().toString());
-            rappController_ref.ChangeFilterToColor(filter , colorLevel_Spectre);
-
-        });
-
-        gbc.gridy++;
-        colorLevel_spinner.setPreferredSize(new Dimension(100, 30));
-        right_box_setup.add(colorLevel_spinner, gbc);
-        colorLevel_spinner.addChangeListener(e -> {
-            String filter = filter_Spect_color_jcb.getSelectedItem().toString();
-            int colorLevel_Spectre = Integer.parseInt(colorLevel_spinner.getValue().toString());
-            rappController_ref.ChangeFilterToColor(filter , colorLevel_Spectre);
-
-        });
 
         ////////////////////////////////  right_box_shoot (SHOOT OPTION) Content //////////////////////////////////
 

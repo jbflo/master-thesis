@@ -938,29 +938,69 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
     }
 
+    public  String[]  getConfigGroup(){
+        StrVector conf_group =  core_.getAvailableConfigGroups();
+
+        return conf_group.toArray();
+    }
+
+
+    public  String[]  getConfigPreset( String groupN){
+        StrVector conf_group =  core_.getAvailableConfigGroups();
+        StrVector conf_preset = null;
+        for (int i=0; i < conf_group.size() ; i++){
+          conf_preset  =  core_.getAvailableConfigs(groupN);
+        }
+        return conf_preset.toArray();
+    }
+
     public void ChangeFilterToColor(String filter, int level) {
        String filterColor = filter;
        int colorLevel = level;
         // list devices
         if (filterColor != null) {
             try {
+                core_.waitForDevice(core_.getCameraDevice());
+                StrVector devices = core_.getLoadedDevices();
+               // System.out.println("Device status:");
+                for (int i = 0; i < devices.size(); i++) {
+                    // System.out.println(devices.get(i));
+                    // list device properties
+                    StrVector properties = core_.getDevicePropertyNames(devices.get(i));
+                    if (properties.size() == 0)
+                        System.out.println("No properties.");
+                    for (int j = 0; j < properties.size(); j++) {
+                        core_.getAvailableConfigGroups();
+                        System.out.println("   " + properties.get(j) + " = "
+                                + core_.getProperty(devices.get(i), properties.get(j)));
+                        StrVector values = core_.getAllowedPropertyValues(devices.get(i), properties.get(j));
+                        for (int k = 0; k < values.size(); k++) {
+                            System.out.println("      " + values.get(k));
+                        }
+                    }
+                }
+
+
                 // Set Core_Shutter to use Spectra
                 core_.setProperty("Core", "Shutter", "Spectra");
                 Thread.sleep(100); // wait and set  Spectra sate to One
                 core_.setProperty("Spectra", "State", 1);
 
+
                 if (filter == "BRIGHT_FIELD"){
-                    core_.setProperty("Spectra", "White_Enable", 1);
-                    core_.setProperty("Spectra", "White_Level", colorLevel);
+                    core_.setConfig("Chan", "BF");
+                   // core_.setProperty("Spectra", "White_Enable", 1);
+                    //core_.setProperty("Spectra", "White_Level", colorLevel);
 
                 }
                 else if (filterColor == "RED"){
-                    core_.setProperty("Spectra", "White_Enable", 0);
-                    core_.setProperty("Spectra", "Red_Enable", 1);
-                    core_.setProperty("Spectra", "Blue_Enable", 0);
-                    core_.setProperty("Spectra", "Green_Enable", 0);
+                    core_.setConfig("Chan", "RFP");
+                   // core_.setProperty("Spectra", "White_Enable", 0);
+                    //core_.setProperty("Spectra", "Red_Enable", 1);
+                    //core_.setProperty("Spectra", "Blue_Enable", 0);
+                    //core_.setProperty("Spectra", "Green_Enable", 0);
 
-                    core_.setProperty("Spectra", "Red_Level", colorLevel);
+                    //core_.setProperty("Spectra", "Red_Level", colorLevel);
                 }
                 else if (filterColor == "BLUE") {
                     core_.setProperty("Spectra", "White_Enable", 0);
@@ -970,36 +1010,37 @@ public class RappController extends  MMFrame implements OnStateListener {
 
                     core_.setProperty("Spectra", "Blue_Level", colorLevel);
                 }
-                else if (filterColor == "GREEN") {
-                    core_.setProperty("Spectra", "White_Enable", 0);
-                    core_.setProperty("Spectra", "Green_Enable", 1);
-                    core_.setProperty("Spectra", "Red_Enable", 0);
-                    core_.setProperty("Spectra", "Blue_Enable", 0);
+                else if (filterColor == "GFP") {
+                    core_.setConfig("Chan", "GFP");
+                  //  core_.setProperty("Spectra", "White_Enable", 0);
+                   // core_.setProperty("Spectra", "Green_Enable", 1);
+                   // core_.setProperty("Spectra", "Red_Enable", 0);
+                   // core_.setProperty("Spectra", "Blue_Enable", 0);
 
-                    core_.setProperty("Spectra", "Green_Level", colorLevel);
+                   // core_.setProperty("Spectra", "Green_Level", colorLevel);
                 }
                 else if (filterColor == "DEFAULT") {
                     core_.setProperty("Spectra", "State", 0);
                 }
 
 
-                StrVector devices = core_.getLoadedDevices();
-                System.out.println("Device status:");
-                for (int i = 0; i < devices.size(); i++) {
-                    System.out.println(devices.get(i));
-                    // list device properties
-                    StrVector properties = core_.getDevicePropertyNames(devices.get(i));
-                    if (properties.size() == 0)
-                        System.out.println("   No properties.");
-                    for (int j = 0; j < properties.size(); j++) {
-                        System.out.println("   " + properties.get(j) + " = "
-                                + core_.getProperty(devices.get(i), properties.get(j)));
-                        StrVector values = core_.getAllowedPropertyValues(devices.get(i), properties.get(j));
-                        for (int k = 0; k < values.size(); k++) {
-                            System.out.println("      " + values.get(k));
-                        }
-                    }
-                }
+//                StrVector devices = core_.getLoadedDevices();
+//                System.out.println("Device status:");
+//                for (int i = 0; i < devices.size(); i++) {
+//                    System.out.println(devices.get(i));
+//                    // list device properties
+//                    StrVector properties = core_.getDevicePropertyNames(devices.get(i));
+//                    if (properties.size() == 0)
+//                        System.out.println("   No properties.");
+//                    for (int j = 0; j < properties.size(); j++) {
+//                        System.out.println("   " + properties.get(j) + " = "
+//                                + core_.getProperty(devices.get(i), properties.get(j)));
+//                        StrVector values = core_.getAllowedPropertyValues(devices.get(i), properties.get(j));
+//                        for (int k = 0; k < values.size(); k++) {
+//                            System.out.println("      " + values.get(k));
+//                        }
+//                    }
+//                }
 
 
             } catch (Exception e) {
