@@ -1013,7 +1013,34 @@ public class RappController extends  MMFrame implements OnStateListener {
 
     public void fluorescenceSequence(String seq ) {
         String sequence = seq;
+        if (sequence != null) {
+            try {
+                // Set Core_Shutter to use Spectra
+                core_.setProperty("Core", "Shutter", "Spectra");
+                Thread.sleep(100); // wait and set  Spectra sate to One
+                core_.setProperty("Spectra", "State", 1);
 
+                if (sequence == "BRIGHT_FIELD"){
+                    core_.setProperty("Spectra", "White_Enable", 1);
+
+                }
+                else if (sequence == "RED"){
+                    core_.setProperty("Spectra", "White_Enable", 0);
+                    core_.setProperty("Spectra", "Red_Enable", 1);
+                    core_.setProperty("Spectra", "Blue_Enable", 0);
+                    core_.setProperty("Spectra", "Green_Enable", 0);
+
+
+                }
+
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                ReportingUtils.showError("Please Try Again! were unable to change filter color");
+
+            }
+
+        }
 
     }
 
