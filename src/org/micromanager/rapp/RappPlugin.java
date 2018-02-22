@@ -35,6 +35,7 @@ import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.GUIUtils;
 import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
+import org.micromanager.utils.MMFrame;
 
 
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;

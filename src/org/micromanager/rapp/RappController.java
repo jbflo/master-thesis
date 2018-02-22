@@ -954,102 +954,17 @@ public class RappController extends  MMFrame implements OnStateListener {
         return conf_preset.toArray();
     }
 
-    public void ChangeFilterToColor(String filter, int level) {
-       String filterColor = filter;
-       int colorLevel = level;
-        // list devices
-        if (filterColor != null) {
+    public void ChangeConfigSet(String groupName, String configName) {
             try {
                 core_.waitForDevice(core_.getCameraDevice());
-                StrVector devices = core_.getLoadedDevices();
-               // System.out.println("Device status:");
-                for (int i = 0; i < devices.size(); i++) {
-                    // System.out.println(devices.get(i));
-                    // list device properties
-                    StrVector properties = core_.getDevicePropertyNames(devices.get(i));
-                    if (properties.size() == 0)
-                        System.out.println("No properties.");
-                    for (int j = 0; j < properties.size(); j++) {
-                        core_.getAvailableConfigGroups();
-                        System.out.println("   " + properties.get(j) + " = "
-                                + core_.getProperty(devices.get(i), properties.get(j)));
-                        StrVector values = core_.getAllowedPropertyValues(devices.get(i), properties.get(j));
-                        for (int k = 0; k < values.size(); k++) {
-                            System.out.println("      " + values.get(k));
-                        }
-                    }
+                if (groupName != null && configName != null){
+                    core_.setConfig(groupName, configName);
                 }
-
-
-                // Set Core_Shutter to use Spectra
-                core_.setProperty("Core", "Shutter", "Spectra");
-                Thread.sleep(100); // wait and set  Spectra sate to One
-                core_.setProperty("Spectra", "State", 1);
-
-
-                if (filter == "BRIGHT_FIELD"){
-                    core_.setConfig("Chan", "BF");
-                   // core_.setProperty("Spectra", "White_Enable", 1);
-                    //core_.setProperty("Spectra", "White_Level", colorLevel);
-
-                }
-                else if (filterColor == "RED"){
-                    core_.setConfig("Chan", "RFP");
-                   // core_.setProperty("Spectra", "White_Enable", 0);
-                    //core_.setProperty("Spectra", "Red_Enable", 1);
-                    //core_.setProperty("Spectra", "Blue_Enable", 0);
-                    //core_.setProperty("Spectra", "Green_Enable", 0);
-
-                    //core_.setProperty("Spectra", "Red_Level", colorLevel);
-                }
-                else if (filterColor == "BLUE") {
-                    core_.setProperty("Spectra", "White_Enable", 0);
-                    core_.setProperty("Spectra", "Blue_Enable", 1);
-                    core_.setProperty("Spectra", "Red_Enable", 0);
-                    core_.setProperty("Spectra", "Green_Enable", 0);
-
-                    core_.setProperty("Spectra", "Blue_Level", colorLevel);
-                }
-                else if (filterColor == "GFP") {
-                    core_.setConfig("Chan", "GFP");
-                  //  core_.setProperty("Spectra", "White_Enable", 0);
-                   // core_.setProperty("Spectra", "Green_Enable", 1);
-                   // core_.setProperty("Spectra", "Red_Enable", 0);
-                   // core_.setProperty("Spectra", "Blue_Enable", 0);
-
-                   // core_.setProperty("Spectra", "Green_Level", colorLevel);
-                }
-                else if (filterColor == "DEFAULT") {
-                    core_.setProperty("Spectra", "State", 0);
-                }
-
-
-//                StrVector devices = core_.getLoadedDevices();
-//                System.out.println("Device status:");
-//                for (int i = 0; i < devices.size(); i++) {
-//                    System.out.println(devices.get(i));
-//                    // list device properties
-//                    StrVector properties = core_.getDevicePropertyNames(devices.get(i));
-//                    if (properties.size() == 0)
-//                        System.out.println("   No properties.");
-//                    for (int j = 0; j < properties.size(); j++) {
-//                        System.out.println("   " + properties.get(j) + " = "
-//                                + core_.getProperty(devices.get(i), properties.get(j)));
-//                        StrVector values = core_.getAllowedPropertyValues(devices.get(i), properties.get(j));
-//                        for (int k = 0; k < values.size(); k++) {
-//                            System.out.println("      " + values.get(k));
-//                        }
-//                    }
-//                }
-
-
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                ReportingUtils.showError("Please Try Again! were unable to change filter color");
+                ReportingUtils.showError("Please Try Again! were unable to change Configuration preset");
 
             }
-
-        }
     }
 
     public void fluorescenceSequence(String seq ) {
@@ -1062,18 +977,31 @@ public class RappController extends  MMFrame implements OnStateListener {
                 core_.setProperty("Spectra", "State", 1);
 
                 if (sequence == "BRIGHT_FIELD"){
-                    core_.setProperty("Spectra", "White_Enable", 1);
+                    core_.setConfig("channels", "bf");
+                    core_.snapImage();
+                }
+                else if (sequence == "RFP"){
+                    core_.setConfig("channels", "rfp");
+                    core_.snapImage();
 
                 }
-                else if (sequence == "RED"){
-                    core_.setProperty("Spectra", "White_Enable", 0);
-                    core_.setProperty("Spectra", "Red_Enable", 1);
-                    core_.setProperty("Spectra", "Blue_Enable", 0);
+                else if (sequence == "GFP"){
+                    core_.setConfig("channels", "gfp");
+                    core_.snapImage();
                     core_.setProperty("Spectra", "Green_Enable", 0);
 
-
                 }
-
+                else if (sequence == "ALL"){
+                    core_.setConfig("channels", "bf");
+                    core_.snapImage();
+                    Thread.sleep(100);
+                    core_.setConfig("channels", "gfp");
+                    core_.snapImage();
+                    Thread.sleep(100);
+                    core_.setConfig("channels", "rfp");
+                    core_.snapImage();
+                    core_.setProperty("Spectra", "Green_Enable", 0);
+                }
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());

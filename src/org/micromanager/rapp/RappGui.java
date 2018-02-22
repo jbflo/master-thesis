@@ -407,8 +407,11 @@ public class RappGui extends JFrame {
         right_box_setup.add(presetConfList_jcb, gbc);
         presetConfList_jcb.setPreferredSize(new Dimension(100, 20));
         presetConfList_jcb.addActionListener(e -> {
-            String PresetName = presetConfList_jcb.getSelectedItem().toString();
 
+            String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
+            String PresetName = Sequence_jcb.getSelectedItem().toString();
+            // # Here we Apply the set form the Group configuration Settings
+            rappController_ref.ChangeConfigSet(GroupConfN, PresetName);
         });
 
         gbc.gridy++;
@@ -416,11 +419,7 @@ public class RappGui extends JFrame {
         right_box_setup.add(Sequence_jcb, gbc);
         Sequence_jcb.setPreferredSize(new Dimension(100, 20));
         Sequence_jcb.addActionListener(e -> {
-            String PresetName = Sequence_jcb.getSelectedItem().toString();
-
         });
-
-
 
         ////////////////////////////////  right_box_shoot (SHOOT OPTION) Content //////////////////////////////////
 
@@ -450,7 +449,7 @@ public class RappGui extends JFrame {
         gbc1.gridwidth = GridBagConstraints.REMAINDER;
 
         right_box_shoot.add( pointAndShootOnOff_btn, gbc1);
-        pointAndShootOnOff_btn.setPreferredSize(new Dimension(100,30));
+        pointAndShootOnOff_btn.setPreferredSize(new Dimension(100,20));
         pointAndShootOnOff_btn.addActionListener(e -> {
             updatePointAndShoot();
 
@@ -458,24 +457,24 @@ public class RappGui extends JFrame {
 
         gbc1.gridy++;
         right_box_shoot.add(setAddRois_btn, gbc1);
-        setAddRois_btn.setPreferredSize(new Dimension(100,30));
+        setAddRois_btn.setPreferredSize(new Dimension(100,20));
         setAddRois_btn.addActionListener(e -> {
             RappPlugin.showRoiManager();
         });
 
         gbc1.gridy++;
         right_box_shoot.add(ShootonMarkpoint_btn, gbc1);
-        ShootonMarkpoint_btn.setPreferredSize(new Dimension(100,30));
+        ShootonMarkpoint_btn.setPreferredSize(new Dimension(100,20));
         ShootonMarkpoint_btn.addActionListener(e -> rappController_ref.createMultiPointAndShootFromRoeList());
 
         gbc1.gridy++;
         right_box_shoot.add(shootOnLearningP_btn, gbc1);
-        shootOnLearningP_btn.setPreferredSize(new Dimension(100,30));
+        shootOnLearningP_btn.setPreferredSize(new Dimension(100,20));
        // shootOnLearningP_btn.addActionListener(e -> rappController_ref.getListofROIs());
 
         gbc1.gridy++;
         right_box_shoot.add(loadImage_btn, gbc1);
-        loadImage_btn.setPreferredSize(new Dimension(100,30));
+        loadImage_btn.setPreferredSize(new Dimension(100,20));
         loadImage_btn.addActionListener(e -> {
             ImagePlus image = IJ.openImage(path.concat("Resources/simCell2DPNG.PNG"));
             image.show();
@@ -494,7 +493,6 @@ public class RappGui extends JFrame {
 
 
         this.add(sp2, BorderLayout.CENTER);
-        //this.setBackground(Color.decode("#34495e"));
         this.setBackground(Color.blue);
         this.setSize(900, 500);
         this.setVisible(true);
