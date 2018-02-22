@@ -33,10 +33,7 @@ import javax.swing.*;
  */
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.net.URL;
 import java.util.Objects;
@@ -399,7 +396,10 @@ public class RappGui extends JFrame {
         groupConfList_jcb.addActionListener(e -> {
             String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
             DefaultComboBoxModel model = new DefaultComboBoxModel(rappController_ref.getConfigPreset(GroupConfN));
+            DefaultComboBoxModel model2 = new DefaultComboBoxModel(rappController_ref.getConfigPreset(GroupConfN));
             presetConfList_jcb.setModel(model);
+            Sequence_jcb.setModel(model2);
+            Sequence_jcb.addItem("Apply ALL Sequence");
         });
 
         gbc.gridy++;
@@ -409,16 +409,20 @@ public class RappGui extends JFrame {
         presetConfList_jcb.addActionListener(e -> {
 
             String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
-            String PresetName = Sequence_jcb.getSelectedItem().toString();
+            String PresetName = presetConfList_jcb.getSelectedItem().toString();
             // # Here we Apply the set form the Group configuration Settings
             rappController_ref.ChangeConfigSet(GroupConfN, PresetName);
         });
+
 
         gbc.gridy++;
         Sequence_jcb = new JComboBox(new DefaultComboBoxModel());
         right_box_setup.add(Sequence_jcb, gbc);
         Sequence_jcb.setPreferredSize(new Dimension(100, 20));
         Sequence_jcb.addActionListener(e -> {
+            String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
+            String SequenceName = Sequence_jcb.getSelectedItem().toString();
+            rappController_ref.fluorescenceSequence(GroupConfN, SequenceName);
         });
 
         ////////////////////////////////  right_box_shoot (SHOOT OPTION) Content //////////////////////////////////

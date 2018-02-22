@@ -967,50 +967,36 @@ public class RappController extends  MMFrame implements OnStateListener {
             }
     }
 
-    public void fluorescenceSequence(String seq ) {
-        String sequence = seq;
-        if (sequence != null) {
+    public void fluorescenceSequence(String groupName, String sequenceName) {
+            String configNmae = sequenceName;
             try {
                 // Set Core_Shutter to use Spectra
-                core_.setProperty("Core", "Shutter", "Spectra");
+                core_.waitForDevice(core_.getCameraDevice());
+                core_.setAutoShutter(false);
+
                 Thread.sleep(100); // wait and set  Spectra sate to One
-                core_.setProperty("Spectra", "State", 1);
+                if (groupName != null && sequenceName != null){
+                    if (sequenceName =="Apply ALL Sequence"){
+                        String[] allPreset = getConfigPreset(groupName);
+                        System.out.println(allPreset.length);
+                          for(int i=0; i< allPreset.length; i++){
+                              core_.setConfig(groupName, allPreset[i]);
+                              Thread.sleep(1000);
+                              core_.snapImage();
+                         }
+                        }
+                    else{
+                        core_.setConfig(groupName, configNmae);
+                        core_.snapImage();
+                        }
+                    }
 
-                if (sequence == "BRIGHT_FIELD"){
-                    core_.setConfig("channels", "bf");
-                    core_.snapImage();
-                }
-                else if (sequence == "RFP"){
-                    core_.setConfig("channels", "rfp");
-                    core_.snapImage();
-
-                }
-                else if (sequence == "GFP"){
-                    core_.setConfig("channels", "gfp");
-                    core_.snapImage();
-                    core_.setProperty("Spectra", "Green_Enable", 0);
-
-                }
-                else if (sequence == "ALL"){
-                    core_.setConfig("channels", "bf");
-                    core_.snapImage();
-                    Thread.sleep(100);
-                    core_.setConfig("channels", "gfp");
-                    core_.snapImage();
-                    Thread.sleep(100);
-                    core_.setConfig("channels", "rfp");
-                    core_.snapImage();
-                    core_.setProperty("Spectra", "Green_Enable", 0);
-                }
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 ReportingUtils.showError("Please Try Again! were unable to change filter color");
 
             }
-
-        }
-
     }
 
     //#################################  Method for Saving Image ###############################################
