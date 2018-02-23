@@ -52,7 +52,6 @@ public class RappGui extends JFrame {
     public static RappGui getInstance() {
         return appInterface_;
     }
-    private  static RappPlugin rappP_;
     private  static  RappController rappController_ref;
     private SnapLiveManager SnapLiveManager_;
     private MMStudio studio_;
@@ -64,10 +63,16 @@ public class RappGui extends JFrame {
     private Box right_box_learning  = Box.createVerticalBox();
     private JPanel right_box_shoot = new JPanel();
     private FlowLayout experimentLayout;
+    private JPanel centerPanel = new JPanel();
+    private JDesktopPane desktop;
+    private JPanel rightPanel = new JPanel();
+    private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
+    private JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
+    public  JLabel spiner = new JLabel("nothing");
     private SpinnerModel model_forExposure = new SpinnerNumberModel(100, 0, 9999, 1);
     private SpinnerModel model_forDelay = new SpinnerNumberModel(0, 0, 9999, 1);
     private SpinnerModel model_forColorLevel = new SpinnerNumberModel(100, 0, 100, 1);
-    protected JSpinner exposureT_spinner = new JSpinner(model_forExposure);
+    private JSpinner exposureT_spinner = new JSpinner(model_forExposure);
     protected JSpinner delayField_ = new JSpinner(model_forDelay);
     private JButton setupOption_btn = new JButton("Settings");
     private JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
@@ -78,20 +83,15 @@ public class RappGui extends JFrame {
     private JButton SnapAndSave_btn = new JButton("Snap And Save Image");
     private JButton showCenterSpot_btn = new JButton("Show Center Spot");
     protected JButton calibrate_btn = new JButton("Start Calibration!");
-    protected JComboBox presetConfList_jcb ;
-    protected JComboBox Sequence_jcb ;
-    protected JComboBox groupConfList_jcb;
     private JButton setAddRois_btn = new JButton("Set / Add Rois");
     private JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
     private JButton loadImage_btn = new JButton("Load An Image");
     private JButton ShootonMarkpoint_btn = new JButton("Shoot on ROIs");
-    private JPanel centerPanel = new JPanel();
-    private JDesktopPane desktop;
-    private JPanel rightPanel = new JPanel();
-    private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
-    private JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
-    public  JLabel spiner = new JLabel("nothing");
-    String comboBoxPresetList[] = new String[1];
+    private JComboBox presetConfList_jcb ;
+    private JComboBox Sequence_jcb ;
+    private JComboBox groupConfList_jcb;
+
+
 
      /**
      * Constructor. Creates the main window for the Projector plugin. we use this Class for the main interface
@@ -226,7 +226,7 @@ public class RappGui extends JFrame {
         left_box.add(SnapAndSave_btn);
         SnapAndSave_btn.addActionListener(e -> {
 
-
+            rappController_ref.snapAndSaveImage();
 
         });
 

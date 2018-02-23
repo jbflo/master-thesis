@@ -21,7 +21,10 @@ import org.micromanager.utils.*;
 
 import java.awt.event.AWTEventListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
@@ -68,6 +71,8 @@ import org.micromanager.utils.MMFrame;
  */
 
 public class RappController extends  MMFrame implements OnStateListener {
+    private URL default_path = this.getClass().getResource("");
+    private String path = default_path.toString().substring(6);
     private final RappDevice  dev_;
     private static RappPlugin rappPlugin = new RappPlugin() ;
     private final MouseListener pointAndShootMouseListener;
@@ -983,7 +988,8 @@ public class RappController extends  MMFrame implements OnStateListener {
                               core_.setConfig(groupName, allPreset[i]);
                               Thread.sleep(1000);
                               core_.snapImage();
-                         }
+                              core_.getImage();
+                          }
                         }
                     else{
                         core_.setConfig(groupName, configNmae);
@@ -999,23 +1005,41 @@ public class RappController extends  MMFrame implements OnStateListener {
             }
     }
 
-    //#################################  Method for Saving Image ###############################################
-     public void SnapAndSaveImage(Boolean on) {
-         if (on == true){
-             Object img = null;
-             try {
-                 core_.snapImage();
-                 img = core_.getImage();
-                // core_.
-               //  File outputfile = new File("Resources/saved.tif");
-                // ImageIO.write(img, "tif", outputfile);
-             } catch (Exception ex) {
-                 Logger.getLogger(RappGui.class.getName()).log(Level.SEVERE, null, ex);
-             }
 
-             gui_.displayImage(img);
-             //  gui_.setXYStagePosition(32.0, 32.0);
+
+    //#################################  Method for Saving Image ###############################################
+     public void snapAndSaveImage() {
+         Object img = null;
+         TaggedImage tImg ;
+         ImageProcessor ip ;
+         ImagePlus iPlus =  IJ.openImage(path.concat("Resources/img.tif")); ;
+         long width = core_.getImageWidth();    //width of the image
+         long height = core_.getImageHeight();   //height of the image
+         File f;
+         //write image
+         try{
+             app_.enableLiveMode(false);
+             app_.snapSingleImage();
+             core_.snapImage();
+             img = core_.getImage();
+            // iPlus = ij.IJ.getImage();
+           //  File f = FileDialogs.save(frame_, "Save the configuration file", MM_CONFIG_FILE);
+            // tImg = core_.getTaggedImage();
+             //ip = ImageUtils.makeProcessor(tImg);
+            // iPlus = new ImagePlus("test",  ip);
+            // IJ.saveAsTiff(iPlus,  path.concat("Resources/"));
+             IJ.save(path.concat("Resources/new.tif"));
+             BufferedImage rawImage = iPlus.getBufferedImage();
+             f = new File(path.concat("Resources/new.jpg"));  //output file path
+             ImageIO.write(rawImage, "jpg", f);
+
+             System.out.println("Writing complete.");
+         } catch (Exception e) {
+             e.printStackTrace();
          }
+     //  gui_.displayImage(img);
+         //  gui_.setXYStagePosition(32.0, 32.0);
+
      }
 
 
