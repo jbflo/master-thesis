@@ -64,6 +64,8 @@ import org.json.JSONException;
 import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
 import org.micromanager.utils.MMFrame;
 
+import static org.micromanager.MMStudio.MM_CONFIG_FILE;
+
 
 /**
  * This Class is approximately use as a Controller for the Rapp plugin. Contains logic for calibration,
@@ -91,7 +93,8 @@ public class RappController extends  MMFrame implements OnStateListener {
     private Boolean disposing_ = false;
     private static VirtualAcquisitionDisplay display_;
     private final MMStudio gui_;
-
+    private String camera;
+    private String galvo;
     public boolean bleechingComp=false;
     public List<Point2D.Double> roiPointClick = new ArrayList<>();
     public Point2D.Double roiTemp  = new Point2D.Double();
@@ -107,9 +110,9 @@ public class RappController extends  MMFrame implements OnStateListener {
         app_ = app;
         gui_ = MMStudio.getInstance();
         core_ = core;
-        String camera = core_.getCameraDevice();
+        camera = core_.getCameraDevice();
         String slm = core_.getSLMDevice();
-        String galvo = core_.getGalvoDevice();
+        galvo = core_.getGalvoDevice();
 
         if (slm.length() > 0) {
             dev_ = new SLM(core_, 20);
@@ -869,6 +872,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                 double[] failsArrayX =  new double[xcRoiPosArray.size()];
                 double[] failsArrayY =  new double[ycRoiPosArray.size()];
                 System.out.println(xcRoiPosArray.size());
+
                 for (int i =0 ; i < xcRoiPosArray.size(); i++)
                 { //iterate over the elements of the list
                     failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
@@ -876,11 +880,22 @@ public class RappController extends  MMFrame implements OnStateListener {
                     final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), image,
                                             new Point2D.Double(failsArrayX[i], failsArrayY[i]));
                     System.out.println(devP);
+
                     final Configuration originalConfig = prepareChannel();
                     final boolean originalShutterState = prepareShutter();
                     try {
+                        Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
+                        if (galvoPos != devP){
+                            core_.setGalvoIlluminationState(galvo, false);
+                            core_.setGalvoPosition(galvo, devP.x, devP.y);
+                            Thread.sleep(200);
+                            core_.setGalvoIlluminationState(galvo,true);
+                            core_.waitForDevice(galvo);
+                        }else ReportingUtils.showError("Please Try Again! Galvo problem");
                         displaySpot(devP.x, devP.y);
-                        Thread.sleep(1000); // Do Nothing for 300 ms (4s)
+                        returnShutter(originalShutterState);
+                        returnChannel(originalConfig);
+                        Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
                     }catch (Exception ec){
                         ReportingUtils.showError(ec);
                     }
@@ -973,36 +988,36 @@ public class RappController extends  MMFrame implements OnStateListener {
     }
 
     public void fluorescenceSequence(String groupName, String sequenceName) {
-            String configNmae = sequenceName;
-            try {
-                // Set Core_Shutter to use Spectra
-                core_.waitForDevice(core_.getCameraDevice());
-                core_.setAutoShutter(false);
+        String configNmae = sequenceName;
+        try {
+            // Set Core_Shutter to use Spectra
+            core_.waitForDevice(core_.getCameraDevice());
+            core_.setAutoShutter(false);
 
-                Thread.sleep(100); // wait and set  Spectra sate to One
-                if (groupName != null && sequenceName != null){
-                    if (sequenceName =="Apply ALL Sequence"){
-                        String[] allPreset = getConfigPreset(groupName);
-                        System.out.println(allPreset.length);
-                          for(int i=0; i< allPreset.length; i++){
-                              core_.setConfig(groupName, allPreset[i]);
-                              Thread.sleep(1000);
-                              core_.snapImage();
-                              core_.getImage();
-                          }
-                        }
-                    else{
-                        core_.setConfig(groupName, configNmae);
-                        core_.snapImage();
-                        }
+            Thread.sleep(100); // wait and set  Spectra sate to One
+            if (groupName != null && sequenceName != null){
+                if (sequenceName =="Apply ALL Sequence"){
+                    String[] allPreset = getConfigPreset(groupName);
+                    System.out.println(allPreset.length);
+                      for(int i=0; i< allPreset.length; i++){
+                          core_.setConfig(groupName, allPreset[i]);
+                          Thread.sleep(1000);
+                          core_.snapImage();
+                          core_.getImage();
+                      }
                     }
+                else{
+                    core_.setConfig(groupName, configNmae);
+                    core_.snapImage();
+                    }
+                }
 
 
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                ReportingUtils.showError("Please Try Again! were unable to change filter color");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            ReportingUtils.showError("Please Try Again! were unable to change filter color");
 
-            }
+        }
     }
 
 
@@ -1015,7 +1030,7 @@ public class RappController extends  MMFrame implements OnStateListener {
          ImagePlus iPlus =  IJ.openImage(path.concat("Resources/img.tif")); ;
          long width = core_.getImageWidth();    //width of the image
          long height = core_.getImageHeight();   //height of the image
-         File f;
+         //File f;
          //write image
          try{
              app_.enableLiveMode(false);
@@ -1023,21 +1038,21 @@ public class RappController extends  MMFrame implements OnStateListener {
              core_.snapImage();
              img = core_.getImage();
             // iPlus = ij.IJ.getImage();
-           //  File f = FileDialogs.save(frame_, "Save the configuration file", MM_CONFIG_FILE);
+              File f = FileDialogs.save(RappGui.getInstance(), "Save the configuration file", MM_CONFIG_FILE);
             // tImg = core_.getTaggedImage();
-             //ip = ImageUtils.makeProcessor(tImg);
+             // ip = ImageUtils.makeProcessor(tImg);
             // iPlus = new ImagePlus("test",  ip);
             // IJ.saveAsTiff(iPlus,  path.concat("Resources/"));
              IJ.save(path.concat("Resources/new.tif"));
              BufferedImage rawImage = iPlus.getBufferedImage();
-             f = new File(path.concat("Resources/new.jpg"));  //output file path
+           //  f = new File(path.concat("Resources/new.jpg"));  //output file path
              ImageIO.write(rawImage, "jpg", f);
 
              System.out.println("Writing complete.");
          } catch (Exception e) {
              e.printStackTrace();
          }
-     //  gui_.displayImage(img);
+         //  gui_.displayImage(img);
          //  gui_.setXYStagePosition(32.0, 32.0);
 
      }

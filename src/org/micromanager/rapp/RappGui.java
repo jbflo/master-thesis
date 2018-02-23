@@ -76,7 +76,7 @@ public class RappGui extends JFrame {
     protected JSpinner delayField_ = new JSpinner(model_forDelay);
     private JButton setupOption_btn = new JButton("Settings");
     private JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
-    private JButton learnOption_btn = new JButton("Learning");
+    private JButton learnOption_btn = new JButton("Analysis");
     private JButton shootOption_btn = new JButton("Shoot Option");
     private JToggleButton pointAndShootOnOff_btn = new JToggleButton("ON");
     private JToggleButton LiveMode_btn = new JToggleButton("Start Live View");
@@ -101,7 +101,6 @@ public class RappGui extends JFrame {
         //new RappController(core, app);
         rappController_ref =  new RappController(core, app);
         SnapLiveManager_ = new SnapLiveManager( studio_, core);
-
 
         try {
             setDefaultLookAndFeelDecorated(true);
