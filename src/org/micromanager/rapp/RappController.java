@@ -1011,8 +1011,6 @@ public class RappController extends  MMFrame implements OnStateListener {
                     core_.snapImage();
                     }
                 }
-
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
             ReportingUtils.showError("Please Try Again! were unable to change filter color");
@@ -1024,36 +1022,33 @@ public class RappController extends  MMFrame implements OnStateListener {
 
     //#################################  Method for Saving Image ###############################################
      public void snapAndSaveImage() {
-         Object img = null;
-         TaggedImage tImg ;
-         ImageProcessor ip ;
-         ImagePlus iPlus =  IJ.openImage(path.concat("Resources/img.tif")); ;
-         long width = core_.getImageWidth();    //width of the image
-         long height = core_.getImageHeight();   //height of the image
-         //File f;
+
+         ImagePlus iPlus; //=  IJ.openImage(path.concat("Resources/img.tif")); ;
+         JFileChooser fileChooser = new JFileChooser();
+         fileChooser.setDialogTitle("Specify a file to save");
+         File fileToSave = null;
+         int userSelection = fileChooser.showSaveDialog(this);
+         if (userSelection == JFileChooser.APPROVE_OPTION) {
+              fileToSave = fileChooser.getSelectedFile();
+             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+         }
+
          //write image
          try{
              app_.enableLiveMode(false);
              app_.snapSingleImage();
-             core_.snapImage();
-             img = core_.getImage();
-            // iPlus = ij.IJ.getImage();
-              File f = FileDialogs.save(RappGui.getInstance(), "Save the configuration file", MM_CONFIG_FILE);
-            // tImg = core_.getTaggedImage();
-             // ip = ImageUtils.makeProcessor(tImg);
-            // iPlus = new ImagePlus("test",  ip);
-            // IJ.saveAsTiff(iPlus,  path.concat("Resources/"));
-             IJ.save(path.concat("Resources/new.tif"));
-             BufferedImage rawImage = iPlus.getBufferedImage();
-           //  f = new File(path.concat("Resources/new.jpg"));  //output file path
-             ImageIO.write(rawImage, "jpg", f);
-
-             System.out.println("Writing complete.");
+             iPlus = IJ.getImage();
+             if (iPlus.getStackSize() <= 1) {
+                 IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
+             }else{
+                 for (int i=0; i< iPlus.getStackSize(); i++){
+                     IJ.save(iPlus, fileToSave.getAbsolutePath() + ".ome.tif");
+                 }
+             }
+             System.out.println(iPlus.getStackSize());
          } catch (Exception e) {
              e.printStackTrace();
          }
-         //  gui_.displayImage(img);
-         //  gui_.setXYStagePosition(32.0, 32.0);
 
      }
 

@@ -104,7 +104,7 @@ public class RappGui extends JFrame {
 
         try {
             setDefaultLookAndFeelDecorated(true);
-            UIManager.setLookAndFeel("Metal");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
            e.printStackTrace();
@@ -422,6 +422,7 @@ public class RappGui extends JFrame {
             String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
             String SequenceName = Sequence_jcb.getSelectedItem().toString();
             rappController_ref.fluorescenceSequence(GroupConfN, SequenceName);
+            confirmSaving();
         });
 
         ////////////////////////////////  right_box_shoot (SHOOT OPTION) Content //////////////////////////////////
@@ -444,7 +445,6 @@ public class RappGui extends JFrame {
         right_box_shoot.add(new JLabel("<html><font color='white'>Leaning Point   :</font></html>"), gbc1);
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font color='white'>Load An Image  :</font></html>"),gbc1);
-
 
         gbc1.anchor = GridBagConstraints.WEST;
         gbc1.gridy = 0;
@@ -534,6 +534,16 @@ public class RappGui extends JFrame {
         if (n == JOptionPane.YES_OPTION) {
             LiveMode_btn.setSelected(false);
             dispose();
+        }
+        else  GUIUtils.recallPosition(appInterface_);
+    }
+
+    //  Avoid user to accidentally close the window by this fonction
+    private void confirmSaving() {
+        int n = JOptionPane.showConfirmDialog(appInterface_,
+                "Do you want to save sequence image?", "Saving", JOptionPane.YES_NO_OPTION);
+        if (n == JOptionPane.YES_OPTION) {
+            rappController_ref.snapAndSaveImage();
         }
         else  GUIUtils.recallPosition(appInterface_);
     }
