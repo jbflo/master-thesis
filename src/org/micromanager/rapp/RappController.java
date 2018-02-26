@@ -887,10 +887,11 @@ public class RappController extends  MMFrame implements OnStateListener {
                         Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
                         if (galvoPos != devP){
                             core_.setGalvoIlluminationState(galvo, false);
+                            Thread.sleep(200);
                             core_.setGalvoPosition(galvo, devP.x, devP.y);
                             Thread.sleep(200);
                             core_.setGalvoIlluminationState(galvo,true);
-                            core_.waitForDevice(galvo);
+                            //core_.waitForDevice(galvo);
                         }else ReportingUtils.showError("Please Try Again! Galvo problem");
                         displaySpot(devP.x, devP.y);
                         returnShutter(originalShutterState);

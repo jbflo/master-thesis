@@ -66,8 +66,10 @@ public class RappGui extends JFrame {
     private JPanel centerPanel = new JPanel();
     private JDesktopPane desktop;
     private JPanel rightPanel = new JPanel();
+    private JPanel buttonPanel  = new JPanel();
     private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
     private JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
+    private JSplitPane sp3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, sp, sp2);
     public  JLabel spiner = new JLabel("nothing");
     private SpinnerModel model_forExposure = new SpinnerNumberModel(100, 0, 9999, 1);
     private SpinnerModel model_forDelay = new SpinnerNumberModel(0, 0, 9999, 1);
@@ -493,9 +495,9 @@ public class RappGui extends JFrame {
         sp.setDividerLocation(170);
 
         sp2.setDividerLocation(600);
-
-
+        sp3.setDividerLocation(200);
         this.add(sp2, BorderLayout.CENTER);
+        this.add(sp3);
         this.setBackground(Color.blue);
         this.setSize(900, 500);
         this.setVisible(true);
