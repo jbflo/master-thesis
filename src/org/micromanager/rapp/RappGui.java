@@ -67,9 +67,9 @@ public class RappGui extends JFrame {
     private JDesktopPane desktop;
     private JPanel rightPanel = new JPanel();
     private JPanel buttonPanel  = new JPanel();
-    private JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
-    private JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, rightPanel);
-    private JSplitPane sp3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, sp, sp2);
+    private JSplitPane spliPaneLeft = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
+    private JSplitPane splitPaneRight = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, spliPaneLeft, rightPanel);
+    private JSplitPane splitPaneButton = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPaneRight, buttonPanel);
     public  JLabel spiner = new JLabel("nothing");
     private SpinnerModel model_forExposure = new SpinnerNumberModel(100, 0, 9999, 1);
     private SpinnerModel model_forDelay = new SpinnerNumberModel(0, 0, 9999, 1);
@@ -312,17 +312,17 @@ public class RappGui extends JFrame {
         gbc.gridy++;
         right_box_setup.add(new JLabel("<html><font color='white'>Light (On / OFF)   :</font></html>"), gbc);
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font color='white'>Cal. Delays (ms)    :</font></html>"), gbc);
+        right_box_setup.add(new JLabel("<html><font color='white'>Delays (ms)    :</font></html>"), gbc);
         gbc.gridy++;
         right_box_setup.add(new JLabel("<html><font color='white'>Start Calibration  :</font></html>"),gbc);
         gbc.gridy++;
         right_box_setup.add( new JSeparator(SwingConstants.HORIZONTAL),  gbc, 1); this.right_box_setup.getComponent(1).setPreferredSize(new Dimension(100,10));
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font color='white'>Choose Group Conf.      :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font color='white'>Group Conf.      :</font></html>"),gbc);
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font color='white'>Set Preset Conf.      :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font color='white'>Preset Conf.      :</font></html>"),gbc);
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font color='white'>Apply Sequences     :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font color='white'>Sequences     :</font></html>"),gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridy = 0;
@@ -492,14 +492,23 @@ public class RappGui extends JFrame {
         right_box_learning.setPreferredSize(new Dimension(150, 150));   // vertical box
         right_box_learning.setVisible(false);
 
-        sp.setDividerLocation(170);
+        //////////////////////////////////////# Imaging # ///////////////////////////////////////////////
+        buttonPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
+        buttonPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Imaging Options",0,0,Font.getFont("arial"),  Color.white));
 
-        sp2.setDividerLocation(600);
-        sp3.setDividerLocation(200);
-        this.add(sp2, BorderLayout.CENTER);
-        this.add(sp3);
+
+        spliPaneLeft.setDividerLocation(170);
+        splitPaneRight.setDividerLocation(600);
+        splitPaneButton.setDividerLocation(500);
+
+        this.add(splitPaneButton, BorderLayout.CENTER);
+        spliPaneLeft.setOneTouchExpandable(true);
+        splitPaneRight.setOneTouchExpandable(true);
+        splitPaneButton.setOneTouchExpandable(true);
+
         this.setBackground(Color.blue);
-        this.setSize(900, 500);
+        this.setSize(900, 700);
         this.setVisible(true);
 
         /// Avoid all App Close when close the Plugin GUI
