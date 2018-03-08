@@ -48,11 +48,10 @@ public class RappPlugin implements MMPlugin  {
     public static final String tooltipDescription = "Automated cell recognition for killing and sorting ";
     //private MMStudioMainFrame app_;
 
-    static ScriptInterface app_;
-    private CMMCore core_;
+    private static ScriptInterface app_;
+    private static CMMCore core_;
     private MMStudio mgui_;
     private MMStudio.DisplayImageRoutine displayImageRoutine_;
-  //  private RappGui gui_;
     private AcquisitionEngine acq_;
     private final String ACQ_NAME = "Rapp control";
     private int multiChannelCameraNrCh_;
@@ -63,8 +62,11 @@ public class RappPlugin implements MMPlugin  {
     }
 
     public static CMMCore getMMcore(){
-        CMMCore core1_  = getMMcore();
-        return  core1_;
+        return  core_;
+    }
+
+    public static ScriptInterface getScripI(){
+        return app_;
     }
 
 

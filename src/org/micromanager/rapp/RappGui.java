@@ -11,19 +11,22 @@
 
 package org.micromanager.rapp;
 
-import com.sun.glass.ui.Size;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.ImageWindow;
 import mmcorej.CMMCore;
+import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
 import org.micromanager.SnapLiveManager;
-import org.micromanager.acquisition.LiveModeTimer;
+//import org.micromanager.acquisition.AcquisitionManager;
+//import org.micromanager.acquisition.AcquisitionWrapperEngine;
 import org.micromanager.api.ScriptInterface;
+//import org.micromanager.dialogs.AcqControlDlg;
+import org.micromanager.internalinterfaces.LiveModeListener;
 import org.micromanager.utils.GUIUtils;
-import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
-
+import org.micromanager.rapp.acquisition.*;
+import org.micromanager.rapp.dialogs.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -34,42 +37,33 @@ import javax.swing.*;
 
 import java.awt.BorderLayout;
 import java.awt.event.*;
-import java.awt.geom.Point2D;
+import java.io.File;
 import java.net.URL;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 
-public class RappGui extends JFrame {
-
+public class RappGui extends JFrame implements LiveModeListener {
+    private Preferences mainPrefs_;
+    private MMOptions options_;
+    private AcqControlDlg acquisition_;
+    private static   ImageViewer imageViewer_;
     private static RappGui appInterface_;
     public static RappGui getInstance() {
         return appInterface_;
     }
     private  static  RappController rappController_ref;
     private SnapLiveManager SnapLiveManager_;
-    private MMStudio studio_;
     private URL default_path = this.getClass().getResource("");
     private String path = default_path.toString().substring(6);
-    private JPanel leftPanel = new JPanel();
-    private Box left_box = Box.createVerticalBox();
     private JPanel right_box_setup = new JPanel();
     private Box right_box_learning  = Box.createVerticalBox();
     private JPanel right_box_shoot = new JPanel();
-    private FlowLayout experimentLayout;
-    private JPanel centerPanel = new JPanel();
-    private JDesktopPane desktop;
-    private JPanel rightPanel = new JPanel();
-    private JPanel buttonPanel  = new JPanel();
-    private JSplitPane spliPaneLeft = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
-    private JSplitPane splitPaneRight = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, spliPaneLeft, rightPanel);
-    private JSplitPane splitPaneButton = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPaneRight, buttonPanel);
     public  JLabel spiner = new JLabel("nothing");
     private SpinnerModel model_forExposure = new SpinnerNumberModel(100, 0, 9999, 1);
     private SpinnerModel model_forDelay = new SpinnerNumberModel(0, 0, 9999, 1);
@@ -78,20 +72,18 @@ public class RappGui extends JFrame {
     protected JSpinner delayField_ = new JSpinner(model_forDelay);
     private JButton setupOption_btn = new JButton("Settings");
     private JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
-    private JButton learnOption_btn = new JButton("Analysis");
+    private JButton learnOption_btn;
     private JButton shootOption_btn = new JButton("Shoot Option");
     private JToggleButton pointAndShootOnOff_btn = new JToggleButton("ON");
     private JToggleButton LiveMode_btn = new JToggleButton("Start Live View");
-    private JButton SnapAndSave_btn = new JButton("Snap And Save Image");
-    private JButton showCenterSpot_btn = new JButton("Show Center Spot");
     protected JButton calibrate_btn = new JButton("Start Calibration!");
-    private JButton setAddRois_btn = new JButton("Set / Add Rois");
-    private JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
-    private JButton loadImage_btn = new JButton("Load An Image");
-    private JButton ShootonMarkpoint_btn = new JButton("Shoot on ROIs");
-    private JComboBox presetConfList_jcb ;
-    private JComboBox Sequence_jcb ;
-    private JComboBox groupConfList_jcb;
+    private JComboBox<String> presetConfList_jcb ;
+    private JComboBox<String> Sequence_jcb ;
+    private JComboBox<String> groupConfList_jcb;
+    private JLabel  jLabel_Image;
+    // the index of the images
+    private int pos = 0;
+
 
 
 
@@ -99,10 +91,23 @@ public class RappGui extends JFrame {
      * Constructor. Creates the main window for the Projector plugin. we use this Class for the main interface
      */
     public RappGui(CMMCore core, ScriptInterface app) throws Exception {
-        studio_= (MMStudio)  app;
-        //new RappController(core, app);
+        MMStudio studio_ = (MMStudio) app;
+        AcquisitionManager acqMgr_ = new AcquisitionManager();
+        AcquisitionWrapperEngine engine_ = new AcquisitionWrapperEngine(acqMgr_);
         rappController_ref =  new RappController(core, app);
-        SnapLiveManager_ = new SnapLiveManager( studio_, core);
+        SnapLiveManager_ = new SnapLiveManager(studio_, core);
+        this.options_ = new MMOptions();
+        try {
+            this.mainPrefs_ = Preferences.userNodeForPackage(this.getClass());
+        } catch (Exception var8) {
+            ReportingUtils.logError(var8);
+        }
+
+        try {
+            this.options_.loadSettings();
+        } catch (NullPointerException var9) {
+            ReportingUtils.logError(var9);
+        }
 
         try {
             setDefaultLookAndFeelDecorated(true);
@@ -119,17 +124,20 @@ public class RappGui extends JFrame {
 
 
         this.setLayout(new BorderLayout());
-        experimentLayout = new FlowLayout();
+        FlowLayout experimentLayout = new FlowLayout();
 
         ///////////// Left Panel Content ////////////////////////////
+        JPanel leftPanel = new JPanel();
         leftPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
         leftPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Menu" ,0,0,Font.getFont("arial"),  Color.white ));
 
+        leftPanel.setBackground(Color.decode("#34495e"));
         ///////////// we put all the component from the left into a Horizontal Box //////////////////////////////////
+        Box left_box = Box.createVerticalBox();
         leftPanel.add(left_box);
         left_box.setPreferredSize(new Dimension(150, 400));   // vertical box
-
+        left_box.setBackground(Color.decode("#34495e"));
 
         left_box.add(Box.createVerticalStrut(10));
 
@@ -137,6 +145,7 @@ public class RappGui extends JFrame {
         setupOption_btn.setMaximumSize(new Dimension(145, 50));
         left_box.add(setupOption_btn);
         setupOption_btn.setBackground(Color.decode("#ecf0f1"));
+        JButton learnOption_btn = new JButton("Analysis");
         setupOption_btn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 right_box_setup.setVisible(true);
@@ -221,11 +230,12 @@ public class RappGui extends JFrame {
 
         left_box.add(Box.createVerticalStrut(5));
         // Start or Stop the the Live Mode
-        SnapAndSave_btn.setMaximumSize(new Dimension(145, 50));
-        SnapAndSave_btn.setBackground(Color.decode("#3498db"));
-        SnapAndSave_btn.setForeground(Color.white);
-        left_box.add(SnapAndSave_btn);
-        SnapAndSave_btn.addActionListener(e -> {
+        JButton snapAndSave_btn = new JButton("Snap And Save Image");
+        snapAndSave_btn.setMaximumSize(new Dimension(145, 50));
+        snapAndSave_btn.setBackground(Color.decode("#3498db"));
+        snapAndSave_btn.setForeground(Color.white);
+        left_box.add(snapAndSave_btn);
+        snapAndSave_btn.addActionListener(e -> {
 
             rappController_ref.snapAndSaveImage();
 
@@ -234,6 +244,7 @@ public class RappGui extends JFrame {
         left_box.add(Box.createVerticalStrut(5));
 
         // Illuminate the center of the photo targeting device's range
+        JButton showCenterSpot_btn = new JButton("Show Center Spot");
         showCenterSpot_btn.setBackground(Color.decode("#3498db"));
         showCenterSpot_btn.setMaximumSize((new Dimension(145, 50)));
         left_box.add(showCenterSpot_btn);
@@ -242,24 +253,37 @@ public class RappGui extends JFrame {
                 rappController_ref.displayCenterSpot();
             }
         } );
-        left_box.setBackground(Color.decode("#34495e"));
-        leftPanel.setBackground(Color.decode("#34495e"));
+
 
         /////////////////////////////////// #Center Panel# //////////////////////////////////////////
-       centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
+        JPanel centerPanel = new JPanel();
+        centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
         centerPanel.setBorder(BorderFactory.createTitledBorder(
                BorderFactory.createEtchedBorder(), "View",0,0,Font.getFont("arial"),  Color.white));
         centerPanel.setBackground(Color.decode("#7f8fa6"));
+        try {
+            if (imageViewer_== null) {
+                imageViewer_= new ImageViewer();
+            }
+            imageViewer_.setPreferredSize(new Dimension(600, 600));
+            centerPanel.add(imageViewer_);
+            imageViewer_.setVisible(true);
+            imageViewer_.repaint();
+
+            //acquisition_.
+        } catch (Exception var2) {
+            ReportingUtils.showError(var2, "\nAcquistion window failed to open due to invalid or corrupted settings.\nTry resetting registry settings to factory defaults (Menu Tools|Options).");
+        }
+
+       // showImage(pos);
+      //  centerPanel.add(jLabel_Image);
+        //centerPanel.add(jLabel_Image);
+       // jLabel_Image.setPreferredSize(new Dimension(100, 100));
+
        //centerPanel.add(text1);
        //centerPanel.add(text2);
-
        //centerPanel.add(spiner);
 
-        //Make dragging a little faster but perhaps uglier.
-        //desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
-        desktop = new JDesktopPane(); //a specialized layered pane
-
-        //createFrame(); //create first "window"
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 SnapLiveWindow window = new SnapLiveWindow();
@@ -276,16 +300,8 @@ public class RappGui extends JFrame {
             }
         });
 
-
-       // setContentPane(desktop);
-        try {
-            new JLabel(core.getDeviceName(core.getCameraDevice()));
-            new JLabel(core.getDeviceName(core.getGalvoDevice()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         ////////////////////// #Mange Right panel an Content here#  /////////////////////////////////////
+        JPanel rightPanel = new JPanel();
         rightPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
         rightPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Options",0,0,Font.getFont("arial"),  Color.white));
@@ -304,7 +320,6 @@ public class RappGui extends JFrame {
         gbc.gridy = 0;
         gbc.insets = new Insets(8, 8, 8, 8);
         gbc.anchor = GridBagConstraints.EAST;
-      //  right_box_setup.setPreferredSize(new Dimension(300, 500));
         right_box_setup.setVisible(false);
 
 
@@ -371,8 +386,6 @@ public class RappGui extends JFrame {
                 boolean running = rappController_ref.isCalibrating();
                 if (running) {
                     rappController_ref.stopCalibration();
-                   // calibrate_btn.setText("is Calibrate");
-
                 } else {
                     rappController_ref.runCalibration();
                     calibrate_btn.setText("Stop calibration");
@@ -390,34 +403,34 @@ public class RappGui extends JFrame {
         gbc.gridy++;
         String comboBoxConfigGroup[] = rappController_ref.getConfigGroup();
         // / Liste of available Configurations Settings
-        groupConfList_jcb = new JComboBox(comboBoxConfigGroup);
+        groupConfList_jcb = new JComboBox<>(comboBoxConfigGroup);
         right_box_setup.add(groupConfList_jcb,gbc);
         groupConfList_jcb.setPreferredSize(new Dimension(100, 20));
 
         groupConfList_jcb.addActionListener(e -> {
-            String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
-            DefaultComboBoxModel model = new DefaultComboBoxModel(rappController_ref.getConfigPreset(GroupConfN));
-            DefaultComboBoxModel model2 = new DefaultComboBoxModel(rappController_ref.getConfigPreset(GroupConfN));
+            String GroupConfN = Objects.requireNonNull(groupConfList_jcb.getSelectedItem()).toString();
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(rappController_ref.getConfigPreset(GroupConfN));
+            DefaultComboBoxModel<String> model2 = new DefaultComboBoxModel<>(rappController_ref.getConfigPreset(GroupConfN));
             presetConfList_jcb.setModel(model);
             Sequence_jcb.setModel(model2);
             Sequence_jcb.addItem("Apply ALL Sequence");
         });
 
         gbc.gridy++;
-        presetConfList_jcb = new JComboBox(new DefaultComboBoxModel());
+        presetConfList_jcb = new JComboBox<>(new DefaultComboBoxModel<String>());
         right_box_setup.add(presetConfList_jcb, gbc);
         presetConfList_jcb.setPreferredSize(new Dimension(100, 20));
         presetConfList_jcb.addActionListener(e -> {
 
-            String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
-            String PresetName = presetConfList_jcb.getSelectedItem().toString();
+            String GroupConfN = Objects.requireNonNull(groupConfList_jcb.getSelectedItem()).toString();
+            String PresetName = Objects.requireNonNull(presetConfList_jcb.getSelectedItem()).toString();
             // # Here we Apply the set form the Group configuration Settings
             rappController_ref.ChangeConfigSet(GroupConfN, PresetName);
         });
 
 
         gbc.gridy++;
-        Sequence_jcb = new JComboBox(new DefaultComboBoxModel());
+        Sequence_jcb = new JComboBox<String>(new DefaultComboBoxModel<>());
         right_box_setup.add(Sequence_jcb, gbc);
         Sequence_jcb.setPreferredSize(new Dimension(100, 20));
         Sequence_jcb.addActionListener(e -> {
@@ -461,6 +474,7 @@ public class RappGui extends JFrame {
         });
 
         gbc1.gridy++;
+        JButton setAddRois_btn = new JButton("Set / Add Rois");
         right_box_shoot.add(setAddRois_btn, gbc1);
         setAddRois_btn.setPreferredSize(new Dimension(100,20));
         setAddRois_btn.addActionListener(e -> {
@@ -468,16 +482,19 @@ public class RappGui extends JFrame {
         });
 
         gbc1.gridy++;
-        right_box_shoot.add(ShootonMarkpoint_btn, gbc1);
-        ShootonMarkpoint_btn.setPreferredSize(new Dimension(100,20));
-        ShootonMarkpoint_btn.addActionListener(e -> rappController_ref.createMultiPointAndShootFromRoeList());
+        JButton shootonMarkpoint_btn = new JButton("Shoot on ROIs");
+        right_box_shoot.add(shootonMarkpoint_btn, gbc1);
+        shootonMarkpoint_btn.setPreferredSize(new Dimension(100,20));
+        shootonMarkpoint_btn.addActionListener(e -> rappController_ref.createMultiPointAndShootFromRoeList());
 
         gbc1.gridy++;
+        JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
         right_box_shoot.add(shootOnLearningP_btn, gbc1);
         shootOnLearningP_btn.setPreferredSize(new Dimension(100,20));
        // shootOnLearningP_btn.addActionListener(e -> rappController_ref.getListofROIs());
 
         gbc1.gridy++;
+        JButton loadImage_btn = new JButton("Load An Image");
         right_box_shoot.add(loadImage_btn, gbc1);
         loadImage_btn.setPreferredSize(new Dimension(100,20));
         loadImage_btn.addActionListener(e -> {
@@ -487,20 +504,46 @@ public class RappGui extends JFrame {
 
 
 
-        ///////////////////////////////////# Machine Learning Code # ///////////////////////////////////
+        ///////////////////////////////////# Machine Learning Code / Imaging # ///////////////////////////////////
         rightPanel.add(right_box_learning);
         right_box_learning.setPreferredSize(new Dimension(150, 150));   // vertical box
         right_box_learning.setVisible(false);
 
+
+
+
+
         //////////////////////////////////////# Imaging # ///////////////////////////////////////////////
-        buttonPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
-        buttonPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Imaging Options",0,0,Font.getFont("arial"),  Color.white));
+        JInternalFrame asButtonPanel = new JInternalFrame();
+        asButtonPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Imaging Options",0,0,Font.getFont("arial"),  Color.WHITE));
+        asButtonPanel.setVisible(true);
+        BasicInternalFrameUI AsButtonPanel_bi = (BasicInternalFrameUI) asButtonPanel.getUI();
+        AsButtonPanel_bi.setNorthPane(null);
+        asButtonPanel.setBackground(Color.decode("#34495e"));
 
+        try {
+            if (acquisition_== null) {
+                acquisition_= new AcqControlDlg(engine_, this.mainPrefs_, studio_, this.options_);
+            }
+            acquisition_.setPreferredSize(new Dimension(870, 900));
 
+            asButtonPanel.add(acquisition_);
+            acquisition_.setVisible(true);
+            acquisition_.repaint();
+
+            //acquisition_.
+        } catch (Exception var2) {
+            ReportingUtils.showError(var2, "\nAcquistion window failed to open due to invalid or corrupted settings.\nTry resetting registry settings to factory defaults (Menu Tools|Options).");
+        }
+
+        ///////////////////////// # Utilities # /////////////////////////////////////////////////////////
+        JSplitPane spliPaneLeft = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
         spliPaneLeft.setDividerLocation(170);
+        JSplitPane splitPaneRight = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, spliPaneLeft, rightPanel);
         splitPaneRight.setDividerLocation(600);
-        splitPaneButton.setDividerLocation(500);
+        JSplitPane splitPaneButton = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPaneRight, asButtonPanel);
+        splitPaneButton.setDividerLocation(450);
 
         this.add(splitPaneButton, BorderLayout.CENTER);
         spliPaneLeft.setOneTouchExpandable(true);
@@ -508,12 +551,11 @@ public class RappGui extends JFrame {
         splitPaneButton.setOneTouchExpandable(true);
 
         this.setBackground(Color.blue);
-        this.setSize(900, 700);
+        this.setSize(920, 800);
         this.setVisible(true);
 
         /// Avoid all App Close when close the Plugin GUI
         this.setDefaultCloseOperation(0); // DO_NOTHING_ON_CLOSE
-        this.setVisible(true);
         this.setLocation(32, 32);
         this.addWindowListener(new WindowAdapter() { // Windows Close button action event
             @Override
@@ -564,7 +606,7 @@ public class RappGui extends JFrame {
         SnapLiveWindow window = new SnapLiveWindow();
        //ImageWindow window =  SnapLiveManager_.getSnapLiveWindow();
         window.setVisible(true); //necessary as of 1.3
-        desktop.add(window );
+       //desktop.add(window );
 
 //        try {
 //            window.setSelected(true);
@@ -620,4 +662,8 @@ public class RappGui extends JFrame {
         };
     }
 
+    @Override
+    public void liveModeEnabled(boolean b) {
+
+    }
 }
