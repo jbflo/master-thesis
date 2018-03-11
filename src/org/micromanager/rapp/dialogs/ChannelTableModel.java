@@ -14,7 +14,8 @@ import javax.swing.table.TableModel;
 import org.micromanager.rapp.acquisition.*;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.MMOptions;
-import org.micromanager.utils.ChannelSpec;
+//import org.micromanager.utils.ChannelSpec;
+import org.micromanager.rapp.utils.*;
 import org.micromanager.utils.ReportingUtils;
 import org.micromanager.utils.TooltipTextMaker;
 
@@ -35,8 +36,8 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       "Configuration",
       "Exposure",
       "Z-offset",
-      "Z-stack",
-      "Skip Fr.",
+ //     "Z-stack",
+ //     "Skip Fr.",
       "Color"
    };
    private final String[] TOOLTIPS = new String[]{
@@ -99,11 +100,11 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
             return channels_.get(rowIndex).exposure;
          } else if (columnIndex == 3) {
             return channels_.get(rowIndex).zOffset;
+//         } else if (columnIndex == 4) {
+//            return channels_.get(rowIndex).doZStack;
+//         } else if (columnIndex == 5) {
+//            return channels_.get(rowIndex).skipFactorFrame;
          } else if (columnIndex == 4) {
-            return channels_.get(rowIndex).doZStack;
-         } else if (columnIndex == 5) {
-            return channels_.get(rowIndex).skipFactorFrame;
-         } else if (columnIndex == 6) {
             return channels_.get(rowIndex).color;
          }
       }
@@ -139,11 +140,11 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
          }
       } else if (col == 3) {
          channel.zOffset = ((Double) value);
+//      } else if (col == 4) {
+//         channel.doZStack = (Boolean) value;
+//      } else if (col == 5) {
+//         channel.skipFactorFrame = ((Integer) value);
       } else if (col == 4) {
-         channel.doZStack = (Boolean) value;
-      } else if (col == 5) {
-         channel.skipFactorFrame = ((Integer) value);
-      } else if (col == 6) {
          channel.color = (Color) value;
       }
 

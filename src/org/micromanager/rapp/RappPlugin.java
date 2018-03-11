@@ -97,11 +97,6 @@ public class RappPlugin implements MMPlugin  {
 
     }
 
-    public static ScriptInterface getApp_() {
-        return app_;
-    }
-
-
     @Override // MM
     public void show() {
         /// (Try) calling the Interface Class on Package TestGui

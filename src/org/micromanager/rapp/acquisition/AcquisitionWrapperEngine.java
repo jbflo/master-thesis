@@ -24,6 +24,7 @@ import org.micromanager.api.ImageCache;
 import org.micromanager.api.IAcquisitionEngine2010;
 import org.micromanager.api.PositionList;
 import org.micromanager.api.ScriptInterface;
+//import  org.micromanager.rapp.utils.SequenceSettings;
 import org.micromanager.api.SequenceSettings;
 import org.micromanager.events.EventManager;
 import org.micromanager.events.PipelineEvent;
@@ -33,7 +34,8 @@ import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.rapp.RappPlugin;
 import org.micromanager.utils.AcqOrderMode;
 import org.micromanager.utils.AutofocusManager;
-import org.micromanager.utils.ChannelSpec;
+import org.micromanager.rapp.utils.*;
+//import org.micromanager.utils.ChannelSpec;
 import org.micromanager.utils.ContrastSettings;
 import org.micromanager.utils.MMException;
 import org.micromanager.utils.NumberUtils;
@@ -47,6 +49,7 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
 
    private CMMCore core_;
    protected ScriptInterface studio_;
+   protected org.micromanager.rapp.utils.ScriptInterface studio_2;
    private PositionList posList_;
    private String zstage_;
    private double sliceZStepUm_;
@@ -89,7 +92,9 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
       acqManager_ = mgr;
       core_ = RappPlugin.getMMcore();
       studio_ = RappPlugin.getScripI();
+     // studio_2 = RappPlugin.getScripI();
       posList_ = new PositionList();
+
    }
 
    @Override
@@ -117,7 +122,7 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
       if (acquisitionEngine2010 == null) {
          acquisitionEngine2010 = studio_.getAcquisitionEngine2010();
       }
-      return acquisitionEngine2010;
+       return acquisitionEngine2010;
    }
 
    protected String runAcquisition(SequenceSettings acquisitionSettings, AcquisitionManager acqManager) {
@@ -158,6 +163,7 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
                  acquisitionSettings, true,
                  studio_.getPositionList(),
                  studio_.getAutofocusManager().getDevice());
+
          summaryMetadata_ = getAcquisitionEngine2010().getSummaryMetadata();
 //         org.micromanager.events.EventManager.post(
 //               new SummaryMetadataEvent(summaryMetadata_));
@@ -425,7 +431,7 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
       if (this.useChannels_) {
          for (ChannelSpec channel : channels_) {
             if (channel.useChannel) {
-               acquisitionSettings.channels.add(channel);
+            //   acquisitionSettings.channels.add(channel);
             }
          }
          acquisitionSettings.channelGroup = core_.getChannelGroup();
@@ -495,7 +501,7 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
       else
          useChannels_ = false;
          
-      channels_ = ss.channels;
+   //   channels_ = ss.channels;
        // no channel group
 
       //timeFirst = true means that time points are collected at each position      
@@ -860,32 +866,38 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
     * @deprecated
     */
     @Override
-    public boolean addChannel(String config, double exp, Boolean doZStack, double zOffset, ContrastSettings con8, ContrastSettings con16, int skip, Color c, boolean use) {
-        return addChannel(config, exp, doZStack, zOffset, con8, skip, c, use);
-    }
-    
+//    public boolean addChannel(String config, double exp, Boolean doZStack, double zOffset, ContrastSettings con8, ContrastSettings con16, int skip, Color c, boolean use) {
+//        return addChannel(config, exp, doZStack, zOffset, con8, skip, c, use);
+//    }
+   public boolean addChannel(String config, double exp, double zOffset, ContrastSettings con8, ContrastSettings con16,  Color c, boolean use) {
+      return addChannel(config, exp, zOffset, con8, c, use);
+   }
+
+
+    //    * @param doZStack
    /**
     * Add new channel if the current state of the hardware permits.
     *
     * @param config - configuration name
     * @param exp
-    * @param doZStack
+
     * @param zOffset
     * @param c
     * @return - true if successful
     */
    @Override
-   public boolean addChannel(String config, double exp, Boolean doZStack, double zOffset, ContrastSettings con, int skip, Color c, boolean use) {
+  // public boolean addChannel(String config, double exp, Boolean doZStack, double zOffset, ContrastSettings con, int skip, Color c, boolean use) {
+   public boolean addChannel(String config, double exp, double zOffset, ContrastSettings con,  Color c, boolean use) {
       if (isConfigAvailable(config)) {
          ChannelSpec channel = new ChannelSpec();
          channel.config = config;
          channel.useChannel = use;
          channel.exposure = exp;
-         channel.doZStack = doZStack;
+        // channel.doZStack = doZStack;
          channel.zOffset = zOffset;
          channel.contrast = con;
          channel.color = c;
-         channel.skipFactorFrame = skip;
+    //     channel.skipFactorFrame = skip;
          channels_.add(channel);
          return true;
       } else {
@@ -907,8 +919,11 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
     * @Deprecated
     */
    @Override
-   public boolean addChannel(String config, double exp, double zOffset, ContrastSettings c8, ContrastSettings c16, int skip, Color c) {
-      return addChannel(config, exp, true, zOffset, c16, skip, c, true);
+//   public boolean addChannel(String config, double exp, double zOffset, ContrastSettings c8, ContrastSettings c16, int skip, Color c) {
+//      return addChannel(config, exp, true, zOffset, c16, skip, c, true);
+//   }
+   public boolean addChannel(String config, double exp, double zOffset, ContrastSettings c8, ContrastSettings c16,  Color c) {
+      return addChannel(config, exp,  zOffset, c16,  c, true);
    }
 
    @Override

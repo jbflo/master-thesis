@@ -39,7 +39,9 @@ import org.micromanager.api.PositionList;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.utils.AutofocusManager;
-import org.micromanager.utils.ChannelSpec;
+//import org.micromanager.utils.ChannelSpec;
+import org.micromanager.rapp.utils.*;
+
 import org.micromanager.utils.ContrastSettings;
 import org.micromanager.utils.MMException;
 
@@ -355,8 +357,11 @@ public interface AcquisitionEngine {
    /**
     * @Deprecated
     */
-   public boolean addChannel(String name, double exp, double offset, 
-           ContrastSettings s8, ContrastSettings s16, int skip, Color c);
+//   public boolean addChannel(String name, double exp, double offset,
+//           ContrastSettings s8, ContrastSettings s16, int skip, Color c);
+
+   public boolean addChannel(String name, double exp, double offset,
+                             ContrastSettings s8, ContrastSettings s16, Color c);
 
 
    /*
@@ -371,9 +376,14 @@ public interface AcquisitionEngine {
     * @param c - Provides the preferred color for this channel
     * @param use - If false, this channel will not be included in the acquisition.
     */
-   public boolean addChannel(String name, double exp, Boolean doZStack,
-           double offset, ContrastSettings s8, ContrastSettings s16, int skip, Color c,
-           boolean use);
+//   public boolean addChannel(String name, double exp, Boolean doZStack,
+//           double offset, ContrastSettings s8, ContrastSettings s16, int skip, Color c,
+//           boolean use);
+
+   public boolean addChannel(String name, double exp,
+                             double offset, ContrastSettings s8, ContrastSettings s16,  Color c,
+                             boolean use);
+
 
    /*
     * Adds a channel to the acquisition settings.
@@ -386,10 +396,13 @@ public interface AcquisitionEngine {
     * @param c - Provides the preferred color for this channel
     * @param use - If false, this channel will not be included in the acquisition.
     */
-   public boolean addChannel(String name, double exp, Boolean doZStack,
-           double offset, ContrastSettings con, int skip, Color c,
-           boolean use);
+//   public boolean addChannel(String name, double exp, Boolean doZStack,
+//           double offset, ContrastSettings con, int skip, Color c,
+//           boolean use);
 
+   public boolean addChannel(String name, double exp,
+                             double offset, ContrastSettings con,  Color c,
+                             boolean use);
    /*
     * Sets whether image data should be stored to disk or to RAM during
     * acquisition.

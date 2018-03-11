@@ -19,7 +19,9 @@ import javax.swing.table.TableColumn;
 
 import org.micromanager.rapp.acquisition.*;
 //import org.micromanager.acquisition.AcquisitionEngine;
-import org.micromanager.utils.ChannelSpec;
+//import org.micromanager.utils.ChannelSpec;
+import org.micromanager.rapp.utils.*;
+
 import org.micromanager.utils.ColorEditor;
 import org.micromanager.utils.NumberUtils;
 import org.micromanager.utils.ReportingUtils;
@@ -81,13 +83,13 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
          // exposure and z offset
          text_.setText(NumberUtils.doubleToDisplayString((Double)value));
          return text_;
-      } else if (colIndex == 4) {
-         checkBox_.setSelected((Boolean) value);
-         return checkBox_;
-      } else if (colIndex == 5) {
-         // skip
-         text_.setText(NumberUtils.intToDisplayString((Integer) value));
-         return text_;
+//      } else if (colIndex == 4) {
+//         checkBox_.setSelected((Boolean) value);
+//         return checkBox_;
+//      } else if (colIndex == 5) {
+//         // skip
+//         text_.setText(NumberUtils.intToDisplayString((Integer) value));
+//         return text_;
       } else if (colIndex == 1) {
          // channel
          combo_.removeAllItems();
@@ -147,11 +149,11 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
             return combo_.getSelectedItem();
          } else if (editCol_ == 2 || editCol_ == 3) {
             return new Double(NumberUtils.displayStringToDouble(text_.getText()));
+//         } else if (editCol_ == 4) {
+//            return checkBox_.isSelected();
+//         } else if (editCol_ == 5) {
+//            return new Integer(NumberUtils.displayStringToInt(text_.getText()));
          } else if (editCol_ == 4) {
-            return checkBox_.isSelected();
-         } else if (editCol_ == 5) {
-            return new Integer(NumberUtils.displayStringToInt(text_.getText()));
-         } else if (editCol_ == 6) {
             Color c = colorLabel_.getBackground();
             return c;
          } else {

@@ -10,7 +10,9 @@ import javax.swing.table.TableCellRenderer;
 
 import org.micromanager.rapp.acquisition.*;
 //import org.micromanager.acquisition.AcquisitionEngine;
-import org.micromanager.utils.ChannelSpec;
+//import org.micromanager.utils.ChannelSpec;
+import org.micromanager.rapp.utils.*;
+
 import org.micromanager.utils.NumberUtils;
 
 /**
@@ -63,20 +65,20 @@ public class ChannelCellRenderer extends JLabel implements TableCellRenderer {
          setText(NumberUtils.doubleToDisplayString(channel.exposure));
       } else if (colIndex == 3) {
          setText(NumberUtils.doubleToDisplayString(channel.zOffset));
+//      } else if (colIndex == 4) {
+//         JCheckBox check = new JCheckBox("", channel.doZStack);
+//         check.setEnabled(acqEng_.isZSliceSettingEnabled() && table.isEnabled());
+//         if (isSelected) {
+//            check.setBackground(table.getSelectionBackground());
+//            check.setOpaque(true);
+//         } else {
+//            check.setOpaque(false);
+//            check.setBackground(table.getBackground());
+//         }
+//         return check;
+//      } else if (colIndex == 5) {
+//         setText(Integer.toString(channel.skipFactorFrame));
       } else if (colIndex == 4) {
-         JCheckBox check = new JCheckBox("", channel.doZStack);
-         check.setEnabled(acqEng_.isZSliceSettingEnabled() && table.isEnabled());
-         if (isSelected) {
-            check.setBackground(table.getSelectionBackground());
-            check.setOpaque(true);
-         } else {
-            check.setOpaque(false);
-            check.setBackground(table.getBackground());
-         }
-         return check;
-      } else if (colIndex == 5) {
-         setText(Integer.toString(channel.skipFactorFrame));
-      } else if (colIndex == 6) {
          setText("");
          setBackground(channel.color);
          setOpaque(true);

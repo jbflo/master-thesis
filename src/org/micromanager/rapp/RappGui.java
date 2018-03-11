@@ -11,13 +11,13 @@
 
 package org.micromanager.rapp;
 
-import ij.IJ;
-import ij.ImagePlus;
+
 import ij.gui.ImageWindow;
 import mmcorej.CMMCore;
 import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
 import org.micromanager.SnapLiveManager;
+import org.micromanager.rapp.CellSegmentation.*;
 //import org.micromanager.acquisition.AcquisitionManager;
 //import org.micromanager.acquisition.AcquisitionWrapperEngine;
 import org.micromanager.api.ScriptInterface;
@@ -43,8 +43,7 @@ import java.util.Objects;
 import java.util.prefs.Preferences;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
+import javax.swing.border.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 
@@ -52,6 +51,7 @@ public class RappGui extends JFrame implements LiveModeListener {
     private Preferences mainPrefs_;
     private MMOptions options_;
     private AcqControlDlg acquisition_;
+    private CellPointInternalFrame tablePointFrame;
     private static   ImageViewer imageViewer_;
     private static RappGui appInterface_;
     public static RappGui getInstance() {
@@ -70,12 +70,10 @@ public class RappGui extends JFrame implements LiveModeListener {
     private SpinnerModel model_forColorLevel = new SpinnerNumberModel(100, 0, 100, 1);
     private JSpinner exposureT_spinner = new JSpinner(model_forExposure);
     protected JSpinner delayField_ = new JSpinner(model_forDelay);
-    private JButton setupOption_btn = new JButton("Settings");
     private JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
-    private JButton learnOption_btn;
-    private JButton shootOption_btn = new JButton("Shoot Option");
-    private JToggleButton pointAndShootOnOff_btn = new JToggleButton("ON");
-    private JToggleButton LiveMode_btn = new JToggleButton("Start Live View");
+    private JInternalFrame asButtonPanel = new JInternalFrame();
+    private JToggleButton LiveMode_btn;
+    private JToggleButton pointAndShootOnOff_btn;
     protected JButton calibrate_btn = new JButton("Start Calibration!");
     private JComboBox<String> presetConfList_jcb ;
     private JComboBox<String> Sequence_jcb ;
@@ -109,13 +107,25 @@ public class RappGui extends JFrame implements LiveModeListener {
             ReportingUtils.logError(var9);
         }
 
-        try {
-            setDefaultLookAndFeelDecorated(true);
-            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+        try
+        {
+            for (UIManager.LookAndFeelInfo lnf :
+                    UIManager.getInstalledLookAndFeels()) {
+                if ("Metal".equals(lnf.getName())) {
+                    UIManager.setLookAndFeel(lnf.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) { /* Lazy handling this >.> */ }
+        UIManager.getDefaults().put("SplitPane.border", BorderFactory.createEmptyBorder());
 
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-           e.printStackTrace();
-        }
+//        try {
+//            setDefaultLookAndFeelDecorated(true);
+//            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+//
+//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+//           e.printStackTrace();
+//        }
 
         this.setTitle("Rapp UGA-42 Control");
 
@@ -126,6 +136,16 @@ public class RappGui extends JFrame implements LiveModeListener {
         this.setLayout(new BorderLayout());
         FlowLayout experimentLayout = new FlowLayout();
 
+        /////////////////////// TOp Panel //////////////////////////////////////
+        JPanel topPanel = new JPanel();
+        topPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#7f8fa6"), Color.decode("#192a56")));
+        topPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Welcome..." ,0,0,Font.getFont("arial"),  Color.decode("#192a56") ));
+        topPanel.setBackground(Color.decode("#ecf0f1"));
+
+        JLabel headerLabel = new JLabel("<html><font color='#34495e'> Interface for controlling microscope and laser devices system </font></html>" );
+        headerLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        topPanel.add(headerLabel);
         ///////////// Left Panel Content ////////////////////////////
         JPanel leftPanel = new JPanel();
         leftPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
@@ -141,64 +161,120 @@ public class RappGui extends JFrame implements LiveModeListener {
 
         left_box.add(Box.createVerticalStrut(10));
 
-        // SETUP BUTTON, OPEN THE BOX OPTION TO MANAGE SETUP
-        setupOption_btn.setMaximumSize(new Dimension(145, 50));
+        JToggleButton setupOption_btn =  createJButton("Settings");
+        JToggleButton learnOption_btn = createJButton("Analysis");
+        JToggleButton shootOption_btn = createJButton("Point And Shoot");
+        JToggleButton acquisitionOption_btn = createJButton("Sequence Acquisition");
+
+       // setupOption_btn.setMaximumSize(new Dimension(145, 50));
+
+
+
         left_box.add(setupOption_btn);
-        setupOption_btn.setBackground(Color.decode("#ecf0f1"));
-        JButton learnOption_btn = new JButton("Analysis");
+       // setupOption_btn.setBackground(Color.decode("#ecf0f1"));
+        setupOption_btn.setBorder(null);
         setupOption_btn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 right_box_setup.setVisible(true);
-                setupOption_btn.setBackground(Color.decode("#3498db"));
-                shootOption_btn.setBackground(Color.decode("#ecf0f1"));
-                learnOption_btn.setBackground(Color.decode("#ecf0f1"));
                 right_box_shoot.setVisible(false);
                 right_box_learning.setVisible(false);
+                asButtonPanel.setVisible(false);
+                if( setupOption_btn.isSelected() ){
+                    // We set the other button color just to distinguish
+                    setupOption_btn.setForeground(Color.decode("#2980b9"));
+                    shootOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    learnOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    acquisitionOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    // we do have to set the other bButton selection to False
+                    shootOption_btn.setSelected(false);
+                    learnOption_btn.setSelected(false);
+                    acquisitionOption_btn.setSelected(false);
+
+                }
 
             }
         } );
 
-        left_box.add(Box.createVerticalStrut(5));
+        left_box.add(Box.createVerticalStrut(15));
 
         // Leaning BUTTON, OPEN THE BOX OPTION TO MANAGE the MACHINE LEARNING PART
-        learnOption_btn.setMaximumSize(new Dimension(145, 50));
-        learnOption_btn.setBackground(Color.decode("#ecf0f1"));
         left_box.add(learnOption_btn);
         learnOption_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 right_box_learning.setVisible(true);
-                setupOption_btn.setBackground(Color.decode("#ecf0f1"));
-                shootOption_btn.setBackground(Color.decode("#ecf0f1"));
-                learnOption_btn.setBackground(Color.decode("#3498db"));
                 right_box_shoot.setVisible(false);
                 right_box_setup.setVisible(false);
+                asButtonPanel.setVisible(false);
+                if( learnOption_btn.isSelected() ){
+                    // We set the other button color just to distinguish
+                    learnOption_btn.setForeground(Color.decode("#2980b9"));
+                    shootOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    setupOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    acquisitionOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    // we do have to set the other bButton selection to False
+                    shootOption_btn.setSelected(false);
+                    setupOption_btn.setSelected(false);
+                    acquisitionOption_btn.setSelected(false);
+                }
             }
         });
+        left_box.add(Box.createVerticalStrut(15));
 
-        left_box.add(Box.createVerticalStrut(5));
+        left_box.add(acquisitionOption_btn);
+        acquisitionOption_btn.addActionListener(e -> {
+            asButtonPanel.setVisible(true);
+            right_box_shoot.setVisible(false);
+            right_box_setup.setVisible(false);
+            right_box_learning.setVisible(false);
+
+            if( acquisitionOption_btn.isSelected() ){
+                // We set the other button color just to distinguish
+                acquisitionOption_btn.setForeground(Color.decode("#2980b9"));
+                setupOption_btn.setForeground(Color.decode("#ecf0f1"));
+                learnOption_btn.setForeground(Color.decode("#ecf0f1"));
+                shootOption_btn.setForeground(Color.decode("#ecf0f1"));
+                // we do have to set the other bButton selection to False
+                setupOption_btn.setSelected(false);
+                learnOption_btn.setSelected(false);
+                shootOption_btn.setSelected(false);
+            }
+
+        });
+
+
+        left_box.add(Box.createVerticalStrut(15));
 
         // SHOOT BUTTON, OPEN THE BOX OPTION TO MANAGE SHOOT
-        shootOption_btn.setMaximumSize(new Dimension(145, 50));
-        shootOption_btn.setBackground(Color.decode("#ecf0f1"));
         left_box.add(shootOption_btn);
         shootOption_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 right_box_shoot.setVisible(true);
-                setupOption_btn.setBackground(Color.decode("#ecf0f1"));
-                shootOption_btn.setBackground(Color.decode("#3498db"));
-                learnOption_btn.setBackground(Color.decode("#ecf0f1"));
                 right_box_setup.setVisible(false);
                 right_box_learning.setVisible(false);
+                asButtonPanel.setVisible(false);
+                if( shootOption_btn.isSelected() ){
+                    shootOption_btn.setForeground(Color.decode("#2980b9"));
+                    setupOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    learnOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    acquisitionOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    // we do have to set the other Button selection to False
+                    setupOption_btn.setSelected(false);
+                    learnOption_btn.setSelected(false);
+                    acquisitionOption_btn.setSelected(false);
+                }
+
+
             }
         } );
 
         left_box.add(Box.createVerticalStrut(15));
-        left_box.add( new JSeparator(SwingConstants.HORIZONTAL) , left_box,7);
-        left_box.getComponent(7).setPreferredSize(new Dimension(150,2));
+        left_box.add( new JSeparator(SwingConstants.HORIZONTAL) , left_box,8);
+        left_box.getComponent(8).setPreferredSize(new Dimension(150,2));
 
 
         // Start or Stop the the Live Mode
+        LiveMode_btn = new JToggleButton("Start Live View");
         LiveMode_btn.setMaximumSize(new Dimension(145, 50));
         LiveMode_btn.setBackground(Color.decode("#27ae60"));
         LiveMode_btn.setForeground(Color.white);
@@ -275,15 +351,6 @@ public class RappGui extends JFrame implements LiveModeListener {
             ReportingUtils.showError(var2, "\nAcquistion window failed to open due to invalid or corrupted settings.\nTry resetting registry settings to factory defaults (Menu Tools|Options).");
         }
 
-       // showImage(pos);
-      //  centerPanel.add(jLabel_Image);
-        //centerPanel.add(jLabel_Image);
-       // jLabel_Image.setPreferredSize(new Dimension(100, 100));
-
-       //centerPanel.add(text1);
-       //centerPanel.add(text2);
-       //centerPanel.add(spiner);
-
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 SnapLiveWindow window = new SnapLiveWindow();
@@ -304,10 +371,10 @@ public class RappGui extends JFrame implements LiveModeListener {
         JPanel rightPanel = new JPanel();
         rightPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
         rightPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Options",0,0,Font.getFont("arial"),  Color.white));
+                BorderFactory.createEtchedBorder(), "Options",0,0,Font.getFont("arial"),  Color.decode("#192a56")));
 
         ////////////////////////////////  right_box_Settings Content //////////////////////////////////
-        rightPanel.setBackground(Color.decode("#34495e"));
+        rightPanel.setBackground(Color.decode("#ecf0f1"));
         right_box_setup.setBackground(Color.decode("#34495e"));
         right_box_learning.setBackground(Color.decode("#34495e"));
         right_box_shoot.setBackground(Color.decode("#34495e"));
@@ -455,17 +522,19 @@ public class RappGui extends JFrame implements LiveModeListener {
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font color='white'>ROIs Manager       :</font></html>"), gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("<html><font color='white'>ROis Point  :</font></html>"),gbc1);
+        right_box_shoot.add(new JLabel("<html><font color='white'>Shoot laser on point from ROis Manager  :</font></html>"),gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("<html><font color='white'>Leaning Point   :</font></html>"), gbc1);
+        right_box_shoot.add(new JLabel("<html><font color='white'>Load Cell detection point  :</font></html>"),gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("<html><font color='white'>Load An Image  :</font></html>"),gbc1);
+        right_box_shoot.add(new JLabel("<html><font color='white'>Shoot laser on point from cell detection :</font></html>"), gbc1);
+
 
         gbc1.anchor = GridBagConstraints.WEST;
         gbc1.gridy = 0;
         gbc1.gridx++;
         gbc1.gridwidth = GridBagConstraints.REMAINDER;
 
+        pointAndShootOnOff_btn = new JToggleButton("ON");
         right_box_shoot.add( pointAndShootOnOff_btn, gbc1);
         pointAndShootOnOff_btn.setPreferredSize(new Dimension(100,20));
         pointAndShootOnOff_btn.addActionListener(e -> {
@@ -488,19 +557,51 @@ public class RappGui extends JFrame implements LiveModeListener {
         shootonMarkpoint_btn.addActionListener(e -> rappController_ref.createMultiPointAndShootFromRoeList());
 
         gbc1.gridy++;
+        JButton loadImage_btn = new JButton("Load point");
+        right_box_shoot.add(loadImage_btn, gbc1);
+        loadImage_btn.setPreferredSize(new Dimension(100,20));
+        loadImage_btn.addActionListener(e -> {
+//            ImagePlus image = IJ.openImage(path.concat("Resources/simCell2DPNG.PNG"));
+//            image.show();
+        });
+
+        gbc1.gridy++;
         JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
         right_box_shoot.add(shootOnLearningP_btn, gbc1);
         shootOnLearningP_btn.setPreferredSize(new Dimension(100,20));
        // shootOnLearningP_btn.addActionListener(e -> rappController_ref.getListofROIs());
 
-        gbc1.gridy++;
-        JButton loadImage_btn = new JButton("Load An Image");
-        right_box_shoot.add(loadImage_btn, gbc1);
-        loadImage_btn.setPreferredSize(new Dimension(100,20));
-        loadImage_btn.addActionListener(e -> {
-            ImagePlus image = IJ.openImage(path.concat("Resources/simCell2DPNG.PNG"));
-            image.show();
-        });
+        // Point Table Internal Frame
+        try {
+            if (tablePointFrame == null) {
+                tablePointFrame= new CellPointInternalFrame();
+            }
+            tablePointFrame.setPreferredSize(new Dimension(700, 370));
+            tablePointFrame.setVisible(true);
+            right_box_shoot.add(tablePointFrame);
+            tablePointFrame.repaint();
+
+            //acquisition_.
+        } catch (Exception var2) {
+            ReportingUtils.showError(var2, "\nFrame invalid or corrupted settings.\nTry resetting .");
+        }
+
+        JInternalFrame buttonFrame = new JInternalFrame();
+        try {
+            BasicInternalFrameUI bi = (BasicInternalFrameUI)buttonFrame.getUI();
+            bi.setNorthPane(null);
+//            if (tablePointFrame == null) {
+//                tablePointFrame= new CellPointInternalFrame();
+//            }
+            buttonFrame.setPreferredSize(new Dimension(200, 370));
+            buttonFrame.setVisible(true);
+            right_box_shoot.add(buttonFrame);
+            buttonFrame.repaint();
+
+            //acquisition_.
+        } catch (Exception var2) {
+            ReportingUtils.showError(var2, "\nFrame invalid or corrupted settings.\nTry resetting .");
+        }
 
 
 
@@ -514,7 +615,10 @@ public class RappGui extends JFrame implements LiveModeListener {
 
 
         //////////////////////////////////////# Imaging # ///////////////////////////////////////////////
-        JInternalFrame asButtonPanel = new JInternalFrame();
+
+        rightPanel.add(asButtonPanel);
+        asButtonPanel.setPreferredSize(new Dimension(910, 580));   // vertical box
+        asButtonPanel.setVisible(false);
         asButtonPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Imaging Options",0,0,Font.getFont("arial"),  Color.WHITE));
         asButtonPanel.setVisible(true);
@@ -526,10 +630,9 @@ public class RappGui extends JFrame implements LiveModeListener {
             if (acquisition_== null) {
                 acquisition_= new AcqControlDlg(engine_, this.mainPrefs_, studio_, this.options_);
             }
-            acquisition_.setPreferredSize(new Dimension(870, 900));
-
-            asButtonPanel.add(acquisition_);
+            acquisition_.setPreferredSize(new Dimension(900, 580));
             acquisition_.setVisible(true);
+            asButtonPanel.add(acquisition_);
             acquisition_.repaint();
 
             //acquisition_.
@@ -538,20 +641,17 @@ public class RappGui extends JFrame implements LiveModeListener {
         }
 
         ///////////////////////// # Utilities # /////////////////////////////////////////////////////////
-        JSplitPane spliPaneLeft = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
-        spliPaneLeft.setDividerLocation(170);
-        JSplitPane splitPaneRight = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, spliPaneLeft, rightPanel);
-        splitPaneRight.setDividerLocation(600);
-        JSplitPane splitPaneButton = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPaneRight, asButtonPanel);
-        splitPaneButton.setDividerLocation(450);
 
-        this.add(splitPaneButton, BorderLayout.CENTER);
-        spliPaneLeft.setOneTouchExpandable(true);
-        splitPaneRight.setOneTouchExpandable(true);
-        splitPaneButton.setOneTouchExpandable(true);
+        JSplitPane splitPaneBody = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        JSplitPane splitPaneTop = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, splitPaneBody );
+        splitPaneTop.setDividerLocation(80);
+        splitPaneBody.setDividerLocation(200);
+        this.add(splitPaneTop,BorderLayout.CENTER);
+        splitPaneTop.setOneTouchExpandable(false);
+        splitPaneTop.setContinuousLayout(false);
 
         this.setBackground(Color.blue);
-        this.setSize(920, 800);
+        this.setSize(1150, 700);
         this.setVisible(true);
 
         /// Avoid all App Close when close the Plugin GUI
@@ -564,6 +664,37 @@ public class RappGui extends JFrame implements LiveModeListener {
             }
         });
     }
+    private JToggleButton createJButton(String text) {
+        JToggleButton button = new JToggleButton(text);
+
+        button.setForeground(Color.decode("#ecf0f1"));
+        button.setBorder(null);
+        button.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setContentAreaFilled(false);
+        ImageIcon icon = new ImageIcon(path.concat("Resources/Images/" + text + ".png"));
+        Image img = icon.getImage();
+        Image newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        button.setIcon(new ImageIcon(newimg));
+        button.setSelectedIcon(new ImageIcon(newimg));
+//        button.addActionListener(e -> {
+//            if( button.isSelected() ){
+//                button.setUI(new MetalToggleButtonUI() {
+//                    @Override
+//                    protected Color getSelectColor() {
+//                        return Color.decode("#2980b9");
+//                    }
+//                });
+//                button.setForeground(Color.decode("#2980b9"));
+//            }
+//            else {  button.setForeground(Color.decode("#ecf0f1"));}
+//        });
+
+        return button;
+    }
+
+
     /**
      * Shows the GUI, which is a singleton.
      * @param core MMCore
@@ -600,23 +731,6 @@ public class RappGui extends JFrame implements LiveModeListener {
         }
         else  GUIUtils.recallPosition(appInterface_);
     }
-
-    //Create a new internal frame.
-    protected void createFrame() {
-        SnapLiveWindow window = new SnapLiveWindow();
-       //ImageWindow window =  SnapLiveManager_.getSnapLiveWindow();
-        window.setVisible(true); //necessary as of 1.3
-       //desktop.add(window );
-
-//        try {
-//            window.setSelected(true);
-//        } catch (java.beans.PropertyVetoException e) {}
-    }
-
-
-
-
-
 
     /**
      * Sets the Point and Shoot "On and Off" buttons to a given state.

@@ -41,7 +41,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.micromanager.api.ImageCache;
+//import org.micromanager.rapp.utils.ImageCache;
 import org.micromanager.api.ImageCacheListener;
+//import org.micromanager.rapp.utils.ImageCacheListener;
 import org.micromanager.api.TaggedImageStorage;
 import org.micromanager.utils.MDUtils;
 import org.micromanager.utils.MMException;
@@ -57,8 +59,7 @@ import org.micromanager.utils.ReportingUtils;
  * @author arthur
  */
 public class MMImageCache implements ImageCache {
-   public final List<ImageCacheListener> imageStorageListeners_ = 
-           Collections.synchronizedList(new ArrayList<ImageCacheListener>());
+   public  List<ImageCacheListener> imageStorageListeners_ ;
    private TaggedImageStorage imageStorage_;
    private Set<String> changingKeys_;
    private JSONObject firstTags_;
@@ -91,6 +92,7 @@ public class MMImageCache implements ImageCache {
       imageStorage_ = imageStorage;
       changingKeys_ = new HashSet<String>();
       listenerExecutor_ = Executors.newFixedThreadPool(1);
+      imageStorageListeners_  = Collections.synchronizedList(new ArrayList<ImageCacheListener>());
    }
    public String getDiskLocation() {
       return imageStorage_.getDiskLocation();
@@ -99,8 +101,11 @@ public class MMImageCache implements ImageCache {
    public void finished() {
       imageStorage_.finished();
       String path = getDiskLocation();
+      System.out.println(path);
+      System.out.println(imageStorageListeners_.toArray());
       synchronized (imageStorageListeners_) {
          for (ImageCacheListener l : imageStorageListeners_) {
+            System.out.println(l.toString());
             l.imagingFinished(path);
          }
       }

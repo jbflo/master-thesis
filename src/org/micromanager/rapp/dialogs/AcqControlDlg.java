@@ -57,7 +57,8 @@ import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
 import org.micromanager.utils.AcqOrderMode;
-import org.micromanager.utils.ChannelSpec;
+import org.micromanager.rapp.utils.*;
+//import org.micromanager.utils.ChannelSpec;
 import org.micromanager.utils.ColorEditor;
 import org.micromanager.utils.ColorRenderer;
 import org.micromanager.utils.ContrastSettings;
@@ -186,6 +187,7 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
    private final CardLayout framesSubPanelLayout_;
    private static final String DEFAULT_FRAMES_PANEL_NAME = "Default frames panel";
    private static final String OVERRIDE_FRAMES_PANEL_NAME = "Override frames panel";
+   protected JPanel buttonPanel;
    private CheckBoxPanel channelsPanel_;
    private CheckBoxPanel slicesPanel_;
    protected CheckBoxPanel positionsPanel_;
@@ -268,11 +270,8 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
       }
 
       thePanel.setTitleFont(new Font("Dialog", Font.BOLD, 12));
+      thePanel.setForeground(Color.decode("#34495e"));
       panelList_.add(thePanel);
-      thePanel.setBackground(Color.decode("#34495e"));
-      for(int in =0; in<panelList_.size(); in++) {
-         panelList_.get(in).setBackground(Color.decode("#34495e"));
-      }
       thePanel.setBounds(left, top, right - left, bottom - top);
       dayBorder_ = BorderFactory.createEtchedBorder();
       nightBorder_ = BorderFactory.createEtchedBorder(Color.gray, Color.darkGray);
@@ -295,17 +294,18 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
    public final void createEmptyPanels() {
       panelList_ = new ArrayList<JPanel>();
 
-      //framesPanel_ = (CheckBoxPanel) createPanel("Time points", 5, 308, 220, 451, true); // (text, left, top, right, bottom)
-      positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 160, 705, 275, true);
-     // slicesPanel_ = (CheckBoxPanel) createPanel("Z-stacks (slices)", 5, 156, 220, 306, true);
-      acquisitionOrderPanel_ = createPanel("Acquisition order", 515, 275, 705, 375);
-
-      summaryPanel_ = createPanel("Summary", 515, 1, 705, 160);
-      afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 160, 875, 275, true);
-
       channelsPanel_ = (CheckBoxPanel) createPanel("Channels", 3, 1, 510, 160, true);
-      savePanel_ = (CheckBoxPanel) createPanel("Save images", 3, 160, 510, 275, true);
-      commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 275, 510,370,false);
+      summaryPanel_ = createPanel("Summary", 515, 1, 705, 160);
+      buttonPanel =  createPanel("Run" , 715, 1, 875, 285);
+
+      //framesPanel_ = (CheckBoxPanel) createPanel("Time points", 5, 308, 220, 451, true); // (text, left, top, right, bottom)
+      savePanel_ = (CheckBoxPanel) createPanel("Save images", 3, 170, 510, 285, true);
+      positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 170, 705, 285, true);
+      afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
+
+      // slicesPanel_ = (CheckBoxPanel) createPanel("Z-stacks (slices)", 5, 156, 220, 306, true);
+      acquisitionOrderPanel_ = createPanel("Acquisition order", 515, 295, 705, 395);
+      commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 295, 510,395,false);
 
    }
 
@@ -378,23 +378,15 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
       acqPrefs_ = root.node(root.absolutePath() + "/" + ACQ_SETTINGS_NODE);
       colorPrefs_ = root.node(root.absolutePath() + "/" + COLOR_SETTINGS_NODE);
       exposurePrefs_ = root.node(root.absolutePath() + "/" + EXPOSURE_SETTINGS_NODE);
-//      setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
       numberFormat_ = NumberFormat.getNumberInstance();
 
-//      addWindowListener(new WindowAdapter() {
-//
-//         @Override
-//         public void windowClosing(final WindowEvent e) {
-//            close();
-//         }
-//      });
       acqEng_ = acqEng;
       acqEng.addSettingsListener(this);
-      //getContentPane().setLayout(null);
-      setResizable(true);
+      getContentPane().setLayout(null);
+   //   setResizable(true);
     // setTitle("Multi-Dimensional Acquisition");
-      setBackground(guiColors_.background.get(studio_.getBackgroundStyle()));
+     // setBackground(guiColors_.background.get(studio_.getBackgroundStyle()));
       BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
       bi.setNorthPane(null);
       createEmptyPanels();
@@ -620,7 +612,7 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
 
       acqOrderBox_ = new JComboBox();
       acqOrderBox_.setFont(new Font("", Font.PLAIN, 10));
-      acqOrderBox_.setBounds(2, 26, 195, 22);
+      acqOrderBox_.setBounds(10, 36, 175, 22);
       acquisitionOrderPanel_.add(acqOrderBox_);
 
       acqOrderModes_ = new AcqOrderMode[4];
@@ -959,7 +951,8 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
       commentTextArea_.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
 
 
-      this.setBackground(Color.decode("#34495e"));
+//      this.setBackground(Color.decode("#34495e"));
+//      getContentPane().setBackground(Color.decode("#34495e"));
       // Main buttons
       final JButton closeButton = new JButton();
       closeButton.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -974,8 +967,8 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
          }
       });
       closeButton.setText("Close");
-      closeButton.setBounds(432, 10, 80, 22);
-     // getContentPane().add(closeButton);
+      closeButton.setBounds(40, 40, 80, 22);
+     // buttonPanel.add(closeButton);
 
       acquireButton_ = new JButton();
       acquireButton_.setMargin(new Insets(-9, -9, -9, -9));
@@ -992,8 +985,8 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
          }
       });
       acquireButton_.setText("Acquire!");
-      acquireButton_.setBounds(755, 10, 80, 22);
-      getContentPane().add(acquireButton_);
+      acquireButton_.setBounds(50, 25, 80, 30);
+      buttonPanel.add(acquireButton_);
 
 
       final JButton stopButton = new JButton();
@@ -1006,8 +999,8 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
       });
       stopButton.setText("Stop");
       stopButton.setFont(new Font("Arial", Font.BOLD, 12));
-      stopButton.setBounds(755, 68, 80, 22);
-      getContentPane().add(stopButton);
+      stopButton.setBounds(50, 60, 80, 30);
+      buttonPanel.add(stopButton);
 
 
 
@@ -1023,8 +1016,8 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
       });
 
       loadButton.setText("Load...");
-      loadButton.setBounds(755, 102, 80, 22);
-      getContentPane().add(loadButton);
+      loadButton.setBounds(50, 95, 80, 30);
+      buttonPanel.add(loadButton);
       loadButton.setToolTipText("Load acquisition settings");
 
       final JButton saveAsButton = new JButton();
@@ -1038,19 +1031,19 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
       });
       saveAsButton.setToolTipText("Save current acquisition settings as");
       saveAsButton.setText("Save as...");
-      saveAsButton.setBounds(755, 126, 80, 22);
+      saveAsButton.setBounds(50, 130, 80, 30);
       saveAsButton.setMargin(new Insets(-5, -5, -5, -5));
-      getContentPane().add(saveAsButton);
+      buttonPanel.add(saveAsButton);
 
       final JButton advancedButton = new JButton();
       advancedButton.setFont(new Font("Arial", Font.PLAIN, 10));
       advancedButton.addActionListener(e -> {
-      //   showAdvancedDialog();
-     //    updateGUIContents();
+         showAdvancedDialog();
+         updateGUIContents();
       });
       advancedButton.setText("Advanced");
-      advancedButton.setBounds(755, 45, 80, 22);
-      getContentPane().add(advancedButton);
+      advancedButton.setBounds(50, 165, 80, 30);
+      buttonPanel.add(advancedButton);
 
       // update GUI contents
       // -------------------
@@ -1302,7 +1295,7 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
          String name = acqPrefs_.get(CHANNEL_NAME_PREFIX + i, "Undefined");
          boolean use = acqPrefs_.getBoolean(CHANNEL_USE_PREFIX + i, true);
          double exp = acqPrefs_.getDouble(CHANNEL_EXPOSURE_PREFIX + i, 0.0);
-         Boolean doZStack = acqPrefs_.getBoolean(CHANNEL_DOZSTACK_PREFIX + i, true);
+     //    Boolean doZStack = acqPrefs_.getBoolean(CHANNEL_DOZSTACK_PREFIX + i, true);
          double zOffset = acqPrefs_.getDouble(CHANNEL_ZOFFSET_PREFIX + i, 0.0);
          ContrastSettings con = new ContrastSettings();
          con.min = acqPrefs_.getInt(CHANNEL_CONTRAST_MIN_PREFIX + i, defaultChannel.contrast.min);
@@ -1311,9 +1304,10 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
          int r = acqPrefs_.getInt(CHANNEL_COLOR_R_PREFIX + i, defaultChannel.color.getRed());
          int g = acqPrefs_.getInt(CHANNEL_COLOR_G_PREFIX + i, defaultChannel.color.getGreen());
          int b = acqPrefs_.getInt(CHANNEL_COLOR_B_PREFIX + i, defaultChannel.color.getBlue());
-         int skip = acqPrefs_.getInt(CHANNEL_SKIP_PREFIX + i, defaultChannel.skipFactorFrame);
+      //   int skip = acqPrefs_.getInt(CHANNEL_SKIP_PREFIX + i, defaultChannel.skipFactorFrame);
          Color c = new Color(r, g, b);
-         acqEng_.addChannel(name, exp, doZStack, zOffset, con, skip, c, use);
+         //acqEng_.addChannel(name, exp, doZStack, zOffset, con, skip, c, use);
+         acqEng_.addChannel(name, exp, zOffset, con, c, use);
       }
 
       // Restore Column Width and Column order
@@ -1368,7 +1362,7 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
          acqPrefs_.put(CHANNEL_NAME_PREFIX + i, channel.config);
          acqPrefs_.putBoolean(CHANNEL_USE_PREFIX + i, channel.useChannel);
          acqPrefs_.putDouble(CHANNEL_EXPOSURE_PREFIX + i, channel.exposure);
-         acqPrefs_.putBoolean(CHANNEL_DOZSTACK_PREFIX + i, channel.doZStack);
+        // acqPrefs_.putBoolean(CHANNEL_DOZSTACK_PREFIX + i, channel.doZStack);
          acqPrefs_.putDouble(CHANNEL_ZOFFSET_PREFIX + i, channel.zOffset);
          acqPrefs_.putInt(CHANNEL_CONTRAST_MIN_PREFIX + i, channel.contrast.min);
          acqPrefs_.putInt(CHANNEL_CONTRAST_MAX_PREFIX + i, channel.contrast.max);
@@ -1376,7 +1370,7 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
          acqPrefs_.putInt(CHANNEL_COLOR_R_PREFIX + i, channel.color.getRed());
          acqPrefs_.putInt(CHANNEL_COLOR_G_PREFIX + i, channel.color.getGreen());
          acqPrefs_.putInt(CHANNEL_COLOR_B_PREFIX + i, channel.color.getBlue());
-         acqPrefs_.putInt(CHANNEL_SKIP_PREFIX + i, channel.skipFactorFrame);
+       //  acqPrefs_.putInt(CHANNEL_SKIP_PREFIX + i, channel.skipFactorFrame);
       }
 
       //Save custom time intervals
@@ -1551,12 +1545,12 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
             if (!list.get(i).useChannel )
                continue;
             int num = 1;
-            if (frames) {
-               num *= Math.max(1,numFrames / (list.get(i).skipFactorFrame + 1));
-            }
-            if (slices && list.get(i).doZStack) {
-               num *= numSlices;
-            }
+//            if (frames) {
+//               num *= Math.max(1,numFrames / (list.get(i).skipFactorFrame + 1));
+//            }
+//            if (slices && list.get(i).doZStack) {
+//               num *= numSlices;
+//            }
             if (positions) {
                num *= numPositions;
             }
