@@ -34,7 +34,7 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
    public final String[] COLUMN_NAMES = new String[]{
       "Use?",
       "Configuration",
-      "Exposure",
+      "Exposure (ms) ",
     //  "Z-offset",
  //     "Z-stack",
  //     "Skip Fr.",

@@ -383,8 +383,8 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
       }
    }
 
-   public SequenceSettings getSequenceSettings() {
-      SequenceSettings acquisitionSettings = new SequenceSettings();
+   public org.micromanager.rapp.utils.SequenceSettings getSequenceSettings() {
+      org.micromanager.rapp.utils.SequenceSettings acquisitionSettings = new org.micromanager.rapp.utils.SequenceSettings();
 
       updateChannelCameras();
 
@@ -431,7 +431,7 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
       if (this.useChannels_) {
          for (ChannelSpec channel : channels_) {
             if (channel.useChannel) {
-            //   acquisitionSettings.channels.add(channel);
+               acquisitionSettings.channels.add(channel);
             }
          }
          acquisitionSettings.channelGroup = core_.getChannelGroup();
@@ -457,7 +457,7 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
       acquisitionSettings.comment = comment_;
       acquisitionSettings.usePositionList = this.useMultiPosition_;
      // acquisitionSettings.cameraTimeout = cameraTimeout_;
-      return acquisitionSettings;
+      return  acquisitionSettings;
    }
 
    public void setSequenceSettings(SequenceSettings ss) {
@@ -894,7 +894,7 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
          channel.useChannel = use;
          channel.exposure = exp;
         // channel.doZStack = doZStack;
-         channel.zOffset = zOffset;
+       //  channel.zOffset = zOffset;
          channel.contrast = con;
          channel.color = c;
     //     channel.skipFactorFrame = skip;

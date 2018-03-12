@@ -3,10 +3,12 @@ package org.micromanager.rapp.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import javax.sound.midi.Sequence;
 import java.util.ArrayList;
 //import org.micromanager.utils.ChannelSpec;
 
-public class SequenceSettings {
+public class SequenceSettings extends org.micromanager.api.SequenceSettings {
     public static final double Version = 1.0D;
     public int numFrames = 1;
     public double intervalMs = 0.0D;
