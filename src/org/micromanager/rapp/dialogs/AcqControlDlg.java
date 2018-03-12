@@ -1818,7 +1818,7 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
       updateSavingTypeButtons();
 
       // update summary
-    //  summaryTextArea_.setText(acqEng_.getVerboseSummary());
+      summaryTextArea_.setText(acqEng_.getVerboseSummary());
 
       disableGUItoSettings_ = false;
    }

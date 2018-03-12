@@ -63,9 +63,9 @@ public class ChannelCellRenderer extends JLabel implements TableCellRenderer {
          setText(channel.config);
       } else if (colIndex == 2) {
          setText(NumberUtils.doubleToDisplayString(channel.exposure));
-      } else if (colIndex == 3) {
-         setText(NumberUtils.doubleToDisplayString(channel.zOffset));
-//      } else if (colIndex == 4) {
+//      } else if (colIndex == 3) {
+//         setText(NumberUtils.doubleToDisplayString(channel.zOffset));
+////      } else if (colIndex == 4) {
 //         JCheckBox check = new JCheckBox("", channel.doZStack);
 //         check.setEnabled(acqEng_.isZSliceSettingEnabled() && table.isEnabled());
 //         if (isSelected) {
@@ -78,7 +78,7 @@ public class ChannelCellRenderer extends JLabel implements TableCellRenderer {
 //         return check;
 //      } else if (colIndex == 5) {
 //         setText(Integer.toString(channel.skipFactorFrame));
-      } else if (colIndex == 4) {
+      } else if (colIndex == 3) {
          setText("");
          setBackground(channel.color);
          setOpaque(true);

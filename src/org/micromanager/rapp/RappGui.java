@@ -331,42 +331,6 @@ public class RappGui extends JFrame implements LiveModeListener {
         } );
 
 
-        /////////////////////////////////// #Center Panel# //////////////////////////////////////////
-        JPanel centerPanel = new JPanel();
-        centerPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
-        centerPanel.setBorder(BorderFactory.createTitledBorder(
-               BorderFactory.createEtchedBorder(), "View",0,0,Font.getFont("arial"),  Color.white));
-        centerPanel.setBackground(Color.decode("#7f8fa6"));
-        try {
-            if (imageViewer_== null) {
-                imageViewer_= new ImageViewer();
-            }
-            imageViewer_.setPreferredSize(new Dimension(600, 600));
-            centerPanel.add(imageViewer_);
-            imageViewer_.setVisible(true);
-            imageViewer_.repaint();
-
-            //acquisition_.
-        } catch (Exception var2) {
-            ReportingUtils.showError(var2, "\nAcquistion window failed to open due to invalid or corrupted settings.\nTry resetting registry settings to factory defaults (Menu Tools|Options).");
-        }
-
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                SnapLiveWindow window = new SnapLiveWindow();
-                ImageWindow snap =  SnapLiveManager_.getSnapLiveWindow();
-               // window.add(snap);
-                //desktop.add(window);
-               // window.setVisible(true); //necessary as of 1.3
-                //window.setPreferredSize(new Dimension(300, 400));
-                //centerPanel.add(window);
-                try {
-                    window.setSelected(true);
-                } catch (java.beans.PropertyVetoException e) {}
-
-            }
-        });
-
         ////////////////////// #Mange Right panel an Content here#  /////////////////////////////////////
         JPanel rightPanel = new JPanel();
         rightPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
@@ -605,19 +569,31 @@ public class RappGui extends JFrame implements LiveModeListener {
 
 
 
-        ///////////////////////////////////# Machine Learning Code / Imaging # ///////////////////////////////////
+        /////////////////////////////////// #Image Viewer Center Panel# //////////////////////////////////////////JPanel centerPanel = new JPanel();
+
         rightPanel.add(right_box_learning);
-        right_box_learning.setPreferredSize(new Dimension(150, 150));   // vertical box
+        right_box_learning.setPreferredSize(new Dimension(910, 575));   // vertical box
         right_box_learning.setVisible(false);
 
+        try {
+            if (imageViewer_== null) {
+                imageViewer_= new ImageViewer();
+            }
+            imageViewer_.setPreferredSize(new Dimension(910, 575));
+            right_box_learning.add(imageViewer_);
+            imageViewer_.setVisible(true);
+            imageViewer_.repaint();
 
-
+            //acquisition_.
+        } catch (Exception var2) {
+            ReportingUtils.showError(var2, "\nAcquistion window failed to open due to invalid or corrupted settings.\nTry resetting registry settings to factory defaults (Menu Tools|Options).");
+        }
 
 
         //////////////////////////////////////# Imaging # ///////////////////////////////////////////////
 
         rightPanel.add(asButtonPanel);
-        asButtonPanel.setPreferredSize(new Dimension(910, 580));   // vertical box
+        asButtonPanel.setPreferredSize(new Dimension(910, 575));   // vertical box
         asButtonPanel.setVisible(false);
         asButtonPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Imaging Options",0,0,Font.getFont("arial"),  Color.WHITE));
@@ -630,7 +606,7 @@ public class RappGui extends JFrame implements LiveModeListener {
             if (acquisition_== null) {
                 acquisition_= new AcqControlDlg(engine_, this.mainPrefs_, studio_, this.options_);
             }
-            acquisition_.setPreferredSize(new Dimension(900, 580));
+            acquisition_.setPreferredSize(new Dimension(900, 570));
             acquisition_.setVisible(true);
             asButtonPanel.add(acquisition_);
             acquisition_.repaint();

@@ -1011,8 +1011,8 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
    @Override
    public String getVerboseSummary() {
       int numFrames = getNumFrames();
-      int numSlices = getNumSlices();
-      int numPositions = getNumPositions();
+      //int numSlices = getNumSlices();
+     // int numPositions = getNumPositions();
       int numChannels = getNumChannels();
 
       int totalImages = getTotalImages();
@@ -1035,8 +1035,8 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
       txt =
               "Number of time points: " + (!useCustomIntervals_
               ? numFrames : customTimeIntervalsMs_.size())
-              + "\nNumber of positions: " + numPositions
-              + "\nNumber of slices: " + numSlices
+             // + "\nNumber of positions: " + numPositions
+           //   + "\nNumber of slices: " + numSlices
               + "\nNumber of channels: " + numChannels
               + "\nTotal images: " + totalImages
               + "\nTotal memory: " + (totalMB <= 1024 ? totalMB + " MB" : NumberUtils.doubleToDisplayString(totalMB/1024.0) + " GB")
@@ -1061,18 +1061,18 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
             order.append(", ");
          }
 
-         if (useChannels_ && useSlices_) {
-            if (acqOrderMode_ == AcqOrderMode.TIME_POS_CHANNEL_SLICE
-                    || acqOrderMode_ == AcqOrderMode.POS_TIME_CHANNEL_SLICE) {
-               order.append("Channel, Slice");
-            } else {
-               order.append("Slice, Channel");
-            }
-         } else if (useChannels_) {
-            order.append("Channel");
-         } else if (useSlices_) {
-            order.append("Slice");
-         }
+//         if (useChannels_ && useSlices_) {
+//            if (acqOrderMode_ == AcqOrderMode.TIME_POS_CHANNEL_SLICE
+//                    || acqOrderMode_ == AcqOrderMode.POS_TIME_CHANNEL_SLICE) {
+//               order.append("Channel, Slice");
+//            } else {
+//               order.append("Slice, Channel");
+//            }
+//         } else if (useChannels_) {
+//            order.append("Channel");
+//         } else if (useSlices_) {
+//            order.append("Slice");
+//         }
 
          return txt + order.toString();
       } else {

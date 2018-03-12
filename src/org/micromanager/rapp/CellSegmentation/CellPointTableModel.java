@@ -14,7 +14,9 @@ public class CellPointTableModel extends AbstractTableModel implements TableMode
             "Use?",
             "Point_X",
             "Point_Y",
-            "Color"
+            "GFP Signal",
+            "RFP Signal",
+            "BFP Signal"
     };
     private final String[] TOOLTIPS = new String[]{
             "Toggle channel/group on/off",

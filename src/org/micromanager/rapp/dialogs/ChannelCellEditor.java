@@ -79,7 +79,8 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
       if (colIndex == 0) {
          checkBox_.setSelected((Boolean) value);
          return checkBox_;
-      } else if (colIndex == 2 || colIndex == 3) {
+     // } else if (colIndex == 2 || colIndex == 3) {
+      } else if (colIndex == 2 ) {
          // exposure and z offset
          text_.setText(NumberUtils.doubleToDisplayString((Double)value));
          return text_;

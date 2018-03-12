@@ -35,7 +35,7 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       "Use?",
       "Configuration",
       "Exposure",
-      "Z-offset",
+    //  "Z-offset",
  //     "Z-stack",
  //     "Skip Fr.",
       "Color"
@@ -98,13 +98,13 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
             return channels_.get(rowIndex).config;
          } else if (columnIndex == 2) {
             return channels_.get(rowIndex).exposure;
-         } else if (columnIndex == 3) {
-            return channels_.get(rowIndex).zOffset;
+//         } else if (columnIndex == 3) {
+//            return channels_.get(rowIndex).zOffset;
 //         } else if (columnIndex == 4) {
 //            return channels_.get(rowIndex).doZStack;
 //         } else if (columnIndex == 5) {
 //            return channels_.get(rowIndex).skipFactorFrame;
-         } else if (columnIndex == 4) {
+         } else if (columnIndex == 3) {
             return channels_.get(rowIndex).color;
          }
       }
@@ -138,13 +138,13 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
             studio_.setChannelExposureTime(acqEng_.getChannelGroup(), 
                     channel.config, channel.exposure);
          }
-      } else if (col == 3) {
-         channel.zOffset = ((Double) value);
+//      } else if (col == 3) {
+//         channel.zOffset = ((Double) value);
 //      } else if (col == 4) {
 //         channel.doZStack = (Boolean) value;
 //      } else if (col == 5) {
 //         channel.skipFactorFrame = ((Integer) value);
-      } else if (col == 4) {
+      } else if (col == 3) {
          channel.color = (Color) value;
       }
 

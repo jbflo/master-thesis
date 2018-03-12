@@ -51,7 +51,7 @@ public class CellPointInternalFrame extends JInternalFrame {
         CellPointCellRenderer cellRenderer = new CellPointCellRenderer();
         pointTable_.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        int columnCount = 4;
+        int columnCount = 6;
         columnWidth_ = new int[columnCount];
         columnOrder_ = new int[columnCount];
         for (int k = 0; k < model_.getColumnCount(); k++) {
@@ -72,9 +72,7 @@ public class CellPointInternalFrame extends JInternalFrame {
                 pointTable_.addColumn(column);
             }
         }
-
         pointTablePane_.setViewportView(pointTable_);
-
     }
 
 
