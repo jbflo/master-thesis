@@ -178,7 +178,7 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
                  summaryMetadata_, acquisitionSettings.save, this,
                  studio_.getHideMDADisplayOption());
          MMAcquisition acq = acqManager.getAcquisition(acqName);
-         imageCache_ = acq.getImageCache();
+         imageCache_ = (ImageCache) acq.getImageCache();
 
          // Start pumping processed images into the ImageCache
          DefaultTaggedImageSink sink = new DefaultTaggedImageSink(

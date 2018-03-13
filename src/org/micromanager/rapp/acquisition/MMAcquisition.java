@@ -150,7 +150,7 @@ public class MMAcquisition {
       imageCache_.setSummaryMetadata(summaryMetadata);
       if (show_) {
       //   virtAcq_ = new VirtualAcquisitionDisplay(imageCache_, eng, name, false);
-         imageCache_.addImageCacheListener(virtAcq_);
+    //     imageCache_.addImageCacheListener(virtAcq_);
       }
          this.summary_ = summaryMetadata;
       } catch (JSONException ex) {
@@ -382,8 +382,8 @@ public class MMAcquisition {
 
       if (imageCache_.getSummaryMetadata() != null) {
          if (show_) {
-            virtAcq_ = new VirtualAcquisitionDisplay(imageCache_, null, name, true);
-            imageCache_.addImageCacheListener(virtAcq_);
+           // virtAcq_ = new VirtualAcquisitionDisplay(imageCache_, null, name, true);
+          //  imageCache_.addImageCacheListener(virtAcq_);
             virtAcq_.show();
          }
          
@@ -747,9 +747,9 @@ public class MMAcquisition {
             if (outputQueue_ == null) {
                // Set up our output queue now.
                outputQueue_ = new LinkedBlockingQueue<TaggedImage>(1);
-               DefaultTaggedImageSink sink = new DefaultTaggedImageSink(
-                     outputQueue_, imageCache_);
-               sink.start();
+             //  DefaultTaggedImageSink sink = new DefaultTaggedImageSink(
+              //       outputQueue_, imageCache_);
+           //    sink.start();
             }
             if (!outputQueue_.offer(taggedImg, 1L, TimeUnit.SECONDS)) {
                throw new IllegalStateException("Queue full");

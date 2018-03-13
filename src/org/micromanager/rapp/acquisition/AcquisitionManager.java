@@ -317,7 +317,7 @@ public class AcquisitionManager {
    private void copyDisplaySettings(MMAcquisition acq, JSONObject displaySettings) {
       if (displaySettings == null) 
          return;
-      ImageCache ic = acq.getImageCache();
+      ImageCache ic = (ImageCache) acq.getImageCache();
       for (int i = 0; i < ic.getNumDisplayChannels(); i++) {
          try {
             JSONObject channelSetting = (JSONObject) ((JSONArray) displaySettings.get("Channels")).get(i);
