@@ -27,7 +27,8 @@ import mmcorej.TaggedImage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import org.micromanager.api.TaggedImageStorage;
+//import org.micromanager.api.TaggedImageStorage;
+import org.micromanager.rapp.utils.TaggedImageStorage;
 import org.micromanager.utils.MDUtils;
 import org.micromanager.utils.ReportingUtils;
 

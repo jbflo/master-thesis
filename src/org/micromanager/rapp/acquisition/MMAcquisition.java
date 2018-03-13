@@ -47,12 +47,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 import org.micromanager.MMStudio;
-import org.micromanager.api.ImageCache;
+//import org.micromanager.api.ImageCache;
+import org.micromanager.rapp.utils.ImageCache;
 import org.micromanager.api.MMTags;
-import org.micromanager.api.TaggedImageStorage;
-import org.micromanager.dialogs.AcqControlDlg;
+//import org.micromanager.api.TaggedImageStorage;
+import org.micromanager.rapp.utils.TaggedImageStorage;
+//import org.micromanager.dialogs.AcqControlDlg;
+import  org.micromanager.rapp.dialogs.AcqControlDlg;
 import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
-import org.micromanager.utils.ImageUtils;
+import org.micromanager.rapp.utils.ImageUtils;
+//import org.micromanager.utils.ImageUtils;
 import org.micromanager.utils.JavaUtils;
 import org.micromanager.utils.MDUtils;
 import org.micromanager.utils.MMException;
@@ -117,7 +121,7 @@ public class MMAcquisition {
 
    public MMAcquisition(String name, JSONObject summaryMetadata, boolean diskCached, 
            AcquisitionEngine eng, boolean show) {
-      TaggedImageStorage imageFileManager;
+      TaggedImageStorage  imageFileManager;
       name_ = name;
       virtual_ = diskCached;
       existing_ = false;
@@ -265,12 +269,12 @@ public class MMAcquisition {
       if (!existing_) {
          createDefaultAcqSettings(imageCache);
       }
-      MMStudio.getInstance().getSnapLiveManager().createSnapLiveDisplay(name_, imageCache);
+      //MMStudio.getInstance().getSnapLiveManager().createSnapLiveDisplay(name_, imageCache);
       if (show_) {
          virtAcq_ = MMStudio.getInstance().getSnapLiveManager().getSnapLiveDisplay();
          virtAcq_.show();
-         imageCache_ = virtAcq_.getImageCache();
-         imageCache_.addImageCacheListener(virtAcq_);
+       //  imageCache_ = virtAcq_.getImageCache();
+        // imageCache_.addImageCacheListener(virtAcq_);
       }
 
       initialized_ = true;

@@ -143,7 +143,7 @@ public class RappGui extends JFrame implements LiveModeListener {
                 BorderFactory.createEtchedBorder(), "Welcome..." ,0,0,Font.getFont("arial"),  Color.decode("#192a56") ));
         topPanel.setBackground(Color.decode("#ecf0f1"));
 
-        JLabel headerLabel = new JLabel("<html><font color='#34495e'> Interface for controlling microscope and laser devices system </font></html>" );
+        JLabel headerLabel = new JLabel("<html><font color='#34495e'> Interface for controlling microscope and laser system </font></html>" );
         headerLabel.setFont(new Font("Arial", Font.BOLD, 20));
         topPanel.add(headerLabel);
         ///////////// Left Panel Content ////////////////////////////

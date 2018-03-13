@@ -5,7 +5,8 @@ import java.awt.Color;
 import java.util.Set;
 import mmcorej.TaggedImage;
 import org.json.JSONObject;
-import org.micromanager.api.TaggedImageStorage;
+//import org.micromanager.api.TaggedImageStorage;
+import org.micromanager.rapp.utils.TaggedImageStorage;
 
 public interface ImageCache extends TaggedImageStorage {
     void addImageCacheListener(ImageCacheListener var1);

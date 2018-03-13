@@ -1,6 +1,7 @@
 
 package org.micromanager.rapp.acquisition;
-import org.micromanager.api.TaggedImageStorage;
+//import org.micromanager.api.TaggedImageStorage;
+import org.micromanager.rapp.utils.TaggedImageStorage;
 import ij.CompositeImage;
 import ij.ImagePlus;
 import ij.ImageStack;
