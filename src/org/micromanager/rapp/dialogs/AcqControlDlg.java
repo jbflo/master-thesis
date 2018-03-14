@@ -189,6 +189,7 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
    private static final String OVERRIDE_FRAMES_PANEL_NAME = "Override frames panel";
    protected JPanel buttonPanel;
    private CheckBoxPanel channelsPanel_;
+   private CheckBoxPanel SegmentersPanel_;
    private CheckBoxPanel slicesPanel_;
    private CheckBoxPanel segmentationPanel_;
    protected CheckBoxPanel positionsPanel_;
@@ -1361,7 +1362,7 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
          acqPrefs_.putBoolean(CHANNEL_USE_PREFIX + i, channel.useChannel);
          acqPrefs_.putDouble(CHANNEL_EXPOSURE_PREFIX + i, channel.exposure);
         // acqPrefs_.putBoolean(CHANNEL_DOZSTACK_PREFIX + i, channel.doZStack);
-         acqPrefs_.putDouble(CHANNEL_ZOFFSET_PREFIX + i, channel.zOffset);
+        // acqPrefs_.putDouble(CHANNEL_ZOFFSET_PREFIX + i, channel.zOffset);
          acqPrefs_.putInt(CHANNEL_CONTRAST_MIN_PREFIX + i, channel.contrast.min);
          acqPrefs_.putInt(CHANNEL_CONTRAST_MAX_PREFIX + i, channel.contrast.max);
          acqPrefs_.putDouble(CHANNEL_CONTRAST_GAMMA_PREFIX + i, channel.contrast.gamma);

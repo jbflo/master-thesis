@@ -11,7 +11,7 @@ public class ChannelSpec {
    // public Boolean doZStack = true;
     public String config = "";
     public double exposure = 10.0D;
-    public double zOffset = 0.0D;
+    //public double zOffset = 0.0D;
     public Color color;
     public org.micromanager.utils.ContrastSettings contrast;
   //  public int skipFactorFrame;
