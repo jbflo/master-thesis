@@ -151,13 +151,12 @@ public class MMAcquisition {
   
       imageCache_.setSummaryMetadata(summaryMetadata);
       if (show_) {
-<<<<<<< HEAD
+
 //         virtAcq_ = new VirtualAcquisitionDisplay(imageCache_, eng, name, false);
 //         imageCache_.addImageCacheListener(virtAcq_);
-=======
-      //   virtAcq_ = new VirtualAcquisitionDisplay(imageCache_, eng, name, false);
-    //     imageCache_.addImageCacheListener(virtAcq_);
->>>>>>> 0f299731863d5643c41fa7cb243866e0e4e7f196
+//         virtAcq_ = new VirtualAcquisitionDisplay(imageCache_, eng, name, false);
+//         imageCache_.addImageCacheListener(virtAcq_);
+
       }
          this.summary_ = summaryMetadata;
       } catch (JSONException ex) {
