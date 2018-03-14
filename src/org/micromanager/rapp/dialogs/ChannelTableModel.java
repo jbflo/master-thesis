@@ -11,11 +11,11 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 //import org.micromanager.acquisition.AcquisitionEngine;
-import org.micromanager.rapp.acquisition.*;
+import org.micromanager.rapp.acquisition.AcquisitionEngine;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.MMOptions;
 //import org.micromanager.utils.ChannelSpec;
-import org.micromanager.rapp.utils.*;
+import org.micromanager.rapp.utils.ChannelSpec;
 import org.micromanager.utils.ReportingUtils;
 import org.micromanager.utils.TooltipTextMaker;
 
@@ -35,9 +35,8 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       "Use?",
       "Configuration",
       "Exposure (ms) ",
-    //  "Z-offset",
- //     "Z-stack",
- //     "Skip Fr.",
+    //  "Kill Cells",
+    //  "Laser Exposure (ms)",
       "Color"
    };
    private final String[] TOOLTIPS = new String[]{
@@ -178,7 +177,7 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       }
       ChannelSpec channel = channels_.get(row);
       TableModel model = (TableModel) e.getSource();
-      if (col == 6) {
+      if (col == 3) {
          Color color = (Color) model.getValueAt(row, col);
          colorPrefs_.putInt("Color_" + acqEng_.getChannelGroup() + "_" + channel.config, color.getRGB());
       }

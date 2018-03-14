@@ -6,7 +6,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/src/TestLiveView" />
       <excludeFolder url="file://$MODULE_DIR$/src/Tutorial" />
+      <excludeFolder url="file://$MODULE_DIR$/src/Tutorial/SlideExplorer" />
     </content>
+    <content url="file://$MODULE_DIR$/src/Tutorial/SlideExplorer" />
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="ij" level="project" />

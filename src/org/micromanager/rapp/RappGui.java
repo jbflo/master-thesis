@@ -81,6 +81,7 @@ public class RappGui extends JFrame implements LiveModeListener {
     private JLabel  jLabel_Image;
     // the index of the images
     private int pos = 0;
+    MMStudio studio_;
 
 
 
@@ -89,7 +90,7 @@ public class RappGui extends JFrame implements LiveModeListener {
      * Constructor. Creates the main window for the Projector plugin. we use this Class for the main interface
      */
     public RappGui(CMMCore core, ScriptInterface app) throws Exception {
-        MMStudio studio_ = (MMStudio) app;
+        studio_ = (MMStudio) app;
         AcquisitionManager acqMgr_ = new AcquisitionManager();
         AcquisitionWrapperEngine engine_ = new AcquisitionWrapperEngine(acqMgr_);
         rappController_ref =  new RappController(core, app);
@@ -694,6 +695,7 @@ public class RappGui extends JFrame implements LiveModeListener {
         if (n == JOptionPane.YES_OPTION) {
             LiveMode_btn.setSelected(false);
             dispose();
+            studio_.makeActive();
         }
         else  GUIUtils.recallPosition(appInterface_);
     }

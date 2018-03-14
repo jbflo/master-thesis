@@ -45,9 +45,10 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.*;
 
 import org.micromanager.rapp.RappGui;
-import  org.micromanager.rapp.acquisition.*;
+//
 import mmcorej.CMMCore;
 
+import  org.micromanager.rapp.acquisition.AcquisitionEngine;
 //import org.micromanager.acquisition.AcquisitionEngine;
 import org.micromanager.acquisition.ComponentTitledBorder;
 import org.micromanager.acquisition.TaggedImageStorageDiskDefault;
@@ -57,7 +58,7 @@ import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
 import org.micromanager.utils.AcqOrderMode;
-import org.micromanager.rapp.utils.*;
+import org.micromanager.rapp.utils.ChannelSpec;
 //import org.micromanager.utils.ChannelSpec;
 import org.micromanager.utils.ColorEditor;
 import org.micromanager.utils.ColorRenderer;
@@ -79,8 +80,7 @@ import static javax.swing.JFrame.setDefaultLookAndFeelDecorated;
 
 /**
  * Time-lapse, channel and z-stack acquisition setup dialog.
- * This dialog specifies all parameters for the MDA acquisition. 
- *
+ * This dialog specifies all parameters for the MDA acquisition.
  */
 public class AcqControlDlg extends JInternalFrame implements PropertyChangeListener,
         AcqSettingsListener { 
@@ -190,6 +190,7 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
    protected JPanel buttonPanel;
    private CheckBoxPanel channelsPanel_;
    private CheckBoxPanel slicesPanel_;
+   private CheckBoxPanel segmentationPanel_;
    protected CheckBoxPanel positionsPanel_;
    private JPanel acquisitionOrderPanel_;
    private CheckBoxPanel afPanel_;
@@ -295,7 +296,8 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
       panelList_ = new ArrayList<JPanel>();
 
       channelsPanel_ = (CheckBoxPanel) createPanel("Channels", 3, 1, 510, 160, true);
-      summaryPanel_ = createPanel("Summary", 515, 1, 705, 160);
+      segmentationPanel_= (CheckBoxPanel) createPanel("Segmentation", 515,1,705,160,true );
+
       buttonPanel =  createPanel("Run" , 715, 1, 875, 285);
 
       //framesPanel_ = (CheckBoxPanel) createPanel("Time points", 5, 308, 220, 451, true); // (text, left, top, right, bottom)
@@ -303,8 +305,8 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
       positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 170, 705, 285, true);
       afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
 
-      // slicesPanel_ = (CheckBoxPanel) createPanel("Z-stacks (slices)", 5, 156, 220, 306, true);
-      acquisitionOrderPanel_ = createPanel("Acquisition order", 515, 295, 705, 395);
+      summaryPanel_ = createPanel("Summary", 515, 295, 705, 395);
+      acquisitionOrderPanel_ = createPanel("Acquisition order", 715, 295, 875, 395);
       commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 295, 510,395,false);
 
    }
@@ -973,18 +975,14 @@ public class AcqControlDlg extends JInternalFrame implements PropertyChangeListe
       acquireButton_ = new JButton();
       acquireButton_.setMargin(new Insets(-9, -9, -9, -9));
       acquireButton_.setFont(new Font("Arial", Font.BOLD, 12));
-      acquireButton_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            AbstractCellEditor ae = (AbstractCellEditor) channelTable_.getCellEditor();
-            if (ae != null) {
-               ae.stopCellEditing();
-            }
-            runAcquisition();
+      acquireButton_.addActionListener(e -> {
+         AbstractCellEditor ae = (AbstractCellEditor) channelTable_.getCellEditor();
+         if (ae != null) {
+            ae.stopCellEditing();
          }
+         runAcquisition();
       });
-      acquireButton_.setText("Acquire!");
+      acquireButton_.setText("Run Sequence!");
       acquireButton_.setBounds(50, 25, 80, 30);
       buttonPanel.add(acquireButton_);
 

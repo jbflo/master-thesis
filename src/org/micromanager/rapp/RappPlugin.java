@@ -74,6 +74,7 @@ public class RappPlugin implements MMPlugin  {
     public void dispose() {
         if (form_ != null) {
             form_.dispose();
+
         }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
