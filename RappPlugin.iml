@@ -7,6 +7,9 @@
       <excludeFolder url="file://$MODULE_DIR$/src/TestLiveView" />
       <excludeFolder url="file://$MODULE_DIR$/src/Tutorial" />
       <excludeFolder url="file://$MODULE_DIR$/src/Tutorial/SlideExplorer" />
+      <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/acquisition" />
+      <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/dialogs" />
+      <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/utils" />
     </content>
     <content url="file://$MODULE_DIR$/src/Tutorial/SlideExplorer" />
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />

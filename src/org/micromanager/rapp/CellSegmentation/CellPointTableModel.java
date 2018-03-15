@@ -11,12 +11,12 @@ public class CellPointTableModel extends AbstractTableModel implements TableMode
 
     private static final long serialVersionUID = 3290621191844925827L;
     public final String[] COLUMN_NAMES = new String[]{
-            "Use?",
+            "Use ALl?",
             "Point_X",
             "Point_Y",
-            "GFP Signal",
-            "RFP Signal",
-            "BFP Signal"
+            "Use GFP Signal?",
+            "Use RFP Signal?",
+            "Use BFP Signal?"
     };
     private final String[] TOOLTIPS = new String[]{
             "Toggle channel/group on/off",

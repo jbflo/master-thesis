@@ -63,12 +63,14 @@ public class CellPointInternalFrame extends JInternalFrame {
                 ColorRenderer cr = new ColorRenderer(true);
                 ColorEditor ce = new ColorEditor(model_, model_.getColumnCount() - 1);
                 TableColumn column = new TableColumn(model_.getColumnCount() - 1, 200, cr, ce);
-                column.setPreferredWidth(columnWidth_[model_.getColumnCount() - 1]);
+                //column.setPreferredWidth(columnWidth_[model_.getColumnCount() - 1]);
+                column.setPreferredWidth(116);
                 pointTable_.addColumn(column);
 
             } else {
                 TableColumn column = new TableColumn(colIndex, 200, cellRenderer, cellEditor);
-                column.setPreferredWidth(columnWidth_[colIndex]);
+               // column.setPreferredWidth(columnWidth_[colIndex]);
+                column.setPreferredWidth(116);
                 pointTable_.addColumn(column);
             }
         }
@@ -94,6 +96,7 @@ public class CellPointInternalFrame extends JInternalFrame {
 
         BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
         bi.setNorthPane(null);
+        this.setBorder(null);
       //  createEmptyPanels();
         setLocation(0,0);
         pointTablePane_ =new JScrollPane();

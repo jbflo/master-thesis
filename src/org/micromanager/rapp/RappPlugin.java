@@ -18,6 +18,8 @@ package org.micromanager.rapp;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.awt.geom.Point2D;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,15 +32,8 @@ import mmcorej.TaggedImage;
 import org.micromanager.MMStudio;
 import org.micromanager.acquisition.AcquisitionEngine;
 import org.micromanager.acquisition.AcquisitionWrapperEngine;
-import org.micromanager.api.MMPlugin;
-import org.micromanager.api.ScriptInterface;
-import org.micromanager.utils.GUIUtils;
-import org.micromanager.utils.MMScriptException;
-import org.micromanager.utils.ReportingUtils;
-import org.micromanager.utils.MMFrame;
-
-
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import org.micromanager.api.*;
+import org.micromanager.utils.*;
 
 
 public class RappPlugin implements MMPlugin  {
@@ -68,7 +63,6 @@ public class RappPlugin implements MMPlugin  {
     public static ScriptInterface getScripI(){
         return app_;
     }
-
 
     @Override // MM
     public void dispose() {

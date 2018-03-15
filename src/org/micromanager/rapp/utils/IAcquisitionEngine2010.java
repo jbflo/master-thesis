@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import org.micromanager.api.Autofocus;
 import org.micromanager.api.PositionList;
 
-public interface IAcquisitionEngine2010 {
+public interface IAcquisitionEngine2010 extends org.micromanager.api.IAcquisitionEngine2010 {
     BlockingQueue<TaggedImage> run(SequenceSettings var1);
 
     BlockingQueue<TaggedImage> run(SequenceSettings var1, boolean var2, PositionList var3, Autofocus var4);
