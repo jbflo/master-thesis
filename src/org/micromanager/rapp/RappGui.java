@@ -69,9 +69,9 @@ public class RappGui extends JFrame implements LiveModeListener {
     private Box right_box_learning  = Box.createVerticalBox();
     private JPanel right_box_shoot = new JPanel();
     public  JLabel spiner = new JLabel("nothing");
-    private SpinnerModel model_forExposure = new SpinnerNumberModel(100, 0, 9999, 1);
+    private SpinnerModel model_forExposure = new SpinnerNumberModel(100, 0, 999999, 1);
     private SpinnerModel model_forDelay = new SpinnerNumberModel(0, 0, 9999, 1);
-    private SpinnerModel model_forColorLevel = new SpinnerNumberModel(100, 0, 100, 1);
+    private SpinnerModel model_forFilterExposure = new SpinnerNumberModel(100, 0, 999999, 1);
     private JSpinner exposureT_laser_spinner;
     private JSpinner exposureT_filter_spinner;
     protected JSpinner delayField_ = new JSpinner(model_forDelay);
@@ -387,7 +387,7 @@ public class RappGui extends JFrame implements LiveModeListener {
         exposureT_laser_spinner.setPreferredSize(new Dimension(150, 30));
         right_box_setup.add(exposureT_laser_spinner, gbc);
         exposureT_laser_spinner.addChangeListener(e -> {
-            rappController_ref.setExposure(1000 * Double.parseDouble(exposureT_laser_spinner.getValue().toString()));
+            rappController_ref.setExposure(Double.parseDouble(exposureT_laser_spinner.getValue().toString()));
             System.out.println( exposureT_laser_spinner.getValue().toString());
 
         });
@@ -454,12 +454,12 @@ public class RappGui extends JFrame implements LiveModeListener {
         });
         /// # Set Exposure Time Event  # ///
         gbc.gridy++;
-        exposureT_filter_spinner =  new JSpinner(model_forExposure);
+        exposureT_filter_spinner =  new JSpinner(model_forFilterExposure);
         exposureT_filter_spinner.setPreferredSize(new Dimension(150, 30));
         right_box_setup.add(exposureT_filter_spinner, gbc);
         exposureT_filter_spinner.addChangeListener(e -> {
-            rappController_ref.setExposure(1000 * Double.parseDouble(exposureT_filter_spinner.getValue().toString()));
-            System.out.println( exposureT_filter_spinner.getValue().toString());
+            //rappController_ref.setExposure(1000 * Double.parseDouble(exposureT_filter_spinner.getValue().toString()));
+           // System.out.println( exposureT_filter_spinner.getValue().toString());
         });
 
         gbc.gridy++;
@@ -473,8 +473,6 @@ public class RappGui extends JFrame implements LiveModeListener {
             // # Here we Apply the set form the Group configuration Settings
             rappController_ref.ChangeConfigSet(GroupConfN, PresetName);
         });
-
-
         gbc.gridy++;
 
 

@@ -333,8 +333,9 @@ public class RappController extends  MMFrame implements OnStateListener {
     public void setExposure(double intervalUs) {
         long previousExposure = dev_.getExposure();
         RappGui.getInstance().spiner.setText(String.valueOf(dev_.getExposure()));
+        System.out.println( RappGui.getInstance().spiner.getText());
         long newExposure = (long) intervalUs;
-        if (previousExposure != newExposure) {
+        if ( previousExposure != newExposure) {
             dev_.setExposure(newExposure);
         }
     }
