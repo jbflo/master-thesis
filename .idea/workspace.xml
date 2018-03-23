@@ -7,8 +7,92 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3bd16c0-5336-44c0-8d6f-2b586ae6e16d" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellEditor.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellRenderer.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelSpec.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelTableModel.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SequenceSettings.java" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/RappPlugin.iml" afterPath="$PROJECT_DIR$/RappPlugin.iml" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$2.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$3$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$3$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$3.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$3.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$4.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$4.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$5$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$5$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$5.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$5.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$10.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$10.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$2.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$3.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$3.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$5.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$5.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$6.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$6.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$7.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$7.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$8.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$8.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$9.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$9.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/AcquisitionWrapperEngine.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/AcquisitionWrapperEngine.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/ChannelSpec.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/ChannelSpec.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/ChannelTableModel.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/ChannelTableModel.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/ImageCache.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/MMAcquisition.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/MMAcquisition.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/MMImageCache$1.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/MMImageCache$2.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/MMImageCache.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$1$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$1$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$10.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$10.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$11.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$11.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$12.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$12.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$13.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$13.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$14.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$14.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$15.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$15.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$16.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$16.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$17.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$17.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$18.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$18.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$19.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$19.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$2.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$20.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$20.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$21.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$21.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$22.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$22.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$23.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$23.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$24.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$24.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$25.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$25.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$26.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$26.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$27.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$27.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$28.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$28.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$29.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$29.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$3.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$3.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$30.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$30.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$31.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$31.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$32.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$32.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$4.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$4.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$5.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$5.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$6.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$6.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$7.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$7.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$8.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$8.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$9.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$9.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$CheckBoxPanel$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$CheckBoxPanel$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$CheckBoxPanel.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$CheckBoxPanel.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$ComponentTitledPanel.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$ComponentTitledPanel.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$LabelPanel.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui$LabelPanel.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisition/TaggedImageStorage.class" afterPath="" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionWrapperEngine.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionWrapperEngine.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelSpec.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelSpec.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelTableModel.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelTableModel.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ImageCache.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMAcquisition.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMAcquisition.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMImageCache.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/TaggedImageStorage.java" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,117 +111,418 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RappGui.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RappGui.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="380" column="22" lean-forward="true" selection-start-line="380" selection-start-column="22" selection-end-line="380" selection-end-column="22" />
+            <state relative-caret-position="125">
+              <caret line="486" column="0" lean-forward="false" selection-start-line="486" selection-start-column="0" selection-end-line="486" selection-end-column="0" />
               <folding>
-                <element signature="e#12972#13200#0" expanded="true" />
-                <element signature="e#13199#13200#0" expanded="true" />
-                <element signature="e#14772#14773#0" expanded="true" />
-                <element signature="e#14842#14843#0" expanded="true" />
-                <element signature="e#18434#18642#0" expanded="true" />
-                <element signature="e#18641#18642#0" expanded="true" />
-                <element signature="e#32775#32966#0" expanded="true" />
-                <element signature="e#32965#32966#0" expanded="true" />
+                <element signature="e#13097#13325#0" expanded="true" />
+                <element signature="e#13324#13325#0" expanded="true" />
+                <element signature="e#18702#18910#0" expanded="true" />
+                <element signature="e#18909#18910#0" expanded="true" />
+                <element signature="e#33046#33237#0" expanded="true" />
+                <element signature="e#33236#33237#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChannelTableModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelTableModel.java">
+      <file leaf-file-name="SeqAcqController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+            <state relative-caret-position="1109">
+              <caret line="523" column="24" lean-forward="false" selection-start-line="523" selection-start-column="24" selection-end-line="523" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1972#1973#0" expanded="true" />
+                <element signature="e#2025#2026#0" expanded="true" />
+                <element signature="e#7348#7349#0" expanded="true" />
+                <element signature="e#7376#7377#0" expanded="true" />
+                <element signature="e#7489#7490#0" expanded="true" />
+                <element signature="e#7517#7518#0" expanded="true" />
+                <element signature="e#7575#7576#0" expanded="true" />
+                <element signature="e#7603#7604#0" expanded="true" />
+                <element signature="e#7752#7753#0" expanded="true" />
+                <element signature="e#7780#7781#0" expanded="true" />
+                <element signature="e#7937#7938#0" expanded="true" />
+                <element signature="e#7973#7974#0" expanded="true" />
+                <element signature="e#8228#8229#0" expanded="true" />
+                <element signature="e#8255#8256#0" expanded="true" />
+                <element signature="e#8312#8313#0" expanded="true" />
+                <element signature="e#8348#8349#0" expanded="true" />
+                <element signature="e#8403#8404#0" expanded="true" />
+                <element signature="e#8430#8431#0" expanded="true" />
+                <element signature="e#8499#8500#0" expanded="true" />
+                <element signature="e#8527#8528#0" expanded="true" />
+                <element signature="e#8640#8641#0" expanded="true" />
+                <element signature="e#8668#8669#0" expanded="true" />
+                <element signature="e#8891#8892#0" expanded="true" />
+                <element signature="e#8919#8920#0" expanded="true" />
+                <element signature="e#9060#9061#0" expanded="true" />
+                <element signature="e#9088#9089#0" expanded="true" />
+                <element signature="e#9153#9154#0" expanded="true" />
+                <element signature="e#9180#9181#0" expanded="true" />
+                <element signature="e#9314#9315#0" expanded="true" />
+                <element signature="e#9341#9342#0" expanded="true" />
+                <element signature="e#10244#10245#0" expanded="true" />
+                <element signature="e#10272#10273#0" expanded="true" />
+                <element signature="e#10321#10322#0" expanded="true" />
+                <element signature="e#10345#10346#0" expanded="true" />
+                <element signature="e#10460#10461#0" expanded="true" />
+                <element signature="e#10484#10485#0" expanded="true" />
+                <element signature="e#10680#10681#0" expanded="true" />
+                <element signature="e#10708#10709#0" expanded="true" />
+                <element signature="e#10862#10863#0" expanded="true" />
+                <element signature="e#10889#10890#0" expanded="true" />
+                <element signature="e#10944#10945#0" expanded="true" />
+                <element signature="e#10971#10972#0" expanded="true" />
+                <element signature="e#11041#11042#0" expanded="true" />
+                <element signature="e#11069#11070#0" expanded="true" />
+                <element signature="e#11125#11126#0" expanded="true" />
+                <element signature="e#11161#11162#0" expanded="true" />
+                <element signature="e#11219#11220#0" expanded="true" />
+                <element signature="e#11255#11256#0" expanded="true" />
+                <element signature="e#11304#11305#0" expanded="true" />
+                <element signature="e#11332#11333#0" expanded="true" />
+                <element signature="e#11741#11742#0" expanded="true" />
+                <element signature="e#11768#11769#0" expanded="true" />
+                <element signature="e#11975#11976#0" expanded="true" />
+                <element signature="e#12002#12003#0" expanded="true" />
+                <element signature="e#12105#12106#0" expanded="true" />
+                <element signature="e#12132#12133#0" expanded="true" />
+                <element signature="e#12225#12226#0" expanded="true" />
+                <element signature="e#12252#12253#0" expanded="true" />
+                <element signature="e#12367#12368#0" expanded="true" />
+                <element signature="e#12394#12395#0" expanded="true" />
+                <element signature="e#12507#12508#0" expanded="true" />
+                <element signature="e#12535#12536#0" expanded="true" />
+                <element signature="e#12586#12587#0" expanded="true" />
+                <element signature="e#12610#12611#0" expanded="true" />
+                <element signature="e#12659#12660#0" expanded="true" />
+                <element signature="e#12687#12688#0" expanded="true" />
+                <element signature="e#12927#12928#0" expanded="true" />
+                <element signature="e#12954#12955#0" expanded="true" />
+                <element signature="e#13009#13010#0" expanded="true" />
+                <element signature="e#13036#13037#0" expanded="true" />
+                <element signature="e#13118#13119#0" expanded="true" />
+                <element signature="e#13145#13146#0" expanded="true" />
+                <element signature="e#13193#13194#0" expanded="true" />
+                <element signature="e#13220#13221#0" expanded="true" />
+                <element signature="e#13277#13278#0" expanded="true" />
+                <element signature="e#13305#13306#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CellPointTableModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/CellSegmentation/CellPointTableModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-              <folding>
-                <element signature="e#899#900#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CellPointInternalFrame.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/CellSegmentation/CellPointInternalFrame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1281">
-              <caret line="72" column="44" lean-forward="false" selection-start-line="72" selection-start-column="44" selection-end-line="72" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RappController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RappController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="332" column="19" lean-forward="false" selection-start-line="332" selection-start-column="19" selection-end-line="332" selection-end-column="19" />
+            <state relative-caret-position="354">
+              <caret line="1076" column="62" lean-forward="true" selection-start-line="1076" selection-start-column="62" selection-end-line="1076" selection-end-column="62" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RappDevice.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappDevice.java">
+      <file leaf-file-name="TaggedImageStorageMultipageTiff.class" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/TaggedImageStorageMultipageTiff.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="35" column="18" lean-forward="false" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Galvo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/Galvo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="327" column="20" lean-forward="true" selection-start-line="327" selection-start-column="20" selection-end-line="327" selection-end-column="20" />
+            <state relative-caret-position="54">
+              <caret line="37" column="19" lean-forward="false" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
               <folding>
-                <element signature="e#9914#9915#0" expanded="true" />
-                <element signature="e#9946#9947#0" expanded="true" />
+                <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+                <marker date="1439569898000" expanded="false" signature="152:1171" ph="..." />
+                <marker date="1439569898000" expanded="true" signature="2392:2573" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="2781:3625" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="3663:4297" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="4349:4360" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="4389:4395" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="4422:4433" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="4519:4525" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="4550:4561" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="4645:4651" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="4688:4699" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="4724:4730" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="4764:4775" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="4800:4806" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="4847:6548" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="6651:7084" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="7190:7343" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="7457:7599" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="7683:8064" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="7896:7944" ph="run() → {" />
+                <marker date="1439569898000" expanded="false" signature="8041:8056" ph="}" />
+                <marker date="1439569898000" expanded="true" signature="8171:10243" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="10279:10290" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="10331:10337" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="10379:14671" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="14697:15045" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="15078:15089" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="15114:15120" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="15171:15182" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="15217:15223" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="15298:16714" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="16758:16769" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="16798:16804" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="16850:16861" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="16896:16902" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="16949:16960" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="16992:16998" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="17058:17069" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="17105:17111" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="17152:17771" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="17808:17819" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="17842:17848" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="17884:17895" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="17968:17974" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="18009:18782" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="18826:18837" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="18850:18856" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="18884:34002" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="19558:20493" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="20533:20548" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="20577:20587" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="20631:20646" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="20679:20689" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="20750:20869" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="20934:21675" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="21731:21825" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="21946:22340" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="22378:22393" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="22419:22429" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="22498:26091" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="26170:26553" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="26617:27199" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="27264:27515" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="27586:28747" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="28797:29303" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="29406:32019" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="32078:33996" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CMMCore.class" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMCoreJ.jar!/mmcorej/CMMCore.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="1343" column="32" lean-forward="false" selection-start-line="1343" selection-start-column="32" selection-end-line="1343" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MMCoreJJNI.class" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMCoreJ.jar!/mmcorej/MMCoreJJNI.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="1198" column="0" lean-forward="true" selection-start-line="1198" selection-start-column="0" selection-end-line="1198" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImageWindowCopy.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/ImageWindowCopy.java">
+      <file leaf-file-name="TaggedImageStorageRamFast.class" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/TaggedImageStorageRamFast.class">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="126">
-              <caret line="43" column="13" lean-forward="false" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+              <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+              <folding>
+                <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+                <marker date="1439569898000" expanded="false" signature="152:713" ph="..." />
+                <marker date="1439569898000" expanded="true" signature="1245:1422" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="1478:1489" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="1544:1550" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="1634:1716" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="1870:2156" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="2270:2656" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="2727:3219" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="3302:3724" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="3830:3925" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="3961:3972" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="4003:4009" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="4037:4048" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="4070:4076" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="4109:4120" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="4142:4148" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="4206:4908" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="4952:4963" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="4992:4998" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="5058:5069" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="5102:5108" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="5155:5166" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="5195:5201" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="5227:5374" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="5428:5439" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="5473:5479" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="5516:5527" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="5553:5559" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="5595:5606" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="5629:5635" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="5669:5680" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="5742:5748" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="5789:5796" ph="{}" />
+                <marker date="1439569898000" expanded="true" signature="5859:6107" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="5923:5938" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="5964:5974" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="6033:6048" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="6091:6101" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="6145:6260" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="6243:6254" ph="{}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaggedImageStorageDiskDefault.class" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/TaggedImageStorageDiskDefault.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="246">
+              <caret line="60" column="33" lean-forward="false" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="33" />
+              <folding>
+                <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+                <marker date="1439569898000" expanded="false" signature="152:1236" ph="..." />
+                <marker date="1439569898000" expanded="true" signature="1843:1894" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="2014:2785" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="2567:2630" ph="run() → { " />
+                <marker date="1439569898000" expanded="false" signature="2688:2712" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="2821:2832" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="2855:2861" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="2916:2927" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="2967:2973" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="3023:3211" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="3280:5064" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="5147:7739" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="7825:8193" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="8229:8240" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="8276:8282" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="8333:9076" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="9129:9477" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="9548:10016" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="10110:11834" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="11940:12168" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="12227:13062" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="13158:13418" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="13506:14792" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="14821:14899" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="14932:14943" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="14968:14974" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="15016:15474" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="15532:18875" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="18929:19955" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="20030:20187" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="20047:20137" ph="iterator() → { " />
+                <marker date="1439569898000" expanded="false" signature="20156:20180" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="20244:20680" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="20751:21012" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="21056:21067" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="21096:21102" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="21173:21691" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="21751:21762" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="21795:21801" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="21848:21859" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="21888:21894" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="21935:22655" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="22696:23363" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="23389:23677" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="23714:23725" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="23742:23748" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="23794:23849" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="23884:24270" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="23941:24010" ph="accept(pathname) → {" />
+                <marker date="1439569898000" expanded="false" signature="24093:24108" ph="}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AcquisitionWrapperEngine.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionWrapperEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1938">
+              <caret line="297" column="0" lean-forward="false" selection-start-line="297" selection-start-column="0" selection-end-line="297" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SeqAcqGui.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="935" column="57" lean-forward="false" selection-start-line="935" selection-start-column="57" selection-end-line="935" selection-end-column="57" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageUtils.class" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/utils/ImageUtils.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="395">
+              <caret line="531" column="15" lean-forward="false" selection-start-line="531" selection-start-column="15" selection-end-line="531" selection-end-column="15" />
+              <folding>
+                <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+                <marker date="1439569898000" expanded="false" signature="146:684" ph="..." />
+                <marker date="1439569898000" expanded="true" signature="818:825" ph="{}" />
+                <marker date="1439569898000" expanded="true" signature="874:1116" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="1183:1419" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="1481:1492" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="1533:1539" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="1619:2091" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="2181:2999" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="3073:3377" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="3450:3771" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="3855:4474" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="4596:6436" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="6538:6732" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="6835:7031" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="7134:7330" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="7430:7621" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="7728:7922" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="8026:8222" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="8331:8527" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="8604:8847" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="8927:9173" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="9252:9498" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="9578:9838" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="9917:10135" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="10215:10433" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="10513:10709" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="10763:11241" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="11301:11488" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="11548:11559" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="11598:11604" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="11667:11678" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="11720:11726" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="11785:11796" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="11832:11838" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="11887:12302" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="12352:12625" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="12675:12946" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="12995:13262" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="13310:13582" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="13646:13996" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="14060:14288" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="14361:14673" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="14749:15130" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="15198:15618" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="15688:16116" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="16194:16503" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="16583:16894" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="16953:17542" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="17607:17618" ph=" { " />
+                <marker date="1439569898000" expanded="true" signature="17647:17653" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="17701:17712" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="17733:17739" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="17866:18166" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="18211:18222" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="18237:18243" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="18289:18300" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="18320:18326" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="18372:19024" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="19070:19724" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="19775:20695" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="20764:21315" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="21497:22067" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="22131:22602" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="22667:22678" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="22714:22720" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="22749:22830" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="22813:22824" ph="{}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SaveFileDialogExample.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SaveFileDialogExample.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-315">
+              <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -155,19 +540,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Options</find>
-      <find>Multiple positions (XY)</find>
-      <find>Options..</find>
-      <find>displayMode_</find>
-      <find>Background</find>
-      <find>buttonP</find>
-      <find>Box</find>
-      <find>setBac</find>
-      <find>setBackground</find>
-      <find>Advanced</find>
-      <find>getContentPane()</find>
-      <find>but</find>
-      <find>z-stack</find>
       <find>channelTable_</find>
       <find>getColumnName</find>
       <find>doZStack</find>
@@ -177,14 +549,27 @@
       <find>acquire</find>
       <find>run</find>
       <find>studio_</find>
-      <find>setSequenceSettings</find>
       <find>addChannel</find>
       <find>addC</find>
       <find>add</find>
       <find>saveAs</find>
-      <find>//</find>
       <find>setDisplayMode</find>
       <find>Expo</find>
+      <find>linear</find>
+      <find>isRunning_</find>
+      <find>implements</find>
+      <find>implements IAcquisitionEngine2010</find>
+      <find>//</find>
+      <find>getChannels1</find>
+      <find>setChannelExposureTime</find>
+      <find>Acquire</find>
+      <find>chanKeepShutterOpenCheckBox_</find>
+      <find>runAc</find>
+      <find>setSequenceSettings</find>
+      <find>fluorescenceSequence</find>
+      <find>TaggedImageStorageDiskDefault</find>
+      <find>right_box_setup.SetP</find>
+      <find>Separate</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -198,15 +583,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/GroupEditor.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/MMAboutDlg.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/MMIntroDlg.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/OptionsDlg.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/PresetEditor.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/RegistrationDlg.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/AdvancedOptionsDialog.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/CustomTimeIntervalsPanel.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/LoyalCardManagerMain.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/ImageViewer.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/ImageViewer2.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/utils/ChannelSpec.java" />
@@ -227,11 +603,7 @@
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/utils/IAcquisitionEngine2010.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/utils/ScriptInterface.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/AcqControlDlg.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelSpec.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ProcessorStack.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SequenceSettings.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionEngine.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelTableModel.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/acquisition/AcquisitionWrapperEngine.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelCellEditor.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelCellRenderer.java" />
@@ -240,15 +612,28 @@
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ImageCache.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionManager.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/TaggedImageStorageRamFast.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMImageCache.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMAcquisition.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionWrapperEngine.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/Galvo.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/CellSegmentation/CellPointTableModel.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/CellSegmentation/CellPointInternalFrame.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMImageCache.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionEngine.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelSpec.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelTableModel.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMAcquisition.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SeqAcqController.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionWrapperEngine.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelSpec.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SequenceSettings.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SequenceSettings.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelTableModel.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellEditor.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellRenderer.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
       </list>
     </option>
   </component>
@@ -259,10 +644,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1973" />
-    <option name="y" value="3" />
-    <option name="width" value="1614" />
-    <option name="height" value="867" />
+    <option name="x" value="1880" />
+    <option name="y" value="-14" />
+    <option name="width" value="1278" />
+    <option name="height" value="755" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -280,8 +665,8 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -305,23 +690,34 @@
               <item name="master-thesis" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="rapp" type="462c0819:PsiDirectoryNode" />
-              <item name="CellSegmentation" type="462c0819:PsiDirectoryNode" />
+              <item name="SequenceAcquisition" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
               <item name="master-thesis" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="rapp" type="462c0819:PsiDirectoryNode" />
-              <item name="SequenceAcquisition" type="462c0819:PsiDirectoryNode" />
+              <item name="SequenceAcquisitions" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="CellXJ.jar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
               <item name="Micro-Manager" type="70bed36:NamedLibraryElementNode" />
+            </path>
+            <path>
+              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Micro-Manager" type="70bed36:NamedLibraryElementNode" />
+              <item name="MMCoreJ.jar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
@@ -371,11 +767,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
-    <property name="last_opened_file_path" value="C:/jai-1_1_2_01/lib" />
+    <property name="last_opened_file_path" value="C:/cellxpp/java/CellXJ.jar!/" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="SearchEverywhereHistoryKey" value="isRunning&#9;FILE&#9;jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMAcqEngine.jar!/org/micromanager/acq_engine$_isRunning.class&#10;Acquisition&#9;FILE&#9;jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/AcquisitionManager.class&#10;MM&#9;FILE&#9;jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMCoreJ.jar!/mmcorej/CMMCore.class&#10;MultiDA&#9;PSI&#9;JAVA://com.sun.xml.internal.messaging.saaj.soap.MultipartDataContentHandler&#10;is calib&#9;PSI&#9;JAVA://org.micromanager.rapp.RappController#isCalibrating&#10;is cal&#9;PSI&#9;JAVA://javax.swing.plaf.nimbus.ImageScalingHelper&#10;enableLiveMode&#9;PSI&#9;JAVA://ij.gui.HistogramWindow#enableLiveMode" />
@@ -383,11 +779,13 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.micromanager.rapp.SequenceAcquisitions" />
       <recent name="org.micromanager.rapp.SequenceAcquisition" />
       <recent name="org.micromanager.rapp.acquisition" />
       <recent name="org.micromanager.rapp" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Hp\IdeaProjects\master-thesis\src\org\micromanager\rapp\SequenceAcquisitions" />
       <recent name="C:\Users\Hp\IdeaProjects\master-thesis\src\org\micromanager\rapp\SequenceAcquisition" />
     </key>
   </component>
@@ -573,7 +971,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1592" y="-8" width="2064" height="1128" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -581,16 +978,19 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21875" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18044356" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20259482" sideWeight="0.49596775" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1986028" sideWeight="0.49596775" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984033" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3266129" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Learn" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38709676" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21572581" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15768462" sideWeight="0.50403225" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -601,7 +1001,6 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31836328" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3266129" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -696,447 +1095,993 @@
           <option name="timeStamp" value="67" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMImageCache.java</url>
-          <line>82</line>
+          <url>jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/MMImageCache.class</url>
+          <line>80</line>
           <properties />
-          <option name="timeStamp" value="74" />
+          <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMImageCache.java</url>
-          <line>64</line>
+          <url>file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionWrapperEngine.java</url>
+          <line>223</line>
           <properties />
-          <option name="timeStamp" value="75" />
+          <option name="timeStamp" value="77" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="76" />
+      <option name="time" value="78" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/IAcquisitionEngine2010.class">
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/dialogs/ChannelTableModel.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="26" column="14" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="21" />
+        <state relative-caret-position="-594">
+          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding>
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="false" signature="148:695" ph="..." />
+            <marker date="1439569898000" expanded="false" signature="2216:2227" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2261:2267" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="2415:2598" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="2628:2639" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2697:2703" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="2736:2747" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2779:2785" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="2835:2846" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2884:2890" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="2952:3963" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="4003:4014" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4054:4060" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="4121:5410" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="5465:5476" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="5534:5540" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="5590:6130" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="6186:6197" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="6217:6223" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="6272:6283" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="6305:6311" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="6345:7691" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7736:7861" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7898:8226" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="8261:8585" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="8629:8640" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="8680:8686" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="8731:9063" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="9104:9454" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="9549:9953" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMAcqEngine.jar!/org/micromanager/acq_engine$_isPaused.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="16" column="19" lean-forward="false" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMAcqEngine.jar!/org/micromanager/acq_engine$_isRunning.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="16" column="19" lean-forward="false" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/CalibrationEditor.java" />
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/utils/SliderPanel.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="25" column="54" lean-forward="true" selection-start-line="25" selection-start-column="54" selection-end-line="25" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/utils/IAcquisitionEngine2010.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="27" column="25" lean-forward="true" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/AcquisitionManager.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="25" column="13" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="344" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/acquisition/MMAcquisition.java" />
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/MMImageCache.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="35" column="34" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="533" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/TaggedImageStorageRamFast.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="39" column="47" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/acquisition/TaggedImageStorageLive.java" />
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ProcessorStack.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/acquisition/ProcessorStack.java" />
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/acquisition/TaggedImageStorageDiskDefault.java" />
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/SequenceSettings.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-234">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/AcquisitionEngine.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="24" column="17" lean-forward="false" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/AcquisitionWrapperEngine.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="715" column="29" lean-forward="false" selection-start-line="715" selection-start-column="19" selection-end-line="715" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SequenceSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" column="2" lean-forward="false" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/TaggedImageStorage.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="13" column="17" lean-forward="false" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/utils/ScriptInterface.java" />
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/AdvancedOptionsDialog.java" />
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelCellEditor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="49" lean-forward="false" selection-start-line="2" selection-start-column="2" selection-end-line="4" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelCellRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="2" lean-forward="false" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/dialogs/AcqControlDlg.java" />
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/utils/ImageUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="19" column="40" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="34" column="30" lean-forward="false" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+        <state relative-caret-position="525">
+          <caret line="35" column="32" lean-forward="false" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/acquisition/AcquisitionManager.java" />
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/acquisition/AcquisitionWrapperEngine.java" />
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8484">
-          <caret line="426" column="21" lean-forward="false" selection-start-line="426" selection-start-column="15" selection-end-line="426" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/DefaultTaggedImageSink.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="61" column="0" lean-forward="false" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/TaggedImageStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="20" column="20" lean-forward="false" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/ImageCache.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/TaggedImageStorageRamFast.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="24" column="69" lean-forward="false" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#6041#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#1476#1477#0" expanded="false" />
-            <element signature="e#1543#1544#0" expanded="false" />
-            <element signature="e#3860#3861#0" expanded="false" />
-            <element signature="e#3903#3904#0" expanded="false" />
-            <element signature="e#3932#3933#0" expanded="false" />
-            <element signature="e#3966#3967#0" expanded="false" />
-            <element signature="e#4000#4001#0" expanded="false" />
-            <element signature="e#4034#4035#0" expanded="false" />
-            <element signature="e#4798#4799#0" expanded="false" />
-            <element signature="e#4839#4840#0" expanded="false" />
-            <element signature="e#4900#4901#0" expanded="false" />
-            <element signature="e#4945#4946#0" expanded="false" />
-            <element signature="e#4993#4994#0" expanded="false" />
-            <element signature="e#5034#5035#0" expanded="false" />
-            <element signature="e#5252#5253#0" expanded="false" />
-            <element signature="e#5298#5299#0" expanded="false" />
-            <element signature="e#5336#5337#0" expanded="false" />
-            <element signature="e#5374#5375#0" expanded="false" />
-            <element signature="e#5411#5412#0" expanded="false" />
-            <element signature="e#5446#5447#0" expanded="false" />
-            <element signature="e#5481#5482#0" expanded="false" />
-            <element signature="e#5555#5556#0" expanded="false" />
-            <element signature="e#5725#5726#0" expanded="false" />
-            <element signature="e#5769#5770#0" expanded="false" />
-            <element signature="e#5828#5829#0" expanded="false" />
-            <element signature="e#5889#5890#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="294" column="41" lean-forward="false" selection-start-line="294" selection-start-column="38" selection-end-line="294" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/utils/TaggedImageStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/MMAcquisition.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="48" column="25" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="965" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMImageCache.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="69" column="27" lean-forward="false" selection-start-line="69" selection-start-column="27" selection-end-line="69" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#5419#5420#0" expanded="false" />
-            <element signature="e#5487#5488#0" expanded="false" />
-            <element signature="e#7219#7220#0" expanded="false" />
-            <element signature="e#7288#7289#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMAcquisition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="672" column="38" lean-forward="false" selection-start-line="672" selection-start-column="38" selection-end-line="672" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionWrapperEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2205">
-          <caret line="148" column="21" lean-forward="false" selection-start-line="148" selection-start-column="21" selection-end-line="148" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ImageCache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        <state relative-caret-position="189">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMImageCache.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8142">
+          <caret line="58" column="49" lean-forward="false" selection-start-line="58" selection-start-column="49" selection-end-line="58" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/TaggedImageStorage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/TaggedImageStorageRamFast.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="517">
+          <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui.java">
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/TaggedImageStorage.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18396">
-          <caret line="967" column="12" lean-forward="false" selection-start-line="967" selection-start-column="12" selection-end-line="967" selection-end-column="12" />
+        <state relative-caret-position="651">
+          <caret line="38" column="11" lean-forward="false" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
           <folding>
-            <element signature="e#21549#21550#0" expanded="true" />
-            <element signature="e#21589#21590#0" expanded="true" />
-            <element signature="e#23120#23121#0" expanded="true" />
-            <element signature="e#23173#23174#0" expanded="true" />
-            <element signature="e#24594#24595#0" expanded="true" />
-            <element signature="e#24638#24639#0" expanded="true" />
-            <element signature="e#25661#25662#0" expanded="true" />
-            <element signature="e#25702#25703#0" expanded="true" />
-            <element signature="e#26782#26783#0" expanded="true" />
-            <element signature="e#26824#26825#0" expanded="true" />
-            <element signature="e#27371#27372#0" expanded="true" />
-            <element signature="e#27411#27412#0" expanded="true" />
-            <element signature="e#28912#28913#0" expanded="true" />
-            <element signature="e#28952#28953#0" expanded="true" />
-            <element signature="e#29187#29188#0" expanded="true" />
-            <element signature="e#29223#29224#0" expanded="true" />
-            <element signature="e#30913#30914#0" expanded="true" />
-            <element signature="e#30953#30954#0" expanded="true" />
-            <element signature="e#36075#36076#0" expanded="true" />
-            <element signature="e#36115#36116#0" expanded="true" />
-            <element signature="e#37940#37941#0" expanded="true" />
-            <element signature="e#37983#37984#0" expanded="true" />
-            <element signature="e#40944#40945#0" expanded="true" />
-            <element signature="e#40992#40993#0" expanded="true" />
-            <element signature="e#43386#43387#0" expanded="true" />
-            <element signature="e#43433#43434#0" expanded="true" />
-            <element signature="e#43916#43917#0" expanded="true" />
-            <element signature="e#43966#43967#0" expanded="true" />
-            <element signature="e#44403#44404#0" expanded="true" />
-            <element signature="e#44453#44454#0" expanded="true" />
-            <element signature="e#45324#45325#0" expanded="true" />
-            <element signature="e#45364#45365#0" expanded="true" />
-            <element signature="e#45513#45514#0" expanded="true" />
-            <element signature="e#45553#45554#0" expanded="true" />
-            <element signature="e#45697#45698#0" expanded="true" />
-            <element signature="e#45737#45738#0" expanded="true" />
-            <element signature="e#61664#61665#0" expanded="true" />
-            <element signature="e#61714#61715#0" expanded="true" />
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="false" signature="144:285" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/SnapLiveManager.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1821">
+          <caret line="222" column="14" lean-forward="false" selection-start-line="222" selection-start-column="14" selection-end-line="222" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/MMImageCache.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1089">
+          <caret line="99" column="36" lean-forward="false" selection-start-line="99" selection-start-column="36" selection-end-line="99" selection-end-column="36" />
+          <folding>
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="true" signature="152:940" ph="..." />
+            <marker date="1439569898000" expanded="true" signature="1407:1573" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="1632:1854" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="1919:2088" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2147:2307" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2336:2884" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="2917:2928" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2967:2973" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="3010:3189" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="3226:3237" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="3281:3287" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="3347:3358" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="3409:3415" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="3462:3473" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="3523:3529" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="3569:3580" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="3622:3628" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="3654:3857" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3922:4002" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="4090:5828" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="5402:5483" ph="run() → { " />
+            <marker date="1439569898000" expanded="false" signature="5510:5550" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="5884:7634" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="7339:7428" ph="run() → { " />
+            <marker date="1439569898000" expanded="false" signature="7455:7503" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="7677:7758" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7841:8147" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="8233:8481" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="8544:9435" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="9484:10181" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="10213:10224" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="10268:10274" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="10316:10534" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="10601:10865" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="10918:11226" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="11259:11418" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="11463:11708" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="11762:11979" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="12021:12032" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="12058:12064" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="12100:12111" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="12149:12155" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="12225:12289" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="12324:12526" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="12652:13057" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="13112:13559" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="13590:13847" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="13900:14256" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="14312:14593" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="14646:15109" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="15175:15896" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="15930:16090" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="16139:16298" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="16347:16507" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="16561:16728" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="16786:16959" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="17000:17220" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="17254:17265" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="17327:17333" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/utils/ChannelSpec.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/cellxpp/java/CellXJ.jar!/Cell.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="31" column="5" lean-forward="false" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+          <folding>
+            <marker date="1520944062667" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1520944062667" expanded="true" signature="222:309" ph="{...}" />
+            <marker date="1520944062667" expanded="false" signature="349:360" ph=" { " />
+            <marker date="1520944062667" expanded="false" signature="382:388" ph=" }" />
+            <marker date="1520944062667" expanded="false" signature="418:429" ph=" { " />
+            <marker date="1520944062667" expanded="false" signature="448:454" ph=" }" />
+            <marker date="1520944062667" expanded="true" signature="526:718" ph="{...}" />
+            <marker date="1520944062667" expanded="true" signature="789:981" ph="{...}" />
+            <marker date="1520944062667" expanded="true" signature="1058:1254" ph="{...}" />
+            <marker date="1520944062667" expanded="true" signature="1335:1530" ph="{...}" />
+            <marker date="1520944062667" expanded="true" signature="1615:1809" ph="{...}" />
+            <marker date="1520944062667" expanded="true" signature="1899:2092" ph="{...}" />
+            <marker date="1520944062667" expanded="true" signature="2173:2366" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/cellxpp/java/CellXJ.jar!/Segmentation.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <marker date="1520944062667" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1520944062667" expanded="false" signature="113:160" ph="..." />
+            <marker date="1520944062667" expanded="true" signature="390:455" ph="{...}" />
+            <marker date="1520944062667" expanded="true" signature="483:735" ph="{...}" />
+            <marker date="1520944062667" expanded="true" signature="845:1082" ph="{...}" />
+            <marker date="1520944062667" expanded="true" signature="1255:1465" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/MainFrame.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="246" column="70" lean-forward="true" selection-start-line="246" selection-start-column="70" selection-end-line="246" selection-end-column="70" />
+          <folding>
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="false" signature="140:1983" ph="..." />
+            <marker date="1439569898000" expanded="true" signature="3257:4228" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="4269:4475" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="4302:4382" ph="windowClosing(event) → {" />
+            <marker date="1439569898000" expanded="false" signature="4452:4467" ph="}" />
+            <marker date="1439569898000" expanded="true" signature="4560:4673" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="4706:4777" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="4817:4977" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="5105:5347" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="5410:6187" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="5626:5708" ph="actionPerformed(arg0) → {" />
+            <marker date="1439569898000" expanded="false" signature="6082:6097" ph="}" />
+            <marker date="1439569898000" expanded="true" signature="6244:6802" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="6556:6635" ph="actionPerformed(e) → {" />
+            <marker date="1439569898000" expanded="false" signature="6700:6715" ph="}" />
+            <marker date="1439569898000" expanded="true" signature="6858:7602" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="7024:7095" ph="focusLost(fe) → {" />
+            <marker date="1439569898000" expanded="false" signature="7199:7214" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="7317:7396" ph="actionPerformed(e) → {" />
+            <marker date="1439569898000" expanded="false" signature="7500:7515" ph="}" />
+            <marker date="1439569898000" expanded="true" signature="7660:8566" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="7829:7908" ph="actionPerformed(e) → {" />
+            <marker date="1439569898000" expanded="false" signature="7977:7992" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="8395:8443" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="8500:8515" ph="}" />
+            <marker date="1439569898000" expanded="true" signature="8630:8896" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="8960:9826" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="9194:9242" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="9311:9326" ph="}" />
+            <marker date="1439569898000" expanded="true" signature="9888:11420" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="9992:10040" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="10098:10113" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="10264:10312" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="10416:10431" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="10575:10623" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="10703:10718" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="10885:10933" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="11005:11020" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="11174:11222" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="11350:11365" ph="}" />
+            <marker date="1439569898000" expanded="true" signature="11495:11730" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="11782:12330" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="12106:12179" ph="mousePressed(e) → {" />
+            <marker date="1439569898000" expanded="false" signature="12307:12322" ph="}" />
+            <marker date="1439569898000" expanded="true" signature="12387:12894" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="12952:13283" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="13340:15650" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="13539:13587" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="13645:13660" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="13845:13893" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="13953:13968" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="14158:14206" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="14256:14271" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="14398:14446" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="14497:14512" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="14755:14803" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="14876:14891" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="15139:15187" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="15251:15266" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="15457:15505" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="15576:15591" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="15698:15709" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="15763:15769" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="15830:15984" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="16047:16058" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="16101:16107" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="16155:16166" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="16207:16213" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="16263:16430" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="16464:17029" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="17082:17641" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="17694:18272" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="18327:18651" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="18711:18836" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="18921:19010" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="19074:19701" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="19770:21012" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="21056:21067" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="21123:21129" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="21162:21291" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="21351:21362" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="21412:21418" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="21484:21495" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="21543:21549" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="21614:21893" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="21937:21948" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="21994:22000" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="22042:22053" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="22076:22082" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="22129:22301" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="22361:22449" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="22496:22774" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="22832:23083" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="22869:22917" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="23060:23075" ph="}" />
+            <marker date="1439569898000" expanded="false" signature="23128:23139" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="23166:23172" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="23203:23680" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="23710:24186" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelSpec.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="15" column="12" lean-forward="true" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/ChannelTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+        <state relative-caret-position="358">
+          <caret line="304" column="29" lean-forward="false" selection-start-line="304" selection-start-column="29" selection-end-line="304" selection-end-column="29" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/CellSegmentation/CellPointInternalFrame.java">
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/dialogs/AcqControlDlg.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1281">
-          <caret line="72" column="44" lean-forward="false" selection-start-line="72" selection-start-column="44" selection-end-line="72" selection-end-column="44" />
+        <state relative-caret-position="392">
+          <caret line="1366" column="44" lean-forward="false" selection-start-line="1366" selection-start-column="44" selection-end-line="1366" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/CellSegmentation/CellPointTableModel.java">
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/AcquisitionEngine.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <element signature="e#899#900#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappDevice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="35" column="18" lean-forward="false" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
+        <state relative-caret-position="268">
+          <caret line="39" column="12" lean-forward="false" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/Galvo.java">
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/IAcquisitionEngine2010.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="327" column="20" lean-forward="true" selection-start-line="327" selection-start-column="20" selection-end-line="327" selection-end-column="20" />
-          <folding>
-            <element signature="e#9914#9915#0" expanded="true" />
-            <element signature="e#9946#9947#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMCoreJ.jar!/mmcorej/CMMCore.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="1343" column="32" lean-forward="false" selection-start-line="1343" selection-start-column="32" selection-end-line="1343" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMCoreJ.jar!/mmcorej/MMCoreJJNI.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="1198" column="0" lean-forward="true" selection-start-line="1198" selection-start-column="0" selection-end-line="1198" selection-end-column="0" />
+        <state relative-caret-position="231">
+          <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/ImageWindowCopy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
+        <state relative-caret-position="-2754">
           <caret line="43" column="13" lean-forward="false" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/StagePosition.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="332" column="19" lean-forward="false" selection-start-line="332" selection-start-column="19" selection-end-line="332" selection-end-column="19" />
+        <state relative-caret-position="126">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding>
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="true" signature="393:400" ph="{}" />
+            <marker date="1439569898000" expanded="true" signature="466:683" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="716:1208" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/MMAcquisition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SLM.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1127">
+          <caret line="30" column="13" lean-forward="false" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/imagedisplay/VirtualAcquisitionDisplay.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-819">
+          <caret line="71" column="21" lean-forward="true" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/plaf/basic/BasicButtonListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="251" column="0" lean-forward="false" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMCoreJ.jar!/mmcorej/TaggedImage.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/PositionList.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/MultiStagePosition.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1313">
+          <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/ScriptInterface.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/MMStudio.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="1819" column="54" lean-forward="false" selection-start-line="1819" selection-start-column="54" selection-end-line="1819" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/AcquisitionWrapperEngine.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="408" column="35" lean-forward="false" selection-start-line="408" selection-start-column="35" selection-end-line="408" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SequenceSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelSpec.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SequenceSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="22" column="40" lean-forward="true" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/internalinterfaces/AcqSettingsListener.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="8" column="16" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+          <folding>
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-234">
+          <caret line="25" column="13" lean-forward="false" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="764">
+          <caret line="284" column="0" lean-forward="true" selection-start-line="284" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="147" column="19" lean-forward="false" selection-start-line="147" selection-start-column="19" selection-end-line="147" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="33" column="63" lean-forward="false" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellEditor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="1253" column="32" lean-forward="false" selection-start-line="1253" selection-start-column="32" selection-end-line="1253" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SaveFileDialogExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-315">
+          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="380" column="22" lean-forward="true" selection-start-line="380" selection-start-column="22" selection-end-line="380" selection-end-column="22" />
+        <state relative-caret-position="125">
+          <caret line="486" column="0" lean-forward="false" selection-start-line="486" selection-start-column="0" selection-end-line="486" selection-end-column="0" />
           <folding>
-            <element signature="e#12972#13200#0" expanded="true" />
-            <element signature="e#13199#13200#0" expanded="true" />
-            <element signature="e#14772#14773#0" expanded="true" />
-            <element signature="e#14842#14843#0" expanded="true" />
-            <element signature="e#18434#18642#0" expanded="true" />
-            <element signature="e#18641#18642#0" expanded="true" />
-            <element signature="e#32775#32966#0" expanded="true" />
-            <element signature="e#32965#32966#0" expanded="true" />
+            <element signature="e#13097#13325#0" expanded="true" />
+            <element signature="e#13324#13325#0" expanded="true" />
+            <element signature="e#18702#18910#0" expanded="true" />
+            <element signature="e#18909#18910#0" expanded="true" />
+            <element signature="e#33046#33237#0" expanded="true" />
+            <element signature="e#33236#33237#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/TaggedImageStorageDiskDefault.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="60" column="33" lean-forward="false" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="33" />
+          <folding>
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="false" signature="152:1236" ph="..." />
+            <marker date="1439569898000" expanded="true" signature="1843:1894" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2014:2785" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="2567:2630" ph="run() → { " />
+            <marker date="1439569898000" expanded="false" signature="2688:2712" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="2821:2832" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2855:2861" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="2916:2927" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2967:2973" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="3023:3211" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3280:5064" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="5147:7739" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7825:8193" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="8229:8240" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="8276:8282" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="8333:9076" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="9129:9477" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="9548:10016" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="10110:11834" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="11940:12168" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="12227:13062" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="13158:13418" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="13506:14792" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="14821:14899" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="14932:14943" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="14968:14974" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="15016:15474" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="15532:18875" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="18929:19955" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="20030:20187" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="20047:20137" ph="iterator() → { " />
+            <marker date="1439569898000" expanded="false" signature="20156:20180" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="20244:20680" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="20751:21012" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="21056:21067" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="21096:21102" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="21173:21691" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="21751:21762" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="21795:21801" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="21848:21859" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="21888:21894" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="21935:22655" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="22696:23363" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="23389:23677" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="23714:23725" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="23742:23748" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="23794:23849" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="23884:24270" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="23941:24010" ph="accept(pathname) → {" />
+            <marker date="1439569898000" expanded="false" signature="24093:24108" ph="}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/TaggedImageStorageRamFast.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding>
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="false" signature="152:713" ph="..." />
+            <marker date="1439569898000" expanded="true" signature="1245:1422" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="1478:1489" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="1544:1550" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="1634:1716" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="1870:2156" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2270:2656" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2727:3219" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3302:3724" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3830:3925" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="3961:3972" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4003:4009" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="4037:4048" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4070:4076" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="4109:4120" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4142:4148" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="4206:4908" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="4952:4963" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4992:4998" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="5058:5069" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="5102:5108" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="5155:5166" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="5195:5201" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="5227:5374" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="5428:5439" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="5473:5479" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="5516:5527" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="5553:5559" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="5595:5606" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="5629:5635" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="5669:5680" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="5742:5748" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="5789:5796" ph="{}" />
+            <marker date="1439569898000" expanded="true" signature="5859:6107" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="5923:5938" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="5964:5974" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="6033:6048" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="6091:6101" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="6145:6260" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="6243:6254" ph="{}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/acquisition/TaggedImageStorageMultipageTiff.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="37" column="19" lean-forward="false" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
+          <folding>
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="false" signature="152:1171" ph="..." />
+            <marker date="1439569898000" expanded="true" signature="2392:2573" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2781:3625" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3663:4297" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="4349:4360" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4389:4395" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="4422:4433" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4519:4525" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="4550:4561" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4645:4651" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="4688:4699" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4724:4730" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="4764:4775" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4800:4806" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="4847:6548" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="6651:7084" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7190:7343" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7457:7599" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7683:8064" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="7896:7944" ph="run() → {" />
+            <marker date="1439569898000" expanded="false" signature="8041:8056" ph="}" />
+            <marker date="1439569898000" expanded="true" signature="8171:10243" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="10279:10290" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="10331:10337" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="10379:14671" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="14697:15045" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="15078:15089" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="15114:15120" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="15171:15182" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="15217:15223" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="15298:16714" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="16758:16769" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="16798:16804" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="16850:16861" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="16896:16902" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="16949:16960" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="16992:16998" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="17058:17069" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="17105:17111" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="17152:17771" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="17808:17819" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="17842:17848" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="17884:17895" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="17968:17974" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="18009:18782" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="18826:18837" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="18850:18856" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="18884:34002" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="19558:20493" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="20533:20548" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="20577:20587" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="20631:20646" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="20679:20689" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="20750:20869" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="20934:21675" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="21731:21825" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="21946:22340" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="22378:22393" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="22419:22429" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="22498:26091" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="26170:26553" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="26617:27199" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="27264:27515" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="27586:28747" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="28797:29303" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="29406:32019" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="32078:33996" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/utils/ImageUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="531" column="15" lean-forward="false" selection-start-line="531" selection-start-column="15" selection-end-line="531" selection-end-column="15" />
+          <folding>
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="false" signature="146:684" ph="..." />
+            <marker date="1439569898000" expanded="true" signature="818:825" ph="{}" />
+            <marker date="1439569898000" expanded="true" signature="874:1116" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="1183:1419" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="1481:1492" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="1533:1539" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="1619:2091" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2181:2999" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3073:3377" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3450:3771" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3855:4474" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="4596:6436" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="6538:6732" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="6835:7031" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7134:7330" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7430:7621" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7728:7922" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="8026:8222" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="8331:8527" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="8604:8847" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="8927:9173" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="9252:9498" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="9578:9838" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="9917:10135" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="10215:10433" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="10513:10709" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="10763:11241" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="11301:11488" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="11548:11559" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="11598:11604" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="11667:11678" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="11720:11726" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="11785:11796" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="11832:11838" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="11887:12302" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="12352:12625" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="12675:12946" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="12995:13262" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="13310:13582" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="13646:13996" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="14060:14288" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="14361:14673" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="14749:15130" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="15198:15618" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="15688:16116" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="16194:16503" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="16583:16894" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="16953:17542" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="17607:17618" ph=" { " />
+            <marker date="1439569898000" expanded="true" signature="17647:17653" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="17701:17712" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="17733:17739" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="17866:18166" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="18211:18222" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="18237:18243" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="18289:18300" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="18320:18326" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="18372:19024" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="19070:19724" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="19775:20695" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="20764:21315" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="21497:22067" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="22131:22602" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="22667:22678" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="22714:22720" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="22749:22830" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="22813:22824" ph="{}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/AcquisitionWrapperEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1938">
+          <caret line="297" column="0" lean-forward="false" selection-start-line="297" selection-start-column="0" selection-end-line="297" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1109">
+          <caret line="523" column="24" lean-forward="false" selection-start-line="523" selection-start-column="24" selection-end-line="523" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1972#1973#0" expanded="true" />
+            <element signature="e#2025#2026#0" expanded="true" />
+            <element signature="e#7348#7349#0" expanded="true" />
+            <element signature="e#7376#7377#0" expanded="true" />
+            <element signature="e#7489#7490#0" expanded="true" />
+            <element signature="e#7517#7518#0" expanded="true" />
+            <element signature="e#7575#7576#0" expanded="true" />
+            <element signature="e#7603#7604#0" expanded="true" />
+            <element signature="e#7752#7753#0" expanded="true" />
+            <element signature="e#7780#7781#0" expanded="true" />
+            <element signature="e#7937#7938#0" expanded="true" />
+            <element signature="e#7973#7974#0" expanded="true" />
+            <element signature="e#8228#8229#0" expanded="true" />
+            <element signature="e#8255#8256#0" expanded="true" />
+            <element signature="e#8312#8313#0" expanded="true" />
+            <element signature="e#8348#8349#0" expanded="true" />
+            <element signature="e#8403#8404#0" expanded="true" />
+            <element signature="e#8430#8431#0" expanded="true" />
+            <element signature="e#8499#8500#0" expanded="true" />
+            <element signature="e#8527#8528#0" expanded="true" />
+            <element signature="e#8640#8641#0" expanded="true" />
+            <element signature="e#8668#8669#0" expanded="true" />
+            <element signature="e#8891#8892#0" expanded="true" />
+            <element signature="e#8919#8920#0" expanded="true" />
+            <element signature="e#9060#9061#0" expanded="true" />
+            <element signature="e#9088#9089#0" expanded="true" />
+            <element signature="e#9153#9154#0" expanded="true" />
+            <element signature="e#9180#9181#0" expanded="true" />
+            <element signature="e#9314#9315#0" expanded="true" />
+            <element signature="e#9341#9342#0" expanded="true" />
+            <element signature="e#10244#10245#0" expanded="true" />
+            <element signature="e#10272#10273#0" expanded="true" />
+            <element signature="e#10321#10322#0" expanded="true" />
+            <element signature="e#10345#10346#0" expanded="true" />
+            <element signature="e#10460#10461#0" expanded="true" />
+            <element signature="e#10484#10485#0" expanded="true" />
+            <element signature="e#10680#10681#0" expanded="true" />
+            <element signature="e#10708#10709#0" expanded="true" />
+            <element signature="e#10862#10863#0" expanded="true" />
+            <element signature="e#10889#10890#0" expanded="true" />
+            <element signature="e#10944#10945#0" expanded="true" />
+            <element signature="e#10971#10972#0" expanded="true" />
+            <element signature="e#11041#11042#0" expanded="true" />
+            <element signature="e#11069#11070#0" expanded="true" />
+            <element signature="e#11125#11126#0" expanded="true" />
+            <element signature="e#11161#11162#0" expanded="true" />
+            <element signature="e#11219#11220#0" expanded="true" />
+            <element signature="e#11255#11256#0" expanded="true" />
+            <element signature="e#11304#11305#0" expanded="true" />
+            <element signature="e#11332#11333#0" expanded="true" />
+            <element signature="e#11741#11742#0" expanded="true" />
+            <element signature="e#11768#11769#0" expanded="true" />
+            <element signature="e#11975#11976#0" expanded="true" />
+            <element signature="e#12002#12003#0" expanded="true" />
+            <element signature="e#12105#12106#0" expanded="true" />
+            <element signature="e#12132#12133#0" expanded="true" />
+            <element signature="e#12225#12226#0" expanded="true" />
+            <element signature="e#12252#12253#0" expanded="true" />
+            <element signature="e#12367#12368#0" expanded="true" />
+            <element signature="e#12394#12395#0" expanded="true" />
+            <element signature="e#12507#12508#0" expanded="true" />
+            <element signature="e#12535#12536#0" expanded="true" />
+            <element signature="e#12586#12587#0" expanded="true" />
+            <element signature="e#12610#12611#0" expanded="true" />
+            <element signature="e#12659#12660#0" expanded="true" />
+            <element signature="e#12687#12688#0" expanded="true" />
+            <element signature="e#12927#12928#0" expanded="true" />
+            <element signature="e#12954#12955#0" expanded="true" />
+            <element signature="e#13009#13010#0" expanded="true" />
+            <element signature="e#13036#13037#0" expanded="true" />
+            <element signature="e#13118#13119#0" expanded="true" />
+            <element signature="e#13145#13146#0" expanded="true" />
+            <element signature="e#13193#13194#0" expanded="true" />
+            <element signature="e#13220#13221#0" expanded="true" />
+            <element signature="e#13277#13278#0" expanded="true" />
+            <element signature="e#13305#13306#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisition/SeqAcqGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="935" column="57" lean-forward="false" selection-start-line="935" selection-start-column="57" selection-end-line="935" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="1076" column="62" lean-forward="true" selection-start-line="1076" selection-start-column="62" selection-end-line="1076" selection-end-column="62" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1206,7 +2151,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>ij</last-edited>
+          <last-edited>Micro-Manager</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

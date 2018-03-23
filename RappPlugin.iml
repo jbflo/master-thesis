@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/src/TestLiveView" />
       <excludeFolder url="file://$MODULE_DIR$/src/Tutorial" />
       <excludeFolder url="file://$MODULE_DIR$/src/Tutorial/SlideExplorer" />
+      <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/SequenceAcquisitions" />
       <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/acquisition" />
       <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/dialogs" />
       <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/utils" />
@@ -38,6 +39,15 @@
       <library>
         <CLASSES>
           <root url="jar://C:/jai-1_1_2_01/lib/jai_codec-1.1.3-alpha.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/cellxpp/java/CellXJ.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

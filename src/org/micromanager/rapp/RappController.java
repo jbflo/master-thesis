@@ -15,10 +15,14 @@ package org.micromanager.rapp;
 import ij.measure.Calibration;
 import mmcorej.CMMCore;
 import mmcorej.StrVector;
+import org.json.JSONObject;
 import org.micromanager.MMStudio;
+import org.micromanager.acquisition.TaggedImageStorageDiskDefault;
+import org.micromanager.acquisition.TaggedImageStorageMultipageTiff;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.*;
 
+import java.awt.*;
 import java.awt.event.AWTEventListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -26,6 +30,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,11 +48,6 @@ import ij.plugin.filter.GaussianBlur;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
 
-import java.awt.AWTEvent;
-import java.awt.HeadlessException;
-import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -136,7 +137,6 @@ public class RappController extends  MMFrame implements OnStateListener {
 
     /**
      * Simple utility methods for points
-     *
      * Adds a point to an existing polygon.
      */
     private static void addVertex(Polygon polygon, Point p) {
@@ -654,21 +654,17 @@ public class RappController extends  MMFrame implements OnStateListener {
                     try {
                         isRunning_.set(true);
                         Roi originalROI = IJ.getImage().getRoi();
-
                         // JonD: don't understand why we do this
                         // app_.snapSingleImage();
-
                         // do the heavy lifting of generating the local affine transform map
                         HashMap<Polygon, AffineTransform> mapping =
                                 (HashMap<Polygon, AffineTransform>) generateNonlinearMapping();
-
                         dev_.turnOff();
                         try {
                             Thread.sleep(500);
                         } catch (InterruptedException ex) {
                             ReportingUtils.logError(ex);
                         }
-
                         // save local affine transform map to preferences
                         // TODO allow different mappings to be stored for different channels (e.g. objective magnification)
                         if (!stopRequested_.get()) {
@@ -989,14 +985,22 @@ public class RappController extends  MMFrame implements OnStateListener {
             }
     }
 
-    public void fluorescenceSequence(String groupName, String sequenceName) {
+    public void fluorescenceSequence(String groupName, String sequenceName, boolean save) {
         String configNmae = sequenceName;
+       TaggedImage engineOutputQueue = null;
+
         try {
             // Set Core_Shutter to use Spectra
             core_.waitForDevice(core_.getCameraDevice());
             core_.setAutoShutter(false);
-
             Thread.sleep(100); // wait and set  Spectra sate to One
+            app_.enableLiveMode(false);
+            JSONObject summary = new JSONObject();
+            summary.put("Positions", 1);
+            summary.put("Width",512);
+            summary.put("Height",512);
+            summary.put("Prefix",sequenceName);
+
             if (groupName != null && sequenceName != null){
                 if (sequenceName =="Apply ALL Sequence"){
                     String[] allPreset = getConfigPreset(groupName);
@@ -1005,14 +1009,39 @@ public class RappController extends  MMFrame implements OnStateListener {
                           core_.setConfig(groupName, allPreset[i]);
                           Thread.sleep(1000);
                           core_.snapImage();
-                          core_.getImage();
+                          engineOutputQueue =  core_.getTaggedImage();
                       }
+
+
                     }
                 else{
                     core_.setConfig(groupName, configNmae);
                     core_.snapImage();
                     }
+
+                if (save) {
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle("Specify a file to save");
+                    fileChooser.setAcceptAllFileFilterUsed(false);
+                   // fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    File fileToSave = null;
+                    File dirToSave = null;
+                    int userSelection = fileChooser.showSaveDialog(this);
+                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        fileToSave = fileChooser.getSelectedFile();
+                        dirToSave = fileChooser.getCurrentDirectory();
+                        System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+                    }
+                    // IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
+                    TaggedImageStorageMultipageTiff stackStorage = new TaggedImageStorageMultipageTiff(fileToSave.getAbsolutePath(), true,summary,false,true, true);
+                    TaggedImageStorageDiskDefault separateStorage = new TaggedImageStorageDiskDefault(dirToSave.getAbsolutePath(), true, summary);
+
+                 //   if (engineOutputQueue == null) engineOutputQueue = core_.getTaggedImage();
+                    // stackStorage.putImage( engineOutputQueue);
+                    separateStorage.putImage(engineOutputQueue);
                 }
+            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             ReportingUtils.showError("Please Try Again! were unable to change filter color");
@@ -1023,9 +1052,9 @@ public class RappController extends  MMFrame implements OnStateListener {
 
 
     //#################################  Method for Saving Image ###############################################
-     public void snapAndSaveImage() {
+     public void snapAndSaveImage(ImagePlus img) {
 
-         ImagePlus iPlus; //=  IJ.openImage(path.concat("Resources/img.tif")); ;
+         ImagePlus iPlus = img; //=  IJ.openImage(path.concat("Resources/img.tif")); ;
          JFileChooser fileChooser = new JFileChooser();
          fileChooser.setDialogTitle("Specify a file to save");
          File fileToSave = null;
@@ -1035,11 +1064,19 @@ public class RappController extends  MMFrame implements OnStateListener {
              System.out.println("Save as file: " + fileToSave.getAbsolutePath());
          }
 
+         BlockingQueue<TaggedImage> engineOutputQueue;
+
          //write image
          try{
              app_.enableLiveMode(false);
-             app_.snapSingleImage();
-             iPlus = IJ.getImage();
+            // app_.snapSingleImage();
+
+            // core_.snapImage();
+             TaggedImage tmp = core_.getTaggedImage();
+             app_.openAcquisition(fileToSave.getAbsolutePath(),fileToSave.getAbsolutePath(), 2,1,1,3,true,false );
+
+             System.out.println(app_.getPositionList().getNumberOfPositions());
+          //   iPlus = IJ.getImage();
              if (iPlus.getStackSize() <= 1) {
                  IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
              }else{

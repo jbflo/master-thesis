@@ -101,12 +101,10 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
 
    public void settingsChanged() {
       Iterator i$ = this.settingsListeners_.iterator();
-
       while(i$.hasNext()) {
          AcqSettingsListener listener = (AcqSettingsListener)i$.next();
          listener.settingsChanged();
       }
-
    }
 
    protected IAcquisitionEngine2010 getAcquisitionEngine2010() {
@@ -142,7 +140,9 @@ public class AcquisitionWrapperEngine implements AcquisitionEngine {
 
       try {
          BlockingQueue<TaggedImage> engineOutputQueue = this.getAcquisitionEngine2010().run(acquisitionSettings, true, this.studio_.getPositionList(), this.studio_.getAutofocusManager().getDevice());
+
          this.summaryMetadata_ = this.getAcquisitionEngine2010().getSummaryMetadata();
+
          BlockingQueue<TaggedImage> procStackOutputQueue = ProcessorStack.run(engineOutputQueue, this.taggedImageProcessors_);
          String acqName = acqManager.createAcquisition(this.summaryMetadata_, acquisitionSettings.save, this, this.studio_.getHideMDADisplayOption());
          MMAcquisition acq = acqManager.getAcquisition(acqName);

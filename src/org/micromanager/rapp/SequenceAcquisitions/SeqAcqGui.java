@@ -19,34 +19,21 @@
 //               CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 //               INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
 
-package org.micromanager.rapp.SequenceAcquisition;
+package org.micromanager.rapp.SequenceAcquisitions;
 
 
-import org.micromanager.MMStudio;
-import org.micromanager.api.ScriptInterface;
 import com.swtdesigner.SwingResourceManager;
 import mmcorej.CMMCore;
 import org.micromanager.MMOptions;
+import org.micromanager.MMStudio;
 import org.micromanager.acquisition.ComponentTitledBorder;
 import org.micromanager.acquisition.TaggedImageStorageDiskDefault;
 import org.micromanager.acquisition.TaggedImageStorageMultipageTiff;
+import org.micromanager.api.ScriptInterface;
 import org.micromanager.dialogs.AdvancedOptionsDialog;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
-import org.micromanager.utils.*;
 import org.micromanager.rapp.RappGui;
-//import org.micromanager.rapp.acquisition.AcquisitionEngine;
-//import org.micromanager.rapp.acquisition.ComponentTitledBorder;
-//import org.micromanager.rapp.acquisition.TaggedImageStorageDiskDefault;
-//import org.micromanager.rapp.acquisition.TaggedImageStorageMultipageTiff;
-//import org.micromanager.rapp.dialogs.AdvancedOptionsDialog;
-//import org.micromanager.rapp.dialogs.ChannelCellEditor;
-//import org.micromanager.rapp.dialogs.ChannelCellRenderer;
-//import org.micromanager.rapp.dialogs.ChannelTableModel;
-//import org.micromanager.rapp.utils.ChannelSpec;
-//import org.micromanager.rapp.utils.ImageUtils;
-//import org.micromanager.utils.*;
-//import org.micromanager.utils.DisplayMode;
-//import org.micromanager.utils.FileDialogs.FileType;
+import org.micromanager.utils.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -58,7 +45,6 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.DisplayMode;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -73,6 +59,20 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import static javax.swing.JFrame.setDefaultLookAndFeelDecorated;
+
+//import org.micromanager.rapp.acquisition.AcquisitionEngine;
+//import org.micromanager.rapp.acquisition.ComponentTitledBorder;
+//import org.micromanager.rapp.acquisition.TaggedImageStorageDiskDefault;
+//import org.micromanager.rapp.acquisition.TaggedImageStorageMultipageTiff;
+//import org.micromanager.rapp.dialogs.AdvancedOptionsDialog;
+//import org.micromanager.rapp.dialogs.ChannelCellEditor;
+//import org.micromanager.rapp.dialogs.ChannelCellRenderer;
+//import org.micromanager.rapp.dialogs.ChannelTableModel;
+//import org.micromanager.rapp.utils.ChannelSpec;
+//import org.micromanager.rapp.utils.ImageUtils;
+//import org.micromanager.utils.*;
+//import org.micromanager.utils.DisplayMode;
+//import org.micromanager.utils.FileDialogs.FileType;
 
 //
 //import org.micromanager.acquisition.AcquisitionEngine;
@@ -428,16 +428,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       //framesPanel_.setLayout(new BorderLayout());
       framesSubPanelLayout_ = new CardLayout();
       framesSubPanel_ = new JPanel(framesSubPanelLayout_);
-      //this subpanel is needed for the time points panel to properly render
-      //framesPanel_.add(framesSubPanel_);
 
-      //framesSubPanel_.add(defaultPanel, DEFAULT_FRAMES_PANEL_NAME);
-     // framesSubPanel_.add(overridePanel, OVERRIDE_FRAMES_PANEL_NAME);
-
-      //framesSubPanelLayout_.show(framesSubPanel_, DEFAULT_FRAMES_PANEL_NAME);
-
-
-     // framesPanel_.addActionListener(e -> applySettings());
 
       final JLabel numberLabel = new JLabel();
       numberLabel.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -455,7 +446,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       numFrames_ = new JSpinner(sModel);
       ((JSpinner.DefaultEditor) numFrames_.getEditor()).getTextField().setFont(new Font("Arial", Font.PLAIN, 10));
 
-      numFrames_.setValue((int) acqEng_.getNumFrames());
       defaultPanel.add(numFrames_);
       numFrames_.setBounds(60, 0, 70, 24);
       numFrames_.addChangeListener(new ChangeListener() {
@@ -486,7 +476,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
          @Override
          public void actionPerformed(final ActionEvent e) {
-            interval_.setText(NumberUtils.doubleToDisplayString(convertMsToTime(acqEng_.getFrameIntervalMs(), timeUnitCombo_.getSelectedIndex())));
+           // interval_.setText(NumberUtils.doubleToDisplayString(convertMsToTime(acqEng_.getFrameIntervalMs(), timeUnitCombo_.getSelectedIndex())));
          }
       });
       timeUnitCombo_.setModel(new DefaultComboBoxModel(new String[]{"ms", "s", "min"}));
@@ -687,20 +677,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       afSkipFrame1.setBounds(20, 75, 70, 21);
       afPanel_.add(afSkipFrame1);
 
-
-      afSkipInterval_ = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
-      ((JSpinner.DefaultEditor) afSkipInterval_.getEditor()).getTextField().setFont(new Font("Arial", Font.PLAIN, 10));
-      afSkipInterval_.setBounds(90, 75, 55, 22);
-      afSkipInterval_.setValue(acqEng_.getAfSkipInterval());
-      afSkipInterval_.addChangeListener(new ChangeListener() {
-
-         @Override
-         public void stateChanged(ChangeEvent e) {
-            applySettings();
-            afSkipInterval_.setValue(acqEng_.getAfSkipInterval());
-         }
-      });
-      afPanel_.add(afSkipInterval_);
 
 
       // Channels panel
@@ -1264,35 +1240,15 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
       // load acquisition engine preferences
       acqEng_.clear();
-      int numFrames = acqPrefs_.getInt(ACQ_NUMFRAMES, 1);
-      double interval = acqPrefs_.getDouble(ACQ_INTERVAL, 0.0);
 
-      acqEng_.setFrames(numFrames, interval);
-      acqEng_.enableFramesSetting(acqPrefs_.getBoolean(ACQ_ENABLE_MULTI_FRAME, false));
-
-      boolean framesEnabled = acqEng_.isFramesSettingEnabled();
-      //framesPanel_.setSelected(framesEnabled);
-     // framesPanel_.setSelected(framesEnabled);
-      Component[] comps = framesSubPanel_.getComponents();
-      for (Component c: comps)
-         for (Component co: ((JPanel)c).getComponents() )
-            co.setEnabled(framesEnabled);
-     // framesPanel_.repaint();
-
-      numFrames_.setValue(acqEng_.getNumFrames());
 
       int unit = acqPrefs_.getInt(ACQ_TIME_UNIT, 0);
       timeUnitCombo_.setSelectedIndex(unit);
 
       double bottom = acqPrefs_.getDouble(ACQ_ZBOTTOM, 0.0);
       double top = acqPrefs_.getDouble(ACQ_ZTOP, 0.0);
-      double step = acqPrefs_.getDouble(ACQ_ZSTEP, 1.0);
-      if (Math.abs(step) < Math.abs(acqEng_.getMinZStepUm())) {
-         step = acqEng_.getMinZStepUm();
-      }
-      zVals_ = acqPrefs_.getInt(ACQ_Z_VALUES, 0);
-      acqEng_.setSlices(bottom, top, step, zVals_ == 0 ? false : true);
-      acqEng_.enableZSliceSetting(acqPrefs_.getBoolean(ACQ_ENABLE_SLICE_SETTINGS, acqEng_.isZSliceSettingEnabled()));
+
+
       acqEng_.enableMultiPosition(acqPrefs_.getBoolean(ACQ_ENABLE_MULTI_POSITION, acqEng_.isMultiPositionEnabled()));
       positionsPanel_.setSelected(acqEng_.isMultiPositionEnabled());
       positionsPanel_.repaint();

@@ -1,4 +1,4 @@
-package org.micromanager.rapp.SequenceAcquisition;
+package org.micromanager.rapp.SequenceAcquisitions;
 
 
 import com.google.gson.Gson;

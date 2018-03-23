@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import org.micromanager.MMStudio;
 import org.micromanager.acquisition.*;
 import org.micromanager.api.ImageCache;
+import org.micromanager.acquisition.MMImageCache;
 import org.micromanager.api.TaggedImageStorage;
 //import org.micromanager.dialogs.AcqControlDlg;
 import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
@@ -145,7 +146,7 @@ public class MMAcquisition {
 
             this.imageCache_.setSummaryMetadata(summaryMetadata);
             if (this.show_) {
-                this.virtAcq_ = new VirtualAcquisitionDisplay(this.imageCache_, (org.micromanager.acquisition.AcquisitionEngine) eng, name, false);
+                this.virtAcq_ = new VirtualAcquisitionDisplay(this.imageCache_,(org.micromanager.acquisition.AcquisitionEngine) eng, name, false);
                 this.imageCache_.addImageCacheListener(this.virtAcq_);
             }
 
@@ -181,7 +182,6 @@ public class MMAcquisition {
                         }
                     }
                 } catch (NumberFormatException var12) {
-                    ;
                 }
             }
         }

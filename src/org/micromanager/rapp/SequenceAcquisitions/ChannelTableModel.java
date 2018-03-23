@@ -1,23 +1,19 @@
-package org.micromanager.rapp.SequenceAcquisition;
+package org.micromanager.rapp.SequenceAcquisitions;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.prefs.Preferences;
+import org.micromanager.MMOptions;
+import org.micromanager.api.ScriptInterface;
+import org.micromanager.utils.ReportingUtils;
+import org.micromanager.utils.TooltipTextMaker;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.prefs.Preferences;
 
-//import org.micromanager.acquisition.AcquisitionEngine;
-//import org.micromanager.rapp.acquisition.AcquisitionEngine;
-import org.micromanager.api.ScriptInterface;
-import org.micromanager.MMOptions;
-//import org.micromanager.utils.ChannelSpec;
-//import org.micromanager.rapp.utils.ChannelSpec;
-import org.micromanager.utils.ReportingUtils;
-import org.micromanager.utils.TooltipTextMaker;
 
 /**
  * Data representation class for the channels list in the MDA dialog.
@@ -61,8 +57,8 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       return TOOLTIPS[columnIndex];
    }
 
-   public ChannelTableModel(ScriptInterface studio, AcquisitionEngine eng, 
-         Preferences exposurePrefs, Preferences colorPrefs, 
+   public ChannelTableModel(ScriptInterface studio, AcquisitionEngine eng,
+         Preferences exposurePrefs, Preferences colorPrefs,
          MMOptions options) {
       studio_ = studio;
       acqEng_ = eng;
@@ -129,14 +125,14 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       } else if (col == 1) {
          channel.config = value.toString();
          channel.exposure = exposurePrefs_.getDouble(
-                 "Exposure_" + acqEng_.getChannelGroup() + "_" + 
+                 "Exposure_" + acqEng_.getChannelGroup() + "_" +
                  channel.config, 10.0);
       } else if (col == 2) {
          channel.exposure = ((Double) value);
-         exposurePrefs_.putDouble("Exposure_" + acqEng_.getChannelGroup() 
+         exposurePrefs_.putDouble("Exposure_" + acqEng_.getChannelGroup()
                  + "_" + channel.config,channel.exposure);
          if (options_.syncExposureMainAndMDA_) {
-            studio_.setChannelExposureTime(acqEng_.getChannelGroup(), 
+            studio_.setChannelExposureTime(acqEng_.getChannelGroup(),
                     channel.config, channel.exposure);
          }
 //      } else if (col == 3) {
@@ -155,9 +151,9 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
    @Override
    public boolean isCellEditable(int nRow, int nCol) {
       if (nCol == 4) {
-         if (!acqEng_.isZSliceSettingEnabled()) {
+        // if (!acqEng_.isZSliceSettingEnabled()) {
             return false;
-         }
+       //  }
       }
 
       return true;
@@ -216,10 +212,10 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
             ReportingUtils.showMessage("No more channels are available\nin this channel group.");
          } else {
             channel.color = new Color(colorPrefs_.getInt(
-                    "Color_" + acqEng_.getChannelGroup() + "_" + 
+                    "Color_" + acqEng_.getChannelGroup() + "_" +
                     channel.config, Color.white.getRGB()));
             channel.exposure = exposurePrefs_.getDouble(
-                    "Exposure_" + acqEng_.getChannelGroup() + "_" + 
+                    "Exposure_" + acqEng_.getChannelGroup() + "_" +
                     channel.config, 10.0);
             channels_.add(channel);
          }
@@ -235,7 +231,7 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
    /**
     * Used to change the order of the channels in the MDA window
     * @param rowIdx
-    * @return 
+    * @return
     */
    public int rowDown(int rowIdx) {
       if (rowIdx >= 0 && rowIdx < channels_.size() - 1) {

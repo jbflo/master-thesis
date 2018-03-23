@@ -13,6 +13,7 @@ package org.micromanager.rapp;
 
 
 import ij.gui.ImageWindow;
+import javafx.beans.property.SimpleObjectProperty;
 import mmcorej.CMMCore;
 import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
@@ -53,8 +54,8 @@ import javax.swing.plaf.metal.MetalToggleButtonUI;
 public class RappGui extends JFrame implements LiveModeListener {
     private Preferences mainPrefs_;
     private MMOptions options_;
-   // private AcqControlDlg acquisition_;
-    private SeqAcqGui acquisition_;
+    // private AcqControlDlg acquisition_;
+    private SimpleObjectProperty<SeqAcqGui> acquisition_ = new SimpleObjectProperty<>(this, "acquisition_");
     private CellPointInternalFrame tablePointFrame;
     private static   ImageViewer imageViewer_;
     private static RappGui appInterface_;
@@ -319,7 +320,7 @@ public class RappGui extends JFrame implements LiveModeListener {
         left_box.add(snapAndSave_btn);
         snapAndSave_btn.addActionListener(e -> {
 
-            rappController_ref.snapAndSaveImage();
+          //  rappController_ref.snapAndSaveImage();
 
         });
 
@@ -349,7 +350,7 @@ public class RappGui extends JFrame implements LiveModeListener {
         right_box_learning.setBackground(Color.decode("#34495e"));
         right_box_shoot.setBackground(Color.decode("#34495e"));
 
-        right_box_setup.setPreferredSize(new Dimension(775, 400));
+        right_box_setup.setPreferredSize(new Dimension(775, 430));
         rightPanel.add(right_box_setup);
         right_box_setup.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -375,7 +376,8 @@ public class RappGui extends JFrame implements LiveModeListener {
         right_box_setup.add(new JLabel("<html><font size='4' color='white'>Chanel Exposure time (ms)  :</font></html>"),gbc);
         gbc.gridy++;
         right_box_setup.add(new JLabel("<html><font  size='4' color='white'>Set Configuration Preset.       :</font></html>"),gbc);
-
+        gbc.gridy++;
+        right_box_setup.add(new JLabel("<html><font  size='4' color='white'>Try Sequence .       :</font></html>"),gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridy = 0;
@@ -476,15 +478,15 @@ public class RappGui extends JFrame implements LiveModeListener {
         gbc.gridy++;
 
 
-//        Sequence_jcb = new JComboBox<String>(new DefaultComboBoxModel<>());
-//       // right_box_setup.add(Sequence_jcb, gbc);
-//        Sequence_jcb.setPreferredSize(new Dimension(150, 30));
-//        Sequence_jcb.addActionListener(e -> {
-//            String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
-//            String SequenceName = Sequence_jcb.getSelectedItem().toString();
-//            rappController_ref.fluorescenceSequence(GroupConfN, SequenceName);
-//            confirmSaving();
-//        });
+        Sequence_jcb = new JComboBox<String>(new DefaultComboBoxModel<>());
+        right_box_setup.add(Sequence_jcb, gbc);
+        Sequence_jcb.setPreferredSize(new Dimension(150, 30));
+        Sequence_jcb.addActionListener(e -> {
+            String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
+            String SequenceName = Sequence_jcb.getSelectedItem().toString();
+            rappController_ref.fluorescenceSequence(GroupConfN, SequenceName,confirmSaving());
+
+        });
 
         ////////////////////////////////  right_box_shoot (SHOOT OPTION) Content //////////////////////////////////
 
@@ -678,13 +680,13 @@ public class RappGui extends JFrame implements LiveModeListener {
         asButtonPanel.setBackground(Color.decode("#34495e"));
 
         try {
-            if (acquisition_== null) {
-                acquisition_= new SeqAcqGui(engine_, this.mainPrefs_, studio_, this.options_);
+            if (acquisition_.get() == null) {
+                acquisition_.set(new SeqAcqGui(engine_, this.mainPrefs_, studio_, this.options_));
             }
-            acquisition_.setPreferredSize(new Dimension(900, 545));
-            acquisition_.setVisible(true);
-            asButtonPanel.add(acquisition_);
-            acquisition_.repaint();
+            acquisition_.get().setPreferredSize(new Dimension(900, 545));
+            acquisition_.get().setVisible(true);
+            asButtonPanel.add(acquisition_.get());
+            acquisition_.get().repaint();
 
             //acquisition_.
         } catch (Exception var2) {
@@ -775,13 +777,14 @@ public class RappGui extends JFrame implements LiveModeListener {
     }
 
     //  Avoid user to accidentally close the window by this fonction
-    private void confirmSaving() {
+    private Boolean confirmSaving() {
         int n = JOptionPane.showConfirmDialog(appInterface_,
                 "Do you want to save sequence image?", "Saving", JOptionPane.YES_NO_OPTION);
         if (n == JOptionPane.YES_OPTION) {
-            rappController_ref.snapAndSaveImage();
+            return true;
         }
         else  GUIUtils.recallPosition(appInterface_);
+        return false;
     }
 
     /**
