@@ -99,7 +99,7 @@ public class RappController extends  MMFrame implements OnStateListener {
     public boolean bleechingComp=false;
     public List<Point2D.Double> roiPointClick = new ArrayList<>();
     public Point2D.Double roiTemp  = new Point2D.Double();
-
+    FileDialog fileDialog_ = new FileDialog();
     //private static final RappController fINSTANCE =  new RappController(core_, app_);
 
 //    public static RappController getInstance() {
@@ -996,48 +996,52 @@ public class RappController extends  MMFrame implements OnStateListener {
             Thread.sleep(100); // wait and set  Spectra sate to One
             app_.enableLiveMode(false);
             JSONObject summary = new JSONObject();
+
+            summary.put("Prefix",sequenceName);
+            summary.put("Slices", 18);
             summary.put("Positions", 1);
+            summary.put("Channels",sequenceName);
+            summary.put("Frames", 10);
+            summary.put("Positions",3);
+            summary.put("SlicesFirst",true);
+            summary.put("TimeFirst",false);
+            summary.put("PixelType", "GRAY16");
             summary.put("Width",512);
             summary.put("Height",512);
-            summary.put("Prefix",sequenceName);
+            //these are used to create display settings
+            summary.put("ChColors", new org.json.JSONArray("[1,1]"));
+            summary.put("ChNames", new org.json.JSONArray("[DAPI,FITC]"));
+            summary.put("ChMins", new org.json.JSONArray("[0,0]"));
+            summary.put("ChMaxes", new org.json.JSONArray("[65535,65535]"));
 
             if (groupName != null && sequenceName != null){
                 if (sequenceName =="Apply ALL Sequence"){
                     String[] allPreset = getConfigPreset(groupName);
                     System.out.println(allPreset.length);
+                    core_.startSequenceAcquisition(camera, allPreset.length,10,true);
                       for(int i=0; i< allPreset.length; i++){
                           core_.setConfig(groupName, allPreset[i]);
                           Thread.sleep(1000);
                           core_.snapImage();
-                          engineOutputQueue =  core_.getTaggedImage();
-                      }
 
+                      }
 
                     }
                 else{
                     core_.setConfig(groupName, configNmae);
                     core_.snapImage();
                     }
+                engineOutputQueue =  core_.getTaggedImage();
 
                 if (save) {
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setDialogTitle("Specify a file to save");
-                    fileChooser.setAcceptAllFileFilterUsed(false);
-                   // fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                    File fileToSave = null;
-                    File dirToSave = null;
-                    int userSelection = fileChooser.showSaveDialog(this);
-                    if (userSelection == JFileChooser.APPROVE_OPTION) {
-                        fileToSave = fileChooser.getSelectedFile();
-                        dirToSave = fileChooser.getCurrentDirectory();
-                        System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-                    }
+                    String fileToSave = fileDialog_.ChooseFileDialog();
+                    String dirToSave = fileDialog_.ChooseDirectoryDialog();
                     // IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
-                    TaggedImageStorageMultipageTiff stackStorage = new TaggedImageStorageMultipageTiff(fileToSave.getAbsolutePath(), true,summary,false,true, true);
-                    TaggedImageStorageDiskDefault separateStorage = new TaggedImageStorageDiskDefault(dirToSave.getAbsolutePath(), true, summary);
+                    TaggedImageStorageMultipageTiff stackStorage = new TaggedImageStorageMultipageTiff(fileToSave, true,summary,false,true, true);
+                    TaggedImageStorageDiskDefault separateStorage = new TaggedImageStorageDiskDefault(dirToSave, true, summary);
 
-                 //   if (engineOutputQueue == null) engineOutputQueue = core_.getTaggedImage();
-                    // stackStorage.putImage( engineOutputQueue);
+                  //  if (engineOutputQueue == null) engineOutputQueue = core_.getTaggedImage();
+                   // stackStorage.putImage( engineOutputQueue);
                     separateStorage.putImage(engineOutputQueue);
                 }
             }
