@@ -1,11 +1,13 @@
 package org.micromanager.rapp.SequenceAcquisitions;
 
 import ij.IJ;
+import ij.ImagePlus;
 import mmcorej.*;
 import org.json.JSONObject;
-import org.micromanager.MMStudio;
-import org.micromanager.acquisition.DefaultTaggedImageSink;
-import org.micromanager.api.*;
+import org.micromanager.api.DataProcessor;
+import org.micromanager.api.ImageCache;
+import org.micromanager.api.PositionList;
+import org.micromanager.api.ScriptInterface;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.rapp.RappPlugin;
 import org.micromanager.utils.AutofocusManager;
@@ -19,7 +21,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SeqAcqController implements AcquisitionEngine {
@@ -74,9 +75,11 @@ public class SeqAcqController implements AcquisitionEngine {
     }
 
     protected String runAcquisition(SequenceSettings acquisitionSettings) {
+
         app_.enableLiveMode(false);
         ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
         String chanelGroup_ = acquisitionSettings.channelGroup;
+        String rootPath = null;
         System.out.println( chanelGroup_);
         try {
             core_.waitForDevice(core_.getCameraDevice());
@@ -84,14 +87,37 @@ public class SeqAcqController implements AcquisitionEngine {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (saveFiles_) {
+            File root = new File(rootName_);
+            if (!root.canWrite()) {
+                int result = JOptionPane.showConfirmDialog((Component)null, "The specified root directory\n" + root.getAbsolutePath() + "\ndoes not exist. Create it?", "Directory not found.", 0);
+                if (result != 0) {
+                    ReportingUtils.showMessage("Acquisition canceled.");
+                    return null;
+                }
+                root.mkdirs();
+                if (!root.canWrite()) {
+                    ReportingUtils.showError("Unable to save data to selected location: check that location exists.\nAcquisition canceled.");
+                    return null;
+                }
+            } else if (!enoughDiskSpace()) {
+                ReportingUtils.showError("Not enough space on disk to save the requested image set; acquisition canceled.");
+                return null;
+            }
+           rootPath = root.getAbsolutePath();
+        }
 
+        System.out.println(rootName_ + " test");
         if (!isRunning_.get()) {
             stopRequested_.set(false);
+            String finalRootPath = rootPath;
+            System.out.println(finalRootPath + " test25");
             Thread th = new Thread("Sequence Acquisition thread") {
                 @Override
                 public void run() {
                     try {
                         isRunning_.set(true);
+                        ImagePlus iPlus = null;
                         for (ChannelSpec presetConfig : channels){
                             System.out.println(presetConfig.config.toString());
                             core_.setConfig(chanelGroup_, presetConfig.config.toString());
@@ -103,13 +129,13 @@ public class SeqAcqController implements AcquisitionEngine {
                             core_.snapImage();
                             core_.getTaggedImage();
                             core_.getLastTaggedImage();
+                            iPlus = IJ.getImage();
+                            if (saveFiles_ ) {
+                                IJ.save(iPlus, finalRootPath + "_" + presetConfig.config.toLowerCase() + ".tif");
+                            }
+
                         }
 
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException ex) {
-                            ReportingUtils.logError(ex);
-                        }
                         // save local affine transform map to preferences
                         // TODO allow different mappings to be stored for different channels (e.g. objective magnification)
                         if (!stopRequested_.get()) {
@@ -119,7 +145,6 @@ public class SeqAcqController implements AcquisitionEngine {
                       //  app_.enableLiveMode(liveModeRunning);
                         JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
                                 + (!stopRequested_.get() ? "finished." : "canceled."));
-                   //     IJ.getImage().setRoi(originalROI);
                     } catch (HeadlessException e) {
                         ReportingUtils.showError(e);
                     } catch (RuntimeException e) {
@@ -135,28 +160,8 @@ public class SeqAcqController implements AcquisitionEngine {
             };
             th.start();
         }
-        if (this.saveFiles_) {
-            File root = new File(this.rootName_);
-            if (!root.canWrite()) {
-                int result = JOptionPane.showConfirmDialog((Component)null, "The specified root directory\n" + root.getAbsolutePath() + "\ndoes not exist. Create it?", "Directory not found.", 0);
-                if (result != 0) {
-                    ReportingUtils.showMessage("Acquisition canceled.");
-                    return null;
-                }
-                root.mkdirs();
-                if (!root.canWrite()) {
-                    ReportingUtils.showError("Unable to save data to selected location: check that location exists.\nAcquisition canceled.");
-                    return null;
-                }
-            } else if (!this.enoughDiskSpace()) {
-                ReportingUtils.showError("Not enough space on disk to save the requested image set; acquisition canceled.");
-                return null;
-            }
-        }
-
-        this.app_.enableLiveMode(false);
-
-        try {
+        return null;
+//        try {
 //            BlockingQueue<TaggedImage> engineOutputQueue = this.getAcquisitionEngine2010().run(acquisitionSettings, true, this.studio_.getPositionList(), this.studio_.getAutofocusManager().getDevice());
 //
 //            this.summaryMetadata_ = this.getAcquisitionEngine2010().getSummaryMetadata();
@@ -172,11 +177,11 @@ public class SeqAcqController implements AcquisitionEngine {
 //                }
 //            });
 //            return acqName;
-            return null;
-        } catch (Throwable var8) {
-            ReportingUtils.showError(var8);
-            return null;
-        }
+//            return null;
+//        } catch (Throwable var8) {
+//            ReportingUtils.showError(var8);
+//            return null;
+//        }
     }
 
     private int getNumChannels() {

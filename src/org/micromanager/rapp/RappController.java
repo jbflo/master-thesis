@@ -4,7 +4,7 @@
 //SUBSYSTEM:     RAPP plugin
 //-----------------------------------------------------------------------------
 //AUTHOR:        FLorial,
-//SOURCE :       ProjectorPlugin, Arthur Edelstein
+//SOURCE :       ProjectorPlugin, MultiD Acquisition
 //COPYRIGHT:     ZMBH, University of Heidelberg, 2017-2018
 //LICENSE:       This file is distributed under the
 /////////////////////////////////////////////////////////////////////////////////
@@ -12,53 +12,47 @@
 
 package org.micromanager.rapp;
 
-import ij.ImageStack;
-import ij.io.FileSaver;
-import ij.measure.Calibration;
-import mmcorej.CMMCore;
-import mmcorej.StrVector;
-import org.json.JSONObject;
-import org.micromanager.MMStudio;
-import org.micromanager.acquisition.TaggedImageStorageMultipageTiff;
-import org.micromanager.api.ScriptInterface;
-import org.micromanager.rapp.utils.FileDialog;
-import org.micromanager.utils.*;
-
-import java.awt.*;
-import java.awt.event.AWTEventListener;
-import java.io.File;
-import java.net.URL;
-import java.util.*;
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.prefs.Preferences;
-
 import ij.IJ;
 import ij.ImagePlus;
+import ij.ImageStack;
 import ij.WindowManager;
 import ij.gui.ImageCanvas;
 import ij.gui.ImageWindow;
 import ij.gui.PointRoi;
 import ij.gui.Roi;
+import ij.io.FileSaver;
+import ij.measure.Calibration;
 import ij.plugin.filter.GaussianBlur;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
+import mmcorej.CMMCore;
+import mmcorej.Configuration;
+import mmcorej.StrVector;
+import mmcorej.TaggedImage;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.micromanager.MMStudio;
+import org.micromanager.acquisition.TaggedImageStorageMultipageTiff;
+import org.micromanager.api.ScriptInterface;
+import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
+import org.micromanager.rapp.utils.FileDialog;
+import org.micromanager.utils.*;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.AWTEventListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.io.File;
+import java.net.URL;
+import java.util.*;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.swing.*;
-
-import mmcorej.Configuration;
-import mmcorej.TaggedImage;
-
-import org.json.JSONException;
-import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
-import org.micromanager.utils.MMFrame;
+import java.util.prefs.Preferences;
 
 
 /**
@@ -82,7 +76,6 @@ public class RappController extends  MMFrame implements OnStateListener {
     private String targetingChannel_;
     AtomicBoolean stopRequested_ = new AtomicBoolean(false);
     AtomicBoolean isRunning_ = new AtomicBoolean(false);
-    // private MosaicSequencingFrame mosaicSequencingFrame_;
     private String targetingShutter_;
     private Boolean disposing_ = false;
     private static VirtualAcquisitionDisplay display_;
@@ -1074,8 +1067,14 @@ public class RappController extends  MMFrame implements OnStateListener {
 
     public void  runSegmentation (String xmlPath){
 
-
+        try {
+       //     Segmentation f= Segmentation(xmlPath, core_.getTaggedImage( ));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     //#################################  Method for Saving Image ###############################################
      public void snapAndSaveImage(ImagePlus img) {
