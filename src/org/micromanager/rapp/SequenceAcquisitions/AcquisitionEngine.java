@@ -167,7 +167,6 @@ public interface AcquisitionEngine {
     */
    public String[] getChannelConfigs();
 
-
    /**
     * Returns the configuration preset group currently selected in the Multi-Dimensional Acquistion Window
     */

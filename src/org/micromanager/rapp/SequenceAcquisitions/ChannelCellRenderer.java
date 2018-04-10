@@ -8,8 +8,7 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
 
-//import org.micromanager.acquisition.AcquisitionEngine;
-//import org.micromanager.utils.ChannelSpec;
+
 
 /**
  * Renderer class for the channel table.
@@ -61,7 +60,7 @@ public class ChannelCellRenderer extends JLabel implements TableCellRenderer {
          setText(NumberUtils.doubleToDisplayString(channel.exposure));
 //      } else if (colIndex == 3) {
 //         setText(NumberUtils.doubleToDisplayString(channel.zOffset));
-////      } else if (colIndex == 4) {
+//      } else if (colIndex == 4) {
 //         JCheckBox check = new JCheckBox("", channel.doZStack);
 //         check.setEnabled(acqEng_.isZSliceSettingEnabled() && table.isEnabled());
 //         if (isSelected) {

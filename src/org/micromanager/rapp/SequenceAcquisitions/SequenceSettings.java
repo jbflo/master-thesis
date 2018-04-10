@@ -31,7 +31,7 @@ public class SequenceSettings {
 
     public static SequenceSettings fromJSONStream(String stream) {
         Gson gson = new Gson();
-        return (SequenceSettings)gson.fromJson(stream, SequenceSettings.class);
+        return gson.fromJson(stream, SequenceSettings.class);
     }
 
     public static synchronized void main(String[] args) {

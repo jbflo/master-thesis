@@ -12,29 +12,25 @@
 
 package org.micromanager.rapp;
 
+import ij.ImageStack;
+import ij.io.FileSaver;
 import ij.measure.Calibration;
 import mmcorej.CMMCore;
 import mmcorej.StrVector;
 import org.json.JSONObject;
 import org.micromanager.MMStudio;
-import org.micromanager.acquisition.TaggedImageStorageDiskDefault;
 import org.micromanager.acquisition.TaggedImageStorageMultipageTiff;
 import org.micromanager.api.ScriptInterface;
+import org.micromanager.rapp.utils.FileDialog;
 import org.micromanager.utils.*;
 
 import java.awt.*;
 import java.awt.event.AWTEventListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 import ij.IJ;
@@ -55,7 +51,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import mmcorej.Configuration;
@@ -64,8 +59,6 @@ import mmcorej.TaggedImage;
 import org.json.JSONException;
 import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
 import org.micromanager.utils.MMFrame;
-
-import static org.micromanager.MMStudio.MM_CONFIG_FILE;
 
 
 /**
@@ -99,7 +92,7 @@ public class RappController extends  MMFrame implements OnStateListener {
     public boolean bleechingComp=false;
     public List<Point2D.Double> roiPointClick = new ArrayList<>();
     public Point2D.Double roiTemp  = new Point2D.Double();
-    FileDialog fileDialog_ = new FileDialog();
+    org.micromanager.rapp.utils.FileDialog fileDialog_ = new FileDialog();
     //private static final RappController fINSTANCE =  new RappController(core_, app_);
 
 //    public static RappController getInstance() {
@@ -987,8 +980,12 @@ public class RappController extends  MMFrame implements OnStateListener {
 
     public void fluorescenceSequence(String groupName, String sequenceName, boolean save) {
         String configNmae = sequenceName;
-       TaggedImage engineOutputQueue = null;
-
+        TaggedImage engineOutputQueue = null;
+        TaggedImageStorageMultipageTiff stackStorage =null;
+        ImagePlus iPlus = null;
+        ImageStack stack = new ImageStack();
+        String fileToSave = "";
+        String dirToSave = "";
         try {
             // Set Core_Shutter to use Spectra
             core_.waitForDevice(core_.getCameraDevice());
@@ -1000,10 +997,10 @@ public class RappController extends  MMFrame implements OnStateListener {
             summary.put("Prefix",sequenceName);
             summary.put("Slices", 18);
             summary.put("Positions", 1);
-            summary.put("Channels",sequenceName);
+            //summary.put("Channels",sequenceName);
             summary.put("Frames", 10);
             summary.put("Positions",3);
-            summary.put("SlicesFirst",true);
+            summary.put("SlicesFirst",false);
             summary.put("TimeFirst",false);
             summary.put("PixelType", "GRAY16");
             summary.put("Width",512);
@@ -1013,37 +1010,58 @@ public class RappController extends  MMFrame implements OnStateListener {
             summary.put("ChNames", new org.json.JSONArray("[DAPI,FITC]"));
             summary.put("ChMins", new org.json.JSONArray("[0,0]"));
             summary.put("ChMaxes", new org.json.JSONArray("[65535,65535]"));
-
+            if (save) {
+               fileToSave = fileDialog_.SaveFileDialog();
+             // dirToSave = fileDialog_.ChooseDirectoryDialog();
+              // IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
+            }
             if (groupName != null && sequenceName != null){
                 if (sequenceName =="Apply ALL Sequence"){
                     String[] allPreset = getConfigPreset(groupName);
                     System.out.println(allPreset.length);
-                    core_.startSequenceAcquisition(camera, allPreset.length,10,true);
+                    //core_.startSequenceAcquisition(camera, allPreset.length,10,true);
                       for(int i=0; i< allPreset.length; i++){
                           core_.setConfig(groupName, allPreset[i]);
+                          summary.put("Channels", allPreset[i].length());
+                          System.out.println(allPreset[i].length());
                           Thread.sleep(1000);
                           core_.snapImage();
+                          engineOutputQueue = core_.getTaggedImage();
+                          core_.getLastTaggedImage();
+                          //app_.snapSingleImage();
+                          iPlus = IJ.getImage();
+                          stack = iPlus.getStack();
+                          if(save || fileToSave != null || dirToSave != null) {
+                              IJ.save(iPlus, fileToSave + "_" + allPreset[i] + ".tif");
+                              // new FileSaver(iPlus).saveAsTiffStack(fileToSave);
+                              // IJ.saveAsTiff(iPlus,fileToSave);
+                              // stackStorage = new TaggedImageStorageMultipageTiff(fileToSave, true, summary, false, true, true);
+                              // TaggedImageStorageDiskDefault separateStorage = new TaggedImageStorageDiskDefault(fileToSave, true, summary);
+                              // if (engineOutputQueue == null) engineOutputQueue = core_.getTaggedImage();
+                              // separateStorage.putImage(engineOutputQueue);
+                              // stackStorage.putImage( engineOutputQueue);
+                          }
 
                       }
+
 
                     }
                 else{
                     core_.setConfig(groupName, configNmae);
+                    summary.put("Channels",sequenceName.length());
+                    Thread.sleep(1000);
                     core_.snapImage();
+                    engineOutputQueue = core_.getTaggedImage();
+                    if(save || fileToSave != null || dirToSave != null) {
+                      // stackStorage = new TaggedImageStorageMultipageTiff(fileToSave, true, summary, false, true, true);
+                      //  TaggedImageStorageDiskDefault separateStorage = new TaggedImageStorageDiskDefault(dirToSave, true, summary);
+                        // if (engineOutputQueue == null) engineOutputQueue = core_.getTaggedImage();
+                      //  stackStorage.putImage( engineOutputQueue);
+                       // separateStorage.putImage(engineOutputQueue);
+                        new FileSaver(iPlus).saveAsTiffStack(dirToSave);
                     }
-                engineOutputQueue =  core_.getTaggedImage();
 
-                if (save) {
-                    String fileToSave = fileDialog_.ChooseFileDialog();
-                    String dirToSave = fileDialog_.ChooseDirectoryDialog();
-                    // IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
-                    TaggedImageStorageMultipageTiff stackStorage = new TaggedImageStorageMultipageTiff(fileToSave, true,summary,false,true, true);
-                    TaggedImageStorageDiskDefault separateStorage = new TaggedImageStorageDiskDefault(dirToSave, true, summary);
-
-                  //  if (engineOutputQueue == null) engineOutputQueue = core_.getTaggedImage();
-                   // stackStorage.putImage( engineOutputQueue);
-                    separateStorage.putImage(engineOutputQueue);
-                }
+                    }
             }
 
         } catch (Exception e) {
@@ -1054,6 +1072,10 @@ public class RappController extends  MMFrame implements OnStateListener {
     }
 
 
+    public void  runSegmentation (String xmlPath){
+
+
+    }
 
     //#################################  Method for Saving Image ###############################################
      public void snapAndSaveImage(ImagePlus img) {
@@ -1080,7 +1102,7 @@ public class RappController extends  MMFrame implements OnStateListener {
              app_.openAcquisition(fileToSave.getAbsolutePath(),fileToSave.getAbsolutePath(), 2,1,1,3,true,false );
 
              System.out.println(app_.getPositionList().getNumberOfPositions());
-          //   iPlus = IJ.getImage();
+             iPlus = IJ.getImage();
              if (iPlus.getStackSize() <= 1) {
                  IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
              }else{

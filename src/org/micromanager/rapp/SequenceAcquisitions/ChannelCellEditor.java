@@ -12,9 +12,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
-//import org.micromanager.acquisition.AcquisitionEngine;
-//import org.micromanager.utils.ChannelSpec;
-
 /**
  * Cell editing using either JTextField or JComboBox depending on whether the
  * property enforces a set of allowed values.

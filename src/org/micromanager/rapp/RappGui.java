@@ -13,24 +13,18 @@ package org.micromanager.rapp;
 
 
 import ij.gui.ImageWindow;
-import javafx.beans.property.SimpleObjectProperty;
 import mmcorej.CMMCore;
 import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
 import org.micromanager.SnapLiveManager;
 import org.micromanager.rapp.CellSegmentation.*;
-//import org.micromanager.acquisition.AcquisitionManager;
-//import org.micromanager.acquisition.AcquisitionWrapperEngine;
 import org.micromanager.api.ScriptInterface;
-//import org.micromanager.dialogs.AcqControlDlg;
 import org.micromanager.internalinterfaces.LiveModeListener;
-import org.micromanager.rapp.SequenceAcquisition.AcquisitionManager;
-import org.micromanager.rapp.SequenceAcquisition.AcquisitionWrapperEngine;
-import org.micromanager.rapp.SequenceAcquisition.SeqAcqGui;
+import org.micromanager.rapp.SequenceAcquisitions.*;
+import org.micromanager.rapp.utils.FileDialog;
+import org.micromanager.rapp.utils.ImageViewer;
 import org.micromanager.utils.GUIUtils;
 import org.micromanager.utils.ReportingUtils;
-//import org.micromanager.rapp.acquisition.*;
-//import org.micromanager.rapp.dialogs.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -41,7 +35,6 @@ import javax.swing.*;
 
 import java.awt.BorderLayout;
 import java.awt.event.*;
-import java.io.File;
 import java.net.URL;
 import java.util.Objects;
 import java.util.prefs.Preferences;
@@ -54,10 +47,10 @@ import javax.swing.plaf.metal.MetalToggleButtonUI;
 public class RappGui extends JFrame implements LiveModeListener {
     private Preferences mainPrefs_;
     private MMOptions options_;
-    // private AcqControlDlg acquisition_;
-    private SimpleObjectProperty<SeqAcqGui> acquisition_ = new SimpleObjectProperty<>(this, "acquisition_");
+    private SeqAcqGui acquisition_;
+    //private SimpleObjectProperty<SeqAcqGui> acquisition_ = new SimpleObjectProperty<>(this, "acquisition_");
     private CellPointInternalFrame tablePointFrame;
-    private static   ImageViewer imageViewer_;
+    private static ImageViewer imageViewer_;
     private static RappGui appInterface_;
     public static RappGui getInstance() {
         return appInterface_;
@@ -80,10 +73,12 @@ public class RappGui extends JFrame implements LiveModeListener {
     private JInternalFrame asButtonPanel = new JInternalFrame();
     private JToggleButton LiveMode_btn;
     private JToggleButton pointAndShootOnOff_btn;
-    protected JButton calibrate_btn = new JButton("Start Calibration!");
+    protected JButton calibrate_btn;
+    JButton browseXmlFIle_btn;
     private JComboBox<String> presetConfList_jcb ;
     private JComboBox<String> Sequence_jcb ;
     private JComboBox<String> groupConfList_jcb;
+    private JTextField xml_rootField_2;
     private JLabel  jLabel_Image;
     // the index of the images
     private int pos = 0;
@@ -97,8 +92,9 @@ public class RappGui extends JFrame implements LiveModeListener {
      */
     public RappGui(CMMCore core, ScriptInterface app) throws Exception {
         studio_ = (MMStudio) app;
-        AcquisitionManager acqMgr_ = new AcquisitionManager();
-        AcquisitionWrapperEngine engine_ = new AcquisitionWrapperEngine(acqMgr_);
+        org.micromanager.rapp.utils.FileDialog fileDialog_ = new FileDialog();
+        //AcquisitionManager acqMgr_ = new AcquisitionManager();
+        SeqAcqController engine_ = new SeqAcqController();
         rappController_ref =  new RappController(core, app);
         SnapLiveManager_ = new SnapLiveManager(studio_, core);
         this.options_ = new MMOptions();
@@ -420,6 +416,8 @@ public class RappGui extends JFrame implements LiveModeListener {
         delayField_.setPreferredSize(new Dimension(150, 30));
         right_box_setup.add(delayField_, gbc);
         gbc.gridy++;
+
+        calibrate_btn = new JButton("Start Calibration!");
         calibrate_btn.setPreferredSize(new Dimension(150, 30));
         right_box_setup.add(calibrate_btn, gbc); // Calibrate Button Action
         calibrate_btn.addActionListener(e -> {
@@ -582,25 +580,25 @@ public class RappGui extends JFrame implements LiveModeListener {
             rootLabel_2.setBounds(10, 30, 150, 30);
             buttonFrame.add(rootLabel_2);
 
-            JTextField rootField_2 = new JTextField();
-            rootField_2.setFont(new Font("Arial", Font.PLAIN, 15));
-            rootField_2.setBounds(10, 55, 120, 30);
-            buttonFrame.add(rootField_2);
+            xml_rootField_2 = new JTextField();
+            xml_rootField_2.setEnabled(false);
+            xml_rootField_2.setFont(new Font("Arial", Font.PLAIN, 8));
+            xml_rootField_2.setBounds(5, 55, 125, 30);
+            buttonFrame.add(xml_rootField_2);
 
-            JButton browseRootButton_2 = new JButton();
-            browseRootButton_2.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(final ActionEvent e) {
-                    // setRootDirectory();
+            browseXmlFIle_btn = new JButton();
+            browseXmlFIle_btn.addActionListener(e -> {
+                String xmlPath = fileDialog_.xmlFileChooserDialog();
+                if (xmlPath != null) {
+                    xml_rootField_2.setText(xmlPath);
                 }
             });
-            browseRootButton_2.setMargin(new Insets(2, 5, 2, 5));
-            browseRootButton_2.setFont(new Font("Dialog", Font.PLAIN, 10));
-            browseRootButton_2.setText("...");
-            browseRootButton_2.setBounds(135, 55, 50, 30);
-            buttonFrame.add(browseRootButton_2);
-            browseRootButton_2.setToolTipText("Browse");
+            browseXmlFIle_btn.setMargin(new Insets(2, 5, 2, 5));
+            browseXmlFIle_btn.setFont(new Font("Dialog", Font.PLAIN, 10));
+            browseXmlFIle_btn.setText("...");
+            browseXmlFIle_btn.setBounds(135, 55, 50, 30);
+            buttonFrame.add(browseXmlFIle_btn);
+            browseXmlFIle_btn.setToolTipText("Browse");
 
 
             JLabel filter_exposureLabel = new JLabel();
@@ -619,23 +617,27 @@ public class RappGui extends JFrame implements LiveModeListener {
 
 
 
-            JButton runSegmentation_ = new JButton();
-            runSegmentation_.addActionListener(new ActionListener() {
+            JButton runSegmentation_btn = new JButton();
+            runSegmentation_btn.addActionListener(new ActionListener() {
 
                 @Override
                 public void actionPerformed(final ActionEvent e) {
-                    if ( rootField_2.getText().equals("")){
+                    if ( xml_rootField_2.getText().equals("")){
                         ReportingUtils.showMessage("Please Try Again! "
                                 +"The XML Field is Empty");
                     }
+                    else {
+
+                        rappController_ref.runSegmentation(xml_rootField_2.getText());
+                    }
                 }
             });
-            runSegmentation_.setMargin(new Insets(2, 5, 2, 5));
-            runSegmentation_.setFont(new Font("Dialog", Font.PLAIN, 10));
-            runSegmentation_.setText("Run Segmentation");
-            runSegmentation_.setBounds(50, 135, 102, 30);
-            buttonFrame.add(runSegmentation_);
-            runSegmentation_.setToolTipText("Run Segmentation with Bright Field Image");
+            runSegmentation_btn.setMargin(new Insets(2, 5, 2, 5));
+            runSegmentation_btn.setFont(new Font("Dialog", Font.PLAIN, 10));
+            runSegmentation_btn.setText("Run Segmentation");
+            runSegmentation_btn.setBounds(50, 135, 102, 30);
+            buttonFrame.add(runSegmentation_btn);
+            runSegmentation_btn.setToolTipText("Run Segmentation with Bright Field Image");
 
             buttonFrame.add(new JLabel(""));
             //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -680,13 +682,13 @@ public class RappGui extends JFrame implements LiveModeListener {
         asButtonPanel.setBackground(Color.decode("#34495e"));
 
         try {
-            if (acquisition_.get() == null) {
-                acquisition_.set(new SeqAcqGui(engine_, this.mainPrefs_, studio_, this.options_));
+            if (acquisition_ == null) {
+                acquisition_ = (new SeqAcqGui(engine_, this.mainPrefs_, studio_, this.options_));
             }
-            acquisition_.get().setPreferredSize(new Dimension(900, 545));
-            acquisition_.get().setVisible(true);
-            asButtonPanel.add(acquisition_.get());
-            acquisition_.get().repaint();
+            acquisition_.setPreferredSize(new Dimension(900, 545));
+            acquisition_.setVisible(true);
+            asButtonPanel.add(acquisition_);
+            acquisition_.repaint();
 
             //acquisition_.
         } catch (Exception var2) {
@@ -710,16 +712,33 @@ public class RappGui extends JFrame implements LiveModeListener {
         /// Avoid all App Close when close the Plugin GUI
         this.setDefaultCloseOperation(0); // DO_NOTHING_ON_CLOSE
         this.setLocation(32, 32);
-        this.addWindowListener(new WindowAdapter() { // Windows Close button action event
+        this.addWindowListener(new WindowAdapter() {
+
+            // Windows Close button action event
             @Override
             public void windowClosing(WindowEvent we) {
                 confirmQuit();
             }
+
         });
+        ImageWindow snapWin = SnapLiveManager_.getSnapLiveWindow();
+//       // snapWin.windowClosing(WindowEvent ew) {
+//
+//        }
+//        if (SnapLiveManager_.getSnapLiveWindow().isClosed() == true) {
+//            LiveMode_btn.setSelected(false);
+//            LiveMode_btn.setUI(new MetalToggleButtonUI() {
+//                @Override
+//                protected Color getSelectColor() {
+//                    return Color.decode("#d35400");
+//                }
+//            });
+//        }
     }
+
+
     private JToggleButton createJButton(String text) {
         JToggleButton button = new JToggleButton(text);
-
         button.setForeground(Color.decode("#ecf0f1"));
         button.setBorder(null);
         button.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -728,22 +747,9 @@ public class RappGui extends JFrame implements LiveModeListener {
         button.setContentAreaFilled(false);
         ImageIcon icon = new ImageIcon(path.concat("Resources/Images/" + text + ".png"));
         Image img = icon.getImage();
-        Image newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
-        button.setIcon(new ImageIcon(newimg));
-        button.setSelectedIcon(new ImageIcon(newimg));
-//        button.addActionListener(e -> {
-//            if( button.isSelected() ){
-//                button.setUI(new MetalToggleButtonUI() {
-//                    @Override
-//                    protected Color getSelectColor() {
-//                        return Color.decode("#2980b9");
-//                    }
-//                });
-//                button.setForeground(Color.decode("#2980b9"));
-//            }
-//            else {  button.setForeground(Color.decode("#ecf0f1"));}
-//        });
-
+        Image new_img = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        button.setIcon(new ImageIcon(new_img));
+        button.setSelectedIcon(new ImageIcon(new_img));
         return button;
     }
 

@@ -1,16 +1,13 @@
 package org.micromanager.rapp.SequenceAcquisitions;
 
-import mmcorej.CMMCore;
-import mmcorej.Configuration;
-import mmcorej.TaggedImage;
+import ij.IJ;
+import mmcorej.*;
 import org.json.JSONObject;
+import org.micromanager.MMStudio;
 import org.micromanager.acquisition.DefaultTaggedImageSink;
 import org.micromanager.api.*;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.rapp.RappPlugin;
-import org.micromanager.rapp.SequenceAcquisition.*;
-import org.micromanager.rapp.SequenceAcquisition.ChannelSpec;
-import org.micromanager.rapp.SequenceAcquisition.SequenceSettings;
 import org.micromanager.utils.AutofocusManager;
 import org.micromanager.utils.ContrastSettings;
 import org.micromanager.utils.MMException;
@@ -23,14 +20,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SeqAcqController implements AcquisitionEngine {
     private CMMCore core_;
-    private ScriptInterface studio_;
+    private ScriptInterface app_;
     private PositionList posList_;
     private ArrayList<AcqSettingsListener> settingsListeners_ = new ArrayList();
     private ArrayList<ChannelSpec> channels_ = new ArrayList();
     private String comment_;
+    private int numFrames_;
     private boolean saveFiles_;
     private int acqOrderMode_;
     private boolean useAutoFocus_;
@@ -40,21 +39,22 @@ public class SeqAcqController implements AcquisitionEngine {
     private boolean useMultiPosition_;
     private boolean keepShutterOpenForStack_;
     private boolean keepShutterOpenForChannels_;
-
+    AtomicBoolean stopRequested_ = new AtomicBoolean(false);
+    AtomicBoolean isRunning_ = new AtomicBoolean(false);
 
 
 
     public SeqAcqController (){
 
         this.core_ = RappPlugin.getMMcore();
-        this.studio_ = RappPlugin.getScripI();
+        this.app_ = RappPlugin.getScripI();
         posList_ = new PositionList();
 
     }
 
     public String acquire() throws MMException {
        // return this.runAcquisition(this.getSequenceSettings(), this.acqManager_);
-        return null;
+        return this.runAcquisition(this.getSequenceSettings());
     }
 
     public void addSettingsListener(AcqSettingsListener listener) {
@@ -73,7 +73,68 @@ public class SeqAcqController implements AcquisitionEngine {
         }
     }
 
-    protected String runAcquisition(SequenceSettings acquisitionSettings, AcquisitionManager acqManager) {
+    protected String runAcquisition(SequenceSettings acquisitionSettings) {
+        app_.enableLiveMode(false);
+        ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
+        String chanelGroup_ = acquisitionSettings.channelGroup;
+        System.out.println( chanelGroup_);
+        try {
+            core_.waitForDevice(core_.getCameraDevice());
+            Thread.sleep(100); // wait and start acquisition
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (!isRunning_.get()) {
+            stopRequested_.set(false);
+            Thread th = new Thread("Sequence Acquisition thread") {
+                @Override
+                public void run() {
+                    try {
+                        isRunning_.set(true);
+                        for (ChannelSpec presetConfig : channels){
+                            System.out.println(presetConfig.config.toString());
+                            core_.setConfig(chanelGroup_, presetConfig.config.toString());
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException ex) {
+                                ReportingUtils.logError(ex);
+                            }
+                            core_.snapImage();
+                            core_.getTaggedImage();
+                            core_.getLastTaggedImage();
+                        }
+
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException ex) {
+                            ReportingUtils.logError(ex);
+                        }
+                        // save local affine transform map to preferences
+                        // TODO allow different mappings to be stored for different channels (e.g. objective magnification)
+                        if (!stopRequested_.get()) {
+                         //   saveMapping(mapping);
+                        }
+
+                      //  app_.enableLiveMode(liveModeRunning);
+                        JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
+                                + (!stopRequested_.get() ? "finished." : "canceled."));
+                   //     IJ.getImage().setRoi(originalROI);
+                    } catch (HeadlessException e) {
+                        ReportingUtils.showError(e);
+                    } catch (RuntimeException e) {
+                        ReportingUtils.showError(e);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        isRunning_.set(false);
+                        stopRequested_.set(false);
+                    //    RappGui.getInstance().calibrate_btn.setText("Calibrated");
+                    }
+                }
+            };
+            th.start();
+        }
         if (this.saveFiles_) {
             File root = new File(this.rootName_);
             if (!root.canWrite()) {
@@ -82,7 +143,6 @@ public class SeqAcqController implements AcquisitionEngine {
                     ReportingUtils.showMessage("Acquisition canceled.");
                     return null;
                 }
-
                 root.mkdirs();
                 if (!root.canWrite()) {
                     ReportingUtils.showError("Unable to save data to selected location: check that location exists.\nAcquisition canceled.");
@@ -94,7 +154,7 @@ public class SeqAcqController implements AcquisitionEngine {
             }
         }
 
-        this.studio_.enableLiveMode(false);
+        this.app_.enableLiveMode(false);
 
         try {
 //            BlockingQueue<TaggedImage> engineOutputQueue = this.getAcquisitionEngine2010().run(acquisitionSettings, true, this.studio_.getPositionList(), this.studio_.getAutofocusManager().getDevice());
@@ -153,7 +213,7 @@ public class SeqAcqController implements AcquisitionEngine {
     }
 
     private long getTotalMB() {
-        CMMCore core = this.studio_.getMMCore();
+        CMMCore core = this.app_.getMMCore();
         long totalMB = core.getImageWidth() * core.getImageHeight() * core.getBytesPerPixel() * (long)this.getTotalImages() / 1048576L;
         return totalMB;
     }
@@ -193,7 +253,139 @@ public class SeqAcqController implements AcquisitionEngine {
         return false;
     }
 
+    public SequenceSettings getSequenceSettings() {
+        SequenceSettings acquisitionSettings = new SequenceSettings();
+        this.updateChannelCameras();
+//        if (this.useFrames_) {
+//            if (this.useCustomIntervals_) {
+//                acquisitionSettings.customIntervalsMs = this.customTimeIntervalsMs_;
+//                acquisitionSettings.numFrames = acquisitionSettings.customIntervalsMs.size();
+//            } else {
+//                acquisitionSettings.numFrames = this.numFrames_;
+//                acquisitionSettings.intervalMs = this.interval_;
+//            }
+//        } else {
+//            acquisitionSettings.numFrames = 0;
+//        }
 
+//        if (this.useSlices_) {
+//            double start = this.sliceZBottomUm_;
+//            double stop = this.sliceZTopUm_;
+//            double step = Math.abs(this.sliceZStepUm_);
+//            if (step == 0.0D) {
+//                throw new UnsupportedOperationException("zero Z step size");
+//            }
+//
+//            int count = this.getNumSlices();
+//            if (start > stop) {
+//                step = -step;
+//            }
+//
+//            for(int i = 0; i < count; ++i) {
+//                acquisitionSettings.slices.add(start + (double)i * step);
+//            }
+//        }
+
+       // acquisitionSettings.relativeZSlice = !this.absoluteZ_;
+
+//        try {
+//            String zdrive = this.core_.getFocusDevice();
+//            acquisitionSettings.zReference = zdrive.length() > 0 ? this.core_.getPosition(this.core_.getFocusDevice()) : 0.0D;
+//        } catch (Exception var10) {
+//            ReportingUtils.logError(var10);
+//        }
+
+        if (this.useChannels_) {
+            Iterator i$ = this.channels_.iterator();
+
+            while(i$.hasNext()) {
+                ChannelSpec channel = (ChannelSpec)i$.next();
+                if (channel.useChannel) {
+                    acquisitionSettings.channels.add(channel);
+                }
+            }
+
+            acquisitionSettings.channelGroup = this.core_.getChannelGroup();
+        }
+
+       // acquisitionSettings.timeFirst = this.acqOrderMode_ == 3 || this.acqOrderMode_ == 2;
+      //  acquisitionSettings.slicesFirst = this.acqOrderMode_ == 3 || this.acqOrderMode_ == 1;
+        acquisitionSettings.useAutofocus = this.useAutoFocus_;
+    //    acquisitionSettings.skipAutofocusCount = this.afSkipInterval_;
+        acquisitionSettings.keepShutterOpenChannels = this.keepShutterOpenForChannels_;
+     //   acquisitionSettings.keepShutterOpenSlices = this.keepShutterOpenForStack_;
+        acquisitionSettings.save = this.saveFiles_;
+        if (this.saveFiles_) {
+            acquisitionSettings.root = this.rootName_;
+            acquisitionSettings.prefix = this.dirName_;
+        }
+
+        acquisitionSettings.comment = this.comment_;
+        acquisitionSettings.usePositionList = this.useMultiPosition_;
+        return acquisitionSettings;
+    }
+
+    public void setSequenceSettings(SequenceSettings ss) {
+        this.updateChannelCameras();
+//        this.useFrames_ = true;
+//        if (this.useCustomIntervals_) {
+//            this.customTimeIntervalsMs_ = ss.customIntervalsMs;
+//            this.numFrames_ = ss.customIntervalsMs.size();
+//        } else {
+//            this.numFrames_ = ss.numFrames;
+//            this.interval_ = ss.intervalMs;
+//        }
+
+//        this.useSlices_ = true;
+//        if (ss.slices.size() == 0) {
+//            this.useSlices_ = false;
+//        } else if (ss.slices.size() == 1) {
+//            this.sliceZBottomUm_ = (Double)ss.slices.get(0);
+//            this.sliceZTopUm_ = this.sliceZBottomUm_;
+//            this.sliceZStepUm_ = 0.0D;
+//        } else {
+//            this.sliceZBottomUm_ = (Double)ss.slices.get(0);
+//            this.sliceZTopUm_ = (Double)ss.slices.get(ss.slices.size() - 1);
+//            this.sliceZStepUm_ = (Double)ss.slices.get(1) - (Double)ss.slices.get(0);
+//            if (this.sliceZBottomUm_ > this.sliceZBottomUm_) {
+//                this.sliceZStepUm_ = -this.sliceZStepUm_;
+//            }
+//        }
+
+      //  this.absoluteZ_ = !ss.relativeZSlice;
+        if (ss.channels.size() > 0) {
+            this.useChannels_ = true;
+        } else {
+            this.useChannels_ = false;
+        }
+
+        this.channels_ = ss.channels;
+//        if (ss.timeFirst && ss.slicesFirst) {
+//            this.acqOrderMode_ = 3;
+//        }
+//
+//        if (ss.timeFirst && !ss.slicesFirst) {
+//            this.acqOrderMode_ = 2;
+//        }
+
+//        if (!ss.timeFirst && ss.slicesFirst) {
+//            this.acqOrderMode_ = 1;
+//        }
+//
+//        if (!ss.timeFirst && !ss.slicesFirst) {
+//            this.acqOrderMode_ = 0;
+//        }
+
+        this.useAutoFocus_ = ss.useAutofocus;
+       // this.afSkipInterval_ = ss.skipAutofocusCount;
+        this.keepShutterOpenForChannels_ = ss.keepShutterOpenChannels;
+      //  this.keepShutterOpenForStack_ = ss.keepShutterOpenSlices;
+        this.saveFiles_ = ss.save;
+        this.rootName_ = ss.root;
+        this.dirName_ = ss.prefix;
+        this.comment_ = ss.comment;
+        this.useMultiPosition_ = ss.usePositionList;
+    }
 
 
     @Override
@@ -279,89 +471,114 @@ public class SeqAcqController implements AcquisitionEngine {
 
     @Override
     public void setChannel(int row, ChannelSpec channel) {
-
+        this.channels_.set(row, channel);
     }
 
     @Override
     public String getFirstConfigGroup() {
-        return null;
+        if (this.core_ == null) {
+            return "";
+        } else {
+            String[] groups = this.getAvailableGroups();
+            return groups != null && groups.length >= 1 ? this.getAvailableGroups()[0] : "";
+        }
     }
 
     @Override
     public String[] getChannelConfigs() {
-        return new String[0];
+        return this.core_ == null ? new String[0] : this.core_.getAvailableConfigs(this.core_.getChannelGroup()).toArray();
     }
 
 
 
     @Override
-    public String getChannelGroup() {
-        return null;
+    public String getChannelGroup(){
+        return this.core_.getChannelGroup();
     }
 
     @Override
-    public boolean setChannelGroup(String newGroup) {
-        return false;
+    public boolean setChannelGroup(String group) {
+        if (this.groupIsEligibleChannel(group)) {
+            try {
+                this.core_.setChannelGroup(group);
+                return true;
+            } catch (Exception var5) {
+                try {
+                    this.core_.setChannelGroup("");
+                } catch (Exception var4) {
+                    ReportingUtils.showError(var4);
+                }
+
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void clear() {
+        if (this.channels_ != null) {
+            this.channels_.clear();
+        }
 
+      //  this.numFrames_ = 0;
     }
 
 
 
     @Override
     public boolean isChannelsSettingEnabled() {
-        return false;
+
+        return this.useChannels_;
     }
 
     @Override
     public void enableChannelsSetting(boolean enable) {
-
+        this.useChannels_ = enable;
     }
 
 
     @Override
     public void keepShutterOpenForChannels(boolean open) {
-
+        this.keepShutterOpenForChannels_ = open;
     }
 
     @Override
     public boolean isShutterOpenForChannels() {
-        return false;
+        return this.keepShutterOpenForChannels_;
     }
 
 
 
     @Override
     public void enableMultiPosition(boolean selected) {
-
+        this.useMultiPosition_ = selected;
     }
 
     @Override
     public boolean isMultiPositionEnabled() {
-        return false;
+        return this.useMultiPosition_;
     }
 
     @Override
     public ArrayList<ChannelSpec> getChannels() {
-        return null;
+        return this.channels_;
     }
 
     @Override
     public void setChannels(ArrayList<ChannelSpec> channels) {
-
+        this.channels_ = channels;
     }
 
     @Override
     public String getRootName() {
-        return null;
+        return this.rootName_;
     }
 
     @Override
     public void setRootName(String absolutePath) {
-
+        this.rootName_ = absolutePath;
     }
 
     @Override
@@ -380,28 +597,38 @@ public class SeqAcqController implements AcquisitionEngine {
     }
 
     @Override
-    public boolean addChannel(String name, double exp, ContrastSettings s8, ContrastSettings s16, Color c) {
-        return false;
+    public boolean addChannel(String config, double exp, Boolean doSegmentation, ContrastSettings con8, ContrastSettings con16,  Color c, boolean use) {
+        return this.addChannel(config, exp, doSegmentation,  con8,  c, use);
     }
 
     @Override
-    public boolean addChannel(String name, double exp, Boolean doSegmentation, ContrastSettings s8, ContrastSettings s16, Color c, boolean use) {
-        return false;
+    public boolean addChannel(String config, double exp, Boolean doSegmentation,  ContrastSettings con, Color c, boolean use) {
+        if (this.isConfigAvailable(config)) {
+            ChannelSpec channel = new ChannelSpec();
+            channel.config = config;
+            channel.useChannel = use;
+            channel.exposure = exp;
+            channel.doSegmentation = doSegmentation;
+            channel.contrast = con;
+            channel.color = c;
+            this.channels_.add(channel);
+            return true;
+        } else {
+            ReportingUtils.logError("\"" + config + "\" is not found in the current Channel group.");
+            return false;
+        }
     }
-
     @Override
-    public boolean addChannel(String name, double exp, Boolean doSegmentation, ContrastSettings con, Color c, boolean use) {
-        return false;
+    public boolean addChannel(String config, double exp,  ContrastSettings c8, ContrastSettings c16, Color c) {
+        return this.addChannel(config, exp, true,  c16,  c, true);
     }
-
     @Override
     public void setSaveFiles(boolean selected) {
-
+        this.saveFiles_ = selected;
     }
-
     @Override
     public boolean getSaveFiles() {
-        return false;
+        return this.saveFiles_;
     }
 
     @Override
@@ -423,19 +650,15 @@ public class SeqAcqController implements AcquisitionEngine {
     public void setAcqOrderMode(int mode) {
 
     }
-
     @Override
     public void enableAutoFocus(boolean enabled) {
-
+        this.useAutoFocus_ = enabled;
     }
 
     @Override
     public boolean isAutoFocusEnabled() {
-        return false;
+        return this.useAutoFocus_;
     }
-
-
-
 
 
     @Override
@@ -445,7 +668,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
     @Override
     public String installAutofocusPlugin(String className) {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -454,7 +677,15 @@ public class SeqAcqController implements AcquisitionEngine {
     }
 
     @Override
-    public boolean isConfigAvailable(String config_) {
+    public boolean isConfigAvailable(String config) {
+        StrVector vcfgs = this.core_.getAvailableConfigs(this.core_.getChannelGroup());
+
+        for(int i = 0; (long)i < vcfgs.size(); ++i) {
+            if (config.compareTo(vcfgs.get(i)) == 0) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -465,10 +696,48 @@ public class SeqAcqController implements AcquisitionEngine {
 
     @Override
     public String[] getAvailableGroups() {
-        return new String[0];
+        StrVector groups;
+        try {
+            groups = this.core_.getAllowedPropertyValues("Core", "ChannelGroup");
+        } catch (Exception var5) {
+            ReportingUtils.logError(var5);
+            return new String[0];
+        }
+
+        ArrayList<String> strGroups = new ArrayList();
+        Iterator i$ = groups.iterator();
+
+        while(i$.hasNext()) {
+            String group = (String)i$.next();
+            if (this.groupIsEligibleChannel(group)) {
+                strGroups.add(group);
+            }
+        }
+
+        return strGroups.toArray(new String[0]);
     }
 
+    private boolean groupIsEligibleChannel(String group) {
+        StrVector cfgs = this.core_.getAvailableConfigs(group);
+        if (cfgs.size() == 1L) {
+            try {
+                Configuration presetData = this.core_.getConfigData(group, cfgs.get(0));
+                if (presetData.size() == 1L) {
+                    PropertySetting setting = presetData.getSetting(0L);
+                    String devLabel = setting.getDeviceLabel();
+                    String propName = setting.getPropertyName();
+                    if (this.core_.hasPropertyLimits(devLabel, propName)) {
+                        return false;
+                    }
+                }
+            } catch (Exception var7) {
+                ReportingUtils.logError(var7);
+                return false;
+            }
+        }
 
+        return true;
+    }
 
     @Override
     public boolean isPaused() {
