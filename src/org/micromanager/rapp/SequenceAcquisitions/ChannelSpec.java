@@ -11,8 +11,9 @@ public class ChannelSpec {
     public static final double Version = 1.0D;
     public Boolean doSegmentation = true;
     public String config = "";
-    public String cellToKill = "";
+    public Boolean KillCell = true;
     public double exposure = 10.0D;
+    public double laser_exposure = 10.0D;
     public Color color;
     public org.micromanager.utils.ContrastSettings contrast;
     public boolean useChannel;

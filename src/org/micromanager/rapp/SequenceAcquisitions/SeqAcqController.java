@@ -10,10 +10,8 @@ import org.micromanager.api.PositionList;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.rapp.RappPlugin;
-import org.micromanager.utils.AutofocusManager;
-import org.micromanager.utils.ContrastSettings;
-import org.micromanager.utils.MMException;
-import org.micromanager.utils.ReportingUtils;
+import org.micromanager.rapp.utils.Acquisition;
+import org.micromanager.utils.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,12 +35,14 @@ public class SeqAcqController implements AcquisitionEngine {
     private String rootName_;
     private String dirName_;
     private boolean useChannels_;
+    private boolean useSegmentation_;
+    private boolean killCell_;
     private boolean useMultiPosition_;
     private boolean keepShutterOpenForStack_;
     private boolean keepShutterOpenForChannels_;
-    AtomicBoolean stopRequested_ = new AtomicBoolean(false);
-    AtomicBoolean isRunning_ = new AtomicBoolean(false);
-
+    private AtomicBoolean stopRequested_ = new AtomicBoolean(false);
+    private AtomicBoolean isRunning_ = new AtomicBoolean(false);
+    Acquisition acq_ = new Acquisition();
 
 
     public SeqAcqController (){
@@ -75,12 +75,12 @@ public class SeqAcqController implements AcquisitionEngine {
     }
 
     protected String runAcquisition(SequenceSettings acquisitionSettings) {
-
         app_.enableLiveMode(false);
         ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
+        ArrayList<String> channelsConf = new ArrayList();
+        ;
         String chanelGroup_ = acquisitionSettings.channelGroup;
-        String rootPath = null;
-        System.out.println( chanelGroup_);
+        System.out.println( channels_.toArray());
         try {
             core_.waitForDevice(core_.getCameraDevice());
             Thread.sleep(100); // wait and start acquisition
@@ -104,20 +104,23 @@ public class SeqAcqController implements AcquisitionEngine {
                 ReportingUtils.showError("Not enough space on disk to save the requested image set; acquisition canceled.");
                 return null;
             }
-           rootPath = root.getAbsolutePath();
+
+//            for (ChannelSpec presetConfig : channels){
+//                channelsConf.add(presetConfig.config.toString());
+//            }
+
         }
 
-        System.out.println(rootName_ + " test");
+        System.out.println(dirName_ + " test");
         if (!isRunning_.get()) {
             stopRequested_.set(false);
-            String finalRootPath = rootPath;
-            System.out.println(finalRootPath + " test25");
             Thread th = new Thread("Sequence Acquisition thread") {
                 @Override
                 public void run() {
                     try {
                         isRunning_.set(true);
                         ImagePlus iPlus = null;
+                        TaggedImage itagg = null;
                         for (ChannelSpec presetConfig : channels){
                             System.out.println(presetConfig.config.toString());
                             core_.setConfig(chanelGroup_, presetConfig.config.toString());
@@ -127,21 +130,31 @@ public class SeqAcqController implements AcquisitionEngine {
                                 ReportingUtils.logError(ex);
                             }
                             core_.snapImage();
-                            core_.getTaggedImage();
                             core_.getLastTaggedImage();
                             iPlus = IJ.getImage();
-                            if (saveFiles_ ) {
-                                IJ.save(iPlus, finalRootPath + "_" + presetConfig.config.toLowerCase() + ".tif");
+                            if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
+                                System.out.println(" Multi Image");
+                                IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
+                                // IJ.open(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
                             }
-
+                            else if(saveFiles_ && SeqAcqGui.saveMultiTiff_){
+                                IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
+                                IJ.open(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException ex) {
+                                    ReportingUtils.logError(ex);
+                                }
+                            }
+                            if (stopRequested_.get()) {
+                                ReportingUtils.showMessage("Acquisition canceled.");
+                                break;
+                            }
                         }
-
-                        // save local affine transform map to preferences
-                        // TODO allow different mappings to be stored for different channels (e.g. objective magnification)
-                        if (!stopRequested_.get()) {
-                         //   saveMapping(mapping);
+                        if(saveFiles_ && SeqAcqGui.saveMultiTiff_){
+                            IJ.run("Images to Stack", "name=Stack title=[] use");
+                            IJ.saveAs("Tiff", rootName_ +  "\\"+ dirName_+ "_"+ "StackTest" + ".tif");
                         }
-
                       //  app_.enableLiveMode(liveModeRunning);
                         JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
                                 + (!stopRequested_.get() ? "finished." : "canceled."));
@@ -340,6 +353,8 @@ public class SeqAcqController implements AcquisitionEngine {
 //            this.numFrames_ = ss.numFrames;
 //            this.interval_ = ss.intervalMs;
 //        }
+
+        this.useSegmentation_ = true;
 
 //        this.useSlices_ = true;
 //        if (ss.slices.size() == 0) {
@@ -543,6 +558,16 @@ public class SeqAcqController implements AcquisitionEngine {
         this.useChannels_ = enable;
     }
 
+    @Override
+    public boolean isKillCellEnabled() {
+        return this.killCell_;
+    }
+
+    @Override
+    public void enableKillCell(boolean selected) {
+          this.killCell_ = selected;
+    }
+
 
     @Override
     public void keepShutterOpenForChannels(boolean open) {
@@ -564,6 +589,16 @@ public class SeqAcqController implements AcquisitionEngine {
     @Override
     public boolean isMultiPositionEnabled() {
         return this.useMultiPosition_;
+    }
+
+    @Override
+    public void enableSegmentation(boolean selected) {
+        this.useSegmentation_ = selected;
+    }
+
+    @Override
+    public boolean isDoSegmentationEnabled() {
+        return useSegmentation_;
     }
 
     @Override
@@ -593,27 +628,30 @@ public class SeqAcqController implements AcquisitionEngine {
 
     @Override
     public void setDirName(String text) {
-
+        this.dirName_ = text;
     }
 
     @Override
     public void setComment(String text) {
-
+        this.comment_ = text;
+        this.settingsChanged();
     }
 
     @Override
-    public boolean addChannel(String config, double exp, Boolean doSegmentation, ContrastSettings con8, ContrastSettings con16,  Color c, boolean use) {
-        return this.addChannel(config, exp, doSegmentation,  con8,  c, use);
+    public boolean addChannel(String config, double exp,  double laserExp, Boolean doSegmentation, Boolean killCell, ContrastSettings con8, ContrastSettings con16,  Color c, boolean use) {
+        return this.addChannel(config, exp, laserExp, doSegmentation,killCell,  con8,  c, use);
     }
 
     @Override
-    public boolean addChannel(String config, double exp, Boolean doSegmentation,  ContrastSettings con, Color c, boolean use) {
+    public boolean addChannel(String config, double exp, double laserExp, Boolean doSegmentation, Boolean killCell, ContrastSettings con, Color c, boolean use) {
         if (this.isConfigAvailable(config)) {
             ChannelSpec channel = new ChannelSpec();
             channel.config = config;
             channel.useChannel = use;
             channel.exposure = exp;
+            channel.laser_exposure = laserExp;
             channel.doSegmentation = doSegmentation;
+            channel.KillCell= killCell;
             channel.contrast = con;
             channel.color = c;
             this.channels_.add(channel);
@@ -623,9 +661,10 @@ public class SeqAcqController implements AcquisitionEngine {
             return false;
         }
     }
+
     @Override
-    public boolean addChannel(String config, double exp,  ContrastSettings c8, ContrastSettings c16, Color c) {
-        return this.addChannel(config, exp, true,  c16,  c, true);
+    public boolean addChannel(String config, double exp, double laserExp, Boolean killCell,  ContrastSettings c8, ContrastSettings c16, Color c) {
+        return this.addChannel(config, exp, laserExp, true, true, c16,  c, true);
     }
     @Override
     public void setSaveFiles(boolean selected) {
@@ -647,13 +686,12 @@ public class SeqAcqController implements AcquisitionEngine {
     }
 
     @Override
-    public int getAcqOrderMode() {
-        return 0;
+    public int getAcqOrderMode(){return this.acqOrderMode_;
     }
 
     @Override
     public void setAcqOrderMode(int mode) {
-
+        this.acqOrderMode_ = mode;
     }
     @Override
     public void enableAutoFocus(boolean enabled) {
@@ -678,7 +716,65 @@ public class SeqAcqController implements AcquisitionEngine {
 
     @Override
     public String getVerboseSummary() {
-        return null;
+//        int numFrames = this.getNumFrames();
+//        int numSlices = this.getNumSlices();
+        int numPositions = this.getNumPositions();
+        int numChannels = this.getNumChannels();
+        int totalImages = this.getTotalImages();
+        long totalMB = this.getTotalMB();
+        double totalDurationSec = 0.0D;
+        Double d;
+//        if (!this.useCustomIntervals_) {
+//            totalDurationSec = this.interval_ * (double)numFrames / 1000.0D;
+//        } else {
+//            for(Iterator i$ = this.customTimeIntervalsMs_.iterator(); i$.hasNext(); totalDurationSec += d / 1000.0D) {
+//                d = (Double)i$.next();
+//            }
+//        }
+
+        int hrs = (int)(totalDurationSec / 3600.0D);
+        double remainSec = totalDurationSec - (double)(hrs * 3600);
+        int mins = (int)(remainSec / 60.0D);
+        remainSec -= (double)(mins * 60);
+        String txt = "Number of time points: "  + "\nNumber of positions: " + numPositions + "\nNumber of slices: " + "\nNumber of channels: " + numChannels + "\nTotal images: " + totalImages + "\nTotal memory: " + (totalMB <= 1024L ? totalMB + " MB" : NumberUtils.doubleToDisplayString((double)totalMB / 1024.0D) + " GB") + "\nDuration: " + hrs + "h " + mins + "m " + NumberUtils.doubleToDisplayString(remainSec) + "s";
+        if (!this.useMultiPosition_ && !this.useChannels_ && !this.useSegmentation_) {
+            return txt;
+        } else {
+            StringBuffer order = new StringBuffer("\nOrder: ");
+//            if (this.useFrames_ && this.useMultiPosition_) {
+//                if (this.acqOrderMode_ != 1 && this.acqOrderMode_ != 0) {
+//                    order.append("Position, Time");
+//                } else {
+//                    order.append("Time, Position");
+//                }
+//            }
+//            else if (this.useFrames_) {
+//                order.append("Time");
+//            }
+             if (this.useMultiPosition_) {
+                order.append("Position");
+            }
+
+//            if ((this.useFrames_ || this.useMultiPosition_) && (this.useChannels_ || this.useSlices_)) {
+//                order.append(", ");
+//            }
+
+//            if (this.useChannels_ && this.useSlices_) {
+//                if (this.acqOrderMode_ != 1 && this.acqOrderMode_ != 3) {
+//                    order.append("Slice, Channel");
+//                } else {
+//                    order.append("Channel, Slice");
+//                }
+//            }
+            else if (this.useChannels_) {
+                order.append("Channel");
+            }
+//            else if (this.useSlices_) {
+//                order.append("Slice");
+//            }
+
+            return txt + order.toString();
+        }
     }
 
     @Override

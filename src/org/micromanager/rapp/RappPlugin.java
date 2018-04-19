@@ -15,16 +15,6 @@ package org.micromanager.rapp;
 
 ///////////////     Java /  Java-swim Import class And Plugin       /////////////
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.geom.Point2D;
-import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-/////////////////  Micro-Manager Package ////////////////////////
-
 import ij.IJ;
 import ij.plugin.frame.RoiManager;
 import mmcorej.CMMCore;
@@ -32,8 +22,18 @@ import mmcorej.TaggedImage;
 import org.micromanager.MMStudio;
 import org.micromanager.acquisition.AcquisitionEngine;
 import org.micromanager.acquisition.AcquisitionWrapperEngine;
-import org.micromanager.api.*;
-import org.micromanager.utils.*;
+import org.micromanager.api.MMPlugin;
+import org.micromanager.api.ScriptInterface;
+import org.micromanager.utils.GUIUtils;
+import org.micromanager.utils.MMScriptException;
+import org.micromanager.utils.ReportingUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.util.concurrent.LinkedBlockingQueue;
+
+/////////////////  Micro-Manager Package ////////////////////////
 
 
 public class RappPlugin implements MMPlugin  {
@@ -68,7 +68,6 @@ public class RappPlugin implements MMPlugin  {
     public void dispose() {
         if (form_ != null) {
             form_.dispose();
-
         }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

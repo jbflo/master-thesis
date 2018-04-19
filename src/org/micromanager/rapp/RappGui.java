@@ -12,37 +12,39 @@
 package org.micromanager.rapp;
 
 
+import ij.IJ;
+import ij.ImagePlus;
 import ij.gui.ImageWindow;
 import mmcorej.CMMCore;
 import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
 import org.micromanager.SnapLiveManager;
-import org.micromanager.rapp.CellSegmentation.*;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.internalinterfaces.LiveModeListener;
-import org.micromanager.rapp.SequenceAcquisitions.*;
+import org.micromanager.rapp.CellSegmentation.CellPointInternalFrame;
+import org.micromanager.rapp.SequenceAcquisitions.SeqAcqController;
+import org.micromanager.rapp.SequenceAcquisitions.SeqAcqGui;
 import org.micromanager.rapp.utils.FileDialog;
 import org.micromanager.rapp.utils.ImageViewer;
 import org.micromanager.utils.GUIUtils;
 import org.micromanager.utils.ReportingUtils;
-import java.awt.*;
+
 import javax.swing.*;
-
-/**
- *
- * @author FLorial
- */
-
-import java.awt.BorderLayout;
-import java.awt.event.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.plaf.metal.MetalToggleButtonUI;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.URL;
 import java.util.Objects;
 import java.util.prefs.Preferences;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.*;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
-import javax.swing.plaf.metal.MetalToggleButtonUI;
+
+/**
+ * @author FLorial
+ */
 
 public class RappGui extends JFrame implements LiveModeListener {
     private Preferences mainPrefs_;
@@ -74,7 +76,8 @@ public class RappGui extends JFrame implements LiveModeListener {
     private JToggleButton LiveMode_btn;
     private JToggleButton pointAndShootOnOff_btn;
     protected JButton calibrate_btn;
-    JButton browseXmlFIle_btn;
+    private JButton browseXmlFIle_btn;
+     private JButton runSegmentation_btn;
     private JComboBox<String> presetConfList_jcb ;
     private JComboBox<String> Sequence_jcb ;
     private JComboBox<String> groupConfList_jcb;
@@ -242,7 +245,6 @@ public class RappGui extends JFrame implements LiveModeListener {
                 learnOption_btn.setSelected(false);
                 shootOption_btn.setSelected(false);
             }
-
         });
 
 
@@ -275,7 +277,6 @@ public class RappGui extends JFrame implements LiveModeListener {
         left_box.add( new JSeparator(SwingConstants.HORIZONTAL) , left_box,8);
         left_box.getComponent(8).setPreferredSize(new Dimension(150,2));
 
-
         // Start or Stop the the Live Mode
         LiveMode_btn = new JToggleButton("Start Live View");
         LiveMode_btn.setMaximumSize(new Dimension(145, 50));
@@ -302,8 +303,7 @@ public class RappGui extends JFrame implements LiveModeListener {
                     snap.close();
                 }
                // createFrame();
-            //   LiveModeButton(e);
-
+              //   LiveModeButton(e);
             }
         } );
 
@@ -315,23 +315,15 @@ public class RappGui extends JFrame implements LiveModeListener {
         snapAndSave_btn.setForeground(Color.white);
         left_box.add(snapAndSave_btn);
         snapAndSave_btn.addActionListener(e -> {
-
           //  rappController_ref.snapAndSaveImage();
-
         });
-
         left_box.add(Box.createVerticalStrut(5));
-
         // Illuminate the center of the photo targeting device's range
         JButton showCenterSpot_btn = new JButton("Show Center Spot");
         showCenterSpot_btn.setBackground(Color.decode("#3498db"));
         showCenterSpot_btn.setMaximumSize((new Dimension(145, 50)));
         left_box.add(showCenterSpot_btn);
-        showCenterSpot_btn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                rappController_ref.displayCenterSpot();
-            }
-        } );
+        showCenterSpot_btn.addActionListener(e -> rappController_ref.displayCenterSpot());
 
 
         ////////////////////// #Mange Right panel an Content here#  /////////////////////////////////////
@@ -540,8 +532,14 @@ public class RappGui extends JFrame implements LiveModeListener {
         right_box_shoot.add(loadImage_btn, gbc1);
         loadImage_btn.setPreferredSize(new Dimension(120,25));
         loadImage_btn.addActionListener(e -> {
-//            ImagePlus image = IJ.openImage(path.concat("Resources/simCell2DPNG.PNG"));
-//            image.show();
+            ImagePlus image = IJ.openImage(fileDialog_.ChooseFileDialog());
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            image.show();
+            rappController_ref.findCells();
         });
 
         gbc1.gridy++;
@@ -617,18 +615,20 @@ public class RappGui extends JFrame implements LiveModeListener {
 
 
 
-            JButton runSegmentation_btn = new JButton();
-            runSegmentation_btn.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(final ActionEvent e) {
-                    if ( xml_rootField_2.getText().equals("")){
-                        ReportingUtils.showMessage("Please Try Again! "
-                                +"The XML Field is Empty");
+            runSegmentation_btn = new JButton();
+            runSegmentation_btn.addActionListener(e -> {
+                if ( xml_rootField_2.getText().equals("")){
+                    ReportingUtils.showMessage("Please Try Again! "
+                            +"The XML Field is Empty");
+                }
+                else {
+                    String taggPath = fileDialog_.SaveFileDialog();
+                    if ( taggPath != null ){
+                        rappController_ref.runSegmentation(xml_rootField_2.getText(), taggPath);
                     }
                     else {
-
-                        rappController_ref.runSegmentation(xml_rootField_2.getText());
+                        ReportingUtils.showMessage("Please Try Again! "
+                                +"Choose a proper TaggeImage ");
                     }
                 }
             });

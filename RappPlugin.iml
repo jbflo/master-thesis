@@ -43,6 +43,18 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="CellXJ" level="project" />
+    <orderEntry type="library" name="bioformats_package" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://C:/cellxpp/java" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/cellxpp/java" />
+        </SOURCES>
+        <jarDirectory url="file://C:/cellxpp/java" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>

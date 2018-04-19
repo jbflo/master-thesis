@@ -20,6 +20,7 @@ public class SequenceSettings {
     public String channelGroup = "";
     public boolean usePositionList = false;
     public boolean useSegmentation = false;
+    public boolean killCell = false;
 
     public SequenceSettings() {
     }
@@ -39,6 +40,7 @@ public class SequenceSettings {
         String channelGroup = "Channel";
         s.channels = new ArrayList();
         ChannelSpec ch1 = new ChannelSpec();
+        s.killCell = true;
         ch1.config = "DAPI";
         ch1.exposure = 5.0D;
         s.channels.add(ch1);

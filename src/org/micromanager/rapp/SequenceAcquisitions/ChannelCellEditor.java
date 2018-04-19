@@ -6,7 +6,6 @@ import org.micromanager.utils.ReportingUtils;
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -65,23 +64,19 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
       if (colIndex == 0) {
          checkBox_.setSelected((Boolean) value);
          return checkBox_;
-     // } else if (colIndex == 2 || colIndex == 3) {
-      } else if (colIndex == 2 ) {
-         // exposure and z offset
-         text_.setText(NumberUtils.doubleToDisplayString((Double)value));
-         return text_;
-//      } else if (colIndex == 4) {
-//         checkBox_.setSelected((Boolean) value);
-//         return checkBox_;
-//      } else if (colIndex == 5) {
-//         // skip
-//         text_.setText(NumberUtils.intToDisplayString((Integer) value));
-//         return text_;
-      } else if (colIndex == 1) {
-         // channel
-         combo_.removeAllItems();
+      } else if (colIndex != 2 && colIndex != 3) {
+         if (colIndex == 4 ) {
+         checkBox_.setSelected((Boolean) value);
+         checkBox_.setEnabled(acqEng_.isDoSegmentationEnabled());
+         return checkBox_;
 
-         // remove old listeners
+          } else if (colIndex != 1) {
+             return this.colorLabel_;
+          }else {
+             // remove old listeners
+             this.combo_.removeAllItems();
+
+         // channel
          ActionListener[] l = combo_.getActionListeners();
          for (int i = 0; i < l.length; i++) {
             combo_.removeActionListener(l[i]);
@@ -93,27 +88,27 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
             combo_.addItem(configs[i]);
          }
          combo_.setSelectedItem(channel.config);
-         
-         // end editing on selection change
-         combo_.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               channel_.color = new Color(colorPrefs_.getInt(
-                       "Color_" + acqEng_.getChannelGroup() + "_" + 
-                       (String) combo_.getSelectedItem(), Color.white.getRGB()));
-               channel_.exposure = exposurePrefs_.getDouble(
-                    "Exposure_" + acqEng_.getChannelGroup() + "_" + 
-                    (String) combo_.getSelectedItem(), 10.0);
-               fireEditingStopped();
-            }
+         // end editing on selection change
+         combo_.addActionListener(e -> {
+            channel_.color = new Color(colorPrefs_.getInt(
+                    "Color_" + acqEng_.getChannelGroup() + "_" +
+                            (String) combo_.getSelectedItem(), Color.white.getRGB()));
+            channel_.exposure = exposurePrefs_.getDouble(
+                    "Exposure_" + acqEng_.getChannelGroup() + "_" +
+                            (String) combo_.getSelectedItem(), 10.0);
+            channel_.laser_exposure = exposurePrefs_.getDouble(
+                    "Exposure_" + acqEng_.getChannelGroup() + "_" +
+                            (String) combo_.getSelectedItem(), 10.0);
+            this.fireEditingStopped();
          });
 
          // Return the configured component
          return combo_;
+      }
       } else {
-         // ColorEditor takes care of this
-         return colorLabel_;
+            this.text_.setText(NumberUtils.doubleToDisplayString((Double)value));
+            return this.text_;
       }
    }
 
@@ -121,6 +116,7 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
     * This method is called when editing is completed.
     * It must return the new value to be stored in the cell.
     */
+
    @Override
    public Object getCellEditorValue() {
       // TODO: if content of column does not match type we get an exception
@@ -131,21 +127,17 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
             // As a side effect, change to the color and exposure of the new channel
             channel_.color = new Color(colorPrefs_.getInt("Color_" + acqEng_.getChannelGroup() + "_" + combo_.getSelectedItem(), Color.white.getRGB()));
             channel_.exposure = exposurePrefs_.getDouble(
-                    "Exposure_" + acqEng_.getChannelGroup() + "_" + 
-                    channel_.config, 10.0);
+                    "Exposure_" + acqEng_.getChannelGroup() + "_" + channel_.config, 10.0);
             return combo_.getSelectedItem();
          } else if (editCol_ == 2 || editCol_ == 3) {
-            return new Double(NumberUtils.displayStringToDouble(text_.getText()));
-//         } else if (editCol_ == 4) {
-//            return checkBox_.isSelected();
-//         } else if (editCol_ == 5) {
-//            return new Integer(NumberUtils.displayStringToInt(text_.getText()));
-         } else if (editCol_ == 4) {
-            Color c = colorLabel_.getBackground();
-            return c;
+            return NumberUtils.displayStringToDouble(text_.getText());
+         } else if (editCol_ == 4 ) {
+            checkBox_.setEnabled(acqEng_.isDoSegmentationEnabled());
+           return checkBox_.isSelected();
+         } else if (editCol_ == 5) {
+             return colorLabel_.getBackground();
          } else {
-            String err = "Internal error: unknown column";
-            return err;
+             return "Internal error: unknown column";
          }
       } catch (ParseException p) {
          ReportingUtils.showError(p);

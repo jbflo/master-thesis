@@ -197,10 +197,22 @@ public interface AcquisitionEngine {
     * whatever the current device settings are.
     */
    public void enableChannelsSetting(boolean enable);
+    /*
+     * Returns whether channels will be included in the acquired dimensions.
+     */
+    public boolean isKillCellEnabled();
+
+    /*
+     * Sets whether channels are to be included in the settings. If this
+     * value is set to false, then only a single channel is acquired, with
+     * whatever the current device settings are.
+     */
+    public void enableKillCell(boolean enable);
 
 
 
-   /**
+
+    /**
     * Flag indicating whether to override autoshutter behavior and keep the shutter
     * open for channel imaging.  This only has an effect when autoshutter is on, and when
     * mode "Channels First" has been chosen.
@@ -226,7 +238,20 @@ public interface AcquisitionEngine {
     */
    public boolean isMultiPositionEnabled();
 
-   /**
+    /**
+     * Sets a flag that signals whether multiple positions will be acquired
+     * @param selected - acquires at multiple stage positions when true
+     */
+    public void enableSegmentation(boolean selected);
+
+    /**
+     * Returns true when multiple positions will be acquired
+     * @return whether or not acquisition will be executed at multiple stage
+     * positions
+     */
+    boolean isDoSegmentationEnabled();
+
+    /**
     * Access to the channels used in this acquisition
     * @return - Channels used in this acquisition
     */
@@ -249,6 +274,7 @@ public interface AcquisitionEngine {
     * @param absolutePath
     */
    public void setRootName(String absolutePath);
+
 
 
    /**
@@ -276,7 +302,7 @@ public interface AcquisitionEngine {
 //   public boolean addChannel(String name, double exp, double offset,
 //           ContrastSettings s8, ContrastSettings s16, int skip, Color c);
 
-   public boolean addChannel(String name, double exp,
+   public boolean addChannel(String name, double exp, double LaserExp, Boolean killCell,
                              ContrastSettings s8, ContrastSettings s16, Color c);
 
 
@@ -296,7 +322,7 @@ public interface AcquisitionEngine {
 //           double offset, ContrastSettings s8, ContrastSettings s16, int skip, Color c,
 //           boolean use);
 
-   public boolean addChannel(String name, double exp, Boolean doSegmentation,
+   boolean addChannel(String name, double exp, double LaserExp, Boolean doSegmentation, Boolean killCell,
                              ContrastSettings s8, ContrastSettings s16, Color c,
                              boolean use);
 
@@ -316,7 +342,7 @@ public interface AcquisitionEngine {
 //           double offset, ContrastSettings con, int skip, Color c,
 //           boolean use);
 
-   public boolean addChannel(String name, double exp, Boolean doSegmentation,
+   boolean addChannel(String name, double exp, double LaserExp, Boolean doSegmentation, Boolean killCell,
                              ContrastSettings con, Color c,
                              boolean use);
    /*
@@ -325,7 +351,7 @@ public interface AcquisitionEngine {
     * @param selected - If true, image data will be saved to disk during acquisition.
     *
     */
-   public void setSaveFiles(boolean selected);
+   void setSaveFiles(boolean selected);
 
    /*
     * Returns the settings that if true, indicates images will be saved
@@ -342,6 +368,7 @@ public interface AcquisitionEngine {
     * @Deprecated
     */
    public void setDisplayMode(int mode);
+
 
    /**
     * Returns the setting for the order of the four dimensions (P, T, C, Z).
@@ -365,7 +392,8 @@ public interface AcquisitionEngine {
     */
    public boolean isAutoFocusEnabled();
 
- /*
+
+    /*
     * @Deprecated
     */
    public void setSingleWindow(boolean selected);

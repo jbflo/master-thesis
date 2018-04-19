@@ -22,6 +22,8 @@ import ij.gui.PointRoi;
 import ij.gui.Roi;
 import ij.io.FileSaver;
 import ij.measure.Calibration;
+import ij.plugin.Duplicator;
+import ij.plugin.filter.Analyzer;
 import ij.plugin.filter.GaussianBlur;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
@@ -54,6 +56,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.prefs.Preferences;
 
+//import CellXJ.*;
+
 
 /**
  * This Class is approximately use as a Controller for the Rapp plugin. Contains logic for calibration,
@@ -85,7 +89,9 @@ public class RappController extends  MMFrame implements OnStateListener {
     public boolean bleechingComp=false;
     public List<Point2D.Double> roiPointClick = new ArrayList<>();
     public Point2D.Double roiTemp  = new Point2D.Double();
-    org.micromanager.rapp.utils.FileDialog fileDialog_ = new FileDialog();
+    FileDialog fileDialog_ = new FileDialog();
+
+
     //private static final RappController fINSTANCE =  new RappController(core_, app_);
 
 //    public static RappController getInstance() {
@@ -823,7 +829,6 @@ public class RappController extends  MMFrame implements OnStateListener {
 
     ///////////////////////////////# Read the all The Marked ROis and Shoot on Them #///////////////////////////
     public void createMultiPointAndShootFromRoeList() {
-
         makeRunnableAsync(
             () -> {
                 ImagePlus image = IJ.getImage();
@@ -988,13 +993,13 @@ public class RappController extends  MMFrame implements OnStateListener {
             JSONObject summary = new JSONObject();
 
             summary.put("Prefix",sequenceName);
-            summary.put("Slices", 18);
-            summary.put("Positions", 1);
-            //summary.put("Channels",sequenceName);
-            summary.put("Frames", 10);
-            summary.put("Positions",3);
-            summary.put("SlicesFirst",false);
-            summary.put("TimeFirst",false);
+            //summary.put("Slices", 1);
+            //summary.put("Positions", 1);
+            summary.put("Channels", 2);
+            //summary.put("Frames", 1);
+            //summary.put("Positions",3);
+            //summary.put("SlicesFirst",false);
+            //summary.put("TimeFirst",false);
             summary.put("PixelType", "GRAY16");
             summary.put("Width",512);
             summary.put("Height",512);
@@ -1008,12 +1013,14 @@ public class RappController extends  MMFrame implements OnStateListener {
              // dirToSave = fileDialog_.ChooseDirectoryDialog();
               // IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
             }
+
             if (groupName != null && sequenceName != null){
                 if (sequenceName =="Apply ALL Sequence"){
                     String[] allPreset = getConfigPreset(groupName);
                     System.out.println(allPreset.length);
                     //core_.startSequenceAcquisition(camera, allPreset.length,10,true);
-                      for(int i=0; i< allPreset.length; i++){
+                     // for(int i=0; i< allPreset.length; i++){
+                    for(int i=0; i<2; i++){
                           core_.setConfig(groupName, allPreset[i]);
                           summary.put("Channels", allPreset[i].length());
                           System.out.println(allPreset[i].length());
@@ -1028,11 +1035,11 @@ public class RappController extends  MMFrame implements OnStateListener {
                               IJ.save(iPlus, fileToSave + "_" + allPreset[i] + ".tif");
                               // new FileSaver(iPlus).saveAsTiffStack(fileToSave);
                               // IJ.saveAsTiff(iPlus,fileToSave);
-                              // stackStorage = new TaggedImageStorageMultipageTiff(fileToSave, true, summary, false, true, true);
+                               stackStorage = new TaggedImageStorageMultipageTiff(fileToSave, true, summary, false, true, true);
                               // TaggedImageStorageDiskDefault separateStorage = new TaggedImageStorageDiskDefault(fileToSave, true, summary);
-                              // if (engineOutputQueue == null) engineOutputQueue = core_.getTaggedImage();
+                               if (engineOutputQueue == null) engineOutputQueue = core_.getTaggedImage();
                               // separateStorage.putImage(engineOutputQueue);
-                              // stackStorage.putImage( engineOutputQueue);
+                               stackStorage.putImage( engineOutputQueue);
                           }
 
                       }
@@ -1065,16 +1072,54 @@ public class RappController extends  MMFrame implements OnStateListener {
     }
 
 
-    public void  runSegmentation (String xmlPath){
+    public void  runSegmentation (String xmlPath,  String taggPath_){
+
+        ImagePlus  iPlus = IJ.openImage(taggPath_);
+        Object pixel = iPlus.getPixel(iPlus.getWidth(), iPlus.getHeight());
+        JSONObject summary = new JSONObject();
+        TaggedImage image = new TaggedImage(pixel, summary);
 
         try {
-       //     Segmentation f= Segmentation(xmlPath, core_.getTaggedImage( ));
+//            Segmentation(xmlPath, core_.getTaggedImage( ));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public ArrayList[] findCells() {
+        ImagePlus impOrg = IJ.getImage();
+        ImagePlus imp = new Duplicator().run(impOrg);
+        impOrg.setTitle("Original");
+        imp.setTitle("Working on ...");
+        imp.show();
+        imp.updateAndRepaintWindow();
+        IJ.run(imp, "Gaussian Blur...", "sigma=5");
+        IJ.run(imp, "Find Maxima...", "noise=20 output=List exclude");
+        ij.measure.ResultsTable resTab = Analyzer.getResultsTable();
+        int resCount = resTab.getCounter();
+        ArrayList xTab = new ArrayList();
+        ArrayList yTab = new ArrayList();
+        double[] x = new double[resCount];
+        double[] y = new double[resCount];
+        Roi[] r = new Roi[resCount];
 
+        for (int i=0; i<resCount; i++){
+            double xx = resTab.getValueAsDouble(0, i);
+            double yy = resTab.getValueAsDouble(1, i);
+            xTab.add(xx);
+            yTab.add(yy);
+            x[i]=xx;
+            y[i]=yy;
+            r[i]= new Roi(xx,yy,10,10);
+            imp.setRoi(new Roi(xx,yy,10,10));
+            IJ.run("Draw");
+        }
+        //imp.setRoi(r);
+        System.out.println(xTab);
+        System.out.println(yTab);
+        imp.updateAndRepaintWindow();
+      return new ArrayList[]{xTab, xTab};
+    }
 
     //#################################  Method for Saving Image ###############################################
      public void snapAndSaveImage(ImagePlus img) {
@@ -1131,7 +1176,6 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
         return false;  // (x, y) not found
     }*/
-
 
     @Override
     public void stateChanged(boolean onState) {

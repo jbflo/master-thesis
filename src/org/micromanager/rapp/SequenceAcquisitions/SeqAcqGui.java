@@ -23,14 +23,11 @@ package org.micromanager.rapp.SequenceAcquisitions;
 
 
 import com.swtdesigner.SwingResourceManager;
-import ij.gui.ImageWindow;
 import mmcorej.CMMCore;
 import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
 import org.micromanager.SnapLiveManager;
 import org.micromanager.acquisition.ComponentTitledBorder;
-import org.micromanager.acquisition.TaggedImageStorageDiskDefault;
-import org.micromanager.acquisition.TaggedImageStorageMultipageTiff;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.dialogs.AdvancedOptionsDialog;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
@@ -130,13 +127,10 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private static final String ACQ_TIME_UNIT = "acqTimeInit";
    private static final String ACQ_ZBOTTOM = "acqZbottom";
    private static final String ACQ_ZTOP = "acqZtop";
-   private static final String ACQ_ZSTEP = "acqZstep";
-   private static final String ACQ_ENABLE_SLICE_SETTINGS = "enableSliceSettings";
    private static final String ACQ_ENABLE_MULTI_POSITION = "enableMultiPosition";
-   private static final String ACQ_ENABLE_MULTI_FRAME = "enableMultiFrame";
    private static final String ACQ_ENABLE_MULTI_CHANNEL = "enableMultiChannels";
+   private static final String ACQ_ENABLE_SEGMENTATION = "enableSegmentation";
    private static final String ACQ_ORDER_MODE = "acqOrderMode";
-   private static final String ACQ_NUMFRAMES = "acqNumframes";
    private static final String ACQ_CHANNEL_GROUP = "acqChannelGroup";
    private static final String ACQ_NUM_CHANNELS = "acqNumchannels";
    private static final String ACQ_CHANNELS_KEEP_SHUTTER_OPEN = "acqChannelsKeepShutterOpen";
@@ -144,9 +138,9 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private static final String CHANNEL_NAME_PREFIX = "acqChannelName";
    private static final String CHANNEL_USE_PREFIX = "acqChannelUse";
    private static final String SEGMENTATION_USE_PREFIX = "acqSegmentationUse";
+   private static final String KILL_CELL_PREFIX = "acqKillCell";
    private static final String CHANNEL_EXPOSURE_PREFIX = "acqChannelExp";
-   private static final String CHANNEL_ZOFFSET_PREFIX = "acqChannelZOffset";
-   private static final String CHANNEL_DOZSTACK_PREFIX = "acqChannelDoZStack";
+   private static final String CHANNEL_LASER_EXPOSURE_PREFIX = "acqChannelLaserExp";
    private static final String CHANNEL_CONTRAST_MIN_PREFIX = "acqChannelContrastMin";
    private static final String CHANNEL_CONTRAST_MAX_PREFIX = "acqChannelContrastMax";
    private static final String CHANNEL_CONTRAST_GAMMA_PREFIX = "acqChannelContrstGamma";
@@ -190,6 +184,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private Border nightBorder_;
    private ArrayList<JPanel> panelList_;
    private boolean disableGUItoSettings_ = false;
+   protected static boolean saveMultiTiff_ = true;
    private SnapLiveManager SnapLiveManager_;
    private CMMCore core_;
 
@@ -243,7 +238,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
             channelTable_.addColumn(column);
          }
       }
-
       channelTablePane_.setViewportView(channelTable_);
    }
 
@@ -720,6 +714,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          @Override
          public void actionPerformed(ActionEvent e) {
             applySettings();
+            System.out.println(acqEng_.isDoSegmentationEnabled());
             model_.addNewChannel();
             model_.fireTableStructureChanged();
          }
@@ -894,7 +889,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       singleButton_.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-            ImageUtils.setImageStorageClass(TaggedImageStorageDiskDefault.class);
+            saveMultiTiff_ = false;
          }});
 
       multiButton_ = new JRadioButton("Image stack file");
@@ -904,7 +899,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       multiButton_.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-            ImageUtils.setImageStorageClass(TaggedImageStorageMultipageTiff.class);
+            saveMultiTiff_ = true;
          }});
 
       ButtonGroup buttonGroup = new ButtonGroup();
@@ -913,15 +908,11 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       updateSavingTypeButtons();
 
 
-       segmentationPanel_.addActionListener(new ActionListener() {
-
-           @Override
-           public void actionPerformed(final ActionEvent e) {
-               if (!segmentationPanel_.isSelected()) {
-                  // displayModeCombo_.setSelectedIndex(0);
-               }
-               applySettings();
+       segmentationPanel_.addActionListener(e -> {
+           if (!segmentationPanel_.isSelected()) {
+              // displayModeCombo_.setSelectedIndex(0);
            }
+           applySettings();
        });
 
        rootLabel_2 = new JLabel();
@@ -1057,30 +1048,10 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       // update GUI contents
       // -------------------
 
-
       // add update event listeners
-      positionsPanel_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(ActionEvent arg0) {
-            applySettings();
-         }
-      });
-      displayModeCombo_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            applySettings();
-         }
-      });
-      acqOrderBox_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            applySettings();
-         }
-      });
-
+      positionsPanel_.addActionListener(arg0 -> applySettings());
+      displayModeCombo_.addActionListener(e -> applySettings());
+      acqOrderBox_.addActionListener(e -> applySettings());
 
       // load acquistion settings
       loadAcqSettings();
@@ -1170,10 +1141,11 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       return false;
    }
 
+
    public final void updateSavingTypeButtons() {
-      if (ImageUtils.getImageStorageClass().equals(TaggedImageStorageDiskDefault.class)) {
+      if (!saveMultiTiff_){
          singleButton_.setSelected(true);
-      } else if (ImageUtils.getImageStorageClass().equals(TaggedImageStorageMultipageTiff.class)) {
+      } else if (saveMultiTiff_) {
          multiButton_.setSelected(true);
       }
    }
@@ -1222,10 +1194,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
    public final synchronized void loadAcqSettings() {
       disableGUItoSettings_ = true;
-
       // load acquisition engine preferences
       acqEng_.clear();
-
 
       int unit = acqPrefs_.getInt(ACQ_TIME_UNIT, 0);
       timeUnitCombo_.setSelectedIndex(unit);
@@ -1244,6 +1214,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       acqEng_.enableChannelsSetting(acqPrefs_.getBoolean(ACQ_ENABLE_MULTI_CHANNEL, false));
       channelsPanel_.setSelected(acqEng_.isChannelsSettingEnabled());
       channelsPanel_.repaint();
+
+      acqEng_.enableSegmentation(acqPrefs_.getBoolean(ACQ_ENABLE_SEGMENTATION, acqEng_.isDoSegmentationEnabled()));
+      segmentationPanel_.setSelected(acqEng_.isDoSegmentationEnabled());
+      segmentationPanel_.repaint();
+
+      acqEng_.enableKillCell(acqPrefs_.getBoolean(ACQ_ENABLE_SEGMENTATION, acqEng_.isDoSegmentationEnabled()));
 
       savePanel_.setSelected(acqPrefs_.getBoolean(ACQ_SAVE_FILES, false));
 
@@ -1273,7 +1249,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       acqEng_.setCustomTimeIntervals(intervals);
       acqEng_.enableCustomTimeIntervals(acqPrefs_.getBoolean(ACQ_ENABLE_CUSTOM_INTERVALS, false));
 
-
       int numChannels = acqPrefs_.getInt(ACQ_NUM_CHANNELS, 0);
 
       ChannelSpec defaultChannel = new ChannelSpec();
@@ -1283,9 +1258,9 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          String name = acqPrefs_.get(CHANNEL_NAME_PREFIX + i, "Undefined");
          boolean use = acqPrefs_.getBoolean(CHANNEL_USE_PREFIX + i, true);
          boolean useSeg = acqPrefs_.getBoolean(SEGMENTATION_USE_PREFIX +i,true);
+         boolean killCell = acqPrefs_.getBoolean(KILL_CELL_PREFIX +i,true);
          double exp = acqPrefs_.getDouble(CHANNEL_EXPOSURE_PREFIX + i, 0.0);
-     //    Boolean doZStack = acqPrefs_.getBoolean(CHANNEL_DOZSTACK_PREFIX + i, true);
-        // double zOffset = acqPrefs_.getDouble(CHANNEL_ZOFFSET_PREFIX + i, 0.0);
+         double laserExp = acqPrefs_.getDouble(CHANNEL_LASER_EXPOSURE_PREFIX + i, 0.0);
          ContrastSettings con = new ContrastSettings();
          con.min = acqPrefs_.getInt(CHANNEL_CONTRAST_MIN_PREFIX + i, defaultChannel.contrast.min);
          con.max = acqPrefs_.getInt(CHANNEL_CONTRAST_MAX_PREFIX + i, defaultChannel.contrast.max);
@@ -1293,10 +1268,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          int r = acqPrefs_.getInt(CHANNEL_COLOR_R_PREFIX + i, defaultChannel.color.getRed());
          int g = acqPrefs_.getInt(CHANNEL_COLOR_G_PREFIX + i, defaultChannel.color.getGreen());
          int b = acqPrefs_.getInt(CHANNEL_COLOR_B_PREFIX + i, defaultChannel.color.getBlue());
-      //   int skip = acqPrefs_.getInt(CHANNEL_SKIP_PREFIX + i, defaultChannel.skipFactorFrame);
          Color c = new Color(r, g, b);
-         //acqEng_.addChannel(name, exp, doZStack, zOffset, con, skip, c, use);
-         acqEng_.addChannel(name, exp,useSeg, con, c, use);
+         acqEng_.addChannel(name, exp, laserExp, useSeg, killCell, con, c, use);
       }
 
       // Restore Column Width and Column order
@@ -1631,7 +1604,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          JOptionPane.showMessageDialog(this, "Cannot start acquisition: previous acquisition still in progress.");
          return null;
       }
-      //ImageWindow snap =  SnapLiveManager_.getSnapLiveWindow();
+      // ImageWindow snap =  SnapLiveManager_.getSnapLiveWindow();
       if(SnapLiveManager_.getSnapLiveWindow() == null){
          JOptionPane.showMessageDialog(this, "Cannot start acquisition : No image Found,  Open Live window to acquire Image");
          return null;
@@ -1734,6 +1707,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       checkForCustomTimeIntervals();
      // slicesPanel_.setSelected(acqEng_.isZSliceSettingEnabled());
       positionsPanel_.setSelected(acqEng_.isMultiPositionEnabled());
+      segmentationPanel_.setSelected(acqEng_.isDoSegmentationEnabled());
       afPanel_.setSelected(acqEng_.isAutoFocusEnabled());
 //      acqOrderBox_.setEnabled(positionsPanel_.isSelected() || framesPanel_.isSelected()
 //        || slicesPanel_.isSelected()      || channelsPanel_.isSelected());
@@ -1856,7 +1830,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 //         }
 //         acqEng_.setSlices(NumberUtils.displayStringToDouble(zBottom_.getText()), NumberUtils.displayStringToDouble(zTop_.getText()), zStep, zVals_ == 0 ? false : true);
 //        // acqEng_.enableZSliceSetting(slicesPanel_.isSelected());
-//         acqEng_.enableZSliceSetting(false);
          acqEng_.enableMultiPosition(positionsPanel_.isSelected());
 
 
@@ -1864,10 +1837,11 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          acqEng_.setAcqOrderMode(((AcqOrderMode) acqOrderBox_.getSelectedItem()).getID());
          acqEng_.enableChannelsSetting(channelsPanel_.isSelected());
          acqEng_.setChannels(((ChannelTableModel) channelTable_.getModel()).getChannels());
+         acqEng_.enableSegmentation(segmentationPanel_.isSelected());
          //acqEng_.enableFramesSetting(framesPanel_.isSelected());
 //         acqEng_.enableFramesSetting(false);
 //         acqEng_.setFrames((Integer) numFrames_.getValue(),
-//                 convertTimeToMs(NumberUtils.displayStringToDouble(interval_.getText()), timeUnitCombo_.getSelectedIndex()));
+//         convertTimeToMs(NumberUtils.displayStringToDouble(interval_.getText()), timeUnitCombo_.getSelectedIndex()));
       //   acqEng_.setAfSkipInterval(NumberUtils.displayStringToInt(afSkipInterval_.getValue().toString()));
          acqEng_.keepShutterOpenForChannels(chanKeepShutterOpenCheckBox_.isSelected());
        //  acqEng_.keepShutterOpenForStack(stackKeepShutterOpenCheckBox_.isSelected());

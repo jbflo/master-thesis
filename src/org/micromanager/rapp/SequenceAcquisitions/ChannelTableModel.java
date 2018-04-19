@@ -5,6 +5,7 @@ import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.ReportingUtils;
 import org.micromanager.utils.TooltipTextMaker;
 
+import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
@@ -29,11 +30,11 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
    private final MMOptions options_;
 
    public final String[] COLUMN_NAMES = new String[]{
-      "Use?",
+      "Use ?",
       "Configuration",
       "Exposure (ms) ",
-    //  "Cells To Kill",
-    //  "Laser Exposure (ms)",
+      "Laser Exposure (ms)",
+      "Kill Cells ?",
       "Color"
    };
 
@@ -44,8 +45,7 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       TooltipTextMaker.addHTMLBreaksForTooltip("Set a Z offset specific to this channel/group (the main "
       + "object in one of the channels/groups is in a different focal plane from the other channels/groups"),
       "Collect images in multiple Z planes?",
-      TooltipTextMaker.addHTMLBreaksForTooltip("Setting 'Skip Frame' to a number other than "
-      + "0 will cause the acquisition to 'skip' taking images in "
+      TooltipTextMaker.addHTMLBreaksForTooltip("Setting :  taking images in "
       + "that channel (after taking the first image) for the indicated "
       + "number of time intervals. The 5D-Image Viewer will 'fill in' these skipped "
       + "frames with the previous image. In some situations it may be "
@@ -57,9 +57,7 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       return TOOLTIPS[columnIndex];
    }
 
-   public ChannelTableModel(ScriptInterface studio, AcquisitionEngine eng,
-         Preferences exposurePrefs, Preferences colorPrefs,
-         MMOptions options) {
+   public ChannelTableModel(ScriptInterface studio, AcquisitionEngine eng, Preferences exposurePrefs, Preferences colorPrefs, MMOptions options) {
       studio_ = studio;
       acqEng_ = eng;
       exposurePrefs_ = exposurePrefs;
@@ -95,13 +93,11 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
             return channels_.get(rowIndex).config;
          } else if (columnIndex == 2) {
             return channels_.get(rowIndex).exposure;
-//         } else if (columnIndex == 3) {
-//            return channels_.get(rowIndex).zOffset;
-//         } else if (columnIndex == 4) {
-//            return channels_.get(rowIndex).doZStack;
-//         } else if (columnIndex == 5) {
-//            return channels_.get(rowIndex).skipFactorFrame;
          } else if (columnIndex == 3) {
+            return channels_.get(rowIndex).laser_exposure;
+         } else if (columnIndex == 4) {
+            return channels_.get(rowIndex).KillCell;
+         } else if (columnIndex == 5) {
             return channels_.get(rowIndex).color;
          }
       }
@@ -115,47 +111,40 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
 
    @Override
    public void setValueAt(Object value, int row, int col) {
-      if (row >= channels_.size() || value == null) {
-         return;
-      }
+          if (row < channels_.size() && value != null) {
 
-      ChannelSpec channel = channels_.get(row);
-      if (col == 0) {
-         channel.useChannel = ((Boolean) value);
-      } else if (col == 1) {
-         channel.config = value.toString();
-         channel.exposure = exposurePrefs_.getDouble(
-                 "Exposure_" + acqEng_.getChannelGroup() + "_" +
-                 channel.config, 10.0);
-      } else if (col == 2) {
-         channel.exposure = ((Double) value);
-         exposurePrefs_.putDouble("Exposure_" + acqEng_.getChannelGroup()
-                 + "_" + channel.config,channel.exposure);
-         if (options_.syncExposureMainAndMDA_) {
-            studio_.setChannelExposureTime(acqEng_.getChannelGroup(),
-                    channel.config, channel.exposure);
-         }
-//      } else if (col == 3) {
-//         channel.zOffset = ((Double) value);
-//      } else if (col == 4) {
-//         channel.doZStack = (Boolean) value;
-//      } else if (col == 5) {
-//         channel.skipFactorFrame = ((Integer) value);
-      } else if (col == 3) {
-         channel.color = (Color) value;
-      }
-
-      acqEng_.setChannel(row, channel);
+          ChannelSpec channel = channels_.get(row);
+          if (col == 0) {
+             channel.useChannel = ((Boolean) value);
+          } else if (col == 1) {
+             channel.config = value.toString();
+             channel.exposure = exposurePrefs_.getDouble("Exposure_" + acqEng_.getChannelGroup() + "_" + channel.config, 10.0);
+          } else if (col == 2) {
+             channel.exposure = ((Double) value);
+             exposurePrefs_.putDouble("Exposure_" + acqEng_.getChannelGroup() + "_" + channel.config,channel.exposure);
+             if (options_.syncExposureMainAndMDA_) {
+                studio_.setChannelExposureTime(acqEng_.getChannelGroup(),
+                        channel.config, channel.exposure);
+             }
+          } else if (col == 3) {
+             channel.laser_exposure = ((Double) value);
+          } else if (col == 4) {
+            channel.KillCell = ((Boolean) value);
+          } else if (col == 5) {
+             channel.color = (Color) value;
+          }
+          acqEng_.setChannel(row, channel);
+       }
    }
+
 
    @Override
    public boolean isCellEditable(int nRow, int nCol) {
-      if (nCol == 4) {
+      if (nCol == 5) {
         // if (!acqEng_.isZSliceSettingEnabled()) {
             return false;
        //  }
       }
-
       return true;
    }
 
@@ -175,7 +164,11 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       }
       ChannelSpec channel = channels_.get(row);
       TableModel model = (TableModel) e.getSource();
-      if (col == 3) {
+      if (col == 4){
+         JCheckBox check = new JCheckBox("", channel.KillCell);
+         check.setEnabled(acqEng_.isDoSegmentationEnabled());
+      }
+      if (col == 5) {
          Color color = (Color) model.getValueAt(row, col);
          colorPrefs_.putInt("Color_" + acqEng_.getChannelGroup() + "_" + channel.config, color.getRGB());
       }
@@ -196,6 +189,7 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       ChannelSpec channel = new ChannelSpec();
       channel.config = "";
       if (acqEng_.getChannelConfigs().length > 0) {
+
          for (String config : acqEng_.getChannelConfigs()) {
             boolean unique = true;
             for (ChannelSpec chan : channels_) {
