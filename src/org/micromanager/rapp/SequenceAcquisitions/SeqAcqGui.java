@@ -210,7 +210,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          }
       };
 
-      channelTable_.setFont(new Font("Dialog", Font.PLAIN, 10));
+      channelTable_.setFont(new Font("Dialog", Font.PLAIN, 9));
       channelTable_.setAutoCreateColumnsFromModel(false);
       channelTable_.setModel(model_);
       model_.setChannels(acqEng_.getChannels());

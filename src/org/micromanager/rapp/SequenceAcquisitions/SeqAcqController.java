@@ -147,7 +147,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                 }
                             }
                             if (stopRequested_.get()) {
-                                ReportingUtils.showMessage("Acquisition canceled.");
+                                ReportingUtils.showMessage("Acquisition Stop.");
                                 break;
                             }
                         }
@@ -437,6 +437,11 @@ public class SeqAcqController implements AcquisitionEngine {
 
     @Override
     public boolean abortRequest() {
+        if (isRunning_.get()){
+            isRunning_.set(false);
+            stopRequested_.set(true);
+        }
+
         return false;
     }
 
