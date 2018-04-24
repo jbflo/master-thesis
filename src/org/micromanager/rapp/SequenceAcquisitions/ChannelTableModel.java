@@ -5,7 +5,6 @@ import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.ReportingUtils;
 import org.micromanager.utils.TooltipTextMaker;
 
-import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
@@ -140,10 +139,10 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
 
    @Override
    public boolean isCellEditable(int nRow, int nCol) {
-      if (nCol == 5) {
-        // if (!acqEng_.isZSliceSettingEnabled()) {
+      if (nCol == 4) {
+         if (!acqEng_.isDoSegmentationEnabled()) {
             return false;
-       //  }
+        }
       }
       return true;
    }
@@ -164,10 +163,7 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       }
       ChannelSpec channel = channels_.get(row);
       TableModel model = (TableModel) e.getSource();
-      if (col == 4){
-         JCheckBox check = new JCheckBox("", channel.KillCell);
-         check.setEnabled(acqEng_.isDoSegmentationEnabled());
-      }
+
       if (col == 5) {
          Color color = (Color) model.getValueAt(row, col);
          colorPrefs_.putInt("Color_" + acqEng_.getChannelGroup() + "_" + channel.config, color.getRGB());

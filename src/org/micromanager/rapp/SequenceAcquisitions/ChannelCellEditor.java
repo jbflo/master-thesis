@@ -67,7 +67,6 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
       } else if (colIndex != 2 && colIndex != 3) {
          if (colIndex == 4 ) {
          checkBox_.setSelected((Boolean) value);
-         checkBox_.setEnabled(acqEng_.isDoSegmentationEnabled());
          return checkBox_;
 
           } else if (colIndex != 1) {
@@ -75,14 +74,12 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
           }else {
              // remove old listeners
              this.combo_.removeAllItems();
-
          // channel
          ActionListener[] l = combo_.getActionListeners();
          for (int i = 0; i < l.length; i++) {
             combo_.removeActionListener(l[i]);
          }
          combo_.removeAllItems();
-
          String configs[] = model.getAvailableChannels();
          for (int i = 0; i < configs.length; i++) {
             combo_.addItem(configs[i]);
@@ -132,7 +129,6 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
          } else if (editCol_ == 2 || editCol_ == 3) {
             return NumberUtils.displayStringToDouble(text_.getText());
          } else if (editCol_ == 4 ) {
-            checkBox_.setEnabled(acqEng_.isDoSegmentationEnabled());
            return checkBox_.isSelected();
          } else if (editCol_ == 5) {
              return colorLabel_.getBackground();

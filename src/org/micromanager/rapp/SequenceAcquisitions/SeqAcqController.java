@@ -9,6 +9,7 @@ import org.micromanager.api.ImageCache;
 import org.micromanager.api.PositionList;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
+import org.micromanager.rapp.RappController;
 import org.micromanager.rapp.RappPlugin;
 import org.micromanager.rapp.utils.Acquisition;
 import org.micromanager.utils.*;
@@ -27,6 +28,7 @@ public class SeqAcqController implements AcquisitionEngine {
     private PositionList posList_;
     private ArrayList<AcqSettingsListener> settingsListeners_ = new ArrayList();
     private ArrayList<ChannelSpec> channels_ = new ArrayList();
+    private  static RappController rappController_ref;
     private String comment_;
     private int numFrames_;
     private boolean saveFiles_;
@@ -50,6 +52,11 @@ public class SeqAcqController implements AcquisitionEngine {
         this.core_ = RappPlugin.getMMcore();
         this.app_ = RappPlugin.getScripI();
         posList_ = new PositionList();
+        try {
+            rappController_ref =  new RappController(core_, app_);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -77,10 +84,8 @@ public class SeqAcqController implements AcquisitionEngine {
     protected String runAcquisition(SequenceSettings acquisitionSettings) {
         app_.enableLiveMode(false);
         ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
-        ArrayList<String> channelsConf = new ArrayList();
-        ;
         String chanelGroup_ = acquisitionSettings.channelGroup;
-        System.out.println( channels_.toArray());
+
         try {
             core_.waitForDevice(core_.getCameraDevice());
             Thread.sleep(100); // wait and start acquisition
@@ -111,7 +116,6 @@ public class SeqAcqController implements AcquisitionEngine {
 
         }
 
-        System.out.println(dirName_ + " test");
         if (!isRunning_.get()) {
             stopRequested_.set(false);
             Thread th = new Thread("Sequence Acquisition thread") {
@@ -121,17 +125,54 @@ public class SeqAcqController implements AcquisitionEngine {
                         isRunning_.set(true);
                         ImagePlus iPlus = null;
                         TaggedImage itagg = null;
+                        // for (int i = 0 ; i < channels.size() ; i ++){
                         for (ChannelSpec presetConfig : channels){
-                            System.out.println(presetConfig.config.toString());
+                            // Set the Chanel Exposure Time
+                            app_.setChannelExposureTime(chanelGroup_,
+                                    presetConfig.config, presetConfig.exposure);
+                            // Then Change The Chanel Config (Preset )
                             core_.setConfig(chanelGroup_, presetConfig.config.toString());
-                            try {
-                                Thread.sleep(500);
-                            } catch (InterruptedException ex) {
-                                ReportingUtils.logError(ex);
-                            }
+                           // System.out.println(presetConfig.exposure  + "__"+ presetConfig.laser_exposure +" __ "+  presetConfig.KillCell);
+                            // Take a Photo for each fix chanel
                             core_.snapImage();
                             core_.getLastTaggedImage();
                             iPlus = IJ.getImage();
+
+                            if (channels.subList(0, channels.size()).get(0).config.equals(presetConfig.config)){
+                                System.out.println( "You Are :" + presetConfig.config);
+                            }
+
+                            // if the Images was not save , we do the segmentation for the image in Memory
+                            if(!saveFiles_  && presetConfig.doSegmentation){
+                                // Execute the Segmentation depends on the Colors.
+                                ArrayList[] ll =  rappController_ref.findCells(iPlus);
+                                if (presetConfig.KillCell) {
+                                    rappController_ref.shootFromSegmentationListPoint(ll, iPlus);
+                                }
+                                System.out.println( presetConfig.color.toString());
+                                System.out.println( Color.BLUE.toString());
+
+
+                                if (presetConfig.color == Color.WHITE){
+                                    System.out.println( "You Are White");
+                                }
+
+                                if(presetConfig.color == Color.GREEN){
+                                    System.out.println( "You Are GREEN");
+                                    rappController_ref.findCells(iPlus);
+
+                                }
+                                if (presetConfig.color == Color.RED){
+                                    System.out.println( "You Are RED");
+
+                                }
+                                if (presetConfig.color == Color.BLUE){
+                                    System.out.println( "You Are BLUE");
+
+                                }
+
+                            }
+
                             if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
                                 System.out.println(" Multi Image");
                                 IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
@@ -145,6 +186,8 @@ public class SeqAcqController implements AcquisitionEngine {
                                 } catch (InterruptedException ex) {
                                     ReportingUtils.logError(ex);
                                 }
+
+
                             }
                             if (stopRequested_.get()) {
                                 ReportingUtils.showMessage("Acquisition Stop.");
@@ -153,8 +196,9 @@ public class SeqAcqController implements AcquisitionEngine {
                         }
                         if(saveFiles_ && SeqAcqGui.saveMultiTiff_){
                             IJ.run("Images to Stack", "name=Stack title=[] use");
-                            IJ.saveAs("Tiff", rootName_ +  "\\"+ dirName_+ "_"+ "StackTest" + ".tif");
+                            IJ.saveAs("Tiff", rootName_ +  "\\"+ dirName_+ "_"+ "Stack" + ".tif");
                         }
+
                       //  app_.enableLiveMode(liveModeRunning);
                         JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
                                 + (!stopRequested_.get() ? "finished." : "canceled."));
@@ -167,7 +211,7 @@ public class SeqAcqController implements AcquisitionEngine {
                     } finally {
                         isRunning_.set(false);
                         stopRequested_.set(false);
-                    //    RappGui.getInstance().calibrate_btn.setText("Calibrated");
+                    //  RappGui.getInstance().calibrate_btn.setText("Calibrated");
                     }
                 }
             };
@@ -797,7 +841,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
     @Override
     public String[] getCameraConfigs() {
-        return new String[0];
+        return this.core_ == null ? new String[0] : this.core_.getAvailableConfigs("Camera").toArray();
     }
 
     @Override

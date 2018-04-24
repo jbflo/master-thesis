@@ -39,6 +39,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.prefs.Preferences;
 
@@ -539,7 +540,8 @@ public class RappGui extends JFrame implements LiveModeListener {
                 e1.printStackTrace();
             }
             image.show();
-            rappController_ref.findCells();
+            ArrayList[] ll =  rappController_ref.findCells(image);
+            rappController_ref.shootFromSegmentationListPoint(ll, image);
         });
 
         gbc1.gridy++;

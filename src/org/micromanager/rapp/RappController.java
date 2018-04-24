@@ -894,11 +894,56 @@ public class RappController extends  MMFrame implements OnStateListener {
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
 
-    public void shootLaseronLearningPoint(List<Point2D.Double> point){
+    public void shootFromSegmentationListPoint(ArrayList[] segmentatio_pt, ImagePlus iplus_) {
         makeRunnableAsync(
-            () -> {
+                () -> {
+                    ArrayList xcRoiPosArray = new ArrayList();
+                    ArrayList ycRoiPosArray = new ArrayList();
+                    if (segmentatio_pt.length != 0 ) {
+                        for (int i = 0; i < segmentatio_pt.length; i++) {
 
-            }).run();
+                            xcRoiPosArray.add(segmentatio_pt[0].get(i));
+                            ycRoiPosArray.add(segmentatio_pt[1].get(i));
+                        }
+                    }
+                    else ReportingUtils.showError("Please Add some roi point before! Your points return Null");
+
+                    double[] failsArrayX =  new double[xcRoiPosArray.size()];
+                    double[] failsArrayY =  new double[ycRoiPosArray.size()];
+                    System.out.println(xcRoiPosArray.size());
+
+                    for (int i =0 ; i < xcRoiPosArray.size(); i++)
+                    { //iterate over the elements of the list
+                        System.out.println(xcRoiPosArray.get(i).toString());
+                        failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
+                        failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
+
+                        final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), iplus_,
+                                new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+                        System.out.println(devP);
+
+                        final Configuration originalConfig = prepareChannel();
+                        final boolean originalShutterState = prepareShutter();
+                        try {
+                            Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
+                            if (galvoPos != devP){
+                                // core_.setGalvoIlluminationState(galvo, false);
+                                Thread.sleep(200);
+                                core_.setGalvoPosition(galvo, devP.x, devP.y);
+                                Thread.sleep(200);
+                                //core_.setGalvoIlluminationState(galvo,true);
+                                //core_.waitForDevice(galvo);
+                            }else ReportingUtils.showError("Please Try Again! Galvo problem");
+                            displaySpot(devP.x, devP.y);
+                            returnShutter(originalShutterState);
+                            returnChannel(originalConfig);
+                            Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
+                        }catch (Exception ec){
+                            ReportingUtils.showError(ec);
+                        }
+                    }
+
+                }).run();
     }
 
 
@@ -1086,8 +1131,8 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
     }
 
-    public ArrayList[] findCells() {
-        ImagePlus impOrg = IJ.getImage();
+    public ArrayList[] findCells(ImagePlus impOrg) {
+        //ImagePlus impOrg = IJ.getImage();
         ImagePlus imp = new Duplicator().run(impOrg);
         impOrg.setTitle("Original");
         imp.setTitle("Working on ...");

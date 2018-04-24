@@ -147,7 +147,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private static final String CHANNEL_COLOR_R_PREFIX = "acqChannelColorR";
    private static final String CHANNEL_COLOR_G_PREFIX = "acqChannelColorG";
    private static final String CHANNEL_COLOR_B_PREFIX = "acqChannelColorB";
-   private static final String CHANNEL_SKIP_PREFIX = "acqSkip";
    private static final String ACQ_Z_VALUES = "acqZValues";
    private static final String ACQ_DIR_NAME = "acqDirName";
    private static final String ACQ_ROOT_NAME = "acqRootName";
