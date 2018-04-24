@@ -904,6 +904,9 @@ public class RappController extends  MMFrame implements OnStateListener {
 
                             xcRoiPosArray.add(segmentatio_pt[0].get(i));
                             ycRoiPosArray.add(segmentatio_pt[1].get(i));
+
+                            System.out.println(segmentatio_pt[0]);
+                            System.out.println(segmentatio_pt[1]);
                         }
                     }
                     else ReportingUtils.showError("Please Add some roi point before! Your points return Null");
@@ -915,6 +918,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                     for (int i =0 ; i < xcRoiPosArray.size(); i++)
                     { //iterate over the elements of the list
                         System.out.println(xcRoiPosArray.get(i).toString());
+                        System.out.println(ycRoiPosArray.get(i).toString());
                         failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
                         failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
 
@@ -925,15 +929,15 @@ public class RappController extends  MMFrame implements OnStateListener {
                         final Configuration originalConfig = prepareChannel();
                         final boolean originalShutterState = prepareShutter();
                         try {
-                            Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
-                            if (galvoPos != devP){
-                                // core_.setGalvoIlluminationState(galvo, false);
-                                Thread.sleep(200);
-                                core_.setGalvoPosition(galvo, devP.x, devP.y);
-                                Thread.sleep(200);
-                                //core_.setGalvoIlluminationState(galvo,true);
-                                //core_.waitForDevice(galvo);
-                            }else ReportingUtils.showError("Please Try Again! Galvo problem");
+                            //Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
+//                            if (galvoPos != devP){
+//                                // core_.setGalvoIlluminationState(galvo, false);
+//                                Thread.sleep(200);
+//                                core_.setGalvoPosition(galvo, devP.x, devP.y);
+//                                Thread.sleep(200);
+//                                //core_.setGalvoIlluminationState(galvo,true);
+//                                //core_.waitForDevice(galvo);
+//                            }else ReportingUtils.showError("Please Try Again! Galvo problem");
                             displaySpot(devP.x, devP.y);
                             returnShutter(originalShutterState);
                             returnChannel(originalConfig);
@@ -1041,10 +1045,7 @@ public class RappController extends  MMFrame implements OnStateListener {
             //summary.put("Slices", 1);
             //summary.put("Positions", 1);
             summary.put("Channels", 2);
-            //summary.put("Frames", 1);
-            //summary.put("Positions",3);
-            //summary.put("SlicesFirst",false);
-            //summary.put("TimeFirst",false);
+
             summary.put("PixelType", "GRAY16");
             summary.put("Width",512);
             summary.put("Height",512);
