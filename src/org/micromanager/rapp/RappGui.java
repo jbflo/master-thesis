@@ -78,7 +78,7 @@ public class RappGui extends JFrame implements LiveModeListener {
     private JToggleButton pointAndShootOnOff_btn;
     protected JButton calibrate_btn;
     private JButton browseXmlFIle_btn;
-     private JButton runSegmentation_btn;
+    private JButton runSegmentation_btn;
     private JComboBox<String> presetConfList_jcb ;
     private JComboBox<String> Sequence_jcb ;
     private JComboBox<String> groupConfList_jcb;
@@ -97,7 +97,7 @@ public class RappGui extends JFrame implements LiveModeListener {
     public RappGui(CMMCore core, ScriptInterface app) throws Exception {
         studio_ = (MMStudio) app;
         org.micromanager.rapp.utils.FileDialog fileDialog_ = new FileDialog();
-        //AcquisitionManager acqMgr_ = new AcquisitionManager();
+
         SeqAcqController engine_ = new SeqAcqController();
         rappController_ref =  new RappController(core, app);
         SnapLiveManager_ = new SnapLiveManager(studio_, core);
@@ -492,11 +492,11 @@ public class RappGui extends JFrame implements LiveModeListener {
 
         right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Point And Shoot Mode :</font></html>"), gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>ROIs Manager       :</font></html>"), gbc1);
+        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>ROIs Manager   :</font></html>"), gbc1);
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Shoot laser on point from ROis Manager  :</font></html>"),gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Load  Selected Cell detection point  :</font></html>"),gbc1);
+        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Run Color Segmentation and kill All Detected  Cell :</font></html>"),gbc1);
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Shoot laser on Selected point from cell detection :</font></html>"), gbc1);
 
@@ -508,48 +508,51 @@ public class RappGui extends JFrame implements LiveModeListener {
 
         pointAndShootOnOff_btn = new JToggleButton("ON");
         right_box_shoot.add( pointAndShootOnOff_btn, gbc1);
-        pointAndShootOnOff_btn.setPreferredSize(new Dimension(120,25));
-        pointAndShootOnOff_btn.addActionListener(e -> {
-            updatePointAndShoot();
-
-        });
+        pointAndShootOnOff_btn.setPreferredSize(new Dimension(140,28));
+        pointAndShootOnOff_btn.addActionListener((ActionEvent e) -> updatePointAndShoot());
 
         gbc1.gridy++;
         JButton setAddRois_btn = new JButton("Set / Add Rois");
+        setAddRois_btn.setBackground(new Color(0x2dce98));
+        setAddRois_btn.setForeground(Color.white);
         right_box_shoot.add(setAddRois_btn, gbc1);
-        setAddRois_btn.setPreferredSize(new Dimension(120,25));
+        setAddRois_btn.setPreferredSize(new Dimension(140,28));
         setAddRois_btn.addActionListener(e -> {
             RappPlugin.showRoiManager();
         });
 
         gbc1.gridy++;
-        JButton shootonMarkpoint_btn = new JButton("Shoot on ROIs");
+        JButton shootonMarkpoint_btn = new JButton("Kill Mark Cells");
         right_box_shoot.add(shootonMarkpoint_btn, gbc1);
-        shootonMarkpoint_btn.setPreferredSize(new Dimension(120,25));
+        shootonMarkpoint_btn.setPreferredSize(new Dimension(140,28));
         shootonMarkpoint_btn.addActionListener(e -> rappController_ref.createMultiPointAndShootFromRoeList());
 
         gbc1.gridy++;
-        JButton loadImage_btn = new JButton("Load point");
+        JButton loadImage_btn = new JButton("Kill Detected Cells");
+        loadImage_btn.setBackground(new Color(0x2dce98));
+        loadImage_btn.setForeground(Color.white);
         right_box_shoot.add(loadImage_btn, gbc1);
-        loadImage_btn.setPreferredSize(new Dimension(120,25));
+        loadImage_btn.setPreferredSize(new Dimension(140,28));
         loadImage_btn.addActionListener(e -> {
-            ImagePlus image = IJ.openImage(fileDialog_.ChooseFileDialog());
+            ImagePlus image = IJ.openImage(fileDialog_.ChooseFileDialog("Please Choose a Color Tiff Image with Cells"));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             }
-            image.show();
-            ArrayList[] ll =  rappController_ref.findCells(image);
-            rappController_ref.shootFromSegmentationListPoint(ll, image);
+            if (image !=null) {
+                image.show();
+                ArrayList[] ll = rappController_ref.findCells(image);
+                rappController_ref.shootFromSegmentationListPoint(ll, image);
+            }else ReportingUtils.showMessage(" No Image were chosen ");
         });
 
         gbc1.gridy++;
-        JButton shootOnLearningP_btn = new JButton("Shoot on Learning ");
+        JButton shootOnLearningP_btn = new JButton("Shoot on Learning");
         right_box_shoot.add(shootOnLearningP_btn, gbc1);
-        shootOnLearningP_btn.setPreferredSize(new Dimension(120,25));
+        shootOnLearningP_btn.setPreferredSize(new Dimension(140,28));
        // shootOnLearningP_btn.addActionListener(e -> rappController_ref.getListofROIs());
-
+        gbc1.gridy++;
         // Point Table Internal Frame
         try {
             if (tablePointFrame == null) {
@@ -615,8 +618,6 @@ public class RappGui extends JFrame implements LiveModeListener {
                 System.out.println( exposureT_filter_spinner2.getValue().toString());
             });
 
-
-
             runSegmentation_btn = new JButton();
             runSegmentation_btn.addActionListener(e -> {
                 if ( xml_rootField_2.getText().equals("")){
@@ -624,13 +625,13 @@ public class RappGui extends JFrame implements LiveModeListener {
                             +"The XML Field is Empty");
                 }
                 else {
-                    String taggPath = fileDialog_.SaveFileDialog();
+                    String taggPath = fileDialog_.ChooseFileDialog("Please Choose a Bright Field Tiff Image with Cells");
                     if ( taggPath != null ){
                         rappController_ref.runSegmentation(xml_rootField_2.getText(), taggPath);
                     }
                     else {
                         ReportingUtils.showMessage("Please Try Again! "
-                                +"Choose a proper TaggeImage ");
+                                +"No Image were chosen");
                     }
                 }
             });
@@ -643,7 +644,7 @@ public class RappGui extends JFrame implements LiveModeListener {
 
             buttonFrame.add(new JLabel(""));
             //////////////////////////////////////////////////////////////////////////////////////////////////
-            //acquisition_.
+            // acquisition_.
         } catch (Exception var2) {
             ReportingUtils.showError(var2, "\nFrame invalid or corrupted settings.\nTry resetting .");
         }
@@ -755,6 +756,21 @@ public class RappGui extends JFrame implements LiveModeListener {
         return button;
     }
 
+    private JToggleButton createPointJButton(String text) {
+        JToggleButton button = new JToggleButton(text);
+        button.setForeground(Color.decode("#ecf0f1"));
+        button.setBorder(null);
+        button.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setContentAreaFilled(false);
+        ImageIcon icon = new ImageIcon(path.concat("Resources/Images/" + text + ".png"));
+        Image img = icon.getImage();
+        Image new_img = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        button.setIcon(new ImageIcon(new_img));
+        button.setSelectedIcon(new ImageIcon(new_img));
+        return button;
+    }
 
     /**
      * Shows the GUI, which is a singleton.

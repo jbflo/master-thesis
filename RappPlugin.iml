@@ -56,5 +56,16 @@
         <jarDirectory url="file://C:/cellxpp/java" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/msys64/home/Hp/cellxpp/java/CellXJ.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="commons-io-2.6" level="project" />
+    <orderEntry type="library" name="CellXJ" level="project" />
   </component>
 </module>

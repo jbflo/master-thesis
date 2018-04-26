@@ -3,12 +3,9 @@ package org.micromanager.rapp.utils;
 
 import org.micromanager.rapp.RappGui;
 
-import java.awt.FlowLayout;
-import java.io.File;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
 
 public class FileDialog  {
 
@@ -21,19 +18,21 @@ public class FileDialog  {
     }
 
 
-    public String ChooseFileDialog() {
+    public String ChooseFileDialog(String title) {
 
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Choose the needed file ");
-        File fileToSave = null;
+        fileChooser.setDialogTitle(title);
+        File choose_file;
         int userSelection = fileChooser.showSaveDialog(RappGui.getInstance());
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            fileToSave = fileChooser.getSelectedFile();
-            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+            choose_file = fileChooser.getSelectedFile();
+            System.out.println("Save as file: " + choose_file.getAbsolutePath());
+            return choose_file.getAbsolutePath();
         }
+        return null ;
 
-        return fileToSave.getAbsolutePath();
     }
+
     public String xmlFileChooserDialog() {
 
         JFileChooser fileChooser = new JFileChooser();

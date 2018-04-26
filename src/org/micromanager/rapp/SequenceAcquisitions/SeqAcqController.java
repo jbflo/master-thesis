@@ -30,7 +30,6 @@ public class SeqAcqController implements AcquisitionEngine {
     private ArrayList<ChannelSpec> channels_ = new ArrayList();
     private  static RappController rappController_ref;
     private String comment_;
-    private int numFrames_;
     private boolean saveFiles_;
     private int acqOrderMode_;
     private boolean useAutoFocus_;
@@ -40,7 +39,6 @@ public class SeqAcqController implements AcquisitionEngine {
     private boolean useSegmentation_;
     private boolean killCell_;
     private boolean useMultiPosition_;
-    private boolean keepShutterOpenForStack_;
     private boolean keepShutterOpenForChannels_;
     private AtomicBoolean stopRequested_ = new AtomicBoolean(false);
     private AtomicBoolean isRunning_ = new AtomicBoolean(false);
@@ -81,6 +79,29 @@ public class SeqAcqController implements AcquisitionEngine {
         }
     }
 
+    protected boolean imagesSaving(){
+
+        if (saveFiles_) {
+            File root = new File(rootName_);
+            if (!root.canWrite()) {
+                int result = JOptionPane.showConfirmDialog(null, "The specified root directory\n" + root.getAbsolutePath() + "\ndoes not exist. Create it?", "Directory not found.", 0);
+                if (result != 0) {
+                    ReportingUtils.showMessage("Acquire Image won't save");
+                    return false;
+                }
+                root.mkdirs();
+                if (!root.canWrite()) {
+                    ReportingUtils.showError("Unable to save data to selected location: check that location exists.\nAcquisition canceled.");
+                    return false;
+                }
+            } else if (!enoughDiskSpace()) {
+                ReportingUtils.showError("Not enough space on disk to save the requested image set; acquisition canceled.");
+                return false;
+            }
+        }
+        return true;
+    }
+
     protected String runAcquisition(SequenceSettings acquisitionSettings) {
         app_.enableLiveMode(false);
         ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
@@ -92,30 +113,11 @@ public class SeqAcqController implements AcquisitionEngine {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (saveFiles_) {
-            File root = new File(rootName_);
-            if (!root.canWrite()) {
-                int result = JOptionPane.showConfirmDialog((Component)null, "The specified root directory\n" + root.getAbsolutePath() + "\ndoes not exist. Create it?", "Directory not found.", 0);
-                if (result != 0) {
-                    ReportingUtils.showMessage("Acquisition canceled.");
-                    return null;
-                }
-                root.mkdirs();
-                if (!root.canWrite()) {
-                    ReportingUtils.showError("Unable to save data to selected location: check that location exists.\nAcquisition canceled.");
-                    return null;
-                }
-            } else if (!enoughDiskSpace()) {
-                ReportingUtils.showError("Not enough space on disk to save the requested image set; acquisition canceled.");
-                return null;
-            }
+        //for (ChannelSpec presetConfig : channels){
+        //     channelsConf.add(presetConfig.config.toString());
+        //    }
 
-//            for (ChannelSpec presetConfig : channels){
-//                channelsConf.add(presetConfig.config.toString());
-//            }
-
-        }
-
+        saveFiles_ = this.imagesSaving();
         if (!isRunning_.get()) {
             stopRequested_.set(false);
             Thread th = new Thread("Sequence Acquisition thread") {
@@ -123,16 +125,15 @@ public class SeqAcqController implements AcquisitionEngine {
                 public void run() {
                     try {
                         isRunning_.set(true);
-                        ImagePlus iPlus = null;
-                        TaggedImage itagg = null;
-                        // for (int i = 0 ; i < channels.size() ; i ++){
+                        ImagePlus iPlus ;
+                        TaggedImage itagg ;
+
                         for (ChannelSpec presetConfig : channels){
                             // Set the Chanel Exposure Time
-                            app_.setChannelExposureTime(chanelGroup_,
-                                    presetConfig.config, presetConfig.exposure);
+                            app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
                             // Then Change The Chanel Config (Preset )
                             core_.setConfig(chanelGroup_, presetConfig.config.toString());
-                           // System.out.println(presetConfig.exposure  + "__"+ presetConfig.laser_exposure +" __ "+  presetConfig.KillCell);
+
                             // Take a Photo for each fix chanel
                             core_.snapImage();
                             core_.getLastTaggedImage();
@@ -147,8 +148,10 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Execute the Segmentation depends on the Colors.
                                 ArrayList[] ll =  rappController_ref.findCells(iPlus);
                                 if (presetConfig.KillCell) {
+
                                     rappController_ref.shootFromSegmentationListPoint(ll, iPlus);
                                 }
+
                                 System.out.println( presetConfig.color.toString());
                                 System.out.println( Color.BLUE.toString());
 
@@ -174,11 +177,11 @@ public class SeqAcqController implements AcquisitionEngine {
                             }
 
                             if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
-                                System.out.println(" Multi Image");
+                                // The acquires Images are saving as separate Image.
                                 IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
-                                // IJ.open(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
                             }
                             else if(saveFiles_ && SeqAcqGui.saveMultiTiff_){
+                                // The acquires Images are saving as a stack Image.
                                 IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
                                 IJ.open(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
                                 try {
@@ -186,8 +189,6 @@ public class SeqAcqController implements AcquisitionEngine {
                                 } catch (InterruptedException ex) {
                                     ReportingUtils.logError(ex);
                                 }
-
-
                             }
                             if (stopRequested_.get()) {
                                 ReportingUtils.showMessage("Acquisition Stop.");
@@ -258,6 +259,25 @@ public class SeqAcqController implements AcquisitionEngine {
 
         return numChannels;
     }
+
+    private int getNumChannelsToKill() {
+        int numKillChannels = 0;
+        if (this.useChannels_ && this.killCell_) {
+            Iterator i$ = this.channels_.iterator();
+
+            while(i$.hasNext()) {
+                ChannelSpec channel = (ChannelSpec)i$.next();
+                if (channel.useChannel && channel.KillCell) {
+                    ++numKillChannels;
+                }
+            }
+        } else {
+            numKillChannels = 1;
+        }
+
+        return numKillChannels;
+    }
+
 
     private int getNumPositions() {
         int numPositions = Math.max(1, this.posList_.getNumberOfPositions());
@@ -348,14 +368,7 @@ public class SeqAcqController implements AcquisitionEngine {
 //            }
 //        }
 
-       // acquisitionSettings.relativeZSlice = !this.absoluteZ_;
 
-//        try {
-//            String zdrive = this.core_.getFocusDevice();
-//            acquisitionSettings.zReference = zdrive.length() > 0 ? this.core_.getPosition(this.core_.getFocusDevice()) : 0.0D;
-//        } catch (Exception var10) {
-//            ReportingUtils.logError(var10);
-//        }
 
         if (this.useChannels_) {
             Iterator i$ = this.channels_.iterator();
@@ -765,62 +778,36 @@ public class SeqAcqController implements AcquisitionEngine {
 
     @Override
     public String getVerboseSummary() {
-//        int numFrames = this.getNumFrames();
-//        int numSlices = this.getNumSlices();
         int numPositions = this.getNumPositions();
         int numChannels = this.getNumChannels();
+        int numKillChannels = this.getNumChannelsToKill();
         int totalImages = this.getTotalImages();
         long totalMB = this.getTotalMB();
         double totalDurationSec = 0.0D;
-        Double d;
-//        if (!this.useCustomIntervals_) {
-//            totalDurationSec = this.interval_ * (double)numFrames / 1000.0D;
-//        } else {
-//            for(Iterator i$ = this.customTimeIntervalsMs_.iterator(); i$.hasNext(); totalDurationSec += d / 1000.0D) {
-//                d = (Double)i$.next();
-//            }
-//        }
 
         int hrs = (int)(totalDurationSec / 3600.0D);
         double remainSec = totalDurationSec - (double)(hrs * 3600);
         int mins = (int)(remainSec / 60.0D);
         remainSec -= (double)(mins * 60);
-        String txt = "Number of time points: "  + "\nNumber of positions: " + numPositions + "\nNumber of slices: " + "\nNumber of channels: " + numChannels + "\nTotal images: " + totalImages + "\nTotal memory: " + (totalMB <= 1024L ? totalMB + " MB" : NumberUtils.doubleToDisplayString((double)totalMB / 1024.0D) + " GB") + "\nDuration: " + hrs + "h " + mins + "m " + NumberUtils.doubleToDisplayString(remainSec) + "s";
+        String txt = "\nNumber of positions: " + numPositions +  "\nNumber of channels: " + numChannels + "\nNumber of Chanel to Kill: " + numKillChannels + "\nTotal images: " + totalImages + "\nTotal memory: " + (totalMB <= 1024L ? totalMB + " MB" : NumberUtils.doubleToDisplayString((double)totalMB / 1024.0D) + " GB") + "\nDuration: " + hrs + "h " + mins + "m " + NumberUtils.doubleToDisplayString(remainSec) + "s";
         if (!this.useMultiPosition_ && !this.useChannels_ && !this.useSegmentation_) {
             return txt;
         } else {
             StringBuffer order = new StringBuffer("\nOrder: ");
-//            if (this.useFrames_ && this.useMultiPosition_) {
-//                if (this.acqOrderMode_ != 1 && this.acqOrderMode_ != 0) {
-//                    order.append("Position, Time");
-//                } else {
-//                    order.append("Time, Position");
-//                }
-//            }
-//            else if (this.useFrames_) {
-//                order.append("Time");
-//            }
+
              if (this.useMultiPosition_) {
                 order.append("Position");
             }
 
-//            if ((this.useFrames_ || this.useMultiPosition_) && (this.useChannels_ || this.useSlices_)) {
-//                order.append(", ");
-//            }
-
-//            if (this.useChannels_ && this.useSlices_) {
-//                if (this.acqOrderMode_ != 1 && this.acqOrderMode_ != 3) {
-//                    order.append("Slice, Channel");
-//                } else {
-//                    order.append("Channel, Slice");
-//                }
-//            }
             else if (this.useChannels_) {
                 order.append("Channel");
             }
-//            else if (this.useSlices_) {
-//                order.append("Slice");
-//            }
+             else if (this.useSegmentation_) {
+                 order.append("Segmentation_");
+             }
+            else if (this.killCell_) {
+                order.append("Kill");
+            }
 
             return txt + order.toString();
         }

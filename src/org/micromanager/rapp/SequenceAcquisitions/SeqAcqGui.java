@@ -153,7 +153,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private static final String ACQ_SAVE_FILES = "acqSaveFiles";
    private static final String ACQ_DISPLAY_MODE = "acqDisplayMode";
    private static final String ACQ_AF_ENABLE = "autofocus_enabled";
-   private static final String ACQ_AF_SKIP_INTERVAL = "autofocusSkipInterval";
    private static final String ACQ_COLUMN_WIDTH = "column_width";
    private static final String ACQ_COLUMN_ORDER = "column_order";
    private static final int ACQ_DEFAULT_COLUMN_WIDTH = 77;
@@ -164,14 +163,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
            true, "xml");
    private int columnWidth_[];
    private int columnOrder_[];
-   private CheckBoxPanel framesPanel_;
    private final JPanel framesSubPanel_;
    private final CardLayout framesSubPanelLayout_;
    private static final String DEFAULT_FRAMES_PANEL_NAME = "Default frames panel";
    private static final String OVERRIDE_FRAMES_PANEL_NAME = "Override frames panel";
    protected JPanel buttonPanel;
    private CheckBoxPanel channelsPanel_;
-   private CheckBoxPanel slicesPanel_;
    private CheckBoxPanel segmentationPanel_;
    protected CheckBoxPanel positionsPanel_;
    private JPanel acquisitionOrderPanel_;
@@ -196,7 +193,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          @SuppressWarnings("serial")
          protected JTableHeader createDefaultTableHeader() {
             return new JTableHeader(columnModel) {
-
                @Override
                public String getToolTipText(MouseEvent e) {
                   String tip = null;
@@ -294,30 +290,20 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    }
 
    private void createToolTips() {
-      //framesPanel_.setToolTipText("Acquire images over a repeating time interval");
       positionsPanel_.setToolTipText("Acquire images from a series of positions in the XY plane");
-     // slicesPanel_.setToolTipText("Acquire images from a series of Z positions");
-
-      String imageName = getClass().getResource("/org/micromanager/icons/acq_order_figure.png").toString();
-
+      //String imageName = getClass().getResource("/org/micromanager/icons/acq_order_figure.png").toString();
       String acqOrderToolTip =
-              "<html>Lets you select the order of image acquisition when some combination of multiple dimensions<br>"
-              + "(i.e. time points, XY positions, Z-slices, or Channels)  is selected.  During image acquisition, the<br>"
-              + "values of each dimension are iterated in the reverse order of their listing here.  \"Time\" and \"Position\" <br>"
-              + "always precede \"Slice\" and \"Channel\" <br><br>"
-              + "For example, suppose there are are two time points, two XY positions, and two Z slices, and Acquisition<br>"
-              + "order is set to \"Time, Position, Slice\".  The microscope will acquire images in the following order: <br> "
-              + "Time point 1, XY position 1, Z-slice 1 <br>"
-              + "Time point 1, XY position 1, Z-slice 2 <br>"
-              + "Time point 1, XY position 2, Z-slice 1 <br>"
-              + "Time point 1, XY position 2, Z-slice 2 <br>"
-              + "Time point 2, XY position 1, Z-slice 1 <br>"
-              + "etc. <br><br>"
-              + "<img src=" + imageName + "></html>";
+              "<html> The acquisition order is Automatically selected when you have a multiple dimensions<br>"
+              + "(i.e.  X positions, Channel, Segmentation, Cell Killing, and or Saving)  is selected. <br>"
+              + "During image acquisition, the values of each dimension are iterated automatically."
+              + "The microscope will acquire images in the following order : "
+              + "<br> \"Position\"and \"Channel\" always precede \" Chanel Saving? \" , \"Segmentation\" and \"Cell Killing\" <br><br>"
+              + "For example, you can only change the order of the Saving"
+                      // + "<img src=" + imageName + ">
+              + "</html>"
+              ;
       acquisitionOrderPanel_.setToolTipText(acqOrderToolTip);
       acqOrderBox_.setToolTipText(acqOrderToolTip);
-
-
       afPanel_.setToolTipText("Toggle autofocus on/off");
       channelsPanel_.setToolTipText("Lets you acquire images in multiple channels (groups of "
               + "properties with multiple preset values");
@@ -329,12 +315,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
               + " acquired images are still kept in memory, facilitating fast playback. If such behavior is not desired, "
               + "check the 'Conserve RAM' option (Tools | Options)"));
 
-      segmentationPanel_.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip("is the Segmentation panel is selected "
-      + " Images will be segmentated before .... "
-
-
-      ));
-
+      segmentationPanel_.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip("The Segmentation panel should be selected for the killing available " +
+                      "If the Segmentation panel is selected  Images will be segmented before .... "));
    }
 
    /**
@@ -362,8 +344,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       guiColors_ = new GUIColors();
       options_ = options;
       SnapLiveManager_ = new SnapLiveManager((MMStudio) studio_, core_);
-//      setIconImage(SwingResourceManager.getImage(MMStudio.class,
-//            "icons/microscope.gif"));
 
       Preferences root = Preferences.userNodeForPackage(this.getClass());
       acqPrefs_ = root.node(root.absolutePath() + "/" + ACQ_SETTINGS_NODE);
@@ -375,9 +355,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       acqEng_ = acqEng;
       acqEng.addSettingsListener(this);
       getContentPane().setLayout(null);
-   //   setResizable(true);
-    // setTitle("Multi-Dimensional Acquisition");
-     // setBackground(guiColors_.background.get(studio_.getBackgroundStyle()));
+
+      // Set JFrame Form and Location
       BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
       bi.setNorthPane(null);
       createEmptyPanels();
