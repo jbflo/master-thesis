@@ -38,6 +38,7 @@ import org.micromanager.MMStudio;
 import org.micromanager.acquisition.TaggedImageStorageMultipageTiff;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
+import org.micromanager.rapp.SequenceAcquisitions.SeqAcqController;
 import org.micromanager.rapp.utils.FileDialog;
 import org.micromanager.utils.*;
 
@@ -905,6 +906,10 @@ public class RappController extends  MMFrame implements OnStateListener {
         Roi[] r = new Roi[resCount];
 
         for (int i=0; i<resCount; i++){
+            if (SeqAcqController.stopAcqRequested_.get()) {
+                ReportingUtils.showMessage("Acquisition Stop.");
+                break;
+            }
             double xx = resTab.getValueAsDouble(0, i);
             double yy = resTab.getValueAsDouble(1, i);
             xTab.add(xx);
@@ -916,25 +921,28 @@ public class RappController extends  MMFrame implements OnStateListener {
             IJ.run("Draw");
         }
         //imp.setRoi(r);
-        System.out.println(xTab);
-        System.out.println(yTab);
+        System.out.println( " Xcord "+ xTab);
+        System.out.println(" Ycord "+ yTab);
         imp.updateAndRepaintWindow();
         return new ArrayList[]{xTab, yTab};
     }
 
     public void shootFromSegmentationListPoint(ArrayList[] segmentatio_pt, ImagePlus iplus_) {
-        makeRunnableAsync(
-        () -> {
+
             if (segmentatio_pt.length != 0 ) {
                 double[] failsArrayX =  new double[segmentatio_pt[0].size()];
                 double[] failsArrayY =  new double[segmentatio_pt[1].size()];
-                System.out.println(segmentatio_pt[1].size());
-
+                System.out.println(" SIze: "+ segmentatio_pt[1].size());
+                System.out.println(" Val: "+ segmentatio_pt.toString());
                 for (int i =0 ; i < segmentatio_pt[0].size(); i++)
                 {
+                    if (SeqAcqController.stopAcqRequested_.get()) {
+                        ReportingUtils.showMessage("Acquisition Stop.");
+                        break;
+                    }
                     //iterate over the elements of the list
-                    System.out.println(segmentatio_pt[0].get(i).toString());
-                    System.out.println(segmentatio_pt[1].get(i).toString());
+                    System.out.println( " Xval" + segmentatio_pt[0].get(i).toString());
+                    System.out.println(" Yval" + segmentatio_pt[1].get(i).toString());
 
                     System.out.println("_________________________________");
 
@@ -967,8 +975,6 @@ public class RappController extends  MMFrame implements OnStateListener {
                 }
             }
             else ReportingUtils.showError("Could not Point and shoot : No Cell  ");
-
-        }).run();
     }
 
 
