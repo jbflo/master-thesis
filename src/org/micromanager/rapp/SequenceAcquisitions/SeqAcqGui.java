@@ -213,8 +213,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       ChannelCellEditor cellEditor = new ChannelCellEditor(acqEng_,
             exposurePrefs_, colorPrefs_);
       ChannelCellRenderer cellRenderer = new ChannelCellRenderer(acqEng_);
-      channelTable_.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
+    //  channelTable_.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
       for (int k = 0; k < model_.getColumnCount(); k++) {
          int colIndex = search(columnOrder_, k);
          if (colIndex < 0) {

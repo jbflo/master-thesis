@@ -496,10 +496,9 @@ public class RappGui extends JFrame implements LiveModeListener {
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Shoot laser on point from ROis Manager  :</font></html>"),gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Run Color Segmentation and kill All Detected  Cell :</font></html>"),gbc1);
+        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Run a BrightField Segmentation and kill All Detected  Cell :</font></html>"),gbc1);
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Shoot laser on Selected point from cell detection :</font></html>"), gbc1);
-
 
         gbc1.anchor = GridBagConstraints.WEST;
         gbc1.gridy = 0;
@@ -534,7 +533,7 @@ public class RappGui extends JFrame implements LiveModeListener {
         right_box_shoot.add(loadImage_btn, gbc1);
         loadImage_btn.setPreferredSize(new Dimension(140,28));
         loadImage_btn.addActionListener(e -> {
-            ImagePlus image = IJ.openImage(fileDialog_.ChooseFileDialog("Please Choose a Color Tiff Image with Cells"));
+            ImagePlus image = IJ.openImage(fileDialog_.ChooseFileDialog("Please Choose a BrightField Tiff Image with Cells"));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e1) {
@@ -542,7 +541,7 @@ public class RappGui extends JFrame implements LiveModeListener {
             }
             if (image !=null) {
                 image.show();
-                ArrayList[] ll = rappController_ref.findCells(image);
+                ArrayList[] ll = rappController_ref.brightFieldSegmenter(image, image.getTitle());
                 rappController_ref.shootFromSegmentationListPoint(ll, image);
             }else ReportingUtils.showMessage(" No Image were chosen ");
         });

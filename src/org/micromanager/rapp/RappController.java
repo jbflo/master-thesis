@@ -827,7 +827,9 @@ public class RappController extends  MMFrame implements OnStateListener {
         makeRunnableAsync(
             () -> {
                 ImagePlus image;
+
                 RoiManager rm = RoiManager.getInstance();
+
 
                 if (rm != null) {
                     int roiCount = rm.getCount();
@@ -884,6 +886,41 @@ public class RappController extends  MMFrame implements OnStateListener {
         }).run();
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
+    public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title) {
+        ImagePlus imp = new Duplicator().run(impproc);
+        impproc.setTitle(title);
+        imp.setTitle("Working on : "+ title );
+        imp.show();
+        imp.updateAndRepaintWindow();
+
+        IJ.run(imp,"Threshold...", "Default B&W");
+        IJ.run(imp,"Analyze Particles...", "size=0-infinity pixel summarize add");   //change range for cell size filtering
+
+        ij.measure.ResultsTable resTab = Analyzer.getResultsTable();
+        int resCount = resTab.getCounter();
+        ArrayList xTab = new ArrayList();
+        ArrayList yTab = new ArrayList();
+        double[] x = new double[resCount];
+        double[] y = new double[resCount];
+        Roi[] r = new Roi[resCount];
+
+        for (int i=0; i<resCount; i++){
+            double xx = resTab.getValueAsDouble(0, i);
+            double yy = resTab.getValueAsDouble(1, i);
+            xTab.add(xx);
+            yTab.add(yy);
+            x[i]=xx;
+            y[i]=yy;
+            r[i]= new Roi(xx,yy,10,10);
+            imp.setRoi(new Roi(xx,yy,10,10));
+            IJ.run("Draw");
+        }
+        //imp.setRoi(r);
+        System.out.println(xTab);
+        System.out.println(yTab);
+        imp.updateAndRepaintWindow();
+        return new ArrayList[]{xTab, yTab};
+    }
 
     public void shootFromSegmentationListPoint(ArrayList[] segmentatio_pt, ImagePlus iplus_) {
         makeRunnableAsync(
@@ -1105,12 +1142,22 @@ public class RappController extends  MMFrame implements OnStateListener {
     public void  runSegmentation (String xmlPath,  String taggPath_){
 
         ImagePlus  iPlus = IJ.openImage(taggPath_);
-        Object pixel = iPlus.getPixel(iPlus.getWidth(), iPlus.getHeight());
+        ImageStack stack = iPlus.getStack();
+        // Object pixel = iPlus.getPixel(iPlus.getWidth(), iPlus.getHeight());
+        Object pixelArray = stack.getPixels(1);
         JSONObject summary = new JSONObject();
-        TaggedImage image = new TaggedImage(pixel, summary);
+        try {
+            summary.put("Width", iPlus.getWidth());
+            summary.put("Height",iPlus.getHeight());
+            summary.put("BitDepth",iPlus.getBitDepth());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        TaggedImage image = new TaggedImage(pixelArray, summary);
 
         try {
-            Segmentation seg = new Segmentation(xmlPath, core_.getTaggedImage( ));
+            Segmentation seg = new Segmentation(xmlPath, image);
             Cell cell;
             System.out.println("Has next? " + seg.hasNext());
             while (seg.hasNext()) {
@@ -1123,14 +1170,20 @@ public class RappController extends  MMFrame implements OnStateListener {
     }
 
     public ArrayList[] findCells(ImagePlus impOrg) {
-        //ImagePlus impOrg = IJ.getImage();
+        // ImagePlus impOrg = IJ.getImage();
         ImagePlus imp = new Duplicator().run(impOrg);
         impOrg.setTitle("Original");
         imp.setTitle("Working on ...");
+
         imp.show();
         imp.updateAndRepaintWindow();
-        IJ.run(imp, "Gaussian Blur...", "sigma=5");
-        IJ.run(imp, "Find Maxima...", "noise=20 output=List exclude");
+
+//      IJ.run(imp, "Gaussian Blur...", "sigma=5");
+//      IJ.run(imp, "Find Maxima...", "noise=20 output=List exclude");
+
+        IJ.run(imp,"Threshold...", "Default B&W");
+        IJ.run(imp,"Analyze Particles...", "size=0-infinity pixel summarize add");   //change range for cell size filtering
+
         ij.measure.ResultsTable resTab = Analyzer.getResultsTable();
         int resCount = resTab.getCounter();
         ArrayList xTab = new ArrayList();
