@@ -7,11 +7,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3bd16c0-5336-44c0-8d6f-2b586ae6e16d" name="Default" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
+=======
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/CellXJ1.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/CellXJ.xml" afterPath="$PROJECT_DIR$/.idea/libraries/CellXJ.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/bioformats_package.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/RappPlugin.iml" afterPath="$PROJECT_DIR$/RappPlugin.iml" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.class" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,23 +35,26 @@
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/RappPlugin$MM.coverage" NAME="MM Coverage Results" MODIFIED="1524673439720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/RappPlugin$Test.coverage" NAME="Test Coverage Results" MODIFIED="1520372486528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/RappPlugin$MM.coverage" NAME="MM Coverage Results" MODIFIED="1524673439720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="RappPlugin" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RappController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RappController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="76">
               <caret line="888" column="57" lean-forward="false" selection-start-line="888" selection-start-column="57" selection-end-line="888" selection-end-column="57" />
+=======
+            <state relative-caret-position="263">
+              <caret line="1112" column="0" lean-forward="false" selection-start-line="1112" selection-start-column="0" selection-end-line="1112" selection-end-column="0" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4336#4337#0" expanded="true" />
-                <element signature="e#4420#4421#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -50,6 +63,7 @@
       <file leaf-file-name="SeqAcqGui.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="-168">
               <caret line="215" column="6" lean-forward="false" selection-start-line="215" selection-start-column="6" selection-end-line="215" selection-end-column="6" />
               <folding>
@@ -58,6 +72,11 @@
                 <element signature="e#36393#36394#0" expanded="true" />
                 <element signature="e#36439#36440#0" expanded="true" />
               </folding>
+=======
+            <state relative-caret-position="15560">
+              <caret line="855" column="0" lean-forward="false" selection-start-line="855" selection-start-column="0" selection-end-line="855" selection-end-column="0" />
+              <folding />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
             </state>
           </provider>
         </entry>
@@ -65,7 +84,11 @@
       <file leaf-file-name="AcquisitionEngine.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="21">
+=======
+            <state relative-caret-position="7380">
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
               <caret line="406" column="21" lean-forward="false" selection-start-line="406" selection-start-column="17" selection-end-line="406" selection-end-column="34" />
               <folding />
             </state>
@@ -75,6 +98,7 @@
       <file leaf-file-name="SeqAcqController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="526">
               <caret line="153" column="33" lean-forward="false" selection-start-line="153" selection-start-column="33" selection-end-line="153" selection-end-column="33" />
               <folding>
@@ -158,6 +182,13 @@
                 <element signature="e#29261#29262#0" expanded="true" />
                 <element signature="e#29318#29319#0" expanded="true" />
                 <element signature="e#29346#29347#0" expanded="true" />
+=======
+            <state relative-caret-position="245">
+              <caret line="179" column="29" lean-forward="false" selection-start-line="179" selection-start-column="29" selection-end-line="179" selection-end-column="29" />
+              <folding>
+                <element signature="e#29383#29384#0" expanded="true" />
+                <element signature="e#29410#29411#0" expanded="true" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
               </folding>
             </state>
           </provider>
@@ -166,8 +197,13 @@
       <file leaf-file-name="RappGui.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="445">
               <caret line="544" column="55" lean-forward="false" selection-start-line="544" selection-start-column="55" selection-end-line="544" selection-end-column="55" />
+=======
+            <state relative-caret-position="10060">
+              <caret line="543" column="29" lean-forward="false" selection-start-line="543" selection-start-column="29" selection-end-line="543" selection-end-column="29" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
               <folding />
             </state>
           </provider>
@@ -176,7 +212,7 @@
       <file leaf-file-name="GUIUtils.class" pinned="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/utils/GUIUtils.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4032">
+            <state relative-caret-position="3840">
               <caret line="255" column="0" lean-forward="false" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
               <folding>
                 <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
@@ -272,6 +308,7 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Segmentation.class" pinned="false" current-in-tab="false">
         <entry file="jar://C:/msys64/home/Hp/cellxpp/java/CellXJ.jar!/com/knoplab/segmenter/Segmentation.class">
           <provider selected="true" editor-type-id="text-editor">
@@ -294,10 +331,12 @@
           </provider>
         </entry>
       </file>
+=======
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
       <file leaf-file-name="JSONObject.class" pinned="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/json/JSONObject.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2499">
+            <state relative-caret-position="2380">
               <caret line="130" column="0" lean-forward="false" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
               <folding>
                 <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
@@ -529,19 +568,6 @@
               <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
               <item name="master-thesis" type="462c0819:PsiDirectoryNode" />
               <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="master-thesis" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-              <item name="RappPlugin_jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="master-thesis" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
               <item name="production" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -573,66 +599,24 @@
               <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
-            <path>
-              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="CellXJ.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="CellXJ.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="segmenter" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="CellXJ" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Micro-Manager" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Micro-Manager" type="70bed36:NamedLibraryElementNode" />
-              <item name="MMCoreJ.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Micro-Manager" type="70bed36:NamedLibraryElementNode" />
-              <item name="MMCoreJ.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="mmcorej" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Micro-Manager" type="70bed36:NamedLibraryElementNode" />
-              <item name="MMJ_.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RappPlugin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Micro-Manager" type="70bed36:NamedLibraryElementNode" />
-              <item name="MMJ_.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+<<<<<<< HEAD
       <pane id="PackagesPane" />
+=======
+      <pane id="Scope" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
       <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
-    <property name="last_opened_file_path" value="C:/msys64/home/Hp/cellxpp/java/CellXJ.jar!/" />
+    <property name="last_opened_file_path" value="C:/msys64/home/knoplab/cellxpp/java/CellXJ.jar!/" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
@@ -836,38 +820,53 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+=======
+    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25604838" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25603113" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34594595" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3463035" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32702702" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17095116" sideWeight="0.49596775" order="0" side_tool="false" content_ui="combo" />
+=======
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17011128" sideWeight="0.49596775" order="0" side_tool="false" content_ui="combo" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
       <window_info id="Learn" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
+=======
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48689517" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15768462" sideWeight="0.50403225" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984033" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31786427" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3266129" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -1122,27 +1121,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/event/ChangeListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="41" column="9" lean-forward="false" selection-start-line="41" selection-start-column="9" selection-end-line="41" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/net/URLClassLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6846">
-          <caret line="380" column="39" lean-forward="false" selection-start-line="380" selection-start-column="39" selection-end-line="380" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Documents/java-packages/bioformats_package.jar!/org/apache/commons/io/IOUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7308">
-          <caret line="371" column="5" lean-forward="false" selection-start-line="371" selection-start-column="5" selection-end-line="371" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/event/ChangeListener.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/net/URLClassLoader.java" />
+    <entry file="jar://$PROJECT_DIR$/../java-packages/bioformats_package.jar!/org/apache/commons/io/IOUtils.class" />
     <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMCoreJ.jar!/org/json/JSONObject.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -1159,7 +1140,7 @@
     </entry>
     <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/json/JSONObject.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2499">
+        <state relative-caret-position="2380">
           <caret line="130" column="0" lean-forward="false" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
           <folding>
             <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
@@ -1240,7 +1221,7 @@
     </entry>
     <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/utils/GUIUtils.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4032">
+        <state relative-caret-position="3840">
           <caret line="255" column="0" lean-forward="false" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
           <folding>
             <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
@@ -1335,6 +1316,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/jre/lib/rt.jar!/sun/misc/Unsafe.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
@@ -1349,10 +1331,16 @@
         </state>
       </provider>
     </entry>
+=======
+    <entry file="jar://C:/msys64/home/Hp/cellxpp/java/CellXJ.jar!/com/knoplab/segmenter/Segmentation.class" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/jre/lib/rt.jar!/sun/misc/Unsafe.class" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/concurrent/locks/LockSupport.java" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
     <entry file="jar://C:/Program Files/Micro-Manager-1.4/ij.jar!/ij/WindowManager.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
           <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+<<<<<<< HEAD
         </state>
       </provider>
     </entry>
@@ -1370,12 +1358,20 @@
           <folding>
             <element signature="e#36767#36768#0" expanded="false" />
           </folding>
+=======
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/lang/Thread.java" />
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="21">
+=======
+        <state relative-caret-position="7380">
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
           <caret line="406" column="21" lean-forward="false" selection-start-line="406" selection-start-column="17" selection-end-line="406" selection-end-column="34" />
           <folding />
         </state>
@@ -1383,6 +1379,7 @@
     </entry>
     <entry file="jar://C:/msys64/home/Hp/cellxpp/java/CellXJ.jar!/com/knoplab/segmenter/Segmentation.class">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="330">
           <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding>
@@ -1487,11 +1484,17 @@
             <element signature="e#29318#29319#0" expanded="true" />
             <element signature="e#29346#29347#0" expanded="true" />
           </folding>
+=======
+        <state relative-caret-position="10060">
+          <caret line="543" column="29" lean-forward="false" selection-start-line="543" selection-start-column="29" selection-end-line="543" selection-end-column="29" />
+          <folding />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="76">
           <caret line="888" column="57" lean-forward="false" selection-start-line="888" selection-start-column="57" selection-end-line="888" selection-end-column="57" />
           <folding>
@@ -1519,6 +1522,31 @@
             <element signature="e#9581#9582#0" expanded="true" />
             <element signature="e#36393#36394#0" expanded="true" />
             <element signature="e#36439#36440#0" expanded="true" />
+=======
+        <state relative-caret-position="15560">
+          <caret line="855" column="0" lean-forward="false" selection-start-line="855" selection-start-column="0" selection-end-line="855" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="179" column="29" lean-forward="false" selection-start-line="179" selection-start-column="29" selection-end-line="179" selection-end-column="29" />
+          <folding>
+            <element signature="e#29383#29384#0" expanded="true" />
+            <element signature="e#29410#29411#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="1112" column="0" lean-forward="false" selection-start-line="1112" selection-start-column="0" selection-end-line="1112" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+>>>>>>> 06f11d2c436cd76520fd05d8dadf0d18b28d1e3b
           </folding>
         </state>
       </provider>
@@ -1589,7 +1617,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>bioformats_package</last-edited>
+          <last-edited>CellXJ1</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

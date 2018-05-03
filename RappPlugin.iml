@@ -43,7 +43,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="bioformats_package" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -66,6 +65,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="commons-io-2.6" level="project" />
-    <orderEntry type="library" name="CellXJ" level="project" />
+    <orderEntry type="library" name="CellXJ1" level="project" />
   </component>
 </module>
