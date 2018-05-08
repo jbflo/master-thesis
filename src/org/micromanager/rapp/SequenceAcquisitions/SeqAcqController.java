@@ -10,6 +10,7 @@ import org.micromanager.api.PositionList;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.rapp.RappController;
+import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.RappPlugin;
 import org.micromanager.rapp.utils.Acquisition;
 import org.micromanager.utils.*;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SeqAcqController implements AcquisitionEngine {
@@ -79,6 +81,7 @@ public class SeqAcqController implements AcquisitionEngine {
         }
     }
 
+
     protected boolean imagesSaving(){
 
         if (saveFiles_) {
@@ -124,15 +127,23 @@ public class SeqAcqController implements AcquisitionEngine {
                 @Override
                 public void run() {
                     try {
+                        SeqAcqGui.acquireButton_.setEnabled(false);
                         isRunning_.set(true);
                         ImagePlus iPlus ;
                         TaggedImage itagg ;
-
+                        int progress = 0;
+                        SeqAcqGui.taskOutput.setText("");
+                        RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                         for (ChannelSpec presetConfig : channels){
                             if (stopAcqRequested_.get()) {
                                 ReportingUtils.showMessage("Acquisition Stop.");
                                 break;
                             }
+
+                            progress  +=  100 / channels.size();
+                            SeqAcqGui.progressBar.setValue(progress);
+                            SeqAcqGui.taskOutput.append(String.format("Completed %d%% of Sequence Task.\n", progress));
+
                             // Set the Chanel Exposure Time
                             app_.enableLiveMode(false); // Make sure the Live Mode is off
                             app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
@@ -192,7 +203,6 @@ public class SeqAcqController implements AcquisitionEngine {
 
                         JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
                                 + (!stopAcqRequested_.get() ? "finished." : "canceled."));
-
                     } catch (HeadlessException e) {
                         ReportingUtils.showError(e);
                     } catch (RuntimeException e) {
@@ -200,6 +210,8 @@ public class SeqAcqController implements AcquisitionEngine {
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
+                        RappGui.getInstance().setCursor(null); // turn off the wait cursor
+                        SeqAcqGui.acquireButton_.setEnabled(true); // Activate the Button again
                         isRunning_.set(false);
                         stopAcqRequested_.set(false);
                     }

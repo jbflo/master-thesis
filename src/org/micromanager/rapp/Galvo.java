@@ -41,7 +41,6 @@ public class Galvo implements RappDevice {
       mmc_ = mmc;
       galvo_ = mmc_.getGalvoDevice();
       galvoExecutor_ = Executors.newSingleThreadExecutor();
-      //interval_us_ = mmc_.setExposure(9.0);
    }
 
    @Override

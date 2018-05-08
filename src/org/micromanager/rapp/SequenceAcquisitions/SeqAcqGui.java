@@ -22,7 +22,9 @@
 package org.micromanager.rapp.SequenceAcquisitions;
 
 
+import javax.swing.SwingWorker;
 import com.swtdesigner.SwingResourceManager;
+import javafx.concurrent.Task;
 import mmcorej.CMMCore;
 import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
@@ -55,6 +57,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Random;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -101,7 +104,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private File acqFile_;
    private String acqDir_;
    private int zVals_ = 0;
-   private final JButton acquireButton_;
+   protected static  JButton acquireButton_;
    private final JButton setBottomButton_;
    private final JButton setTopButton_;
    protected JComboBox displayModeCombo_;
@@ -119,6 +122,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private final JLabel displayMode_;
    private final JCheckBox stackKeepShutterOpenCheckBox_;
    private final JCheckBox chanKeepShutterOpenCheckBox_;
+   protected static JProgressBar progressBar;
+   protected static JTextArea taskOutput;
    private final AcqOrderMode[] acqOrderModes_;
    private AdvancedOptionsDialog advancedOptionsWindow_;
    //persistent properties (app settings);
@@ -207,6 +212,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
       channelTable_.setFont(new Font("Dialog", Font.PLAIN, 9));
       channelTable_.setAutoCreateColumnsFromModel(false);
+     // channelTable_.getTableHeader().setBackground(Color.decode("#34495e"));
       channelTable_.setModel(model_);
       model_.setChannels(acqEng_.getChannels());
 
@@ -282,9 +288,9 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 170, 705, 285, true);
       afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
 
-      summaryPanel_ = createPanel("Summary", 515, 295, 705, 420);
-      acquisitionOrderPanel_ = createPanel("Acquisition order", 715, 295, 880, 420);
-      commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 295, 510,420,false);
+      summaryPanel_ = createPanel("Summary", 515, 295, 705, 430);
+      acquisitionOrderPanel_ = createPanel("Acquisition order", 715, 295, 880, 430);
+      commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 295, 510,430,false);
 
    }
 
@@ -313,7 +319,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
               + "unexpected computer failure or accidental closing of image window. Even when saving to disk, some of the"
               + " acquired images are still kept in memory, facilitating fast playback. If such behavior is not desired, "
               + "check the 'Conserve RAM' option (Tools | Options)"));
-
       segmentationPanel_.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip("The Segmentation panel should be selected for the killing available " +
                       "If the Segmentation panel is selected  Images will be segmented before .... "));
    }
@@ -932,6 +937,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       commentTextArea_.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
 
 
+
+
 //      this.setBackground(Color.decode("#34495e"));
 //      getContentPane().setBackground(Color.decode("#34495e"));
       // Main buttons
@@ -949,9 +956,31 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       });
       closeButton.setText("Close");
       closeButton.setBounds(40, 40, 80, 22);
+
+
+
      // buttonPanel.add(closeButton);
+      progressBar = new JProgressBar(0, 100);
+      progressBar.setPreferredSize(new Dimension(180, 40));
+      this.add(progressBar);
+      progressBar.setBounds(80, 440, 320, 60);
+      progressBar.setValue(0);
+      progressBar.setStringPainted(true);
+
+      taskOutput = new JTextArea(5, 20);
+      taskOutput.setEditable(false);
+      taskOutput.setToolTipText("Process progress calculation");
+      taskOutput.setWrapStyleWord(true);
+      taskOutput.setLineWrap(true);
+      taskOutput.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+      JScrollPane jScrollPane_ = new JScrollPane(taskOutput);
+      jScrollPane_.setBounds(410, 440, 320, 60);
+      jScrollPane_.setViewportView(taskOutput);
+      this.add(jScrollPane_);
 
       acquireButton_ = new JButton();
+      acquireButton_.setActionCommand("start");
+      acquireButton_.addActionListener(RappGui.getInstance());
       acquireButton_.setMargin(new Insets(-9, -9, -9, -9));
       acquireButton_.setFont(new Font("Arial", Font.BOLD, 12));
       acquireButton_.addActionListener(e -> {
@@ -959,8 +988,11 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          if (ae != null) {
             ae.stopCellEditing();
          }
+         // Instances of javax.swing.SwingWorker are not reusuable, so
+         // we create new instances as needed.
          runAcquisition();
       });
+
       acquireButton_.setText("Run Sequence!");
       acquireButton_.setBounds(25, 35, 120, 30);
       buttonPanel.add(acquireButton_);
@@ -1022,6 +1054,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       advancedButton.setBounds(50, 175, 80, 30);
       buttonPanel.add(advancedButton);
 
+
+
       // update GUI contents
       // -------------------
 
@@ -1050,6 +1084,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
    }
 
+
+
    /**
     * Called when a field's "value" property changes.
     * Causes the Summary to be updated
@@ -1059,6 +1095,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       // update summary
       applySettings();
       summaryTextArea_.setText(acqEng_.getVerboseSummary());
+
+//      if ("progress" == e.getPropertyName()) {
+//         int progress = (Integer) e.getNewValue();
+//         progressBar.setValue(progress);
+//         taskOutput.append(String.format("Completed %d%% of task.\n", task.getProgress()));
+//      }
    }
 
    /**
