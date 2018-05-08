@@ -140,10 +140,6 @@ public class SeqAcqController implements AcquisitionEngine {
                                 break;
                             }
 
-                            progress  +=  100 / channels.size();
-                            SeqAcqGui.progressBar.setValue(progress);
-                            SeqAcqGui.taskOutput.append(String.format("Completed %d%% of Sequence Task.\n", progress));
-
                             // Set the Chanel Exposure Time
                             app_.enableLiveMode(false); // Make sure the Live Mode is off
                             app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
@@ -164,7 +160,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                 ArrayList[] ll =  rappController_ref.brightFieldSegmenter(iPlus, presetConfig.config.toString());
                                 if (presetConfig.KillCell) {
                                     app_.enableLiveMode(true); //  Open the live mode before shooting
-                                    rappController_ref.shootFromSegmentationListPoint(ll, iPlus);
+                                    rappController_ref.shootFromSegmentationListPoint(ll);
                                 }
                             }
 
@@ -177,7 +173,8 @@ public class SeqAcqController implements AcquisitionEngine {
                                     if (presetConfig.KillCell) {
                                         ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString());
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
-                                        rappController_ref.shootFromSegmentationListPoint(ll, image_);
+                                        rappController_ref.createMultiPointAndShootFromRoeList();
+                                        //rappController_ref.shootFromSegmentationListPoint(ll);
                                     }
                                 }
 
@@ -190,10 +187,13 @@ public class SeqAcqController implements AcquisitionEngine {
                                 if (presetConfig.KillCell) {
                                     ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString());
                                     app_.enableLiveMode(true); //  Open the live mode before shooting
-                                    rappController_ref.shootFromSegmentationListPoint(ll, image_);
+                                    rappController_ref.shootFromSegmentationListPoint(ll);
                                 }
                             }
 
+                            progress  +=  100 / channels.size();
+                            SeqAcqGui.progressBar.setValue(progress);
+                            SeqAcqGui.taskOutput.append(String.format("Completed %d%% of Sequence Task.\n", progress));
 
                         }
                         if(saveFiles_ && SeqAcqGui.saveMultiTiff_){

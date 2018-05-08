@@ -825,8 +825,8 @@ public class RappController extends  MMFrame implements OnStateListener {
 
     ///////////////////////////////# Read the all The Marked ROis and Shoot on Them #///////////////////////////
     public void createMultiPointAndShootFromRoeList() {
-        makeRunnableAsync(
-            () -> {
+     //   makeRunnableAsync(
+      //      () -> {
                 ImagePlus image;
 
                 RoiManager rm = RoiManager.getInstance();
@@ -884,7 +884,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                     }
                 }  else ReportingUtils.showError("Please set / Add Rois Manager before Shooting  ");
 
-        }).run();
+       // }).run();
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
     public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title) {
@@ -927,9 +927,10 @@ public class RappController extends  MMFrame implements OnStateListener {
         return new ArrayList[]{xTab, yTab};
     }
 
-    public void shootFromSegmentationListPoint(ArrayList[] segmentatio_pt, ImagePlus iplus_) {
+    public void shootFromSegmentationListPoint(ArrayList[] segmentatio_pt) {
 
             if (segmentatio_pt.length != 0 ) {
+                ImagePlus iplus_ = IJ.getImage();
                 double[] failsArrayX =  new double[segmentatio_pt[0].size()];
                 double[] failsArrayY =  new double[segmentatio_pt[1].size()];
                 System.out.println(" SIze: "+ segmentatio_pt[1].size());
@@ -937,7 +938,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                 for (int i =0 ; i < segmentatio_pt[0].size(); i++)
                 {
                     if (SeqAcqController.stopAcqRequested_.get()) {
-                        ReportingUtils.showMessage("Acquisition Stop.");
+                       // ReportingUtils.showMessage("Acquisition Stop.");
                         break;
                     }
                     //iterate over the elements of the list
