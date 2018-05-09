@@ -889,9 +889,10 @@ public class RappController extends  MMFrame implements OnStateListener {
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
     public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title, boolean addRoi) {
         ImagePlus imp = new Duplicator().run(impproc);
+
         impproc.setTitle(title);
         imp.setTitle("Working on : "+ title );
-        imp.show();
+        imp.show(title);
         imp.updateAndRepaintWindow();
 
         IJ.run(imp,"Threshold...", "Default B&W");
@@ -921,7 +922,7 @@ public class RappController extends  MMFrame implements OnStateListener {
             y[i]=yy;
             r[i]= new Roi(xx,yy,10,10);
             imp.setRoi(new Roi(xx,yy,10,10));
-            IJ.run("Draw");
+            //IJ.run("Draw");
         }
         //imp.setRoi(r);
         System.out.println( " Xcord "+ xTab);
@@ -958,6 +959,9 @@ public class RappController extends  MMFrame implements OnStateListener {
             System.out.println(xcRoiPosArray.size());
 
             for (int i = 0; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
+                if (SeqAcqController.stopAcqRequested_.get()) {
+                       // ReportingUtils.showMessage("Acquisition Stop.");
+                        break; }
                 failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
                 failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
 
@@ -985,7 +989,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                     ReportingUtils.showError(ec);
                 }
             }
-        }  else ReportingUtils.showError("Please set / Add Rois Manager before Shooting  ");
+        }  else ReportingUtils.showError("No Cell Coordinate were found on this Image Segmented, Click Ok to Continue \" ");
 //            if (segmentatio_pt.length != 0 ) {
 //                ImagePlus iplus_ = IJ.getImage();
 //                double[] failsArrayX =  new double[segmentatio_pt[0].size()];

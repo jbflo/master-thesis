@@ -147,8 +147,8 @@ public class SeqAcqController implements AcquisitionEngine {
                             core_.setConfig(chanelGroup_, presetConfig.config.toString());
 
                             // Take a Photo for each fix chanel
-                            core_.snapImage();
-                            core_.getLastTaggedImage();
+                            //core_.snapImage();
+                            app_.snapSingleImage();
                             iPlus = IJ.getImage();
 
                             if (channels.subList(0, channels.size()).get(0).config.equals(presetConfig.config)){
@@ -169,6 +169,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // The acquires Images are saving as separate Image.
                                 IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
                                 if(presetConfig.doSegmentation){
+
                                     ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
                                     // Execute the Segmentation depends on the Colors.
                                     ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString(), presetConfig.KillCell);
