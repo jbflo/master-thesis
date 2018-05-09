@@ -1,0 +1,1305 @@
+<html>
+<head>
+<title>RappController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(204,120,50); }
+.s3 { color: rgb(98,151,85); font-style: italic; }
+.s4 { color: rgb(106,135,89); }
+.s5 { color: rgb(104,151,187); }
+.s6 { color: rgb(98,151,85); font-weight: bold; font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+RappController.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">///////////////////////////////////////////////////////////////////////////////</span><span class="s1"> 
+<a name="l2"><span class="ln">2    </span></a></span><span class="s0">//FILE:          RappPlugin.java</span><span class="s1"> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s0">//PROJECT:       Micro-Manager Laser Automated Plugin</span><span class="s1"> 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s0">//SUBSYSTEM:     RAPP plugin</span><span class="s1"> 
+<a name="l5"><span class="ln">5    </span></a></span><span class="s0">//-----------------------------------------------------------------------------</span><span class="s1"> 
+<a name="l6"><span class="ln">6    </span></a></span><span class="s0">//AUTHOR:        FLorial,</span><span class="s1"> 
+<a name="l7"><span class="ln">7    </span></a></span><span class="s0">//SOURCE :       ProjectorPlugin, MultiD Acquisition</span><span class="s1"> 
+<a name="l8"><span class="ln">8    </span></a></span><span class="s0">//COPYRIGHT:     ZMBH, University of Heidelberg, 2017-2018</span><span class="s1"> 
+<a name="l9"><span class="ln">9    </span></a></span><span class="s0">//LICENSE:       This file is distributed under the</span><span class="s1"> 
+<a name="l10"><span class="ln">10   </span></a></span><span class="s0">/////////////////////////////////////////////////////////////////////////////////</span><span class="s1"> 
+<a name="l11"><span class="ln">11   </span></a> 
+<a name="l12"><span class="ln">12   </span></a> 
+<a name="l13"><span class="ln">13   </span></a></span><span class="s2">package </span><span class="s1">org.micromanager.rapp</span><span class="s2">;</span><span class="s1"> 
+<a name="l14"><span class="ln">14   </span></a> 
+<a name="l15"><span class="ln">15   </span></a></span><span class="s2">import </span><span class="s1">com.knoplab.segmenter.Cell</span><span class="s2">;</span><span class="s1"> 
+<a name="l16"><span class="ln">16   </span></a></span><span class="s2">import </span><span class="s1">com.knoplab.segmenter.Segmentation</span><span class="s2">;</span><span class="s1"> 
+<a name="l17"><span class="ln">17   </span></a></span><span class="s2">import </span><span class="s1">ij.IJ</span><span class="s2">;</span><span class="s1"> 
+<a name="l18"><span class="ln">18   </span></a></span><span class="s2">import </span><span class="s1">ij.ImagePlus</span><span class="s2">;</span><span class="s1"> 
+<a name="l19"><span class="ln">19   </span></a></span><span class="s2">import </span><span class="s1">ij.ImageStack</span><span class="s2">;</span><span class="s1"> 
+<a name="l20"><span class="ln">20   </span></a></span><span class="s2">import </span><span class="s1">ij.WindowManager</span><span class="s2">;</span><span class="s1"> 
+<a name="l21"><span class="ln">21   </span></a></span><span class="s2">import </span><span class="s1">ij.gui.ImageCanvas</span><span class="s2">;</span><span class="s1"> 
+<a name="l22"><span class="ln">22   </span></a></span><span class="s2">import </span><span class="s1">ij.gui.ImageWindow</span><span class="s2">;</span><span class="s1"> 
+<a name="l23"><span class="ln">23   </span></a></span><span class="s2">import </span><span class="s1">ij.gui.PointRoi</span><span class="s2">;</span><span class="s1"> 
+<a name="l24"><span class="ln">24   </span></a></span><span class="s2">import </span><span class="s1">ij.gui.Roi</span><span class="s2">;</span><span class="s1"> 
+<a name="l25"><span class="ln">25   </span></a></span><span class="s2">import </span><span class="s1">ij.io.FileSaver</span><span class="s2">;</span><span class="s1"> 
+<a name="l26"><span class="ln">26   </span></a></span><span class="s2">import </span><span class="s1">ij.plugin.Duplicator</span><span class="s2">;</span><span class="s1"> 
+<a name="l27"><span class="ln">27   </span></a></span><span class="s2">import </span><span class="s1">ij.plugin.filter.Analyzer</span><span class="s2">;</span><span class="s1"> 
+<a name="l28"><span class="ln">28   </span></a></span><span class="s2">import </span><span class="s1">ij.plugin.filter.GaussianBlur</span><span class="s2">;</span><span class="s1"> 
+<a name="l29"><span class="ln">29   </span></a></span><span class="s2">import </span><span class="s1">ij.plugin.frame.RoiManager</span><span class="s2">;</span><span class="s1"> 
+<a name="l30"><span class="ln">30   </span></a></span><span class="s2">import </span><span class="s1">ij.process.ImageProcessor</span><span class="s2">;</span><span class="s1"> 
+<a name="l31"><span class="ln">31   </span></a></span><span class="s2">import </span><span class="s1">mmcorej.CMMCore</span><span class="s2">;</span><span class="s1"> 
+<a name="l32"><span class="ln">32   </span></a></span><span class="s2">import </span><span class="s1">mmcorej.Configuration</span><span class="s2">;</span><span class="s1"> 
+<a name="l33"><span class="ln">33   </span></a></span><span class="s2">import </span><span class="s1">mmcorej.StrVector</span><span class="s2">;</span><span class="s1"> 
+<a name="l34"><span class="ln">34   </span></a></span><span class="s2">import </span><span class="s1">mmcorej.TaggedImage</span><span class="s2">;</span><span class="s1"> 
+<a name="l35"><span class="ln">35   </span></a></span><span class="s2">import </span><span class="s1">org.json.JSONException</span><span class="s2">;</span><span class="s1"> 
+<a name="l36"><span class="ln">36   </span></a></span><span class="s2">import </span><span class="s1">org.json.JSONObject</span><span class="s2">;</span><span class="s1"> 
+<a name="l37"><span class="ln">37   </span></a></span><span class="s2">import </span><span class="s1">org.micromanager.MMStudio</span><span class="s2">;</span><span class="s1"> 
+<a name="l38"><span class="ln">38   </span></a></span><span class="s2">import </span><span class="s1">org.micromanager.acquisition.TaggedImageStorageMultipageTiff</span><span class="s2">;</span><span class="s1"> 
+<a name="l39"><span class="ln">39   </span></a></span><span class="s2">import </span><span class="s1">org.micromanager.api.ScriptInterface</span><span class="s2">;</span><span class="s1"> 
+<a name="l40"><span class="ln">40   </span></a></span><span class="s2">import </span><span class="s1">org.micromanager.imagedisplay.VirtualAcquisitionDisplay</span><span class="s2">;</span><span class="s1"> 
+<a name="l41"><span class="ln">41   </span></a></span><span class="s2">import <a href="../../../org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java.html">org.micromanager.rapp.SequenceAcquisitions.SeqAcqController</a>;</span><span class="s1"> 
+<a name="l42"><span class="ln">42   </span></a></span><span class="s2">import <a href="../../../org/micromanager/rapp/utils/FileDialog.java.html">org.micromanager.rapp.utils.FileDialog</a>;</span><span class="s1"> 
+<a name="l43"><span class="ln">43   </span></a></span><span class="s2">import </span><span class="s1">org.micromanager.utils.*</span><span class="s2">;</span><span class="s1"> 
+<a name="l44"><span class="ln">44   </span></a> 
+<a name="l45"><span class="ln">45   </span></a></span><span class="s2">import </span><span class="s1">javax.swing.*</span><span class="s2">;</span><span class="s1"> 
+<a name="l46"><span class="ln">46   </span></a></span><span class="s2">import </span><span class="s1">java.awt.*</span><span class="s2">;</span><span class="s1"> 
+<a name="l47"><span class="ln">47   </span></a></span><span class="s2">import </span><span class="s1">java.awt.event.AWTEventListener</span><span class="s2">;</span><span class="s1"> 
+<a name="l48"><span class="ln">48   </span></a></span><span class="s2">import </span><span class="s1">java.awt.event.MouseAdapter</span><span class="s2">;</span><span class="s1"> 
+<a name="l49"><span class="ln">49   </span></a></span><span class="s2">import </span><span class="s1">java.awt.event.MouseEvent</span><span class="s2">;</span><span class="s1"> 
+<a name="l50"><span class="ln">50   </span></a></span><span class="s2">import </span><span class="s1">java.awt.event.MouseListener</span><span class="s2">;</span><span class="s1"> 
+<a name="l51"><span class="ln">51   </span></a></span><span class="s2">import </span><span class="s1">java.awt.geom.AffineTransform</span><span class="s2">;</span><span class="s1"> 
+<a name="l52"><span class="ln">52   </span></a></span><span class="s2">import </span><span class="s1">java.awt.geom.Point2D</span><span class="s2">;</span><span class="s1"> 
+<a name="l53"><span class="ln">53   </span></a></span><span class="s2">import </span><span class="s1">java.io.File</span><span class="s2">;</span><span class="s1"> 
+<a name="l54"><span class="ln">54   </span></a></span><span class="s2">import </span><span class="s1">java.net.URL</span><span class="s2">;</span><span class="s1"> 
+<a name="l55"><span class="ln">55   </span></a></span><span class="s2">import </span><span class="s1">java.util.*</span><span class="s2">;</span><span class="s1"> 
+<a name="l56"><span class="ln">56   </span></a></span><span class="s2">import </span><span class="s1">java.util.List</span><span class="s2">;</span><span class="s1"> 
+<a name="l57"><span class="ln">57   </span></a></span><span class="s2">import </span><span class="s1">java.util.concurrent.BlockingQueue</span><span class="s2">;</span><span class="s1"> 
+<a name="l58"><span class="ln">58   </span></a></span><span class="s2">import </span><span class="s1">java.util.concurrent.atomic.AtomicBoolean</span><span class="s2">;</span><span class="s1"> 
+<a name="l59"><span class="ln">59   </span></a></span><span class="s2">import </span><span class="s1">java.util.prefs.Preferences</span><span class="s2">;</span><span class="s1"> 
+<a name="l60"><span class="ln">60   </span></a> 
+<a name="l61"><span class="ln">61   </span></a></span><span class="s3">/** 
+<a name="l62"><span class="ln">62   </span></a> * This Class is approximately use as a Controller for the Rapp plugin. Contains logic for calibration, 
+<a name="l63"><span class="ln">63   </span></a> * and control for Camera and Galvos (Rapp UG-42). 
+<a name="l64"><span class="ln">64   </span></a> */</span><span class="s1"> 
+<a name="l65"><span class="ln">65   </span></a> 
+<a name="l66"><span class="ln">66   </span></a></span><span class="s2">public class </span><span class="s1">RappController </span><span class="s2">extends  </span><span class="s1">MMFrame </span><span class="s2">implements <a href="OnStateListener.java.html">OnStateListener</a> </span><span class="s1">{ 
+<a name="l67"><span class="ln">67   </span></a>    </span><span class="s2">private </span><span class="s1">URL default_path = </span><span class="s2">this</span><span class="s1">.getClass().getResource(</span><span class="s4">&quot;&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l68"><span class="ln">68   </span></a>    </span><span class="s2">private </span><span class="s1">String path = default_path.toString().substring(</span><span class="s5">6</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l69"><span class="ln">69   </span></a>    </span><span class="s2">private final <a href="RappDevice.java.html">RappDevice</a>  </span><span class="s1">dev_</span><span class="s2">;</span><span class="s1"> 
+<a name="l70"><span class="ln">70   </span></a>    </span><span class="s2">private static <a href="RappPlugin.java.html">RappPlugin</a> </span><span class="s1">rappPlugin = </span><span class="s2">new <a href="RappPlugin.java.html">RappPlugin</a></span><span class="s1">() </span><span class="s2">;</span><span class="s1"> 
+<a name="l71"><span class="ln">71   </span></a>    </span><span class="s2">private final </span><span class="s1">MouseListener pointAndShootMouseListener</span><span class="s2">;</span><span class="s1"> 
+<a name="l72"><span class="ln">72   </span></a>    </span><span class="s2">private final </span><span class="s1">AtomicBoolean pointAndShooteModeOn_ = </span><span class="s2">new </span><span class="s1">AtomicBoolean(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l73"><span class="ln">73   </span></a>    </span><span class="s2">private final </span><span class="s1">CMMCore core_</span><span class="s2">;</span><span class="s1"> 
+<a name="l74"><span class="ln">74   </span></a>    </span><span class="s2">private final </span><span class="s1">ScriptInterface app_  </span><span class="s2">;</span><span class="s1"> 
+<a name="l75"><span class="ln">75   </span></a>    </span><span class="s2">private final boolean </span><span class="s1">isSLM_</span><span class="s2">;</span><span class="s1"> 
+<a name="l76"><span class="ln">76   </span></a>    </span><span class="s2">private </span><span class="s1">Roi[] individualRois_ = {}</span><span class="s2">;</span><span class="s1"> 
+<a name="l77"><span class="ln">77   </span></a>    </span><span class="s2">private </span><span class="s1">Map&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt; mapping_ = </span><span class="s2">null;</span><span class="s1"> 
+<a name="l78"><span class="ln">78   </span></a>    </span><span class="s2">private </span><span class="s1">String mappingNode_ = </span><span class="s2">null;</span><span class="s1"> 
+<a name="l79"><span class="ln">79   </span></a>    </span><span class="s2">private </span><span class="s1">String targetingChannel_</span><span class="s2">;</span><span class="s1"> 
+<a name="l80"><span class="ln">80   </span></a>    AtomicBoolean stopRequested_ = </span><span class="s2">new </span><span class="s1">AtomicBoolean(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l81"><span class="ln">81   </span></a>    AtomicBoolean isRunning_ = </span><span class="s2">new </span><span class="s1">AtomicBoolean(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l82"><span class="ln">82   </span></a>    </span><span class="s2">private </span><span class="s1">String targetingShutter_</span><span class="s2">;</span><span class="s1"> 
+<a name="l83"><span class="ln">83   </span></a>    </span><span class="s2">private </span><span class="s1">Boolean disposing_ = </span><span class="s2">false;</span><span class="s1"> 
+<a name="l84"><span class="ln">84   </span></a>    </span><span class="s2">private static </span><span class="s1">VirtualAcquisitionDisplay display_</span><span class="s2">;</span><span class="s1"> 
+<a name="l85"><span class="ln">85   </span></a>    </span><span class="s2">private final </span><span class="s1">MMStudio gui_</span><span class="s2">;</span><span class="s1"> 
+<a name="l86"><span class="ln">86   </span></a>    </span><span class="s2">private </span><span class="s1">String camera</span><span class="s2">;</span><span class="s1"> 
+<a name="l87"><span class="ln">87   </span></a>    </span><span class="s2">private </span><span class="s1">String galvo</span><span class="s2">;</span><span class="s1"> 
+<a name="l88"><span class="ln">88   </span></a>    </span><span class="s2">public boolean </span><span class="s1">bleechingComp=</span><span class="s2">false;</span><span class="s1"> 
+<a name="l89"><span class="ln">89   </span></a>    </span><span class="s2">public </span><span class="s1">List&lt;Point2D.Double&gt; roiPointClick = </span><span class="s2">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s2">;</span><span class="s1"> 
+<a name="l90"><span class="ln">90   </span></a>    </span><span class="s2">public </span><span class="s1">Point2D.Double roiTemp  = </span><span class="s2">new </span><span class="s1">Point2D.Double()</span><span class="s2">;</span><span class="s1"> 
+<a name="l91"><span class="ln">91   </span></a>    <a href="../../../org/micromanager/rapp/utils/FileDialog.java.html">FileDialog</a> fileDialog_ = </span><span class="s2">new <a href="../../../org/micromanager/rapp/utils/FileDialog.java.html">FileDialog</a></span><span class="s1">()</span><span class="s2">;</span><span class="s1"> 
+<a name="l92"><span class="ln">92   </span></a> 
+<a name="l93"><span class="ln">93   </span></a> 
+<a name="l94"><span class="ln">94   </span></a>    </span><span class="s0">//private static final RappController fINSTANCE =  new RappController(core_, app_);</span><span class="s1"> 
+<a name="l95"><span class="ln">95   </span></a> 
+<a name="l96"><span class="ln">96   </span></a></span><span class="s0">//    public static RappController getInstance() {</span><span class="s1"> 
+<a name="l97"><span class="ln">97   </span></a></span><span class="s0">//        return fINSTANCE;</span><span class="s1"> 
+<a name="l98"><span class="ln">98   </span></a></span><span class="s0">//    }</span><span class="s1"> 
+<a name="l99"><span class="ln">99   </span></a> 
+<a name="l100"><span class="ln">100  </span></a> 
+<a name="l101"><span class="ln">101  </span></a>    </span><span class="s2">public </span><span class="s1">RappController( CMMCore core</span><span class="s2">, </span><span class="s1">ScriptInterface app) </span><span class="s2">throws </span><span class="s1">Exception { 
+<a name="l102"><span class="ln">102  </span></a>        app_ = app</span><span class="s2">;</span><span class="s1"> 
+<a name="l103"><span class="ln">103  </span></a>        gui_ = MMStudio.getInstance()</span><span class="s2">;</span><span class="s1"> 
+<a name="l104"><span class="ln">104  </span></a>        core_ = core</span><span class="s2">;</span><span class="s1"> 
+<a name="l105"><span class="ln">105  </span></a>        camera = core_.getCameraDevice()</span><span class="s2">;</span><span class="s1"> 
+<a name="l106"><span class="ln">106  </span></a>        String slm = core_.getSLMDevice()</span><span class="s2">;</span><span class="s1"> 
+<a name="l107"><span class="ln">107  </span></a>        galvo = core_.getGalvoDevice()</span><span class="s2">;</span><span class="s1"> 
+<a name="l108"><span class="ln">108  </span></a> 
+<a name="l109"><span class="ln">109  </span></a>        </span><span class="s2">if </span><span class="s1">(slm.length() &gt; </span><span class="s5">0</span><span class="s1">) { 
+<a name="l110"><span class="ln">110  </span></a>            dev_ = </span><span class="s2">new <a href="SLM.java.html">SLM</a></span><span class="s1">(core_</span><span class="s2">, </span><span class="s5">20</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l111"><span class="ln">111  </span></a>        } </span><span class="s2">else if </span><span class="s1">(galvo.length() &gt; </span><span class="s5">0</span><span class="s1">) { 
+<a name="l112"><span class="ln">112  </span></a>            dev_ = </span><span class="s2">new <a href="Galvo.java.html">Galvo</a></span><span class="s1">(core_)</span><span class="s2">;</span><span class="s1"> 
+<a name="l113"><span class="ln">113  </span></a>        } </span><span class="s2">else </span><span class="s1">{ 
+<a name="l114"><span class="ln">114  </span></a>            dev_ = </span><span class="s2">null;</span><span class="s1"> 
+<a name="l115"><span class="ln">115  </span></a>        } 
+<a name="l116"><span class="ln">116  </span></a> 
+<a name="l117"><span class="ln">117  </span></a>        loadMapping()</span><span class="s2">;</span><span class="s1"> 
+<a name="l118"><span class="ln">118  </span></a>        pointAndShootMouseListener = createPointAndShootMouseListenerInstance()</span><span class="s2">;</span><span class="s1"> 
+<a name="l119"><span class="ln">119  </span></a> 
+<a name="l120"><span class="ln">120  </span></a>        Toolkit.getDefaultToolkit().addAWTEventListener(</span><span class="s2">new </span><span class="s1">AWTEventListener() { 
+<a name="l121"><span class="ln">121  </span></a>            @Override 
+<a name="l122"><span class="ln">122  </span></a>            </span><span class="s2">public void </span><span class="s1">eventDispatched(AWTEvent e) { 
+<a name="l123"><span class="ln">123  </span></a>                enablePointAndShootMode(pointAndShooteModeOn_.get())</span><span class="s2">;</span><span class="s1"> 
+<a name="l124"><span class="ln">124  </span></a>            } 
+<a name="l125"><span class="ln">125  </span></a>        }</span><span class="s2">, </span><span class="s1">AWTEvent.WINDOW_EVENT_MASK)</span><span class="s2">;</span><span class="s1"> 
+<a name="l126"><span class="ln">126  </span></a>        isSLM_ = dev_ </span><span class="s2">instanceof <a href="SLM.java.html">SLM</a>;</span><span class="s1"> 
+<a name="l127"><span class="ln">127  </span></a>    } 
+<a name="l128"><span class="ln">128  </span></a> 
+<a name="l129"><span class="ln">129  </span></a>    </span><span class="s3">/** 
+<a name="l130"><span class="ln">130  </span></a>     * Simple utility methods for points 
+<a name="l131"><span class="ln">131  </span></a>     * Adds a point to an existing polygon. 
+<a name="l132"><span class="ln">132  </span></a>     */</span><span class="s1"> 
+<a name="l133"><span class="ln">133  </span></a>    </span><span class="s2">private static void </span><span class="s1">addVertex(Polygon polygon</span><span class="s2">, </span><span class="s1">Point p) { 
+<a name="l134"><span class="ln">134  </span></a>        polygon.addPoint(p.x</span><span class="s2">, </span><span class="s1">p.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l135"><span class="ln">135  </span></a>    } 
+<a name="l136"><span class="ln">136  </span></a> 
+<a name="l137"><span class="ln">137  </span></a>     </span><span class="s3">/** 
+<a name="l138"><span class="ln">138  </span></a>     * Returns the vertices of the given polygon as a series of points. 
+<a name="l139"><span class="ln">139  </span></a>     */</span><span class="s1"> 
+<a name="l140"><span class="ln">140  </span></a>     </span><span class="s2">private static </span><span class="s1">Point[] getVertices(Polygon polygon) { 
+<a name="l141"><span class="ln">141  </span></a>         Point vertices[] = </span><span class="s2">new </span><span class="s1">Point[polygon.npoints]</span><span class="s2">;</span><span class="s1"> 
+<a name="l142"><span class="ln">142  </span></a>         </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s2">; </span><span class="s1">i &lt; polygon.npoints</span><span class="s2">; </span><span class="s1">++i) { 
+<a name="l143"><span class="ln">143  </span></a>             vertices[i] = </span><span class="s2">new </span><span class="s1">Point(polygon.xpoints[i]</span><span class="s2">, </span><span class="s1">polygon.ypoints[i])</span><span class="s2">;</span><span class="s1"> 
+<a name="l144"><span class="ln">144  </span></a>         } 
+<a name="l145"><span class="ln">145  </span></a>         </span><span class="s2">return </span><span class="s1">vertices</span><span class="s2">;</span><span class="s1"> 
+<a name="l146"><span class="ln">146  </span></a>     } 
+<a name="l147"><span class="ln">147  </span></a> 
+<a name="l148"><span class="ln">148  </span></a>    </span><span class="s3">/** 
+<a name="l149"><span class="ln">149  </span></a>     * Gets the vectorial mean of an array of Points. 
+<a name="l150"><span class="ln">150  </span></a>     */</span><span class="s1"> 
+<a name="l151"><span class="ln">151  </span></a>     </span><span class="s2">private static </span><span class="s1">Point2D.Double meanPosition2D(Point[] points) { 
+<a name="l152"><span class="ln">152  </span></a>         </span><span class="s2">double </span><span class="s1">xsum = </span><span class="s5">0</span><span class="s2">;</span><span class="s1"> 
+<a name="l153"><span class="ln">153  </span></a>         </span><span class="s2">double </span><span class="s1">ysum = </span><span class="s5">0</span><span class="s2">;</span><span class="s1"> 
+<a name="l154"><span class="ln">154  </span></a>         </span><span class="s2">int </span><span class="s1">n = points.length</span><span class="s2">;</span><span class="s1"> 
+<a name="l155"><span class="ln">155  </span></a>         </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s2">; </span><span class="s1">i &lt; n</span><span class="s2">; </span><span class="s1">++i) { 
+<a name="l156"><span class="ln">156  </span></a>            xsum += points[i].x</span><span class="s2">;</span><span class="s1"> 
+<a name="l157"><span class="ln">157  </span></a>            ysum += points[i].y</span><span class="s2">;</span><span class="s1"> 
+<a name="l158"><span class="ln">158  </span></a>         } 
+<a name="l159"><span class="ln">159  </span></a>         </span><span class="s2">return new </span><span class="s1">Point2D.Double(xsum/n</span><span class="s2">, </span><span class="s1">ysum/n)</span><span class="s2">;</span><span class="s1"> 
+<a name="l160"><span class="ln">160  </span></a>     } 
+<a name="l161"><span class="ln">161  </span></a> 
+<a name="l162"><span class="ln">162  </span></a>    </span><span class="s3">/** 
+<a name="l163"><span class="ln">163  </span></a>     * Converts a Point with double values for x,y to a point 
+<a name="l164"><span class="ln">164  </span></a>     * with x and y rounded to the nearest integer. 
+<a name="l165"><span class="ln">165  </span></a>     */</span><span class="s1"> 
+<a name="l166"><span class="ln">166  </span></a>     </span><span class="s2">private static </span><span class="s1">Point toIntPoint(Point2D.Double pt) { 
+<a name="l167"><span class="ln">167  </span></a>         </span><span class="s2">return new </span><span class="s1">Point((</span><span class="s2">int</span><span class="s1">) (</span><span class="s5">0.5 </span><span class="s1">+ pt.x)</span><span class="s2">, </span><span class="s1">(</span><span class="s2">int</span><span class="s1">) (</span><span class="s5">0.5 </span><span class="s1">+ pt.y))</span><span class="s2">;</span><span class="s1"> 
+<a name="l168"><span class="ln">168  </span></a>     } 
+<a name="l169"><span class="ln">169  </span></a> 
+<a name="l170"><span class="ln">170  </span></a>     </span><span class="s3">/** 
+<a name="l171"><span class="ln">171  </span></a>      * Converts a Point with integer values to a Point with x and y doubles. 
+<a name="l172"><span class="ln">172  </span></a>     */</span><span class="s1"> 
+<a name="l173"><span class="ln">173  </span></a>     </span><span class="s2">private static </span><span class="s1">Point2D.Double toDoublePoint(Point pt) { 
+<a name="l174"><span class="ln">174  </span></a>        </span><span class="s2">return new </span><span class="s1">Point2D.Double(pt.x</span><span class="s2">, </span><span class="s1">pt.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l175"><span class="ln">175  </span></a>     } 
+<a name="l176"><span class="ln">176  </span></a> 
+<a name="l177"><span class="ln">177  </span></a>    </span><span class="s0">// ## Methods for handling targeting channel and shutter</span><span class="s1"> 
+<a name="l178"><span class="ln">178  </span></a> 
+<a name="l179"><span class="ln">179  </span></a>    </span><span class="s3">/** 
+<a name="l180"><span class="ln">180  </span></a>     * Reads the available channels from Micro-Manager Channel Group 
+<a name="l181"><span class="ln">181  </span></a>     * and populates the targeting channel drop-down menu. 
+<a name="l182"><span class="ln">182  </span></a>     */</span><span class="s1"> 
+<a name="l183"><span class="ln">183  </span></a>   </span><span class="s0">/* final void populateChannelComboBox(String initialChannel) { 
+<a name="l184"><span class="ln">184  </span></a>        if (initialChannel == null) { 
+<a name="l185"><span class="ln">185  </span></a>            initialChannel = (String) channelComboBox.getSelectedItem(); 
+<a name="l186"><span class="ln">186  </span></a>        } 
+<a name="l187"><span class="ln">187  </span></a>        channelComboBox.removeAllItems(); 
+<a name="l188"><span class="ln">188  </span></a>        channelComboBox.addItem(&quot;&quot;); 
+<a name="l189"><span class="ln">189  </span></a>        // try to avoid crash on shutdown 
+<a name="l190"><span class="ln">190  </span></a>        if (core_ != null) { 
+<a name="l191"><span class="ln">191  </span></a>            for (String preset : core_.getAvailableConfigs(core_.getChannelGroup())) { 
+<a name="l192"><span class="ln">192  </span></a>                channelComboBox.addItem(preset); 
+<a name="l193"><span class="ln">193  </span></a>            } 
+<a name="l194"><span class="ln">194  </span></a>            channelComboBox.setSelectedItem(initialChannel); 
+<a name="l195"><span class="ln">195  </span></a>        } 
+<a name="l196"><span class="ln">196  </span></a>    } 
+<a name="l197"><span class="ln">197  </span></a> 
+<a name="l198"><span class="ln">198  </span></a>    */</span><span class="s3">/** 
+<a name="l199"><span class="ln">199  </span></a>     * Reads the available shutters from Micro-Manager and 
+<a name="l200"><span class="ln">200  </span></a>     * lists them in the targeting shutter drop-down menu. 
+<a name="l201"><span class="ln">201  </span></a>     */</span><span class="s0">/* 
+<a name="l202"><span class="ln">202  </span></a>    final void populateShutterComboBox(String initialShutter) { 
+<a name="l203"><span class="ln">203  </span></a>        if (initialShutter == null) { 
+<a name="l204"><span class="ln">204  </span></a>            initialShutter = (String) shutterComboBox.getSelectedItem(); 
+<a name="l205"><span class="ln">205  </span></a>        } 
+<a name="l206"><span class="ln">206  </span></a>        shutterComboBox.removeAllItems(); 
+<a name="l207"><span class="ln">207  </span></a>        shutterComboBox.addItem(&quot;&quot;); 
+<a name="l208"><span class="ln">208  </span></a>        // trying to avoid crashes on shutdown 
+<a name="l209"><span class="ln">209  </span></a>        if (core_ != null) { 
+<a name="l210"><span class="ln">210  </span></a>            for (String shutter : core_.getLoadedDevicesOfType(DeviceType.ShutterDevice)) { 
+<a name="l211"><span class="ln">211  </span></a>                shutterComboBox.addItem(shutter); 
+<a name="l212"><span class="ln">212  </span></a>            } 
+<a name="l213"><span class="ln">213  </span></a>            shutterComboBox.setSelectedItem(initialShutter); 
+<a name="l214"><span class="ln">214  </span></a>        } 
+<a name="l215"><span class="ln">215  </span></a>    }*/</span><span class="s1"> 
+<a name="l216"><span class="ln">216  </span></a> 
+<a name="l217"><span class="ln">217  </span></a>    </span><span class="s3">/** 
+<a name="l218"><span class="ln">218  </span></a>     * Sets the targeting channel. channelName should be 
+<a name="l219"><span class="ln">219  </span></a>     * a channel from the current ChannelGroup. 
+<a name="l220"><span class="ln">220  </span></a>     */</span><span class="s1"> 
+<a name="l221"><span class="ln">221  </span></a>    </span><span class="s2">void </span><span class="s1">setTargetingChannel(String channelName) { 
+<a name="l222"><span class="ln">222  </span></a>        targetingChannel_ = channelName</span><span class="s2">;</span><span class="s1"> 
+<a name="l223"><span class="ln">223  </span></a>        </span><span class="s2">if </span><span class="s1">(channelName != </span><span class="s2">null</span><span class="s1">) { 
+<a name="l224"><span class="ln">224  </span></a>            Preferences.userNodeForPackage(</span><span class="s2">this</span><span class="s1">.getClass()).put(</span><span class="s4">&quot;channel&quot;</span><span class="s2">, </span><span class="s1">channelName)</span><span class="s2">;</span><span class="s1"> 
+<a name="l225"><span class="ln">225  </span></a>        } 
+<a name="l226"><span class="ln">226  </span></a>    } 
+<a name="l227"><span class="ln">227  </span></a> 
+<a name="l228"><span class="ln">228  </span></a>    </span><span class="s3">/** 
+<a name="l229"><span class="ln">229  </span></a>     * Sets the targeting shutter. 
+<a name="l230"><span class="ln">230  </span></a>     * Should be the name of a loaded Shutter device. 
+<a name="l231"><span class="ln">231  </span></a>     */</span><span class="s1"> 
+<a name="l232"><span class="ln">232  </span></a>    </span><span class="s2">void </span><span class="s1">setTargetingShutter(String shutterName) { 
+<a name="l233"><span class="ln">233  </span></a>        targetingShutter_ = shutterName</span><span class="s2">;</span><span class="s1"> 
+<a name="l234"><span class="ln">234  </span></a>        </span><span class="s2">if </span><span class="s1">(shutterName != </span><span class="s2">null</span><span class="s1">) { 
+<a name="l235"><span class="ln">235  </span></a>            Preferences.userNodeForPackage(</span><span class="s2">this</span><span class="s1">.getClass()).put(</span><span class="s4">&quot;shutter&quot;</span><span class="s2">, </span><span class="s1">shutterName)</span><span class="s2">;</span><span class="s1"> 
+<a name="l236"><span class="ln">236  </span></a>        } 
+<a name="l237"><span class="ln">237  </span></a>    } 
+<a name="l238"><span class="ln">238  </span></a> 
+<a name="l239"><span class="ln">239  </span></a>    </span><span class="s3">/** 
+<a name="l240"><span class="ln">240  </span></a>     * Sets the Channel Group to the targeting channel, if it exists. 
+<a name="l241"><span class="ln">241  </span></a>     * </span><span class="s6">@return</span><span class="s3"> 
+<a name="l242"><span class="ln">242  </span></a>     */</span><span class="s1"> 
+<a name="l243"><span class="ln">243  </span></a>    </span><span class="s2">public </span><span class="s1">Configuration prepareChannel() { 
+<a name="l244"><span class="ln">244  </span></a>        Configuration originalConfig = </span><span class="s2">null;</span><span class="s1"> 
+<a name="l245"><span class="ln">245  </span></a>        String channelGroup = core_.getChannelGroup()</span><span class="s2">;</span><span class="s1"> 
+<a name="l246"><span class="ln">246  </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l247"><span class="ln">247  </span></a>            </span><span class="s2">if </span><span class="s1">(targetingChannel_ != </span><span class="s2">null </span><span class="s1">&amp;&amp; targetingChannel_.length() &gt; </span><span class="s5">0</span><span class="s1">) { 
+<a name="l248"><span class="ln">248  </span></a>                originalConfig = core_.getConfigGroupState(channelGroup)</span><span class="s2">;</span><span class="s1"> 
+<a name="l249"><span class="ln">249  </span></a>                </span><span class="s2">if </span><span class="s1">(!originalConfig.isConfigurationIncluded(core_.getConfigData(channelGroup</span><span class="s2">, </span><span class="s1">targetingChannel_))) { 
+<a name="l250"><span class="ln">250  </span></a>                    </span><span class="s2">if </span><span class="s1">(app_.isAcquisitionRunning()) { 
+<a name="l251"><span class="ln">251  </span></a>                        app_.setPause(</span><span class="s2">true</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l252"><span class="ln">252  </span></a>                    } 
+<a name="l253"><span class="ln">253  </span></a>                    core_.setConfig(channelGroup</span><span class="s2">, </span><span class="s1">targetingChannel_)</span><span class="s2">;</span><span class="s1"> 
+<a name="l254"><span class="ln">254  </span></a>                } 
+<a name="l255"><span class="ln">255  </span></a>            } 
+<a name="l256"><span class="ln">256  </span></a>        } </span><span class="s2">catch </span><span class="s1">(Exception ex) { 
+<a name="l257"><span class="ln">257  </span></a>            ReportingUtils.logError(ex)</span><span class="s2">;</span><span class="s1"> 
+<a name="l258"><span class="ln">258  </span></a>        } 
+<a name="l259"><span class="ln">259  </span></a>        </span><span class="s2">return </span><span class="s1">originalConfig</span><span class="s2">;</span><span class="s1"> 
+<a name="l260"><span class="ln">260  </span></a>    } 
+<a name="l261"><span class="ln">261  </span></a> 
+<a name="l262"><span class="ln">262  </span></a>    </span><span class="s3">/** 
+<a name="l263"><span class="ln">263  </span></a>     * Should be called with the value returned by prepareChannel. 
+<a name="l264"><span class="ln">264  </span></a>     * Returns Channel Group to its original settings, if needed. 
+<a name="l265"><span class="ln">265  </span></a>     * </span><span class="s6">@param </span><span class="s3">originalConfig value returned by prepareChannel 
+<a name="l266"><span class="ln">266  </span></a>     */</span><span class="s1"> 
+<a name="l267"><span class="ln">267  </span></a>    </span><span class="s2">public void </span><span class="s1">returnChannel(Configuration originalConfig) { 
+<a name="l268"><span class="ln">268  </span></a>        </span><span class="s2">if </span><span class="s1">(originalConfig != </span><span class="s2">null</span><span class="s1">) { 
+<a name="l269"><span class="ln">269  </span></a>            </span><span class="s2">try </span><span class="s1">{ 
+<a name="l270"><span class="ln">270  </span></a>                core_.setSystemState(originalConfig)</span><span class="s2">;</span><span class="s1"> 
+<a name="l271"><span class="ln">271  </span></a>                </span><span class="s2">if </span><span class="s1">(app_.isAcquisitionRunning() &amp;&amp; app_.isPaused()) { 
+<a name="l272"><span class="ln">272  </span></a>                    app_.setPause(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l273"><span class="ln">273  </span></a>                } 
+<a name="l274"><span class="ln">274  </span></a>            } </span><span class="s2">catch </span><span class="s1">(Exception ex) { 
+<a name="l275"><span class="ln">275  </span></a>                ReportingUtils.logError(ex)</span><span class="s2">;</span><span class="s1"> 
+<a name="l276"><span class="ln">276  </span></a>            } 
+<a name="l277"><span class="ln">277  </span></a>        } 
+<a name="l278"><span class="ln">278  </span></a>    } 
+<a name="l279"><span class="ln">279  </span></a> 
+<a name="l280"><span class="ln">280  </span></a>    </span><span class="s3">/** 
+<a name="l281"><span class="ln">281  </span></a>     * Opens the targeting shutter, if it has been specified. 
+<a name="l282"><span class="ln">282  </span></a>     * </span><span class="s6">@return </span><span class="s3">true if it was already open 
+<a name="l283"><span class="ln">283  </span></a>     */</span><span class="s1"> 
+<a name="l284"><span class="ln">284  </span></a>    </span><span class="s2">public boolean </span><span class="s1">prepareShutter() { 
+<a name="l285"><span class="ln">285  </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l286"><span class="ln">286  </span></a>            </span><span class="s2">if </span><span class="s1">(targetingShutter_ != </span><span class="s2">null </span><span class="s1">&amp;&amp; targetingShutter_.length() &gt; </span><span class="s5">0</span><span class="s1">) { 
+<a name="l287"><span class="ln">287  </span></a>                </span><span class="s2">boolean </span><span class="s1">originallyOpen = core_.getShutterOpen(targetingShutter_)</span><span class="s2">;</span><span class="s1"> 
+<a name="l288"><span class="ln">288  </span></a>                </span><span class="s2">if </span><span class="s1">(!originallyOpen) { 
+<a name="l289"><span class="ln">289  </span></a>                    core_.setShutterOpen(targetingShutter_</span><span class="s2">, true</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l290"><span class="ln">290  </span></a>                    core_.waitForDevice(targetingShutter_)</span><span class="s2">;</span><span class="s1"> 
+<a name="l291"><span class="ln">291  </span></a>                } 
+<a name="l292"><span class="ln">292  </span></a>                </span><span class="s2">return </span><span class="s1">originallyOpen</span><span class="s2">;</span><span class="s1"> 
+<a name="l293"><span class="ln">293  </span></a>            } 
+<a name="l294"><span class="ln">294  </span></a>        } </span><span class="s2">catch </span><span class="s1">(Exception ex) { 
+<a name="l295"><span class="ln">295  </span></a>            ReportingUtils.logError(ex)</span><span class="s2">;</span><span class="s1"> 
+<a name="l296"><span class="ln">296  </span></a>        } 
+<a name="l297"><span class="ln">297  </span></a>        </span><span class="s2">return true; </span><span class="s0">// by default, say it was already open</span><span class="s1"> 
+<a name="l298"><span class="ln">298  </span></a>    } 
+<a name="l299"><span class="ln">299  </span></a> 
+<a name="l300"><span class="ln">300  </span></a>    </span><span class="s3">/** 
+<a name="l301"><span class="ln">301  </span></a>     * Closes a targeting shutter if it exists and if it was originally closed. 
+<a name="l302"><span class="ln">302  </span></a>     * Should be called with the value returned by prepareShutter. 
+<a name="l303"><span class="ln">303  </span></a>     * </span><span class="s6">@param </span><span class="s3">originallyOpen - whether or not the shutter was originally open 
+<a name="l304"><span class="ln">304  </span></a>     */</span><span class="s1"> 
+<a name="l305"><span class="ln">305  </span></a>    </span><span class="s2">public void </span><span class="s1">returnShutter(</span><span class="s2">boolean </span><span class="s1">originallyOpen) { 
+<a name="l306"><span class="ln">306  </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l307"><span class="ln">307  </span></a>            </span><span class="s2">if </span><span class="s1">(targetingShutter_ != </span><span class="s2">null </span><span class="s1">&amp;&amp; 
+<a name="l308"><span class="ln">308  </span></a>                    (targetingShutter_.length() &gt; </span><span class="s5">0</span><span class="s1">) &amp;&amp; 
+<a name="l309"><span class="ln">309  </span></a>                    !originallyOpen) { 
+<a name="l310"><span class="ln">310  </span></a>                core_.setShutterOpen(targetingShutter_</span><span class="s2">, false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l311"><span class="ln">311  </span></a>                core_.waitForDevice(targetingShutter_)</span><span class="s2">;</span><span class="s1"> 
+<a name="l312"><span class="ln">312  </span></a>            } 
+<a name="l313"><span class="ln">313  </span></a>        } </span><span class="s2">catch </span><span class="s1">(Exception ex) { 
+<a name="l314"><span class="ln">314  </span></a>            ReportingUtils.logError(ex)</span><span class="s2">;</span><span class="s1"> 
+<a name="l315"><span class="ln">315  </span></a>        } 
+<a name="l316"><span class="ln">316  </span></a>    } 
+<a name="l317"><span class="ln">317  </span></a> 
+<a name="l318"><span class="ln">318  </span></a>    </span><span class="s0">// ## Simple methods for device control.</span><span class="s1"> 
+<a name="l319"><span class="ln">319  </span></a> 
+<a name="l320"><span class="ln">320  </span></a>    </span><span class="s3">/** 
+<a name="l321"><span class="ln">321  </span></a>     * Sets the exposure time for the phototargeting device. 
+<a name="l322"><span class="ln">322  </span></a>     * </span><span class="s6">@param </span><span class="s3">intervalUs  new exposure time in micros 
+<a name="l323"><span class="ln">323  </span></a>     */</span><span class="s1"> 
+<a name="l324"><span class="ln">324  </span></a>    </span><span class="s2">public void </span><span class="s1">setExposure(</span><span class="s2">double </span><span class="s1">intervalUs) { 
+<a name="l325"><span class="ln">325  </span></a>        </span><span class="s2">long </span><span class="s1">previousExposure = dev_.getExposure()</span><span class="s2">;</span><span class="s1"> 
+<a name="l326"><span class="ln">326  </span></a>        <a href="RappGui.java.html">RappGui</a>.getInstance().spiner.setText(String.valueOf(dev_.getExposure()))</span><span class="s2">;</span><span class="s1"> 
+<a name="l327"><span class="ln">327  </span></a>        System.out.println( <a href="RappGui.java.html">RappGui</a>.getInstance().spiner.getText())</span><span class="s2">;</span><span class="s1"> 
+<a name="l328"><span class="ln">328  </span></a>        </span><span class="s2">long </span><span class="s1">newExposure = (</span><span class="s2">long</span><span class="s1">) intervalUs</span><span class="s2">;</span><span class="s1"> 
+<a name="l329"><span class="ln">329  </span></a>        </span><span class="s2">if </span><span class="s1">( previousExposure != newExposure) { 
+<a name="l330"><span class="ln">330  </span></a>            dev_.setExposure(newExposure)</span><span class="s2">;</span><span class="s1"> 
+<a name="l331"><span class="ln">331  </span></a>        } 
+<a name="l332"><span class="ln">332  </span></a>    } 
+<a name="l333"><span class="ln">333  </span></a> 
+<a name="l334"><span class="ln">334  </span></a>    </span><span class="s3">/** 
+<a name="l335"><span class="ln">335  </span></a>     * Turns the projection device on or off. 
+<a name="l336"><span class="ln">336  </span></a>     * </span><span class="s6">@param </span><span class="s3">onState on=true 
+<a name="l337"><span class="ln">337  </span></a>     */</span><span class="s1"> 
+<a name="l338"><span class="ln">338  </span></a>     </span><span class="s2">public   void </span><span class="s1">setOnState(</span><span class="s2">boolean </span><span class="s1">onState) { 
+<a name="l339"><span class="ln">339  </span></a>        </span><span class="s2">if </span><span class="s1">(onState) { 
+<a name="l340"><span class="ln">340  </span></a>            dev_.turnOn()</span><span class="s2">;</span><span class="s1"> 
+<a name="l341"><span class="ln">341  </span></a>        } </span><span class="s2">else </span><span class="s1">{ 
+<a name="l342"><span class="ln">342  </span></a>            dev_.turnOff()</span><span class="s2">;</span><span class="s1"> 
+<a name="l343"><span class="ln">343  </span></a>        } 
+<a name="l344"><span class="ln">344  </span></a>    } 
+<a name="l345"><span class="ln">345  </span></a> 
+<a name="l346"><span class="ln">346  </span></a>    </span><span class="s3">/** 
+<a name="l347"><span class="ln">347  </span></a>     * Illuminate a spot at position x,y. 
+<a name="l348"><span class="ln">348  </span></a>     */</span><span class="s1"> 
+<a name="l349"><span class="ln">349  </span></a>    </span><span class="s2">private void </span><span class="s1">displaySpot(</span><span class="s2">double </span><span class="s1">x</span><span class="s2">, double </span><span class="s1">y) { 
+<a name="l350"><span class="ln">350  </span></a>       </span><span class="s0">// if (x &gt;= dev_.getXMinimum() &amp;&amp; x &lt; (dev_.getXRange() + dev_.getXMinimum())</span><span class="s1"> 
+<a name="l351"><span class="ln">351  </span></a>           </span><span class="s0">//     &amp;&amp; y &gt;= dev_.getYMinimum() &amp;&amp; y &lt; (dev_.getYRange() + dev_.getYMinimum())) {</span><span class="s1"> 
+<a name="l352"><span class="ln">352  </span></a>            dev_.displaySpot(x</span><span class="s2">, </span><span class="s1">y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l353"><span class="ln">353  </span></a>       </span><span class="s0">// }else System.out.println(&quot;not shoot&quot;);</span><span class="s1"> 
+<a name="l354"><span class="ln">354  </span></a>    } 
+<a name="l355"><span class="ln">355  </span></a> 
+<a name="l356"><span class="ln">356  </span></a>    </span><span class="s3">/** 
+<a name="l357"><span class="ln">357  </span></a>     * Illuminate a spot at the center of the Galvo/SLM range, for 
+<a name="l358"><span class="ln">358  </span></a>     * the exposure time. 
+<a name="l359"><span class="ln">359  </span></a>     */</span><span class="s1"> 
+<a name="l360"><span class="ln">360  </span></a>    </span><span class="s2">void </span><span class="s1">displayCenterSpot() { 
+<a name="l361"><span class="ln">361  </span></a>        </span><span class="s2">double </span><span class="s1">x = dev_.getXRange() / </span><span class="s5">2 </span><span class="s1">+ dev_.getXMinimum()</span><span class="s2">;</span><span class="s1"> 
+<a name="l362"><span class="ln">362  </span></a>        </span><span class="s2">double </span><span class="s1">y = dev_.getYRange() / </span><span class="s5">2 </span><span class="s1">+ dev_.getYMinimum()</span><span class="s2">;</span><span class="s1"> 
+<a name="l363"><span class="ln">363  </span></a>        dev_.displaySpot(x</span><span class="s2">, </span><span class="s1">y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l364"><span class="ln">364  </span></a>    } 
+<a name="l365"><span class="ln">365  </span></a> 
+<a name="l366"><span class="ln">366  </span></a>    </span><span class="s0">//// ################### ## Calibration #################################</span><span class="s1"> 
+<a name="l367"><span class="ln">367  </span></a>    </span><span class="s0">// ## Generating, loading and saving calibration mappings</span><span class="s1"> 
+<a name="l368"><span class="ln">368  </span></a> 
+<a name="l369"><span class="ln">369  </span></a>    </span><span class="s3">/** 
+<a name="l370"><span class="ln">370  </span></a>     * Returns the java Preferences node where we store the Calibration mapping. 
+<a name="l371"><span class="ln">371  </span></a>     * Each channel/camera combination is assigned a different node. 
+<a name="l372"><span class="ln">372  </span></a>     */</span><span class="s1"> 
+<a name="l373"><span class="ln">373  </span></a>    </span><span class="s2">private </span><span class="s1">Preferences getCalibrationNode() { 
+<a name="l374"><span class="ln">374  </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l375"><span class="ln">375  </span></a>            </span><span class="s2">return </span><span class="s1">Preferences.userNodeForPackage(<a href="RappPlugin.java.html">RappPlugin</a>.</span><span class="s2">class</span><span class="s1">) 
+<a name="l376"><span class="ln">376  </span></a>                    .node(</span><span class="s4">&quot;calibration&quot;</span><span class="s1">) 
+<a name="l377"><span class="ln">377  </span></a>                    .node(dev_.getChannel()) 
+<a name="l378"><span class="ln">378  </span></a>                    .node(core_.getCameraDevice())</span><span class="s2">;</span><span class="s1"> 
+<a name="l379"><span class="ln">379  </span></a>        } </span><span class="s2">catch </span><span class="s1">(NullPointerException npe) { 
+<a name="l380"><span class="ln">380  </span></a>            </span><span class="s2">return null;</span><span class="s1"> 
+<a name="l381"><span class="ln">381  </span></a>        } 
+<a name="l382"><span class="ln">382  </span></a>    } 
+<a name="l383"><span class="ln">383  </span></a> 
+<a name="l384"><span class="ln">384  </span></a>    </span><span class="s3">/** 
+<a name="l385"><span class="ln">385  </span></a>     * Load the mapping for the current calibration node. The mapping maps each 
+<a name="l386"><span class="ln">386  </span></a>     * polygon cell to an AffineTransform. 
+<a name="l387"><span class="ln">387  </span></a>     */</span><span class="s1"> 
+<a name="l388"><span class="ln">388  </span></a>    </span><span class="s2">private </span><span class="s1">Map&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt; loadMapping() { 
+<a name="l389"><span class="ln">389  </span></a>        Preferences prefs = getCalibrationNode()</span><span class="s2">;</span><span class="s1"> 
+<a name="l390"><span class="ln">390  </span></a>        </span><span class="s2">if </span><span class="s1">(prefs == </span><span class="s2">null</span><span class="s1">) { 
+<a name="l391"><span class="ln">391  </span></a>            </span><span class="s2">return null;</span><span class="s1"> 
+<a name="l392"><span class="ln">392  </span></a>        } 
+<a name="l393"><span class="ln">393  </span></a>        String nodeStr = prefs.toString()</span><span class="s2">;</span><span class="s1"> 
+<a name="l394"><span class="ln">394  </span></a>        </span><span class="s2">if </span><span class="s1">(mappingNode_ == </span><span class="s2">null </span><span class="s1">|| !nodeStr.contentEquals(mappingNode_)) { 
+<a name="l395"><span class="ln">395  </span></a>            mappingNode_ = nodeStr</span><span class="s2">;</span><span class="s1"> 
+<a name="l396"><span class="ln">396  </span></a>            mapping_ = (Map&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt;) JavaUtils.getObjectFromPrefs( 
+<a name="l397"><span class="ln">397  </span></a>                    prefs</span><span class="s2">,</span><span class="s1"> 
+<a name="l398"><span class="ln">398  </span></a>                    dev_.getName()</span><span class="s2">,</span><span class="s1"> 
+<a name="l399"><span class="ln">399  </span></a>                    </span><span class="s2">new </span><span class="s1">HashMap&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt;())</span><span class="s2">;</span><span class="s1"> 
+<a name="l400"><span class="ln">400  </span></a>        } 
+<a name="l401"><span class="ln">401  </span></a>        </span><span class="s2">return </span><span class="s1">mapping_</span><span class="s2">;</span><span class="s1"> 
+<a name="l402"><span class="ln">402  </span></a>    } 
+<a name="l403"><span class="ln">403  </span></a> 
+<a name="l404"><span class="ln">404  </span></a>    </span><span class="s3">/** 
+<a name="l405"><span class="ln">405  </span></a>     * Save the mapping for the current calibration node. The mapping 
+<a name="l406"><span class="ln">406  </span></a>     * maps each polygon cell to an AffineTransform. 
+<a name="l407"><span class="ln">407  </span></a>     */</span><span class="s1"> 
+<a name="l408"><span class="ln">408  </span></a>    </span><span class="s2">private void </span><span class="s1">saveMapping(HashMap&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt; mapping) { 
+<a name="l409"><span class="ln">409  </span></a>        JavaUtils.putObjectInPrefs(getCalibrationNode()</span><span class="s2">, </span><span class="s1">dev_.getName()</span><span class="s2">, </span><span class="s1">mapping)</span><span class="s2">;</span><span class="s1"> 
+<a name="l410"><span class="ln">410  </span></a>        mapping_ = mapping</span><span class="s2">;</span><span class="s1"> 
+<a name="l411"><span class="ln">411  </span></a>        mappingNode_ = getCalibrationNode().toString()</span><span class="s2">;</span><span class="s1"> 
+<a name="l412"><span class="ln">412  </span></a>    } 
+<a name="l413"><span class="ln">413  </span></a> 
+<a name="l414"><span class="ln">414  </span></a>    </span><span class="s0">// ## Methods for generating a calibration mapping.</span><span class="s1"> 
+<a name="l415"><span class="ln">415  </span></a> 
+<a name="l416"><span class="ln">416  </span></a>    </span><span class="s0">// Find the brightest spot in an ImageProcessor. The image is first blurred</span><span class="s1"> 
+<a name="l417"><span class="ln">417  </span></a>    </span><span class="s0">// and then the pixel with maximum intensity is returned.</span><span class="s1"> 
+<a name="l418"><span class="ln">418  </span></a>    </span><span class="s2">private static </span><span class="s1">Point findPeak(ImageProcessor proc) { 
+<a name="l419"><span class="ln">419  </span></a>        ImageProcessor blurImage = proc.duplicate()</span><span class="s2">;</span><span class="s1"> 
+<a name="l420"><span class="ln">420  </span></a>        blurImage.setRoi((Roi) </span><span class="s2">null</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l421"><span class="ln">421  </span></a>        GaussianBlur blur = </span><span class="s2">new </span><span class="s1">GaussianBlur()</span><span class="s2">;</span><span class="s1"> 
+<a name="l422"><span class="ln">422  </span></a>        blur.blurGaussian(blurImage</span><span class="s2">, </span><span class="s5">10</span><span class="s2">, </span><span class="s5">10</span><span class="s2">, </span><span class="s5">0.01</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l423"><span class="ln">423  </span></a>        </span><span class="s0">//showProcessor(&quot;findPeak&quot;,proc);</span><span class="s1"> 
+<a name="l424"><span class="ln">424  </span></a>        Point x = ImageUtils.findMaxPixel(blurImage)</span><span class="s2">;</span><span class="s1"> 
+<a name="l425"><span class="ln">425  </span></a>        x.translate(</span><span class="s5">1</span><span class="s2">, </span><span class="s5">1</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l426"><span class="ln">426  </span></a>        </span><span class="s2">return </span><span class="s1">x</span><span class="s2">;</span><span class="s1"> 
+<a name="l427"><span class="ln">427  </span></a>    } 
+<a name="l428"><span class="ln">428  </span></a> 
+<a name="l429"><span class="ln">429  </span></a>    </span><span class="s3">/** 
+<a name="l430"><span class="ln">430  </span></a>     * Display a spot using the projection device, and return its current 
+<a name="l431"><span class="ln">431  </span></a>     * location on the camera.  Does not do sub-pixel localization, but could 
+<a name="l432"><span class="ln">432  </span></a>     * (just would change its return type, most other code would be OK with this) 
+<a name="l433"><span class="ln">433  </span></a>     */</span><span class="s1"> 
+<a name="l434"><span class="ln">434  </span></a>    </span><span class="s2">private </span><span class="s1">Point measureSpotOnCamera(Point2D.Double projectionPoint</span><span class="s2">, boolean </span><span class="s1">addToAlbum) { 
+<a name="l435"><span class="ln">435  </span></a>        </span><span class="s2">if </span><span class="s1">(stopRequested_.get()) { 
+<a name="l436"><span class="ln">436  </span></a>            </span><span class="s2">return null;</span><span class="s1"> 
+<a name="l437"><span class="ln">437  </span></a>        } 
+<a name="l438"><span class="ln">438  </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l439"><span class="ln">439  </span></a>            dev_.turnOff()</span><span class="s2">;</span><span class="s1"> 
+<a name="l440"><span class="ln">440  </span></a>            </span><span class="s0">// JonD: wait to make sure the device gets turned off</span><span class="s1"> 
+<a name="l441"><span class="ln">441  </span></a>            Thread.sleep(</span><span class="s5">300</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l442"><span class="ln">442  </span></a>            core_.snapImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l443"><span class="ln">443  </span></a>            TaggedImage image = core_.getTaggedImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l444"><span class="ln">444  </span></a>            ImageProcessor proc1 = ImageUtils.makeMonochromeProcessor(image)</span><span class="s2">;</span><span class="s1"> 
+<a name="l445"><span class="ln">445  </span></a>            </span><span class="s0">// JonD: should use the exposure that the user has set to avoid hardcoding a value;</span><span class="s1"> 
+<a name="l446"><span class="ln">446  </span></a>            </span><span class="s0">// if the user wants a different exposure time for calibration it's easy to specify</span><span class="s1"> 
+<a name="l447"><span class="ln">447  </span></a>            </span><span class="s0">// =&gt; commenting out next two lines</span><span class="s1"> 
+<a name="l448"><span class="ln">448  </span></a>            </span><span class="s0">// long originalExposure = dev_.getExposure();</span><span class="s1"> 
+<a name="l449"><span class="ln">449  </span></a>            </span><span class="s0">// dev_.setExposure(500000);</span><span class="s1"> 
+<a name="l450"><span class="ln">450  </span></a>            displaySpot(projectionPoint.x</span><span class="s2">, </span><span class="s1">projectionPoint.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l451"><span class="ln">451  </span></a>            </span><span class="s0">// NS: Timing between displaySpot and snapImage is critical</span><span class="s1"> 
+<a name="l452"><span class="ln">452  </span></a>            </span><span class="s0">// we have no idea how fast the device will respond</span><span class="s1"> 
+<a name="l453"><span class="ln">453  </span></a>            </span><span class="s0">// if we add &quot;dev_.waitForDevice(), then the RAPP UGA-40 will already have ended</span><span class="s1"> 
+<a name="l454"><span class="ln">454  </span></a>            </span><span class="s0">// its exposure before returning control</span><span class="s1"> 
+<a name="l455"><span class="ln">455  </span></a>            </span><span class="s0">// For now, wait for a user specified delay</span><span class="s1"> 
+<a name="l456"><span class="ln">456  </span></a>            </span><span class="s2">int </span><span class="s1">delayMs = Integer.parseInt(<a href="RappGui.java.html">RappGui</a>.getInstance().delayField_.getValue().toString())</span><span class="s2">;</span><span class="s1"> 
+<a name="l457"><span class="ln">457  </span></a>            Thread.sleep(delayMs)</span><span class="s2">;</span><span class="s1"> 
+<a name="l458"><span class="ln">458  </span></a>            core_.snapImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l459"><span class="ln">459  </span></a>            </span><span class="s0">// NS: just make sure to wait until the spot is no longer displayed</span><span class="s1"> 
+<a name="l460"><span class="ln">460  </span></a>            </span><span class="s0">// JonD: time to wait is simply the exposure time less any delay</span><span class="s1"> 
+<a name="l461"><span class="ln">461  </span></a>            Thread.sleep((</span><span class="s2">int</span><span class="s1">) (dev_.getExposure()/</span><span class="s5">1000</span><span class="s1">) - delayMs)</span><span class="s2">;</span><span class="s1"> 
+<a name="l462"><span class="ln">462  </span></a>            </span><span class="s0">// JonD: see earlier comment =&gt; commenting out next line</span><span class="s1"> 
+<a name="l463"><span class="ln">463  </span></a>            </span><span class="s0">// dev_.setExposure(originalExposure);</span><span class="s1"> 
+<a name="l464"><span class="ln">464  </span></a>            TaggedImage taggedImage2 = core_.getTaggedImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l465"><span class="ln">465  </span></a>            ImageProcessor proc2 = ImageUtils.makeMonochromeProcessor(taggedImage2)</span><span class="s2">;</span><span class="s1"> 
+<a name="l466"><span class="ln">466  </span></a>            app_.displayImage(taggedImage2)</span><span class="s2">;</span><span class="s1"> 
+<a name="l467"><span class="ln">467  </span></a>            </span><span class="s0">// saving images to album is useful for debugging</span><span class="s1"> 
+<a name="l468"><span class="ln">468  </span></a>            </span><span class="s0">// TODO figure out why this doesn't work towards the end; maybe limitation on # of images in album</span><span class="s1"> 
+<a name="l469"><span class="ln">469  </span></a>            </span><span class="s0">// if (addToAlbum) {</span><span class="s1"> 
+<a name="l470"><span class="ln">470  </span></a>            </span><span class="s0">//    app_.addToAlbum(taggedImage2);</span><span class="s1"> 
+<a name="l471"><span class="ln">471  </span></a>            </span><span class="s0">// }</span><span class="s1"> 
+<a name="l472"><span class="ln">472  </span></a>            ImageProcessor diffImage = ImageUtils.subtractImageProcessors(proc2.convertToFloatProcessor()</span><span class="s2">, </span><span class="s1">proc1.convertToFloatProcessor())</span><span class="s2">;</span><span class="s1"> 
+<a name="l473"><span class="ln">473  </span></a>            Point maxPt = findPeak(diffImage)</span><span class="s2">;</span><span class="s1"> 
+<a name="l474"><span class="ln">474  </span></a>            app_.getSnapLiveWin().getImagePlus().setRoi(</span><span class="s2">new </span><span class="s1">PointRoi(maxPt.x</span><span class="s2">, </span><span class="s1">maxPt.y))</span><span class="s2">;</span><span class="s1"> 
+<a name="l475"><span class="ln">475  </span></a>            </span><span class="s0">// NS: what is this second sleep good for????</span><span class="s1"> 
+<a name="l476"><span class="ln">476  </span></a>            </span><span class="s0">// core_.sleep(500);</span><span class="s1"> 
+<a name="l477"><span class="ln">477  </span></a>            </span><span class="s2">return </span><span class="s1">maxPt</span><span class="s2">;</span><span class="s1"> 
+<a name="l478"><span class="ln">478  </span></a>        } </span><span class="s2">catch </span><span class="s1">(Exception e) { 
+<a name="l479"><span class="ln">479  </span></a>            ReportingUtils.showError(e)</span><span class="s2">;</span><span class="s1"> 
+<a name="l480"><span class="ln">480  </span></a>            </span><span class="s2">return null;</span><span class="s1"> 
+<a name="l481"><span class="ln">481  </span></a>        } 
+<a name="l482"><span class="ln">482  </span></a>    } 
+<a name="l483"><span class="ln">483  </span></a> 
+<a name="l484"><span class="ln">484  </span></a>    </span><span class="s3">/** 
+<a name="l485"><span class="ln">485  </span></a>     * Illuminate a spot at ptSLM, measure its location on the camera, and 
+<a name="l486"><span class="ln">486  </span></a>     * add the resulting point pair to the spotMap. 
+<a name="l487"><span class="ln">487  </span></a>     */</span><span class="s1"> 
+<a name="l488"><span class="ln">488  </span></a>    </span><span class="s2">private void </span><span class="s1">measureAndAddToSpotMap(Map&lt;Point2D.Double</span><span class="s2">, </span><span class="s1">Point2D.Double&gt; spotMap</span><span class="s2">,</span><span class="s1"> 
+<a name="l489"><span class="ln">489  </span></a>                                        Point2D.Double ptSLM) { 
+<a name="l490"><span class="ln">490  </span></a>        Point ptCam = measureSpotOnCamera(ptSLM</span><span class="s2">, false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l491"><span class="ln">491  </span></a>        Point2D.Double ptCamDouble = </span><span class="s2">new </span><span class="s1">Point2D.Double(ptCam.x</span><span class="s2">, </span><span class="s1">ptCam.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l492"><span class="ln">492  </span></a>        spotMap.put(ptCamDouble</span><span class="s2">, </span><span class="s1">ptSLM)</span><span class="s2">;</span><span class="s1"> 
+<a name="l493"><span class="ln">493  </span></a>    } 
+<a name="l494"><span class="ln">494  </span></a> 
+<a name="l495"><span class="ln">495  </span></a>    </span><span class="s3">/** 
+<a name="l496"><span class="ln">496  </span></a>     * Illuminates and images five control points near the center, 
+<a name="l497"><span class="ln">497  </span></a>     * and return an affine transform mapping from image coordinates 
+<a name="l498"><span class="ln">498  </span></a>     * to phototargeter coordinates. 
+<a name="l499"><span class="ln">499  </span></a>     */</span><span class="s1"> 
+<a name="l500"><span class="ln">500  </span></a>    </span><span class="s2">private </span><span class="s1">AffineTransform generateLinearMapping() { 
+<a name="l501"><span class="ln">501  </span></a>        </span><span class="s2">double </span><span class="s1">centerX = dev_.getXRange() / </span><span class="s5">2 </span><span class="s1">+ dev_.getXMinimum()</span><span class="s2">;</span><span class="s1"> 
+<a name="l502"><span class="ln">502  </span></a>        </span><span class="s2">double </span><span class="s1">centerY = dev_.getYRange() / </span><span class="s5">2 </span><span class="s1">+ dev_.getYMinimum()</span><span class="s2">;</span><span class="s1"> 
+<a name="l503"><span class="ln">503  </span></a>        </span><span class="s2">double </span><span class="s1">spacing = Math.min(dev_.getXRange()</span><span class="s2">, </span><span class="s1">dev_.getYRange()) / </span><span class="s5">25</span><span class="s2">;  </span><span class="s0">// use 4% of galvo/SLM range</span><span class="s1"> 
+<a name="l504"><span class="ln">504  </span></a>        Map&lt;Point2D.Double</span><span class="s2">, </span><span class="s1">Point2D.Double&gt; spotMap 
+<a name="l505"><span class="ln">505  </span></a>                = </span><span class="s2">new </span><span class="s1">HashMap&lt;Point2D.Double</span><span class="s2">, </span><span class="s1">Point2D.Double&gt;()</span><span class="s2">;</span><span class="s1"> 
+<a name="l506"><span class="ln">506  </span></a> 
+<a name="l507"><span class="ln">507  </span></a>        measureAndAddToSpotMap(spotMap</span><span class="s2">, new </span><span class="s1">Point2D.Double(centerX</span><span class="s2">, </span><span class="s1">centerY))</span><span class="s2">;</span><span class="s1"> 
+<a name="l508"><span class="ln">508  </span></a>        measureAndAddToSpotMap(spotMap</span><span class="s2">, new </span><span class="s1">Point2D.Double(centerX</span><span class="s2">, </span><span class="s1">centerY + spacing))</span><span class="s2">;</span><span class="s1"> 
+<a name="l509"><span class="ln">509  </span></a>        measureAndAddToSpotMap(spotMap</span><span class="s2">, new </span><span class="s1">Point2D.Double(centerX + spacing</span><span class="s2">, </span><span class="s1">centerY))</span><span class="s2">;</span><span class="s1"> 
+<a name="l510"><span class="ln">510  </span></a>        measureAndAddToSpotMap(spotMap</span><span class="s2">, new </span><span class="s1">Point2D.Double(centerX</span><span class="s2">, </span><span class="s1">centerY - spacing))</span><span class="s2">;</span><span class="s1"> 
+<a name="l511"><span class="ln">511  </span></a>        measureAndAddToSpotMap(spotMap</span><span class="s2">, new </span><span class="s1">Point2D.Double(centerX - spacing</span><span class="s2">, </span><span class="s1">centerY))</span><span class="s2">;</span><span class="s1"> 
+<a name="l512"><span class="ln">512  </span></a>        </span><span class="s2">if </span><span class="s1">(stopRequested_.get()) { 
+<a name="l513"><span class="ln">513  </span></a>            </span><span class="s2">return null;</span><span class="s1"> 
+<a name="l514"><span class="ln">514  </span></a>        } 
+<a name="l515"><span class="ln">515  </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l516"><span class="ln">516  </span></a>            </span><span class="s0">// require that the RMS value between the mapped points and the measured points be less than 5% of image size</span><span class="s1"> 
+<a name="l517"><span class="ln">517  </span></a>            </span><span class="s0">// also require that the RMS value be less than the spacing between points in the galvo/SLM coordinate system</span><span class="s1"> 
+<a name="l518"><span class="ln">518  </span></a>            </span><span class="s0">// (2nd requirement was probably the intent of the code until r15505, but parameters were interchanged in call)</span><span class="s1"> 
+<a name="l519"><span class="ln">519  </span></a>            </span><span class="s2">final long </span><span class="s1">imageSize = Math.min(core_.getImageWidth()</span><span class="s2">, </span><span class="s1">core_.getImageHeight())</span><span class="s2">;</span><span class="s1"> 
+<a name="l520"><span class="ln">520  </span></a>            </span><span class="s2">return </span><span class="s1">MathFunctions.generateAffineTransformFromPointPairs(spotMap</span><span class="s2">, </span><span class="s1">imageSize*</span><span class="s5">0.05</span><span class="s2">, </span><span class="s1">spacing)</span><span class="s2">;</span><span class="s1"> 
+<a name="l521"><span class="ln">521  </span></a>        } </span><span class="s2">catch </span><span class="s1">(Exception e) { 
+<a name="l522"><span class="ln">522  </span></a>            </span><span class="s2">throw new </span><span class="s1">RuntimeException(</span><span class="s4">&quot;Spots aren't detected as expected. Is DMD in focus and roughly centered in camera's field of view?&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l523"><span class="ln">523  </span></a>        } 
+<a name="l524"><span class="ln">524  </span></a>    } 
+<a name="l525"><span class="ln">525  </span></a> 
+<a name="l526"><span class="ln">526  </span></a>    </span><span class="s3">/** 
+<a name="l527"><span class="ln">527  </span></a>     * Generate a nonlinear calibration mapping for the current device settings. 
+<a name="l528"><span class="ln">528  </span></a>     * A rectangular lattice of points is illuminated one-by-one on the 
+<a name="l529"><span class="ln">529  </span></a>     * projection device, and locations in camera pixels of corresponding 
+<a name="l530"><span class="ln">530  </span></a>     * spots on the camera image are recorded. For each rectangular 
+<a name="l531"><span class="ln">531  </span></a>     * cell in the grid, we take the four point mappings (camera to projector) 
+<a name="l532"><span class="ln">532  </span></a>     * and generate a local AffineTransform using linear least squares. 
+<a name="l533"><span class="ln">533  </span></a>     * Cells with suspect measured corner positions are discarded. 
+<a name="l534"><span class="ln">534  </span></a>     * A mapping of cell polygon to AffineTransform is generated. 
+<a name="l535"><span class="ln">535  </span></a>     */</span><span class="s1"> 
+<a name="l536"><span class="ln">536  </span></a>    </span><span class="s2">private </span><span class="s1">Map&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt; generateNonlinearMapping() { 
+<a name="l537"><span class="ln">537  </span></a> 
+<a name="l538"><span class="ln">538  </span></a>        </span><span class="s0">// get the affine transform near the center spot</span><span class="s1"> 
+<a name="l539"><span class="ln">539  </span></a>        </span><span class="s2">final </span><span class="s1">AffineTransform firstApproxAffine = generateLinearMapping()</span><span class="s2">;</span><span class="s1"> 
+<a name="l540"><span class="ln">540  </span></a> 
+<a name="l541"><span class="ln">541  </span></a>        </span><span class="s0">// then use this single transform to estimate what SLM coordinates</span><span class="s1"> 
+<a name="l542"><span class="ln">542  </span></a>        </span><span class="s0">// correspond to the image's corner positions</span><span class="s1"> 
+<a name="l543"><span class="ln">543  </span></a>        </span><span class="s2">final </span><span class="s1">Point2D.Double camCorner1 = (Point2D.Double) firstApproxAffine.transform(</span><span class="s2">new </span><span class="s1">Point2D.Double(</span><span class="s5">0</span><span class="s2">, </span><span class="s5">0</span><span class="s1">)</span><span class="s2">, null</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l544"><span class="ln">544  </span></a>        </span><span class="s2">final </span><span class="s1">Point2D.Double camCorner2 = (Point2D.Double) firstApproxAffine.transform(</span><span class="s2">new </span><span class="s1">Point2D.Double((</span><span class="s2">int</span><span class="s1">) core_.getImageWidth()</span><span class="s2">, </span><span class="s1">(</span><span class="s2">int</span><span class="s1">) core_.getImageHeight())</span><span class="s2">, null</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l545"><span class="ln">545  </span></a>        </span><span class="s2">final </span><span class="s1">Point2D.Double camCorner3 = (Point2D.Double) firstApproxAffine.transform(</span><span class="s2">new </span><span class="s1">Point2D.Double(</span><span class="s5">0</span><span class="s2">, </span><span class="s1">(</span><span class="s2">int</span><span class="s1">) core_.getImageHeight())</span><span class="s2">, null</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l546"><span class="ln">546  </span></a>        </span><span class="s2">final </span><span class="s1">Point2D.Double camCorner4 = (Point2D.Double) firstApproxAffine.transform(</span><span class="s2">new </span><span class="s1">Point2D.Double((</span><span class="s2">int</span><span class="s1">) core_.getImageWidth()</span><span class="s2">, </span><span class="s5">0</span><span class="s1">)</span><span class="s2">, null</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l547"><span class="ln">547  </span></a> 
+<a name="l548"><span class="ln">548  </span></a>        </span><span class="s0">// figure out camera's bounds in SLM coordinates</span><span class="s1"> 
+<a name="l549"><span class="ln">549  </span></a>        </span><span class="s0">// min/max because we don't know the relative orientation of the camera and SLM</span><span class="s1"> 
+<a name="l550"><span class="ln">550  </span></a>        </span><span class="s0">// do some extra checking in case camera/SLM aren't at exactly 90 degrees from each other,</span><span class="s1"> 
+<a name="l551"><span class="ln">551  </span></a>        </span><span class="s0">// but still better that they are at 0, 90, 180, or 270 degrees from each other</span><span class="s1"> 
+<a name="l552"><span class="ln">552  </span></a>        </span><span class="s0">// TODO can create grid along camera location instead of SLM's if camera is the limiting factor; this will make arbitrary rotation possible</span><span class="s1"> 
+<a name="l553"><span class="ln">553  </span></a>        </span><span class="s2">final double </span><span class="s1">camLeft = Math.min(Math.min(Math.min(camCorner1.x</span><span class="s2">, </span><span class="s1">camCorner2.x)</span><span class="s2">, </span><span class="s1">camCorner3.x)</span><span class="s2">, </span><span class="s1">camCorner4.x)</span><span class="s2">;</span><span class="s1"> 
+<a name="l554"><span class="ln">554  </span></a>        </span><span class="s2">final double </span><span class="s1">camRight = Math.max(Math.max(Math.max(camCorner1.x</span><span class="s2">, </span><span class="s1">camCorner2.x)</span><span class="s2">, </span><span class="s1">camCorner3.x)</span><span class="s2">, </span><span class="s1">camCorner4.x)</span><span class="s2">;</span><span class="s1"> 
+<a name="l555"><span class="ln">555  </span></a>        </span><span class="s2">final double </span><span class="s1">camTop = Math.min(Math.min(Math.min(camCorner1.y</span><span class="s2">, </span><span class="s1">camCorner2.y)</span><span class="s2">, </span><span class="s1">camCorner3.y)</span><span class="s2">, </span><span class="s1">camCorner4.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l556"><span class="ln">556  </span></a>        </span><span class="s2">final double </span><span class="s1">camBottom = Math.max(Math.max(Math.max(camCorner1.y</span><span class="s2">, </span><span class="s1">camCorner2.y)</span><span class="s2">, </span><span class="s1">camCorner3.y)</span><span class="s2">, </span><span class="s1">camCorner4.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l557"><span class="ln">557  </span></a> 
+<a name="l558"><span class="ln">558  </span></a>        </span><span class="s0">// these are the SLM's bounds</span><span class="s1"> 
+<a name="l559"><span class="ln">559  </span></a>        </span><span class="s2">final double </span><span class="s1">slmLeft = dev_.getXMinimum()</span><span class="s2">;</span><span class="s1"> 
+<a name="l560"><span class="ln">560  </span></a>        </span><span class="s2">final double </span><span class="s1">slmRight = dev_.getXRange() + dev_.getXMinimum()</span><span class="s2">;</span><span class="s1"> 
+<a name="l561"><span class="ln">561  </span></a>        </span><span class="s2">final double </span><span class="s1">slmTop = dev_.getYMinimum()</span><span class="s2">;</span><span class="s1"> 
+<a name="l562"><span class="ln">562  </span></a>        </span><span class="s2">final double </span><span class="s1">slmBottom = dev_.getYRange() + dev_.getYMinimum()</span><span class="s2">;</span><span class="s1"> 
+<a name="l563"><span class="ln">563  </span></a> 
+<a name="l564"><span class="ln">564  </span></a>        </span><span class="s0">// figure out the &quot;overlap region&quot; where both the camera and SLM</span><span class="s1"> 
+<a name="l565"><span class="ln">565  </span></a>        </span><span class="s0">// can &quot;see&quot;, expressed in SLM coordinates</span><span class="s1"> 
+<a name="l566"><span class="ln">566  </span></a>        </span><span class="s2">final double </span><span class="s1">left = Math.max(camLeft</span><span class="s2">, </span><span class="s1">slmLeft)</span><span class="s2">;</span><span class="s1"> 
+<a name="l567"><span class="ln">567  </span></a>        </span><span class="s2">final double </span><span class="s1">right = Math.min(camRight</span><span class="s2">, </span><span class="s1">slmRight)</span><span class="s2">;</span><span class="s1"> 
+<a name="l568"><span class="ln">568  </span></a>        </span><span class="s2">final double </span><span class="s1">top = Math.max(camTop</span><span class="s2">, </span><span class="s1">slmTop)</span><span class="s2">;</span><span class="s1"> 
+<a name="l569"><span class="ln">569  </span></a>        </span><span class="s2">final double </span><span class="s1">bottom = Math.min(camBottom</span><span class="s2">, </span><span class="s1">slmBottom)</span><span class="s2">;</span><span class="s1"> 
+<a name="l570"><span class="ln">570  </span></a>        </span><span class="s2">final double </span><span class="s1">width = right - left</span><span class="s2">;</span><span class="s1"> 
+<a name="l571"><span class="ln">571  </span></a>        </span><span class="s2">final double </span><span class="s1">height = bottom - top</span><span class="s2">;</span><span class="s1"> 
+<a name="l572"><span class="ln">572  </span></a> 
+<a name="l573"><span class="ln">573  </span></a>        </span><span class="s0">// compute a grid of SLM points inside the &quot;overlap region&quot;</span><span class="s1"> 
+<a name="l574"><span class="ln">574  </span></a>        </span><span class="s0">// nGrid is how many polygons in both X and Y</span><span class="s1"> 
+<a name="l575"><span class="ln">575  </span></a>        </span><span class="s0">// require (nGrid + 1)^2 spot measurements to get nGrid^2 squares</span><span class="s1"> 
+<a name="l576"><span class="ln">576  </span></a>        </span><span class="s0">// TODO allow user to change nGrid</span><span class="s1"> 
+<a name="l577"><span class="ln">577  </span></a>        </span><span class="s2">final int </span><span class="s1">nGrid = </span><span class="s5">7</span><span class="s2">;</span><span class="s1"> 
+<a name="l578"><span class="ln">578  </span></a>        Point2D.Double slmPoint[][] = </span><span class="s2">new </span><span class="s1">Point2D.Double[</span><span class="s5">1 </span><span class="s1">+ nGrid][</span><span class="s5">1 </span><span class="s1">+ nGrid]</span><span class="s2">;</span><span class="s1"> 
+<a name="l579"><span class="ln">579  </span></a>        Point2D.Double camPoint[][] = </span><span class="s2">new </span><span class="s1">Point2D.Double[</span><span class="s5">1 </span><span class="s1">+ nGrid][</span><span class="s5">1 </span><span class="s1">+ nGrid]</span><span class="s2">;</span><span class="s1"> 
+<a name="l580"><span class="ln">580  </span></a> 
+<a name="l581"><span class="ln">581  </span></a>        </span><span class="s0">// tabulate the camera spot at each of SLM grid points</span><span class="s1"> 
+<a name="l582"><span class="ln">582  </span></a>        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s2">; </span><span class="s1">i &lt;= nGrid</span><span class="s2">; </span><span class="s1">++i) { 
+<a name="l583"><span class="ln">583  </span></a>            </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">j = </span><span class="s5">0</span><span class="s2">; </span><span class="s1">j &lt;= nGrid</span><span class="s2">; </span><span class="s1">++j) { 
+<a name="l584"><span class="ln">584  </span></a>                </span><span class="s2">double </span><span class="s1">xoffset = ((i + </span><span class="s5">0.5</span><span class="s1">) * width / (nGrid + </span><span class="s5">1.0</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l585"><span class="ln">585  </span></a>                </span><span class="s2">double </span><span class="s1">yoffset = ((j + </span><span class="s5">0.5</span><span class="s1">) * height / (nGrid + </span><span class="s5">1.0</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l586"><span class="ln">586  </span></a>                slmPoint[i][j] = </span><span class="s2">new </span><span class="s1">Point2D.Double(left + xoffset</span><span class="s2">, </span><span class="s1">top + yoffset)</span><span class="s2">;</span><span class="s1"> 
+<a name="l587"><span class="ln">587  </span></a>                Point spot = measureSpotOnCamera(slmPoint[i][j]</span><span class="s2">, true</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l588"><span class="ln">588  </span></a>                </span><span class="s2">if </span><span class="s1">(spot != </span><span class="s2">null</span><span class="s1">) { 
+<a name="l589"><span class="ln">589  </span></a>                    camPoint[i][j] = toDoublePoint(spot)</span><span class="s2">;</span><span class="s1"> 
+<a name="l590"><span class="ln">590  </span></a>                } 
+<a name="l591"><span class="ln">591  </span></a>            } 
+<a name="l592"><span class="ln">592  </span></a>        } 
+<a name="l593"><span class="ln">593  </span></a> 
+<a name="l594"><span class="ln">594  </span></a>        </span><span class="s2">if </span><span class="s1">(stopRequested_.get()) { 
+<a name="l595"><span class="ln">595  </span></a>            </span><span class="s2">return null;</span><span class="s1"> 
+<a name="l596"><span class="ln">596  </span></a>        } 
+<a name="l597"><span class="ln">597  </span></a> 
+<a name="l598"><span class="ln">598  </span></a>        </span><span class="s0">// now make a grid of (square) polygons (in camera's coordinate system)</span><span class="s1"> 
+<a name="l599"><span class="ln">599  </span></a>        </span><span class="s0">// and generate an affine transform for each of these square regions</span><span class="s1"> 
+<a name="l600"><span class="ln">600  </span></a>        Map&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt; bigMap 
+<a name="l601"><span class="ln">601  </span></a>                = </span><span class="s2">new </span><span class="s1">HashMap&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt;()</span><span class="s2">;</span><span class="s1"> 
+<a name="l602"><span class="ln">602  </span></a>        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s2">; </span><span class="s1">i &lt;= nGrid - </span><span class="s5">1</span><span class="s2">; </span><span class="s1">++i) { 
+<a name="l603"><span class="ln">603  </span></a>            </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">j = </span><span class="s5">0</span><span class="s2">; </span><span class="s1">j &lt;= nGrid - </span><span class="s5">1</span><span class="s2">; </span><span class="s1">++j) { 
+<a name="l604"><span class="ln">604  </span></a>                Polygon poly = </span><span class="s2">new </span><span class="s1">Polygon()</span><span class="s2">;</span><span class="s1"> 
+<a name="l605"><span class="ln">605  </span></a>                addVertex(poly</span><span class="s2">, </span><span class="s1">toIntPoint(camPoint[i][j]))</span><span class="s2">;</span><span class="s1"> 
+<a name="l606"><span class="ln">606  </span></a>                addVertex(poly</span><span class="s2">, </span><span class="s1">toIntPoint(camPoint[i][j + </span><span class="s5">1</span><span class="s1">]))</span><span class="s2">;</span><span class="s1"> 
+<a name="l607"><span class="ln">607  </span></a>                addVertex(poly</span><span class="s2">, </span><span class="s1">toIntPoint(camPoint[i + </span><span class="s5">1</span><span class="s1">][j + </span><span class="s5">1</span><span class="s1">]))</span><span class="s2">;</span><span class="s1"> 
+<a name="l608"><span class="ln">608  </span></a>                addVertex(poly</span><span class="s2">, </span><span class="s1">toIntPoint(camPoint[i + </span><span class="s5">1</span><span class="s1">][j]))</span><span class="s2">;</span><span class="s1"> 
+<a name="l609"><span class="ln">609  </span></a> 
+<a name="l610"><span class="ln">610  </span></a>                Map&lt;Point2D.Double</span><span class="s2">, </span><span class="s1">Point2D.Double&gt; map 
+<a name="l611"><span class="ln">611  </span></a>                        = </span><span class="s2">new </span><span class="s1">HashMap&lt;Point2D.Double</span><span class="s2">, </span><span class="s1">Point2D.Double&gt;()</span><span class="s2">;</span><span class="s1"> 
+<a name="l612"><span class="ln">612  </span></a>                map.put(camPoint[i][j]</span><span class="s2">, </span><span class="s1">slmPoint[i][j])</span><span class="s2">;</span><span class="s1"> 
+<a name="l613"><span class="ln">613  </span></a>                map.put(camPoint[i][j + </span><span class="s5">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">slmPoint[i][j + </span><span class="s5">1</span><span class="s1">])</span><span class="s2">;</span><span class="s1"> 
+<a name="l614"><span class="ln">614  </span></a>                map.put(camPoint[i + </span><span class="s5">1</span><span class="s1">][j]</span><span class="s2">, </span><span class="s1">slmPoint[i + </span><span class="s5">1</span><span class="s1">][j])</span><span class="s2">;</span><span class="s1"> 
+<a name="l615"><span class="ln">615  </span></a>                map.put(camPoint[i + </span><span class="s5">1</span><span class="s1">][j + </span><span class="s5">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">slmPoint[i + </span><span class="s5">1</span><span class="s1">][j + </span><span class="s5">1</span><span class="s1">])</span><span class="s2">;</span><span class="s1"> 
+<a name="l616"><span class="ln">616  </span></a>                </span><span class="s2">double </span><span class="s1">srcDX = Math.abs((camPoint[i+</span><span class="s5">1</span><span class="s1">][j].x - camPoint[i][j].x))/</span><span class="s5">4</span><span class="s2">;</span><span class="s1"> 
+<a name="l617"><span class="ln">617  </span></a>                </span><span class="s2">double </span><span class="s1">srcDY = Math.abs((camPoint[i][j+</span><span class="s5">1</span><span class="s1">].y - camPoint[i][j].y))/</span><span class="s5">4</span><span class="s2">;</span><span class="s1"> 
+<a name="l618"><span class="ln">618  </span></a>                </span><span class="s2">double </span><span class="s1">srcTol = Math.max(srcDX</span><span class="s2">, </span><span class="s1">srcDY)</span><span class="s2">;</span><span class="s1"> 
+<a name="l619"><span class="ln">619  </span></a> 
+<a name="l620"><span class="ln">620  </span></a>                </span><span class="s2">try </span><span class="s1">{ 
+<a name="l621"><span class="ln">621  </span></a>                    AffineTransform transform = MathFunctions.generateAffineTransformFromPointPairs(map</span><span class="s2">, </span><span class="s1">srcTol</span><span class="s2">, </span><span class="s1">Double.MAX_VALUE)</span><span class="s2">;</span><span class="s1"> 
+<a name="l622"><span class="ln">622  </span></a>                    bigMap.put(poly</span><span class="s2">, </span><span class="s1">transform)</span><span class="s2">;</span><span class="s1"> 
+<a name="l623"><span class="ln">623  </span></a>                } </span><span class="s2">catch </span><span class="s1">(Exception e) { 
+<a name="l624"><span class="ln">624  </span></a>                    ReportingUtils.logError(</span><span class="s4">&quot;Bad cell in mapping.&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l625"><span class="ln">625  </span></a>                } 
+<a name="l626"><span class="ln">626  </span></a>            } 
+<a name="l627"><span class="ln">627  </span></a>        } 
+<a name="l628"><span class="ln">628  </span></a>        </span><span class="s2">return </span><span class="s1">bigMap</span><span class="s2">;</span><span class="s1"> 
+<a name="l629"><span class="ln">629  </span></a>    } 
+<a name="l630"><span class="ln">630  </span></a> 
+<a name="l631"><span class="ln">631  </span></a>    </span><span class="s3">/** 
+<a name="l632"><span class="ln">632  </span></a>     * Runs the full calibration. First 
+<a name="l633"><span class="ln">633  </span></a>     * generates a linear mapping (a first approximation) and then generates 
+<a name="l634"><span class="ln">634  </span></a>     * a second piece-wise &quot;non-linear&quot; mapping of affine transforms. Saves 
+<a name="l635"><span class="ln">635  </span></a>     * the mapping to Java Preferences. 
+<a name="l636"><span class="ln">636  </span></a>     */</span><span class="s1"> 
+<a name="l637"><span class="ln">637  </span></a>    </span><span class="s2">public void </span><span class="s1">runCalibration() { 
+<a name="l638"><span class="ln">638  </span></a>        </span><span class="s2">final boolean </span><span class="s1">liveModeRunning = app_.isLiveModeOn()</span><span class="s2">;</span><span class="s1"> 
+<a name="l639"><span class="ln">639  </span></a>        app_.enableLiveMode(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l640"><span class="ln">640  </span></a>        </span><span class="s2">if </span><span class="s1">(!isRunning_.get()) { 
+<a name="l641"><span class="ln">641  </span></a>            stopRequested_.set(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l642"><span class="ln">642  </span></a>            Thread th = </span><span class="s2">new </span><span class="s1">Thread(</span><span class="s4">&quot;Projector calibration thread&quot;</span><span class="s1">) { 
+<a name="l643"><span class="ln">643  </span></a>                @Override 
+<a name="l644"><span class="ln">644  </span></a>                </span><span class="s2">public void </span><span class="s1">run() { 
+<a name="l645"><span class="ln">645  </span></a>                    </span><span class="s2">try </span><span class="s1">{ 
+<a name="l646"><span class="ln">646  </span></a>                        isRunning_.set(</span><span class="s2">true</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l647"><span class="ln">647  </span></a>                        Roi originalROI = IJ.getImage().getRoi()</span><span class="s2">;</span><span class="s1"> 
+<a name="l648"><span class="ln">648  </span></a>                        </span><span class="s0">// JonD: don't understand why we do this</span><span class="s1"> 
+<a name="l649"><span class="ln">649  </span></a>                        </span><span class="s0">// app_.snapSingleImage();</span><span class="s1"> 
+<a name="l650"><span class="ln">650  </span></a>                        </span><span class="s0">// do the heavy lifting of generating the local affine transform map</span><span class="s1"> 
+<a name="l651"><span class="ln">651  </span></a>                        HashMap&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt; mapping = 
+<a name="l652"><span class="ln">652  </span></a>                                (HashMap&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt;) generateNonlinearMapping()</span><span class="s2">;</span><span class="s1"> 
+<a name="l653"><span class="ln">653  </span></a>                        dev_.turnOff()</span><span class="s2">;</span><span class="s1"> 
+<a name="l654"><span class="ln">654  </span></a>                        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l655"><span class="ln">655  </span></a>                            Thread.sleep(</span><span class="s5">500</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l656"><span class="ln">656  </span></a>                        } </span><span class="s2">catch </span><span class="s1">(InterruptedException ex) { 
+<a name="l657"><span class="ln">657  </span></a>                            ReportingUtils.logError(ex)</span><span class="s2">;</span><span class="s1"> 
+<a name="l658"><span class="ln">658  </span></a>                        } 
+<a name="l659"><span class="ln">659  </span></a>                        </span><span class="s0">// save local affine transform map to preferences</span><span class="s1"> 
+<a name="l660"><span class="ln">660  </span></a>                        </span><span class="s0">// TODO allow different mappings to be stored for different channels (e.g. objective magnification)</span><span class="s1"> 
+<a name="l661"><span class="ln">661  </span></a>                        </span><span class="s2">if </span><span class="s1">(!stopRequested_.get()) { 
+<a name="l662"><span class="ln">662  </span></a>                            saveMapping(mapping)</span><span class="s2">;</span><span class="s1"> 
+<a name="l663"><span class="ln">663  </span></a>                        } 
+<a name="l664"><span class="ln">664  </span></a> 
+<a name="l665"><span class="ln">665  </span></a>                        app_.enableLiveMode(liveModeRunning)</span><span class="s2">;</span><span class="s1"> 
+<a name="l666"><span class="ln">666  </span></a>                        JOptionPane.showMessageDialog(IJ.getImage().getWindow()</span><span class="s2">, </span><span class="s4">&quot;Calibration &quot;</span><span class="s1"> 
+<a name="l667"><span class="ln">667  </span></a>                                + (!stopRequested_.get() ? </span><span class="s4">&quot;finished.&quot; </span><span class="s1">: </span><span class="s4">&quot;canceled.&quot;</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l668"><span class="ln">668  </span></a>                        IJ.getImage().setRoi(originalROI)</span><span class="s2">;</span><span class="s1"> 
+<a name="l669"><span class="ln">669  </span></a>                    } </span><span class="s2">catch </span><span class="s1">(HeadlessException e) { 
+<a name="l670"><span class="ln">670  </span></a>                        ReportingUtils.showError(e)</span><span class="s2">;</span><span class="s1"> 
+<a name="l671"><span class="ln">671  </span></a>                    } </span><span class="s2">catch </span><span class="s1">(RuntimeException e) { 
+<a name="l672"><span class="ln">672  </span></a>                        ReportingUtils.showError(e)</span><span class="s2">;</span><span class="s1"> 
+<a name="l673"><span class="ln">673  </span></a>                    } </span><span class="s2">finally </span><span class="s1">{ 
+<a name="l674"><span class="ln">674  </span></a>                        isRunning_.set(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l675"><span class="ln">675  </span></a>                        stopRequested_.set(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l676"><span class="ln">676  </span></a>                        <a href="RappGui.java.html">RappGui</a>.getInstance().calibrate_btn.setText(</span><span class="s4">&quot;Calibrated&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l677"><span class="ln">677  </span></a>                    } 
+<a name="l678"><span class="ln">678  </span></a>                } 
+<a name="l679"><span class="ln">679  </span></a>            }</span><span class="s2">;</span><span class="s1"> 
+<a name="l680"><span class="ln">680  </span></a>            th.start()</span><span class="s2">;</span><span class="s1"> 
+<a name="l681"><span class="ln">681  </span></a>        } 
+<a name="l682"><span class="ln">682  </span></a>    } 
+<a name="l683"><span class="ln">683  </span></a> 
+<a name="l684"><span class="ln">684  </span></a>    </span><span class="s3">/** 
+<a name="l685"><span class="ln">685  </span></a>     * Returns true if the calibration is currently running. 
+<a name="l686"><span class="ln">686  </span></a>     * </span><span class="s6">@return </span><span class="s3">true if calibration is running 
+<a name="l687"><span class="ln">687  </span></a>     */</span><span class="s1"> 
+<a name="l688"><span class="ln">688  </span></a>    </span><span class="s2">public boolean </span><span class="s1">isCalibrating() { 
+<a name="l689"><span class="ln">689  </span></a>        </span><span class="s2">return </span><span class="s1">isRunning_.get()</span><span class="s2">;</span><span class="s1"> 
+<a name="l690"><span class="ln">690  </span></a>    } 
+<a name="l691"><span class="ln">691  </span></a> 
+<a name="l692"><span class="ln">692  </span></a>    </span><span class="s3">/** 
+<a name="l693"><span class="ln">693  </span></a>     * Requests an interruption to calibration while it is running. 
+<a name="l694"><span class="ln">694  </span></a>     */</span><span class="s1"> 
+<a name="l695"><span class="ln">695  </span></a>    </span><span class="s2">public void </span><span class="s1">stopCalibration() { 
+<a name="l696"><span class="ln">696  </span></a>        stopRequested_.set(</span><span class="s2">true</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l697"><span class="ln">697  </span></a>    } 
+<a name="l698"><span class="ln">698  </span></a> 
+<a name="l699"><span class="ln">699  </span></a>    </span><span class="s0">// ## Transforming points according to a nonlinear calibration mapping.</span><span class="s1"> 
+<a name="l700"><span class="ln">700  </span></a> 
+<a name="l701"><span class="ln">701  </span></a>    </span><span class="s0">// Transform a point, pt, given the mapping, which is a Map of polygon cells</span><span class="s1"> 
+<a name="l702"><span class="ln">702  </span></a>    </span><span class="s0">// to AffineTransforms.</span><span class="s1"> 
+<a name="l703"><span class="ln">703  </span></a>    </span><span class="s2">private static </span><span class="s1">Point2D.Double transformPoint(Map&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt; mapping</span><span class="s2">, </span><span class="s1">Point2D.Double pt) { 
+<a name="l704"><span class="ln">704  </span></a>        Set&lt;Polygon&gt; set = mapping.keySet()</span><span class="s2">;</span><span class="s1"> 
+<a name="l705"><span class="ln">705  </span></a>        </span><span class="s0">// First find out if the given point is inside a cell, and if so,</span><span class="s1"> 
+<a name="l706"><span class="ln">706  </span></a>        </span><span class="s0">// transform it with that cell's AffineTransform.</span><span class="s1"> 
+<a name="l707"><span class="ln">707  </span></a>        </span><span class="s2">for </span><span class="s1">(Polygon poly : set) { 
+<a name="l708"><span class="ln">708  </span></a>            </span><span class="s2">if </span><span class="s1">(poly.contains(pt)) { 
+<a name="l709"><span class="ln">709  </span></a>                </span><span class="s2">return </span><span class="s1">(Point2D.Double) mapping.get(poly).transform(pt</span><span class="s2">, null</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l710"><span class="ln">710  </span></a>            } 
+<a name="l711"><span class="ln">711  </span></a>        } 
+<a name="l712"><span class="ln">712  </span></a>        </span><span class="s0">// The point isn't inside any cell, so search for the closest cell</span><span class="s1"> 
+<a name="l713"><span class="ln">713  </span></a>        </span><span class="s0">// and use the AffineTransform from that.</span><span class="s1"> 
+<a name="l714"><span class="ln">714  </span></a>        </span><span class="s2">double </span><span class="s1">minDistance = Double.MAX_VALUE</span><span class="s2">;</span><span class="s1"> 
+<a name="l715"><span class="ln">715  </span></a>        Polygon bestPoly = </span><span class="s2">null;</span><span class="s1"> 
+<a name="l716"><span class="ln">716  </span></a>        </span><span class="s2">for </span><span class="s1">(Polygon poly : set) { 
+<a name="l717"><span class="ln">717  </span></a>            </span><span class="s2">double </span><span class="s1">distance = meanPosition2D(getVertices(poly)).distance(pt.x</span><span class="s2">, </span><span class="s1">pt.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l718"><span class="ln">718  </span></a>            </span><span class="s2">if </span><span class="s1">(minDistance &gt; distance) { 
+<a name="l719"><span class="ln">719  </span></a>                bestPoly = poly</span><span class="s2">;</span><span class="s1"> 
+<a name="l720"><span class="ln">720  </span></a>                minDistance = distance</span><span class="s2">;</span><span class="s1"> 
+<a name="l721"><span class="ln">721  </span></a>            } 
+<a name="l722"><span class="ln">722  </span></a>        } 
+<a name="l723"><span class="ln">723  </span></a>        </span><span class="s2">if </span><span class="s1">(bestPoly == </span><span class="s2">null</span><span class="s1">) { 
+<a name="l724"><span class="ln">724  </span></a>            </span><span class="s2">throw new </span><span class="s1">RuntimeException(</span><span class="s4">&quot;Unable to map point to device.&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l725"><span class="ln">725  </span></a>        } 
+<a name="l726"><span class="ln">726  </span></a>        </span><span class="s2">return </span><span class="s1">(Point2D.Double) mapping.get(bestPoly).transform(pt</span><span class="s2">, null</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l727"><span class="ln">727  </span></a>    } 
+<a name="l728"><span class="ln">728  </span></a> 
+<a name="l729"><span class="ln">729  </span></a> 
+<a name="l730"><span class="ln">730  </span></a>    </span><span class="s0">// Returns true if a particular image is mirrored.</span><span class="s1"> 
+<a name="l731"><span class="ln">731  </span></a>    </span><span class="s2">private static boolean </span><span class="s1">isImageMirrored(ImagePlus imgp) { 
+<a name="l732"><span class="ln">732  </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l733"><span class="ln">733  </span></a>            String mirrorString = VirtualAcquisitionDisplay.getDisplay(imgp) 
+<a name="l734"><span class="ln">734  </span></a>                    .getCurrentMetadata().getString(</span><span class="s4">&quot;ImageFlipper-Mirror&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l735"><span class="ln">735  </span></a>            </span><span class="s2">return </span><span class="s1">(mirrorString.contentEquals(</span><span class="s4">&quot;On&quot;</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l736"><span class="ln">736  </span></a>        } </span><span class="s2">catch </span><span class="s1">(JSONException | NullPointerException e) { 
+<a name="l737"><span class="ln">737  </span></a>            </span><span class="s2">return false;</span><span class="s1"> 
+<a name="l738"><span class="ln">738  </span></a>        } 
+<a name="l739"><span class="ln">739  </span></a>    } 
+<a name="l740"><span class="ln">740  </span></a> 
+<a name="l741"><span class="ln">741  </span></a>    </span><span class="s0">// Flips a point if it has been mirrored.</span><span class="s1"> 
+<a name="l742"><span class="ln">742  </span></a>    </span><span class="s2">private static </span><span class="s1">Point2D.Double mirrorIfNecessary(Point2D.Double pOffscreen</span><span class="s2">, </span><span class="s1">ImagePlus imgp) { 
+<a name="l743"><span class="ln">743  </span></a>        </span><span class="s2">if </span><span class="s1">(isImageMirrored(imgp)) { 
+<a name="l744"><span class="ln">744  </span></a>            </span><span class="s2">return new </span><span class="s1">Point2D.Double(imgp.getWidth() - pOffscreen.x</span><span class="s2">, </span><span class="s1">pOffscreen.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l745"><span class="ln">745  </span></a>        } </span><span class="s2">else </span><span class="s1">{ 
+<a name="l746"><span class="ln">746  </span></a>            </span><span class="s2">return </span><span class="s1">pOffscreen</span><span class="s2">;</span><span class="s1"> 
+<a name="l747"><span class="ln">747  </span></a>        } 
+<a name="l748"><span class="ln">748  </span></a>    } 
+<a name="l749"><span class="ln">749  </span></a> 
+<a name="l750"><span class="ln">750  </span></a>    </span><span class="s0">// Transform and mirror (if necessary) a point on an image to</span><span class="s1"> 
+<a name="l751"><span class="ln">751  </span></a>    </span><span class="s0">// a point on phototargeter coordinates.</span><span class="s1"> 
+<a name="l752"><span class="ln">752  </span></a>    </span><span class="s2">private static </span><span class="s1">Point2D.Double transformAndMirrorPoint(Map&lt;Polygon</span><span class="s2">, </span><span class="s1">AffineTransform&gt; mapping</span><span class="s2">,</span><span class="s1"> 
+<a name="l753"><span class="ln">753  </span></a>                                                          ImagePlus imgp</span><span class="s2">, </span><span class="s1">Point2D.Double pt) { 
+<a name="l754"><span class="ln">754  </span></a>        Point2D.Double pOffscreen = mirrorIfNecessary(pt</span><span class="s2">, </span><span class="s1">imgp)</span><span class="s2">;</span><span class="s1"> 
+<a name="l755"><span class="ln">755  </span></a>        </span><span class="s2">return </span><span class="s1">transformPoint(mapping</span><span class="s2">, </span><span class="s1">pOffscreen)</span><span class="s2">;</span><span class="s1"> 
+<a name="l756"><span class="ln">756  </span></a>    } 
+<a name="l757"><span class="ln">757  </span></a> 
+<a name="l758"><span class="ln">758  </span></a>     </span><span class="s0">// ################### Part 2: ## Point and shoot #################################</span><span class="s1"> 
+<a name="l759"><span class="ln">759  </span></a> 
+<a name="l760"><span class="ln">760  </span></a>     </span><span class="s0">// Turn on/off point and shoot mode.</span><span class="s1"> 
+<a name="l761"><span class="ln">761  </span></a>     </span><span class="s2">public void </span><span class="s1">enablePointAndShootMode(</span><span class="s2">boolean </span><span class="s1">on) { 
+<a name="l762"><span class="ln">762  </span></a>         </span><span class="s2">if </span><span class="s1">(on &amp;&amp; (mapping_ == </span><span class="s2">null</span><span class="s1">)) { 
+<a name="l763"><span class="ln">763  </span></a>             ReportingUtils.showError(</span><span class="s4">&quot;Please calibrate the phototargeting device first, using the Settings option.&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l764"><span class="ln">764  </span></a>             </span><span class="s2">throw new </span><span class="s1">RuntimeException(</span><span class="s4">&quot;Please calibrate the phototargeting device first, using the Settings option&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l765"><span class="ln">765  </span></a>         } 
+<a name="l766"><span class="ln">766  </span></a>         pointAndShooteModeOn_.set(on)</span><span class="s2">;</span><span class="s1"> 
+<a name="l767"><span class="ln">767  </span></a>         ImageWindow window = WindowManager.getCurrentWindow()</span><span class="s2">;</span><span class="s1"> 
+<a name="l768"><span class="ln">768  </span></a>         </span><span class="s2">if </span><span class="s1">(window != </span><span class="s2">null</span><span class="s1">) { 
+<a name="l769"><span class="ln">769  </span></a>             ImageCanvas canvas = window.getCanvas()</span><span class="s2">;</span><span class="s1"> 
+<a name="l770"><span class="ln">770  </span></a>             </span><span class="s2">if </span><span class="s1">(on) { 
+<a name="l771"><span class="ln">771  </span></a>                 </span><span class="s2">if </span><span class="s1">(canvas != </span><span class="s2">null</span><span class="s1">) { 
+<a name="l772"><span class="ln">772  </span></a>                     </span><span class="s2">boolean </span><span class="s1">found = </span><span class="s2">false;</span><span class="s1"> 
+<a name="l773"><span class="ln">773  </span></a>                     </span><span class="s2">for </span><span class="s1">(MouseListener listener : canvas.getMouseListeners()) { 
+<a name="l774"><span class="ln">774  </span></a>                         </span><span class="s2">if </span><span class="s1">(listener == pointAndShootMouseListener) { 
+<a name="l775"><span class="ln">775  </span></a>                             found = </span><span class="s2">true;</span><span class="s1"> 
+<a name="l776"><span class="ln">776  </span></a>                         } 
+<a name="l777"><span class="ln">777  </span></a>                     } 
+<a name="l778"><span class="ln">778  </span></a>                     </span><span class="s2">if </span><span class="s1">(!found) { 
+<a name="l779"><span class="ln">779  </span></a>                         canvas.addMouseListener(pointAndShootMouseListener)</span><span class="s2">;</span><span class="s1"> 
+<a name="l780"><span class="ln">780  </span></a>                     } 
+<a name="l781"><span class="ln">781  </span></a>                 } 
+<a name="l782"><span class="ln">782  </span></a>             } </span><span class="s2">else </span><span class="s1">{ 
+<a name="l783"><span class="ln">783  </span></a>                 </span><span class="s2">for </span><span class="s1">(MouseListener listener : canvas.getMouseListeners()) { 
+<a name="l784"><span class="ln">784  </span></a>                     </span><span class="s2">if </span><span class="s1">(listener == pointAndShootMouseListener) { 
+<a name="l785"><span class="ln">785  </span></a>                         canvas.removeMouseListener(listener)</span><span class="s2">;</span><span class="s1"> 
+<a name="l786"><span class="ln">786  </span></a>                     } 
+<a name="l787"><span class="ln">787  </span></a>                 } 
+<a name="l788"><span class="ln">788  </span></a>             } 
+<a name="l789"><span class="ln">789  </span></a>         } 
+<a name="l790"><span class="ln">790  </span></a>     } 
+<a name="l791"><span class="ln">791  </span></a>    </span><span class="s0">// Creates a MouseListener instance for future use with Point and Shoot</span><span class="s1"> 
+<a name="l792"><span class="ln">792  </span></a>    </span><span class="s0">// mode. When the MouseListener is attached to an ImageJ window, any</span><span class="s1"> 
+<a name="l793"><span class="ln">793  </span></a>    </span><span class="s0">// clicks will result in a spot being illuminated.</span><span class="s1"> 
+<a name="l794"><span class="ln">794  </span></a>    </span><span class="s2">private </span><span class="s1">MouseListener createPointAndShootMouseListenerInstance() { 
+<a name="l795"><span class="ln">795  </span></a>        </span><span class="s2">return new </span><span class="s1">MouseAdapter() { 
+<a name="l796"><span class="ln">796  </span></a>            @Override 
+<a name="l797"><span class="ln">797  </span></a>            </span><span class="s2">public void </span><span class="s1">mouseClicked(MouseEvent e) { 
+<a name="l798"><span class="ln">798  </span></a>                </span><span class="s2">if </span><span class="s1">(e.isShiftDown()) { 
+<a name="l799"><span class="ln">799  </span></a>                    Point p = e.getPoint()</span><span class="s2">;</span><span class="s1"> 
+<a name="l800"><span class="ln">800  </span></a>                    ImageCanvas canvas = (ImageCanvas) e.getSource()</span><span class="s2">;</span><span class="s1"> 
+<a name="l801"><span class="ln">801  </span></a>                    Point pOffscreen = </span><span class="s2">new </span><span class="s1">Point(canvas.offScreenX(p.x)</span><span class="s2">, </span><span class="s1">canvas.offScreenY(p.y))</span><span class="s2">;</span><span class="s1"> 
+<a name="l802"><span class="ln">802  </span></a> 
+<a name="l803"><span class="ln">803  </span></a>                    </span><span class="s2">final </span><span class="s1">Point2D.Double devP = transformAndMirrorPoint(loadMapping()</span><span class="s2">, </span><span class="s1">canvas.getImage()</span><span class="s2">,</span><span class="s1"> 
+<a name="l804"><span class="ln">804  </span></a>                            </span><span class="s2">new </span><span class="s1">Point2D.Double(pOffscreen.x</span><span class="s2">, </span><span class="s1">pOffscreen.y))</span><span class="s2">;</span><span class="s1"> 
+<a name="l805"><span class="ln">805  </span></a>                    System.out.println(devP)</span><span class="s2">;</span><span class="s1"> 
+<a name="l806"><span class="ln">806  </span></a>                    </span><span class="s2">final </span><span class="s1">Configuration originalConfig = prepareChannel()</span><span class="s2">;</span><span class="s1"> 
+<a name="l807"><span class="ln">807  </span></a>                    </span><span class="s2">final boolean </span><span class="s1">originalShutterState = prepareShutter()</span><span class="s2">;</span><span class="s1"> 
+<a name="l808"><span class="ln">808  </span></a>                    makeRunnableAsync( 
+<a name="l809"><span class="ln">809  </span></a>                            () -&gt; { 
+<a name="l810"><span class="ln">810  </span></a>                                </span><span class="s2">try </span><span class="s1">{ 
+<a name="l811"><span class="ln">811  </span></a>                                    </span><span class="s2">if </span><span class="s1">(devP != </span><span class="s2">null</span><span class="s1">) { 
+<a name="l812"><span class="ln">812  </span></a>                                        displaySpot(devP.x</span><span class="s2">, </span><span class="s1">devP.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l813"><span class="ln">813  </span></a>                                    }</span><span class="s2">else </span><span class="s1">ReportingUtils.showError(</span><span class="s4">&quot;Please Try Again! Your click return Null&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l814"><span class="ln">814  </span></a> 
+<a name="l815"><span class="ln">815  </span></a>                                    returnShutter(originalShutterState)</span><span class="s2">;</span><span class="s1"> 
+<a name="l816"><span class="ln">816  </span></a>                                    returnChannel(originalConfig)</span><span class="s2">;</span><span class="s1"> 
+<a name="l817"><span class="ln">817  </span></a>                                } </span><span class="s2">catch </span><span class="s1">(Exception e1) { 
+<a name="l818"><span class="ln">818  </span></a>                                    ReportingUtils.showError(e1)</span><span class="s2">;</span><span class="s1"> 
+<a name="l819"><span class="ln">819  </span></a>                                } 
+<a name="l820"><span class="ln">820  </span></a>                            }).run()</span><span class="s2">;</span><span class="s1"> 
+<a name="l821"><span class="ln">821  </span></a>                } 
+<a name="l822"><span class="ln">822  </span></a>            } 
+<a name="l823"><span class="ln">823  </span></a>        }</span><span class="s2">;</span><span class="s1"> 
+<a name="l824"><span class="ln">824  </span></a>    } 
+<a name="l825"><span class="ln">825  </span></a> 
+<a name="l826"><span class="ln">826  </span></a>    </span><span class="s0">///////////////////////////////# Read the all The Marked ROis and Shoot on Them #///////////////////////////</span><span class="s1"> 
+<a name="l827"><span class="ln">827  </span></a>    </span><span class="s2">public void </span><span class="s1">createMultiPointAndShootFromRoeList() { 
+<a name="l828"><span class="ln">828  </span></a>     </span><span class="s0">//   makeRunnableAsync(</span><span class="s1"> 
+<a name="l829"><span class="ln">829  </span></a>      </span><span class="s0">//      () -&gt; {</span><span class="s1"> 
+<a name="l830"><span class="ln">830  </span></a>                ImagePlus image</span><span class="s2">;</span><span class="s1"> 
+<a name="l831"><span class="ln">831  </span></a> 
+<a name="l832"><span class="ln">832  </span></a>                RoiManager rm = RoiManager.getInstance()</span><span class="s2">;</span><span class="s1"> 
+<a name="l833"><span class="ln">833  </span></a> 
+<a name="l834"><span class="ln">834  </span></a> 
+<a name="l835"><span class="ln">835  </span></a>                </span><span class="s2">if </span><span class="s1">(rm != </span><span class="s2">null</span><span class="s1">) { 
+<a name="l836"><span class="ln">836  </span></a>                    </span><span class="s2">int </span><span class="s1">roiCount = rm.getCount()</span><span class="s2">;</span><span class="s1"> 
+<a name="l837"><span class="ln">837  </span></a>                    Roi[] roiArray = rm.getRoisAsArray()</span><span class="s2">;</span><span class="s1"> 
+<a name="l838"><span class="ln">838  </span></a>                    image = IJ.getImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l839"><span class="ln">839  </span></a>                    ArrayList widthRoiPosArray = </span><span class="s2">new </span><span class="s1">ArrayList(roiCount)</span><span class="s2">;</span><span class="s1"> 
+<a name="l840"><span class="ln">840  </span></a>                    ArrayList heightRoiPosArray = </span><span class="s2">new </span><span class="s1">ArrayList(roiCount)</span><span class="s2">;</span><span class="s1"> 
+<a name="l841"><span class="ln">841  </span></a>                    ArrayList xcRoiPosArray = </span><span class="s2">new </span><span class="s1">ArrayList(roiCount)</span><span class="s2">;</span><span class="s1"> 
+<a name="l842"><span class="ln">842  </span></a>                    ArrayList ycRoiPosArray = </span><span class="s2">new </span><span class="s1">ArrayList(roiCount)</span><span class="s2">;</span><span class="s1"> 
+<a name="l843"><span class="ln">843  </span></a> 
+<a name="l844"><span class="ln">844  </span></a>                    </span><span class="s2">if </span><span class="s1">(roiCount != </span><span class="s5">0</span><span class="s1">){ 
+<a name="l845"><span class="ln">845  </span></a>                        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s2">; </span><span class="s1">i &lt; roiCount</span><span class="s2">; </span><span class="s1">i++) { 
+<a name="l846"><span class="ln">846  </span></a>                            widthRoiPosArray.add(roiArray[i].getFloatWidth())</span><span class="s2">;</span><span class="s1"> 
+<a name="l847"><span class="ln">847  </span></a>                            heightRoiPosArray.add(roiArray[i].getFloatHeight())</span><span class="s2">;</span><span class="s1"> 
+<a name="l848"><span class="ln">848  </span></a>                            xcRoiPosArray.add(roiArray[i].getXBase() + Math.round(roiArray[i].getFloatWidth() / </span><span class="s5">2</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l849"><span class="ln">849  </span></a>                            ycRoiPosArray.add(roiArray[i].getYBase() + Math.round(roiArray[i].getFloatHeight() / </span><span class="s5">2</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l850"><span class="ln">850  </span></a>                        } 
+<a name="l851"><span class="ln">851  </span></a>                    }  </span><span class="s2">else </span><span class="s1">ReportingUtils.showError(</span><span class="s4">&quot;Please set / Add Rois Manager before Shooting  &quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l852"><span class="ln">852  </span></a> 
+<a name="l853"><span class="ln">853  </span></a>                    </span><span class="s2">double</span><span class="s1">[] failsArrayX = </span><span class="s2">new double</span><span class="s1">[xcRoiPosArray.size()]</span><span class="s2">;</span><span class="s1"> 
+<a name="l854"><span class="ln">854  </span></a>                    </span><span class="s2">double</span><span class="s1">[] failsArrayY = </span><span class="s2">new double</span><span class="s1">[ycRoiPosArray.size()]</span><span class="s2">;</span><span class="s1"> 
+<a name="l855"><span class="ln">855  </span></a>                    System.out.println(xcRoiPosArray.size())</span><span class="s2">;</span><span class="s1"> 
+<a name="l856"><span class="ln">856  </span></a> 
+<a name="l857"><span class="ln">857  </span></a>                    </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s2">; </span><span class="s1">i &lt; xcRoiPosArray.size()</span><span class="s2">; </span><span class="s1">i++) { </span><span class="s0">//iterate over the elements of the list</span><span class="s1"> 
+<a name="l858"><span class="ln">858  </span></a>                        failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString())</span><span class="s2">; </span><span class="s0">//store each element as a double in the array</span><span class="s1"> 
+<a name="l859"><span class="ln">859  </span></a>                        failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString())</span><span class="s2">; </span><span class="s0">//store each element as a double in the array</span><span class="s1"> 
+<a name="l860"><span class="ln">860  </span></a> 
+<a name="l861"><span class="ln">861  </span></a>                        </span><span class="s2">final </span><span class="s1">Point2D.Double devP = transformAndMirrorPoint(loadMapping()</span><span class="s2">, </span><span class="s1">image</span><span class="s2">,</span><span class="s1"> 
+<a name="l862"><span class="ln">862  </span></a>                                </span><span class="s2">new </span><span class="s1">Point2D.Double(failsArrayX[i]</span><span class="s2">, </span><span class="s1">failsArrayY[i]))</span><span class="s2">;</span><span class="s1"> 
+<a name="l863"><span class="ln">863  </span></a>                        System.out.println(devP)</span><span class="s2">;</span><span class="s1"> 
+<a name="l864"><span class="ln">864  </span></a> 
+<a name="l865"><span class="ln">865  </span></a>                        </span><span class="s2">final </span><span class="s1">Configuration originalConfig = prepareChannel()</span><span class="s2">;</span><span class="s1"> 
+<a name="l866"><span class="ln">866  </span></a>                        </span><span class="s2">final boolean </span><span class="s1">originalShutterState = prepareShutter()</span><span class="s2">;</span><span class="s1"> 
+<a name="l867"><span class="ln">867  </span></a>                        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l868"><span class="ln">868  </span></a>                            Point2D.Double galvoPos = core_.getGalvoPosition(galvo)</span><span class="s2">;</span><span class="s1"> 
+<a name="l869"><span class="ln">869  </span></a>                            </span><span class="s2">if </span><span class="s1">(galvoPos != devP) { 
+<a name="l870"><span class="ln">870  </span></a>                                </span><span class="s0">// core_.setGalvoIlluminationState(galvo, false);</span><span class="s1"> 
+<a name="l871"><span class="ln">871  </span></a>                                Thread.sleep(</span><span class="s5">200</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l872"><span class="ln">872  </span></a>                                core_.setGalvoPosition(galvo</span><span class="s2">, </span><span class="s1">devP.x</span><span class="s2">, </span><span class="s1">devP.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l873"><span class="ln">873  </span></a>                                Thread.sleep(</span><span class="s5">200</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l874"><span class="ln">874  </span></a>                                </span><span class="s0">//core_.setGalvoIlluminationState(galvo,true);</span><span class="s1"> 
+<a name="l875"><span class="ln">875  </span></a>                                </span><span class="s0">//core_.waitForDevice(galvo);</span><span class="s1"> 
+<a name="l876"><span class="ln">876  </span></a>                            } </span><span class="s2">else </span><span class="s1">ReportingUtils.showError(</span><span class="s4">&quot;Please Try Again! Galvo problem&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l877"><span class="ln">877  </span></a>                            displaySpot(devP.x</span><span class="s2">, </span><span class="s1">devP.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l878"><span class="ln">878  </span></a>                            returnShutter(originalShutterState)</span><span class="s2">;</span><span class="s1"> 
+<a name="l879"><span class="ln">879  </span></a>                            returnChannel(originalConfig)</span><span class="s2">;</span><span class="s1"> 
+<a name="l880"><span class="ln">880  </span></a>                            Thread.sleep(</span><span class="s5">1000</span><span class="s1">)</span><span class="s2">; </span><span class="s0">// Do Nothing for 1000 ms (4s)</span><span class="s1"> 
+<a name="l881"><span class="ln">881  </span></a>                        } </span><span class="s2">catch </span><span class="s1">(Exception ec) { 
+<a name="l882"><span class="ln">882  </span></a>                            ReportingUtils.showError(ec)</span><span class="s2">;</span><span class="s1"> 
+<a name="l883"><span class="ln">883  </span></a>                        } 
+<a name="l884"><span class="ln">884  </span></a>                    } 
+<a name="l885"><span class="ln">885  </span></a>                }  </span><span class="s2">else </span><span class="s1">ReportingUtils.showError(</span><span class="s4">&quot;Please set / Add Rois Manager before Shooting  &quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l886"><span class="ln">886  </span></a> 
+<a name="l887"><span class="ln">887  </span></a>       </span><span class="s0">// }).run();</span><span class="s1"> 
+<a name="l888"><span class="ln">888  </span></a>    } 
+<a name="l889"><span class="ln">889  </span></a></span><span class="s0">///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////</span><span class="s1"> 
+<a name="l890"><span class="ln">890  </span></a>    </span><span class="s2">public </span><span class="s1">ArrayList[] brightFieldSegmenter(ImagePlus impproc</span><span class="s2">, </span><span class="s1">String title) { 
+<a name="l891"><span class="ln">891  </span></a>        ImagePlus imp = </span><span class="s2">new </span><span class="s1">Duplicator().run(impproc)</span><span class="s2">;</span><span class="s1"> 
+<a name="l892"><span class="ln">892  </span></a>        impproc.setTitle(title)</span><span class="s2">;</span><span class="s1"> 
+<a name="l893"><span class="ln">893  </span></a>        imp.setTitle(</span><span class="s4">&quot;Working on : &quot;</span><span class="s1">+ title )</span><span class="s2">;</span><span class="s1"> 
+<a name="l894"><span class="ln">894  </span></a>        imp.show()</span><span class="s2">;</span><span class="s1"> 
+<a name="l895"><span class="ln">895  </span></a>        imp.updateAndRepaintWindow()</span><span class="s2">;</span><span class="s1"> 
+<a name="l896"><span class="ln">896  </span></a> 
+<a name="l897"><span class="ln">897  </span></a>        IJ.run(imp</span><span class="s2">,</span><span class="s4">&quot;Threshold...&quot;</span><span class="s2">, </span><span class="s4">&quot;Default B&amp;W&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l898"><span class="ln">898  </span></a>        IJ.run(imp</span><span class="s2">,</span><span class="s4">&quot;Analyze Particles...&quot;</span><span class="s2">, </span><span class="s4">&quot;size=0-infinity pixel summarize add&quot;</span><span class="s1">)</span><span class="s2">;   </span><span class="s0">//change range for cell size filtering</span><span class="s1"> 
+<a name="l899"><span class="ln">899  </span></a> 
+<a name="l900"><span class="ln">900  </span></a>        ij.measure.ResultsTable resTab = Analyzer.getResultsTable()</span><span class="s2">;</span><span class="s1"> 
+<a name="l901"><span class="ln">901  </span></a>        </span><span class="s2">int </span><span class="s1">resCount = resTab.getCounter()</span><span class="s2">;</span><span class="s1"> 
+<a name="l902"><span class="ln">902  </span></a>        ArrayList xTab = </span><span class="s2">new </span><span class="s1">ArrayList()</span><span class="s2">;</span><span class="s1"> 
+<a name="l903"><span class="ln">903  </span></a>        ArrayList yTab = </span><span class="s2">new </span><span class="s1">ArrayList()</span><span class="s2">;</span><span class="s1"> 
+<a name="l904"><span class="ln">904  </span></a>        </span><span class="s2">double</span><span class="s1">[] x = </span><span class="s2">new double</span><span class="s1">[resCount]</span><span class="s2">;</span><span class="s1"> 
+<a name="l905"><span class="ln">905  </span></a>        </span><span class="s2">double</span><span class="s1">[] y = </span><span class="s2">new double</span><span class="s1">[resCount]</span><span class="s2">;</span><span class="s1"> 
+<a name="l906"><span class="ln">906  </span></a>        Roi[] r = </span><span class="s2">new </span><span class="s1">Roi[resCount]</span><span class="s2">;</span><span class="s1"> 
+<a name="l907"><span class="ln">907  </span></a> 
+<a name="l908"><span class="ln">908  </span></a>        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i=</span><span class="s5">0</span><span class="s2">; </span><span class="s1">i&lt;resCount</span><span class="s2">; </span><span class="s1">i++){ 
+<a name="l909"><span class="ln">909  </span></a>            </span><span class="s2">if </span><span class="s1">(<a href="../../../org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java.html">SeqAcqController</a>.stopAcqRequested_.get()) { 
+<a name="l910"><span class="ln">910  </span></a>                ReportingUtils.showMessage(</span><span class="s4">&quot;Acquisition Stop.&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l911"><span class="ln">911  </span></a>                </span><span class="s2">break;</span><span class="s1"> 
+<a name="l912"><span class="ln">912  </span></a>            } 
+<a name="l913"><span class="ln">913  </span></a>            </span><span class="s2">double </span><span class="s1">xx = resTab.getValueAsDouble(</span><span class="s5">0</span><span class="s2">, </span><span class="s1">i)</span><span class="s2">;</span><span class="s1"> 
+<a name="l914"><span class="ln">914  </span></a>            </span><span class="s2">double </span><span class="s1">yy = resTab.getValueAsDouble(</span><span class="s5">1</span><span class="s2">, </span><span class="s1">i)</span><span class="s2">;</span><span class="s1"> 
+<a name="l915"><span class="ln">915  </span></a>            xTab.add(xx)</span><span class="s2">;</span><span class="s1"> 
+<a name="l916"><span class="ln">916  </span></a>            yTab.add(yy)</span><span class="s2">;</span><span class="s1"> 
+<a name="l917"><span class="ln">917  </span></a>            x[i]=xx</span><span class="s2">;</span><span class="s1"> 
+<a name="l918"><span class="ln">918  </span></a>            y[i]=yy</span><span class="s2">;</span><span class="s1"> 
+<a name="l919"><span class="ln">919  </span></a>            r[i]= </span><span class="s2">new </span><span class="s1">Roi(xx</span><span class="s2">,</span><span class="s1">yy</span><span class="s2">,</span><span class="s5">10</span><span class="s2">,</span><span class="s5">10</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l920"><span class="ln">920  </span></a>            imp.setRoi(</span><span class="s2">new </span><span class="s1">Roi(xx</span><span class="s2">,</span><span class="s1">yy</span><span class="s2">,</span><span class="s5">10</span><span class="s2">,</span><span class="s5">10</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l921"><span class="ln">921  </span></a>            IJ.run(</span><span class="s4">&quot;Draw&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l922"><span class="ln">922  </span></a>        } 
+<a name="l923"><span class="ln">923  </span></a>        </span><span class="s0">//imp.setRoi(r);</span><span class="s1"> 
+<a name="l924"><span class="ln">924  </span></a>        System.out.println( </span><span class="s4">&quot; Xcord &quot;</span><span class="s1">+ xTab)</span><span class="s2">;</span><span class="s1"> 
+<a name="l925"><span class="ln">925  </span></a>        System.out.println(</span><span class="s4">&quot; Ycord &quot;</span><span class="s1">+ yTab)</span><span class="s2">;</span><span class="s1"> 
+<a name="l926"><span class="ln">926  </span></a>        imp.updateAndRepaintWindow()</span><span class="s2">;</span><span class="s1"> 
+<a name="l927"><span class="ln">927  </span></a>        </span><span class="s2">return new </span><span class="s1">ArrayList[]{xTab</span><span class="s2">, </span><span class="s1">yTab}</span><span class="s2">;</span><span class="s1"> 
+<a name="l928"><span class="ln">928  </span></a>    } 
+<a name="l929"><span class="ln">929  </span></a> 
+<a name="l930"><span class="ln">930  </span></a>    </span><span class="s2">public void </span><span class="s1">shootFromSegmentationListPoint(ArrayList[] segmentatio_pt) { 
+<a name="l931"><span class="ln">931  </span></a> 
+<a name="l932"><span class="ln">932  </span></a>            </span><span class="s2">if </span><span class="s1">(segmentatio_pt.length != </span><span class="s5">0 </span><span class="s1">) { 
+<a name="l933"><span class="ln">933  </span></a>                ImagePlus iplus_ = IJ.getImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l934"><span class="ln">934  </span></a>                </span><span class="s2">double</span><span class="s1">[] failsArrayX =  </span><span class="s2">new double</span><span class="s1">[segmentatio_pt[</span><span class="s5">0</span><span class="s1">].size()]</span><span class="s2">;</span><span class="s1"> 
+<a name="l935"><span class="ln">935  </span></a>                </span><span class="s2">double</span><span class="s1">[] failsArrayY =  </span><span class="s2">new double</span><span class="s1">[segmentatio_pt[</span><span class="s5">1</span><span class="s1">].size()]</span><span class="s2">;</span><span class="s1"> 
+<a name="l936"><span class="ln">936  </span></a>                System.out.println(</span><span class="s4">&quot; SIze: &quot;</span><span class="s1">+ segmentatio_pt[</span><span class="s5">1</span><span class="s1">].size())</span><span class="s2">;</span><span class="s1"> 
+<a name="l937"><span class="ln">937  </span></a>                System.out.println(</span><span class="s4">&quot; Val: &quot;</span><span class="s1">+ segmentatio_pt.toString())</span><span class="s2">;</span><span class="s1"> 
+<a name="l938"><span class="ln">938  </span></a>                </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i =</span><span class="s5">0 </span><span class="s2">; </span><span class="s1">i &lt; segmentatio_pt[</span><span class="s5">0</span><span class="s1">].size()</span><span class="s2">; </span><span class="s1">i++) 
+<a name="l939"><span class="ln">939  </span></a>                { 
+<a name="l940"><span class="ln">940  </span></a>                    </span><span class="s2">if </span><span class="s1">(<a href="../../../org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java.html">SeqAcqController</a>.stopAcqRequested_.get()) { 
+<a name="l941"><span class="ln">941  </span></a>                       </span><span class="s0">// ReportingUtils.showMessage(&quot;Acquisition Stop.&quot;);</span><span class="s1"> 
+<a name="l942"><span class="ln">942  </span></a>                        </span><span class="s2">break;</span><span class="s1"> 
+<a name="l943"><span class="ln">943  </span></a>                    } 
+<a name="l944"><span class="ln">944  </span></a>                    </span><span class="s0">//iterate over the elements of the list</span><span class="s1"> 
+<a name="l945"><span class="ln">945  </span></a>                    System.out.println( </span><span class="s4">&quot; Xval&quot; </span><span class="s1">+ segmentatio_pt[</span><span class="s5">0</span><span class="s1">].get(i).toString())</span><span class="s2">;</span><span class="s1"> 
+<a name="l946"><span class="ln">946  </span></a>                    System.out.println(</span><span class="s4">&quot; Yval&quot; </span><span class="s1">+ segmentatio_pt[</span><span class="s5">1</span><span class="s1">].get(i).toString())</span><span class="s2">;</span><span class="s1"> 
+<a name="l947"><span class="ln">947  </span></a> 
+<a name="l948"><span class="ln">948  </span></a>                    System.out.println(</span><span class="s4">&quot;_________________________________&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l949"><span class="ln">949  </span></a> 
+<a name="l950"><span class="ln">950  </span></a>                    failsArrayX[i] = Double.parseDouble(segmentatio_pt[</span><span class="s5">0</span><span class="s1">].get(i).toString())</span><span class="s2">; </span><span class="s0">//store each element as a double in the array</span><span class="s1"> 
+<a name="l951"><span class="ln">951  </span></a>                    failsArrayY[i] = Double.parseDouble(segmentatio_pt[</span><span class="s5">1</span><span class="s1">].get(i).toString())</span><span class="s2">; </span><span class="s0">//store each element as a double in the array</span><span class="s1"> 
+<a name="l952"><span class="ln">952  </span></a> 
+<a name="l953"><span class="ln">953  </span></a>                    </span><span class="s2">final </span><span class="s1">Point2D.Double devP = transformAndMirrorPoint(loadMapping()</span><span class="s2">, </span><span class="s1">iplus_</span><span class="s2">,</span><span class="s1"> 
+<a name="l954"><span class="ln">954  </span></a>                            </span><span class="s2">new </span><span class="s1">Point2D.Double(failsArrayX[i]</span><span class="s2">, </span><span class="s1">failsArrayY[i]))</span><span class="s2">;</span><span class="s1"> 
+<a name="l955"><span class="ln">955  </span></a>                    System.out.println(devP)</span><span class="s2">;</span><span class="s1"> 
+<a name="l956"><span class="ln">956  </span></a> 
+<a name="l957"><span class="ln">957  </span></a>                    </span><span class="s2">final </span><span class="s1">Configuration originalConfig = prepareChannel()</span><span class="s2">;</span><span class="s1"> 
+<a name="l958"><span class="ln">958  </span></a>                    </span><span class="s2">final boolean </span><span class="s1">originalShutterState = prepareShutter()</span><span class="s2">;</span><span class="s1"> 
+<a name="l959"><span class="ln">959  </span></a>                    </span><span class="s2">try </span><span class="s1">{ 
+<a name="l960"><span class="ln">960  </span></a>                        </span><span class="s0">//Point2D.Double galvoPos = core_.getGalvoPosition(galvo);</span><span class="s1"> 
+<a name="l961"><span class="ln">961  </span></a></span><span class="s0">//                            if (galvoPos != devP){</span><span class="s1"> 
+<a name="l962"><span class="ln">962  </span></a></span><span class="s0">//                                // core_.setGalvoIlluminationState(galvo, false);</span><span class="s1"> 
+<a name="l963"><span class="ln">963  </span></a></span><span class="s0">//                                Thread.sleep(200);</span><span class="s1"> 
+<a name="l964"><span class="ln">964  </span></a></span><span class="s0">//                                core_.setGalvoPosition(galvo, devP.x, devP.y);</span><span class="s1"> 
+<a name="l965"><span class="ln">965  </span></a></span><span class="s0">//                                Thread.sleep(200);</span><span class="s1"> 
+<a name="l966"><span class="ln">966  </span></a></span><span class="s0">//                                //core_.setGalvoIlluminationState(galvo,true);</span><span class="s1"> 
+<a name="l967"><span class="ln">967  </span></a></span><span class="s0">//                                //core_.waitForDevice(galvo);</span><span class="s1"> 
+<a name="l968"><span class="ln">968  </span></a></span><span class="s0">//                            }else ReportingUtils.showError(&quot;Please Try Again! Galvo problem&quot;);</span><span class="s1"> 
+<a name="l969"><span class="ln">969  </span></a>                        displaySpot(devP.x</span><span class="s2">, </span><span class="s1">devP.y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l970"><span class="ln">970  </span></a>                        returnShutter(originalShutterState)</span><span class="s2">;</span><span class="s1"> 
+<a name="l971"><span class="ln">971  </span></a>                        returnChannel(originalConfig)</span><span class="s2">;</span><span class="s1"> 
+<a name="l972"><span class="ln">972  </span></a>                        Thread.sleep(</span><span class="s5">1000</span><span class="s1">)</span><span class="s2">; </span><span class="s0">// Do Nothing for 1000 ms (4s)</span><span class="s1"> 
+<a name="l973"><span class="ln">973  </span></a>                    }</span><span class="s2">catch </span><span class="s1">(Exception ec){ 
+<a name="l974"><span class="ln">974  </span></a>                        ReportingUtils.showError(ec)</span><span class="s2">;</span><span class="s1"> 
+<a name="l975"><span class="ln">975  </span></a>                    } 
+<a name="l976"><span class="ln">976  </span></a>                } 
+<a name="l977"><span class="ln">977  </span></a>            } 
+<a name="l978"><span class="ln">978  </span></a>            </span><span class="s2">else </span><span class="s1">ReportingUtils.showError(</span><span class="s4">&quot;Could not Point and shoot : No Cell  &quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l979"><span class="ln">979  </span></a>    } 
+<a name="l980"><span class="ln">980  </span></a> 
+<a name="l981"><span class="ln">981  </span></a> 
+<a name="l982"><span class="ln">982  </span></a> 
+<a name="l983"><span class="ln">983  </span></a>    </span><span class="s0">// Generates a runnable that runs the selected ROIs.</span><span class="s1"> 
+<a name="l984"><span class="ln">984  </span></a>    </span><span class="s2">private </span><span class="s1">Runnable phototargetROIsRunnable(</span><span class="s2">final </span><span class="s1">String runnableName) { 
+<a name="l985"><span class="ln">985  </span></a>        </span><span class="s2">return new </span><span class="s1">Runnable() { 
+<a name="l986"><span class="ln">986  </span></a>            @Override 
+<a name="l987"><span class="ln">987  </span></a>            </span><span class="s2">public void </span><span class="s1">run() { 
+<a name="l988"><span class="ln">988  </span></a>               </span><span class="s0">// runRois();</span><span class="s1"> 
+<a name="l989"><span class="ln">989  </span></a>            } 
+<a name="l990"><span class="ln">990  </span></a>            @Override 
+<a name="l991"><span class="ln">991  </span></a>            </span><span class="s2">public </span><span class="s1">String toString() { 
+<a name="l992"><span class="ln">992  </span></a>                </span><span class="s2">return </span><span class="s1">runnableName</span><span class="s2">;</span><span class="s1"> 
+<a name="l993"><span class="ln">993  </span></a>            } 
+<a name="l994"><span class="ln">994  </span></a>        }</span><span class="s2">;</span><span class="s1"> 
+<a name="l995"><span class="ln">995  </span></a>    } 
+<a name="l996"><span class="ln">996  </span></a> 
+<a name="l997"><span class="ln">997  </span></a>    </span><span class="s3">/** 
+<a name="l998"><span class="ln">998  </span></a>     * Converts a Runnable to one that runs asynchronously. 
+<a name="l999"><span class="ln">999  </span></a>     * </span><span class="s6">@param </span><span class="s3">runnable synchronous Runnable 
+<a name="l1000"><span class="ln">1000 </span></a>     * </span><span class="s6">@return </span><span class="s3">asynchronously running Runnable 
+<a name="l1001"><span class="ln">1001 </span></a>     */</span><span class="s1"> 
+<a name="l1002"><span class="ln">1002 </span></a>    </span><span class="s2">public static </span><span class="s1">Runnable makeRunnableAsync(</span><span class="s2">final </span><span class="s1">Runnable runnable) { 
+<a name="l1003"><span class="ln">1003 </span></a>        </span><span class="s2">return new </span><span class="s1">Runnable() { 
+<a name="l1004"><span class="ln">1004 </span></a>            @Override 
+<a name="l1005"><span class="ln">1005 </span></a>            </span><span class="s2">public void </span><span class="s1">run() { 
+<a name="l1006"><span class="ln">1006 </span></a>                </span><span class="s2">new </span><span class="s1">Thread() { 
+<a name="l1007"><span class="ln">1007 </span></a>                    @Override 
+<a name="l1008"><span class="ln">1008 </span></a>                    </span><span class="s2">public void </span><span class="s1">run() { 
+<a name="l1009"><span class="ln">1009 </span></a>                        runnable.run()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1010"><span class="ln">1010 </span></a>                    } 
+<a name="l1011"><span class="ln">1011 </span></a>                }.start()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1012"><span class="ln">1012 </span></a>            } 
+<a name="l1013"><span class="ln">1013 </span></a>        }</span><span class="s2">;</span><span class="s1"> 
+<a name="l1014"><span class="ln">1014 </span></a>    } 
+<a name="l1015"><span class="ln">1015 </span></a>    </span><span class="s0">// Sleep until the designated clock time.</span><span class="s1"> 
+<a name="l1016"><span class="ln">1016 </span></a>    </span><span class="s2">private static void </span><span class="s1">sleepUntil(</span><span class="s2">long </span><span class="s1">clockTimeMillis) { 
+<a name="l1017"><span class="ln">1017 </span></a>        </span><span class="s2">long </span><span class="s1">delta = clockTimeMillis - System.currentTimeMillis()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1018"><span class="ln">1018 </span></a>        </span><span class="s2">if </span><span class="s1">(delta &gt; </span><span class="s5">0</span><span class="s1">) { 
+<a name="l1019"><span class="ln">1019 </span></a>            </span><span class="s2">try </span><span class="s1">{ 
+<a name="l1020"><span class="ln">1020 </span></a>                Thread.sleep(delta)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1021"><span class="ln">1021 </span></a>            } </span><span class="s2">catch </span><span class="s1">(InterruptedException ex) { 
+<a name="l1022"><span class="ln">1022 </span></a>                ReportingUtils.logError(ex)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1023"><span class="ln">1023 </span></a>            } 
+<a name="l1024"><span class="ln">1024 </span></a>        } 
+<a name="l1025"><span class="ln">1025 </span></a>    } 
+<a name="l1026"><span class="ln">1026 </span></a> 
+<a name="l1027"><span class="ln">1027 </span></a>    </span><span class="s2">public  </span><span class="s1">String[]  getConfigGroup(){ 
+<a name="l1028"><span class="ln">1028 </span></a>        StrVector conf_group =  core_.getAvailableConfigGroups()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1029"><span class="ln">1029 </span></a> 
+<a name="l1030"><span class="ln">1030 </span></a>        </span><span class="s2">return </span><span class="s1">conf_group.toArray()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1031"><span class="ln">1031 </span></a>    } 
+<a name="l1032"><span class="ln">1032 </span></a> 
+<a name="l1033"><span class="ln">1033 </span></a> 
+<a name="l1034"><span class="ln">1034 </span></a>    </span><span class="s2">public  </span><span class="s1">String[]  getConfigPreset( String groupN){ 
+<a name="l1035"><span class="ln">1035 </span></a>        StrVector conf_group =  core_.getAvailableConfigGroups()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1036"><span class="ln">1036 </span></a>        StrVector conf_preset = </span><span class="s2">null;</span><span class="s1"> 
+<a name="l1037"><span class="ln">1037 </span></a>        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i=</span><span class="s5">0</span><span class="s2">; </span><span class="s1">i &lt; conf_group.size() </span><span class="s2">; </span><span class="s1">i++){ 
+<a name="l1038"><span class="ln">1038 </span></a>          conf_preset  =  core_.getAvailableConfigs(groupN)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1039"><span class="ln">1039 </span></a>        } 
+<a name="l1040"><span class="ln">1040 </span></a>        </span><span class="s2">return </span><span class="s1">conf_preset.toArray()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1041"><span class="ln">1041 </span></a>    } 
+<a name="l1042"><span class="ln">1042 </span></a> 
+<a name="l1043"><span class="ln">1043 </span></a>    </span><span class="s2">public void </span><span class="s1">ChangeConfigSet(String groupName</span><span class="s2">, </span><span class="s1">String configName) { 
+<a name="l1044"><span class="ln">1044 </span></a>            </span><span class="s2">try </span><span class="s1">{ 
+<a name="l1045"><span class="ln">1045 </span></a>                core_.waitForDevice(core_.getCameraDevice())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1046"><span class="ln">1046 </span></a>                </span><span class="s2">if </span><span class="s1">(groupName != </span><span class="s2">null </span><span class="s1">&amp;&amp; configName != </span><span class="s2">null</span><span class="s1">){ 
+<a name="l1047"><span class="ln">1047 </span></a>                    core_.setConfig(groupName</span><span class="s2">, </span><span class="s1">configName)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1048"><span class="ln">1048 </span></a>                } 
+<a name="l1049"><span class="ln">1049 </span></a>            } </span><span class="s2">catch </span><span class="s1">(Exception e) { 
+<a name="l1050"><span class="ln">1050 </span></a>                System.out.println(e.getMessage())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1051"><span class="ln">1051 </span></a>                ReportingUtils.showError(</span><span class="s4">&quot;Please Try Again! were unable to change Configuration preset&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1052"><span class="ln">1052 </span></a> 
+<a name="l1053"><span class="ln">1053 </span></a>            } 
+<a name="l1054"><span class="ln">1054 </span></a>    } 
+<a name="l1055"><span class="ln">1055 </span></a> 
+<a name="l1056"><span class="ln">1056 </span></a>    </span><span class="s2">public void </span><span class="s1">fluorescenceSequence(String groupName</span><span class="s2">, </span><span class="s1">String sequenceName</span><span class="s2">, boolean </span><span class="s1">save) { 
+<a name="l1057"><span class="ln">1057 </span></a>        String configNmae = sequenceName</span><span class="s2">;</span><span class="s1"> 
+<a name="l1058"><span class="ln">1058 </span></a>        TaggedImage engineOutputQueue = </span><span class="s2">null;</span><span class="s1"> 
+<a name="l1059"><span class="ln">1059 </span></a>        TaggedImageStorageMultipageTiff stackStorage =</span><span class="s2">null;</span><span class="s1"> 
+<a name="l1060"><span class="ln">1060 </span></a>        ImagePlus iPlus = </span><span class="s2">null;</span><span class="s1"> 
+<a name="l1061"><span class="ln">1061 </span></a>        ImageStack stack = </span><span class="s2">new </span><span class="s1">ImageStack()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1062"><span class="ln">1062 </span></a>        String fileToSave = </span><span class="s4">&quot;&quot;</span><span class="s2">;</span><span class="s1"> 
+<a name="l1063"><span class="ln">1063 </span></a>        String dirToSave = </span><span class="s4">&quot;&quot;</span><span class="s2">;</span><span class="s1"> 
+<a name="l1064"><span class="ln">1064 </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l1065"><span class="ln">1065 </span></a>            </span><span class="s0">// Set Core_Shutter to use Spectra</span><span class="s1"> 
+<a name="l1066"><span class="ln">1066 </span></a>            core_.waitForDevice(core_.getCameraDevice())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1067"><span class="ln">1067 </span></a>            core_.setAutoShutter(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1068"><span class="ln">1068 </span></a>            Thread.sleep(</span><span class="s5">100</span><span class="s1">)</span><span class="s2">; </span><span class="s0">// wait and set  Spectra sate to One</span><span class="s1"> 
+<a name="l1069"><span class="ln">1069 </span></a>            app_.enableLiveMode(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1070"><span class="ln">1070 </span></a>            JSONObject summary = </span><span class="s2">new </span><span class="s1">JSONObject()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1071"><span class="ln">1071 </span></a> 
+<a name="l1072"><span class="ln">1072 </span></a>            summary.put(</span><span class="s4">&quot;Prefix&quot;</span><span class="s2">,</span><span class="s1">sequenceName)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1073"><span class="ln">1073 </span></a>            </span><span class="s0">//summary.put(&quot;Slices&quot;, 1);</span><span class="s1"> 
+<a name="l1074"><span class="ln">1074 </span></a>            </span><span class="s0">//summary.put(&quot;Positions&quot;, 1);</span><span class="s1"> 
+<a name="l1075"><span class="ln">1075 </span></a>            summary.put(</span><span class="s4">&quot;Channels&quot;</span><span class="s2">, </span><span class="s5">2</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1076"><span class="ln">1076 </span></a> 
+<a name="l1077"><span class="ln">1077 </span></a>            summary.put(</span><span class="s4">&quot;PixelType&quot;</span><span class="s2">, </span><span class="s4">&quot;GRAY16&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1078"><span class="ln">1078 </span></a>            summary.put(</span><span class="s4">&quot;Width&quot;</span><span class="s2">,</span><span class="s5">512</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1079"><span class="ln">1079 </span></a>            summary.put(</span><span class="s4">&quot;Height&quot;</span><span class="s2">,</span><span class="s5">512</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1080"><span class="ln">1080 </span></a>            </span><span class="s0">//these are used to create display settings</span><span class="s1"> 
+<a name="l1081"><span class="ln">1081 </span></a>            summary.put(</span><span class="s4">&quot;ChColors&quot;</span><span class="s2">, new </span><span class="s1">org.json.JSONArray(</span><span class="s4">&quot;[1,1]&quot;</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l1082"><span class="ln">1082 </span></a>            summary.put(</span><span class="s4">&quot;ChNames&quot;</span><span class="s2">, new </span><span class="s1">org.json.JSONArray(</span><span class="s4">&quot;[DAPI,FITC]&quot;</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l1083"><span class="ln">1083 </span></a>            summary.put(</span><span class="s4">&quot;ChMins&quot;</span><span class="s2">, new </span><span class="s1">org.json.JSONArray(</span><span class="s4">&quot;[0,0]&quot;</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l1084"><span class="ln">1084 </span></a>            summary.put(</span><span class="s4">&quot;ChMaxes&quot;</span><span class="s2">, new </span><span class="s1">org.json.JSONArray(</span><span class="s4">&quot;[65535,65535]&quot;</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l1085"><span class="ln">1085 </span></a>            </span><span class="s2">if </span><span class="s1">(save) { 
+<a name="l1086"><span class="ln">1086 </span></a>               fileToSave = fileDialog_.SaveFileDialog()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1087"><span class="ln">1087 </span></a>             </span><span class="s0">// dirToSave = fileDialog_.ChooseDirectoryDialog();</span><span class="s1"> 
+<a name="l1088"><span class="ln">1088 </span></a>              </span><span class="s0">// IJ.save(iPlus, fileToSave.getAbsolutePath() + &quot;.tif&quot;);</span><span class="s1"> 
+<a name="l1089"><span class="ln">1089 </span></a>            } 
+<a name="l1090"><span class="ln">1090 </span></a> 
+<a name="l1091"><span class="ln">1091 </span></a>            </span><span class="s2">if </span><span class="s1">(groupName != </span><span class="s2">null </span><span class="s1">&amp;&amp; sequenceName != </span><span class="s2">null</span><span class="s1">){ 
+<a name="l1092"><span class="ln">1092 </span></a>                </span><span class="s2">if </span><span class="s1">(sequenceName ==</span><span class="s4">&quot;Apply ALL Sequence&quot;</span><span class="s1">){ 
+<a name="l1093"><span class="ln">1093 </span></a>                    String[] allPreset = getConfigPreset(groupName)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1094"><span class="ln">1094 </span></a>                    System.out.println(allPreset.length)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1095"><span class="ln">1095 </span></a>                    </span><span class="s0">//core_.startSequenceAcquisition(camera, allPreset.length,10,true);</span><span class="s1"> 
+<a name="l1096"><span class="ln">1096 </span></a>                     </span><span class="s0">// for(int i=0; i&lt; allPreset.length; i++){</span><span class="s1"> 
+<a name="l1097"><span class="ln">1097 </span></a>                    </span><span class="s2">for</span><span class="s1">(</span><span class="s2">int </span><span class="s1">i=</span><span class="s5">0</span><span class="s2">; </span><span class="s1">i&lt;</span><span class="s5">2</span><span class="s2">; </span><span class="s1">i++){ 
+<a name="l1098"><span class="ln">1098 </span></a>                          core_.setConfig(groupName</span><span class="s2">, </span><span class="s1">allPreset[i])</span><span class="s2">;</span><span class="s1"> 
+<a name="l1099"><span class="ln">1099 </span></a>                          summary.put(</span><span class="s4">&quot;Channels&quot;</span><span class="s2">, </span><span class="s1">allPreset[i].length())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1100"><span class="ln">1100 </span></a>                          System.out.println(allPreset[i].length())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1101"><span class="ln">1101 </span></a>                          Thread.sleep(</span><span class="s5">1000</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1102"><span class="ln">1102 </span></a>                          core_.snapImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1103"><span class="ln">1103 </span></a>                          engineOutputQueue = core_.getTaggedImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1104"><span class="ln">1104 </span></a>                          core_.getLastTaggedImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1105"><span class="ln">1105 </span></a>                          </span><span class="s0">//app_.snapSingleImage();</span><span class="s1"> 
+<a name="l1106"><span class="ln">1106 </span></a>                          iPlus = IJ.getImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1107"><span class="ln">1107 </span></a>                          stack = iPlus.getStack()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1108"><span class="ln">1108 </span></a>                          </span><span class="s2">if</span><span class="s1">(save || fileToSave != </span><span class="s2">null </span><span class="s1">|| dirToSave != </span><span class="s2">null</span><span class="s1">) { 
+<a name="l1109"><span class="ln">1109 </span></a>                              IJ.save(iPlus</span><span class="s2">, </span><span class="s1">fileToSave + </span><span class="s4">&quot;_&quot; </span><span class="s1">+ allPreset[i] + </span><span class="s4">&quot;.tif&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1110"><span class="ln">1110 </span></a>                              </span><span class="s0">// new FileSaver(iPlus).saveAsTiffStack(fileToSave);</span><span class="s1"> 
+<a name="l1111"><span class="ln">1111 </span></a>                              </span><span class="s0">// IJ.saveAsTiff(iPlus,fileToSave);</span><span class="s1"> 
+<a name="l1112"><span class="ln">1112 </span></a>                               stackStorage = </span><span class="s2">new </span><span class="s1">TaggedImageStorageMultipageTiff(fileToSave</span><span class="s2">, true, </span><span class="s1">summary</span><span class="s2">, false, true, true</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1113"><span class="ln">1113 </span></a>                              </span><span class="s0">// TaggedImageStorageDiskDefault separateStorage = new TaggedImageStorageDiskDefault(fileToSave, true, summary);</span><span class="s1"> 
+<a name="l1114"><span class="ln">1114 </span></a>                               </span><span class="s2">if </span><span class="s1">(engineOutputQueue == </span><span class="s2">null</span><span class="s1">) engineOutputQueue = core_.getTaggedImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1115"><span class="ln">1115 </span></a>                              </span><span class="s0">// separateStorage.putImage(engineOutputQueue);</span><span class="s1"> 
+<a name="l1116"><span class="ln">1116 </span></a>                               stackStorage.putImage( engineOutputQueue)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1117"><span class="ln">1117 </span></a>                          } 
+<a name="l1118"><span class="ln">1118 </span></a> 
+<a name="l1119"><span class="ln">1119 </span></a>                      } 
+<a name="l1120"><span class="ln">1120 </span></a> 
+<a name="l1121"><span class="ln">1121 </span></a> 
+<a name="l1122"><span class="ln">1122 </span></a>                    } 
+<a name="l1123"><span class="ln">1123 </span></a>                </span><span class="s2">else</span><span class="s1">{ 
+<a name="l1124"><span class="ln">1124 </span></a>                    core_.setConfig(groupName</span><span class="s2">, </span><span class="s1">configNmae)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1125"><span class="ln">1125 </span></a>                    summary.put(</span><span class="s4">&quot;Channels&quot;</span><span class="s2">,</span><span class="s1">sequenceName.length())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1126"><span class="ln">1126 </span></a>                    Thread.sleep(</span><span class="s5">1000</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1127"><span class="ln">1127 </span></a>                    core_.snapImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1128"><span class="ln">1128 </span></a>                    engineOutputQueue = core_.getTaggedImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1129"><span class="ln">1129 </span></a>                    </span><span class="s2">if</span><span class="s1">(save || fileToSave != </span><span class="s2">null </span><span class="s1">|| dirToSave != </span><span class="s2">null</span><span class="s1">) { 
+<a name="l1130"><span class="ln">1130 </span></a>                      </span><span class="s0">// stackStorage = new TaggedImageStorageMultipageTiff(fileToSave, true, summary, false, true, true);</span><span class="s1"> 
+<a name="l1131"><span class="ln">1131 </span></a>                      </span><span class="s0">//  TaggedImageStorageDiskDefault separateStorage = new TaggedImageStorageDiskDefault(dirToSave, true, summary);</span><span class="s1"> 
+<a name="l1132"><span class="ln">1132 </span></a>                        </span><span class="s0">// if (engineOutputQueue == null) engineOutputQueue = core_.getTaggedImage();</span><span class="s1"> 
+<a name="l1133"><span class="ln">1133 </span></a>                      </span><span class="s0">//  stackStorage.putImage( engineOutputQueue);</span><span class="s1"> 
+<a name="l1134"><span class="ln">1134 </span></a>                       </span><span class="s0">// separateStorage.putImage(engineOutputQueue);</span><span class="s1"> 
+<a name="l1135"><span class="ln">1135 </span></a>                        </span><span class="s2">new </span><span class="s1">FileSaver(iPlus).saveAsTiffStack(dirToSave)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1136"><span class="ln">1136 </span></a>                    } 
+<a name="l1137"><span class="ln">1137 </span></a> 
+<a name="l1138"><span class="ln">1138 </span></a>                    } 
+<a name="l1139"><span class="ln">1139 </span></a>            } 
+<a name="l1140"><span class="ln">1140 </span></a> 
+<a name="l1141"><span class="ln">1141 </span></a>        } </span><span class="s2">catch </span><span class="s1">(Exception e) { 
+<a name="l1142"><span class="ln">1142 </span></a>            System.out.println(e.getMessage())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1143"><span class="ln">1143 </span></a>            ReportingUtils.showError(</span><span class="s4">&quot;Please Try Again! were unable to change filter color&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1144"><span class="ln">1144 </span></a> 
+<a name="l1145"><span class="ln">1145 </span></a>        } 
+<a name="l1146"><span class="ln">1146 </span></a>    } 
+<a name="l1147"><span class="ln">1147 </span></a> 
+<a name="l1148"><span class="ln">1148 </span></a> 
+<a name="l1149"><span class="ln">1149 </span></a>    </span><span class="s2">public void  </span><span class="s1">runSegmentation (String xmlPath</span><span class="s2">,  </span><span class="s1">String taggPath_){ 
+<a name="l1150"><span class="ln">1150 </span></a> 
+<a name="l1151"><span class="ln">1151 </span></a>        ImagePlus  iPlus = IJ.openImage(taggPath_)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1152"><span class="ln">1152 </span></a>        ImageStack stack = iPlus.getStack()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1153"><span class="ln">1153 </span></a>        </span><span class="s0">// Object pixel = iPlus.getPixel(iPlus.getWidth(), iPlus.getHeight());</span><span class="s1"> 
+<a name="l1154"><span class="ln">1154 </span></a>        Object pixelArray = stack.getPixels(</span><span class="s5">1</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1155"><span class="ln">1155 </span></a>        JSONObject summary = </span><span class="s2">new </span><span class="s1">JSONObject()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1156"><span class="ln">1156 </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l1157"><span class="ln">1157 </span></a>            summary.put(</span><span class="s4">&quot;Width&quot;</span><span class="s2">, </span><span class="s1">iPlus.getWidth())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1158"><span class="ln">1158 </span></a>            summary.put(</span><span class="s4">&quot;Height&quot;</span><span class="s2">,</span><span class="s1">iPlus.getHeight())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1159"><span class="ln">1159 </span></a>            summary.put(</span><span class="s4">&quot;BitDepth&quot;</span><span class="s2">,</span><span class="s1">iPlus.getBitDepth())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1160"><span class="ln">1160 </span></a>        } </span><span class="s2">catch </span><span class="s1">(JSONException e) { 
+<a name="l1161"><span class="ln">1161 </span></a>            e.printStackTrace()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1162"><span class="ln">1162 </span></a>        } 
+<a name="l1163"><span class="ln">1163 </span></a> 
+<a name="l1164"><span class="ln">1164 </span></a>        TaggedImage image = </span><span class="s2">new </span><span class="s1">TaggedImage(pixelArray</span><span class="s2">, </span><span class="s1">summary)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1165"><span class="ln">1165 </span></a> 
+<a name="l1166"><span class="ln">1166 </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l1167"><span class="ln">1167 </span></a>            Segmentation seg = </span><span class="s2">new </span><span class="s1">Segmentation(xmlPath</span><span class="s2">, </span><span class="s1">image)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1168"><span class="ln">1168 </span></a>            Cell cell</span><span class="s2">;</span><span class="s1"> 
+<a name="l1169"><span class="ln">1169 </span></a>            System.out.println(</span><span class="s4">&quot;Has next? &quot; </span><span class="s1">+ seg.hasNext())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1170"><span class="ln">1170 </span></a>            </span><span class="s2">while </span><span class="s1">(seg.hasNext()) { 
+<a name="l1171"><span class="ln">1171 </span></a>                cell = seg.next()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1172"><span class="ln">1172 </span></a>                System.out.println(cell.getCenterX() + </span><span class="s4">&quot;:&quot; </span><span class="s1">+ cell.getCenterY())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1173"><span class="ln">1173 </span></a>            } 
+<a name="l1174"><span class="ln">1174 </span></a>        } </span><span class="s2">catch </span><span class="s1">(Exception e) { 
+<a name="l1175"><span class="ln">1175 </span></a>            e.printStackTrace()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1176"><span class="ln">1176 </span></a>        } 
+<a name="l1177"><span class="ln">1177 </span></a>    } 
+<a name="l1178"><span class="ln">1178 </span></a> 
+<a name="l1179"><span class="ln">1179 </span></a>    </span><span class="s2">public </span><span class="s1">ArrayList[] findCells(ImagePlus impOrg) { 
+<a name="l1180"><span class="ln">1180 </span></a>        </span><span class="s0">// ImagePlus impOrg = IJ.getImage();</span><span class="s1"> 
+<a name="l1181"><span class="ln">1181 </span></a>        ImagePlus imp = </span><span class="s2">new </span><span class="s1">Duplicator().run(impOrg)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1182"><span class="ln">1182 </span></a>        impOrg.setTitle(</span><span class="s4">&quot;Original&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1183"><span class="ln">1183 </span></a>        imp.setTitle(</span><span class="s4">&quot;Working on ...&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1184"><span class="ln">1184 </span></a> 
+<a name="l1185"><span class="ln">1185 </span></a>        imp.show()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1186"><span class="ln">1186 </span></a>        imp.updateAndRepaintWindow()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1187"><span class="ln">1187 </span></a> 
+<a name="l1188"><span class="ln">1188 </span></a></span><span class="s0">//      IJ.run(imp, &quot;Gaussian Blur...&quot;, &quot;sigma=5&quot;);</span><span class="s1"> 
+<a name="l1189"><span class="ln">1189 </span></a></span><span class="s0">//      IJ.run(imp, &quot;Find Maxima...&quot;, &quot;noise=20 output=List exclude&quot;);</span><span class="s1"> 
+<a name="l1190"><span class="ln">1190 </span></a> 
+<a name="l1191"><span class="ln">1191 </span></a>        IJ.run(imp</span><span class="s2">,</span><span class="s4">&quot;Threshold...&quot;</span><span class="s2">, </span><span class="s4">&quot;Default B&amp;W&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1192"><span class="ln">1192 </span></a>        IJ.run(imp</span><span class="s2">,</span><span class="s4">&quot;Analyze Particles...&quot;</span><span class="s2">, </span><span class="s4">&quot;size=0-infinity pixel summarize add&quot;</span><span class="s1">)</span><span class="s2">;   </span><span class="s0">//change range for cell size filtering</span><span class="s1"> 
+<a name="l1193"><span class="ln">1193 </span></a> 
+<a name="l1194"><span class="ln">1194 </span></a>        ij.measure.ResultsTable resTab = Analyzer.getResultsTable()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1195"><span class="ln">1195 </span></a>        </span><span class="s2">int </span><span class="s1">resCount = resTab.getCounter()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1196"><span class="ln">1196 </span></a>        ArrayList xTab = </span><span class="s2">new </span><span class="s1">ArrayList()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1197"><span class="ln">1197 </span></a>        ArrayList yTab = </span><span class="s2">new </span><span class="s1">ArrayList()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1198"><span class="ln">1198 </span></a>        </span><span class="s2">double</span><span class="s1">[] x = </span><span class="s2">new double</span><span class="s1">[resCount]</span><span class="s2">;</span><span class="s1"> 
+<a name="l1199"><span class="ln">1199 </span></a>        </span><span class="s2">double</span><span class="s1">[] y = </span><span class="s2">new double</span><span class="s1">[resCount]</span><span class="s2">;</span><span class="s1"> 
+<a name="l1200"><span class="ln">1200 </span></a>        Roi[] r = </span><span class="s2">new </span><span class="s1">Roi[resCount]</span><span class="s2">;</span><span class="s1"> 
+<a name="l1201"><span class="ln">1201 </span></a> 
+<a name="l1202"><span class="ln">1202 </span></a>        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i=</span><span class="s5">0</span><span class="s2">; </span><span class="s1">i&lt;resCount</span><span class="s2">; </span><span class="s1">i++){ 
+<a name="l1203"><span class="ln">1203 </span></a>            </span><span class="s2">double </span><span class="s1">xx = resTab.getValueAsDouble(</span><span class="s5">0</span><span class="s2">, </span><span class="s1">i)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1204"><span class="ln">1204 </span></a>            </span><span class="s2">double </span><span class="s1">yy = resTab.getValueAsDouble(</span><span class="s5">1</span><span class="s2">, </span><span class="s1">i)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1205"><span class="ln">1205 </span></a>            xTab.add(xx)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1206"><span class="ln">1206 </span></a>            yTab.add(yy)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1207"><span class="ln">1207 </span></a>            x[i]=xx</span><span class="s2">;</span><span class="s1"> 
+<a name="l1208"><span class="ln">1208 </span></a>            y[i]=yy</span><span class="s2">;</span><span class="s1"> 
+<a name="l1209"><span class="ln">1209 </span></a>            r[i]= </span><span class="s2">new </span><span class="s1">Roi(xx</span><span class="s2">,</span><span class="s1">yy</span><span class="s2">,</span><span class="s5">10</span><span class="s2">,</span><span class="s5">10</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1210"><span class="ln">1210 </span></a>            imp.setRoi(</span><span class="s2">new </span><span class="s1">Roi(xx</span><span class="s2">,</span><span class="s1">yy</span><span class="s2">,</span><span class="s5">10</span><span class="s2">,</span><span class="s5">10</span><span class="s1">))</span><span class="s2">;</span><span class="s1"> 
+<a name="l1211"><span class="ln">1211 </span></a>            IJ.run(</span><span class="s4">&quot;Draw&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1212"><span class="ln">1212 </span></a>        } 
+<a name="l1213"><span class="ln">1213 </span></a>        </span><span class="s0">//imp.setRoi(r);</span><span class="s1"> 
+<a name="l1214"><span class="ln">1214 </span></a>        System.out.println(xTab)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1215"><span class="ln">1215 </span></a>        System.out.println(yTab)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1216"><span class="ln">1216 </span></a>        imp.updateAndRepaintWindow()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1217"><span class="ln">1217 </span></a>      </span><span class="s2">return new </span><span class="s1">ArrayList[]{xTab</span><span class="s2">, </span><span class="s1">yTab}</span><span class="s2">;</span><span class="s1"> 
+<a name="l1218"><span class="ln">1218 </span></a>    } 
+<a name="l1219"><span class="ln">1219 </span></a> 
+<a name="l1220"><span class="ln">1220 </span></a>    </span><span class="s0">//#################################  Method for Saving Image ###############################################</span><span class="s1"> 
+<a name="l1221"><span class="ln">1221 </span></a>     </span><span class="s2">public void </span><span class="s1">snapAndSaveImage(ImagePlus img) { 
+<a name="l1222"><span class="ln">1222 </span></a> 
+<a name="l1223"><span class="ln">1223 </span></a>         ImagePlus iPlus = img</span><span class="s2">; </span><span class="s0">//=  IJ.openImage(path.concat(&quot;Resources/img.tif&quot;)); ;</span><span class="s1"> 
+<a name="l1224"><span class="ln">1224 </span></a>         JFileChooser fileChooser = </span><span class="s2">new </span><span class="s1">JFileChooser()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1225"><span class="ln">1225 </span></a>         fileChooser.setDialogTitle(</span><span class="s4">&quot;Specify a file to save&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1226"><span class="ln">1226 </span></a>         File fileToSave = </span><span class="s2">null;</span><span class="s1"> 
+<a name="l1227"><span class="ln">1227 </span></a>         </span><span class="s2">int </span><span class="s1">userSelection = fileChooser.showSaveDialog(</span><span class="s2">this</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1228"><span class="ln">1228 </span></a>         </span><span class="s2">if </span><span class="s1">(userSelection == JFileChooser.APPROVE_OPTION) { 
+<a name="l1229"><span class="ln">1229 </span></a>              fileToSave = fileChooser.getSelectedFile()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1230"><span class="ln">1230 </span></a>             System.out.println(</span><span class="s4">&quot;Save as file: &quot; </span><span class="s1">+ fileToSave.getAbsolutePath())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1231"><span class="ln">1231 </span></a>         } 
+<a name="l1232"><span class="ln">1232 </span></a> 
+<a name="l1233"><span class="ln">1233 </span></a>         BlockingQueue&lt;TaggedImage&gt; engineOutputQueue</span><span class="s2">;</span><span class="s1"> 
+<a name="l1234"><span class="ln">1234 </span></a> 
+<a name="l1235"><span class="ln">1235 </span></a>         </span><span class="s0">//write image</span><span class="s1"> 
+<a name="l1236"><span class="ln">1236 </span></a>         </span><span class="s2">try</span><span class="s1">{ 
+<a name="l1237"><span class="ln">1237 </span></a>             app_.enableLiveMode(</span><span class="s2">false</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1238"><span class="ln">1238 </span></a>            </span><span class="s0">// app_.snapSingleImage();</span><span class="s1"> 
+<a name="l1239"><span class="ln">1239 </span></a> 
+<a name="l1240"><span class="ln">1240 </span></a>            </span><span class="s0">// core_.snapImage();</span><span class="s1"> 
+<a name="l1241"><span class="ln">1241 </span></a>             TaggedImage tmp = core_.getTaggedImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1242"><span class="ln">1242 </span></a>             app_.openAcquisition(fileToSave.getAbsolutePath()</span><span class="s2">,</span><span class="s1">fileToSave.getAbsolutePath()</span><span class="s2">, </span><span class="s5">2</span><span class="s2">,</span><span class="s5">1</span><span class="s2">,</span><span class="s5">1</span><span class="s2">,</span><span class="s5">3</span><span class="s2">,true,false </span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1243"><span class="ln">1243 </span></a> 
+<a name="l1244"><span class="ln">1244 </span></a>             System.out.println(app_.getPositionList().getNumberOfPositions())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1245"><span class="ln">1245 </span></a>             iPlus = IJ.getImage()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1246"><span class="ln">1246 </span></a>             </span><span class="s2">if </span><span class="s1">(iPlus.getStackSize() &lt;= </span><span class="s5">1</span><span class="s1">) { 
+<a name="l1247"><span class="ln">1247 </span></a>                 IJ.save(iPlus</span><span class="s2">, </span><span class="s1">fileToSave.getAbsolutePath() + </span><span class="s4">&quot;.tif&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1248"><span class="ln">1248 </span></a>             }</span><span class="s2">else</span><span class="s1">{ 
+<a name="l1249"><span class="ln">1249 </span></a>                 </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i=</span><span class="s5">0</span><span class="s2">; </span><span class="s1">i&lt; iPlus.getStackSize()</span><span class="s2">; </span><span class="s1">i++){ 
+<a name="l1250"><span class="ln">1250 </span></a>                     IJ.save(iPlus</span><span class="s2">, </span><span class="s1">fileToSave.getAbsolutePath() + </span><span class="s4">&quot;.ome.tif&quot;</span><span class="s1">)</span><span class="s2">;</span><span class="s1"> 
+<a name="l1251"><span class="ln">1251 </span></a>                 } 
+<a name="l1252"><span class="ln">1252 </span></a>             } 
+<a name="l1253"><span class="ln">1253 </span></a>             System.out.println(iPlus.getStackSize())</span><span class="s2">;</span><span class="s1"> 
+<a name="l1254"><span class="ln">1254 </span></a>         } </span><span class="s2">catch </span><span class="s1">(Exception e) { 
+<a name="l1255"><span class="ln">1255 </span></a>             e.printStackTrace()</span><span class="s2">;</span><span class="s1"> 
+<a name="l1256"><span class="ln">1256 </span></a>         } 
+<a name="l1257"><span class="ln">1257 </span></a> 
+<a name="l1258"><span class="ln">1258 </span></a>     } 
+<a name="l1259"><span class="ln">1259 </span></a> 
+<a name="l1260"><span class="ln">1260 </span></a> 
+<a name="l1261"><span class="ln">1261 </span></a> 
+<a name="l1262"><span class="ln">1262 </span></a>   </span><span class="s0">/* private boolean containList(float x, float y) { 
+<a name="l1263"><span class="ln">1263 </span></a>        Point2D p = new Point2D.Double(x,y); 
+<a name="l1264"><span class="ln">1264 </span></a>        p.setLocation(4,4); 
+<a name="l1265"><span class="ln">1265 </span></a>        for (Float[] coordinate : list) { 
+<a name="l1266"><span class="ln">1266 </span></a>            float coordinateX = coordinate[0]; 
+<a name="l1267"><span class="ln">1267 </span></a>            float coordinateY = coordinate[1]; 
+<a name="l1268"><span class="ln">1268 </span></a> 
+<a name="l1269"><span class="ln">1269 </span></a>            if (coordinateX == x &amp;&amp; coordinateY == y) { 
+<a name="l1270"><span class="ln">1270 </span></a>                return true; 
+<a name="l1271"><span class="ln">1271 </span></a>            } 
+<a name="l1272"><span class="ln">1272 </span></a>        } 
+<a name="l1273"><span class="ln">1273 </span></a>        return false;  // (x, y) not found 
+<a name="l1274"><span class="ln">1274 </span></a>    }*/</span><span class="s1"> 
+<a name="l1275"><span class="ln">1275 </span></a> 
+<a name="l1276"><span class="ln">1276 </span></a>    @Override 
+<a name="l1277"><span class="ln">1277 </span></a>    </span><span class="s2">public void </span><span class="s1">stateChanged(</span><span class="s2">boolean </span><span class="s1">onState) { 
+<a name="l1278"><span class="ln">1278 </span></a> 
+<a name="l1279"><span class="ln">1279 </span></a>    } 
+<a name="l1280"><span class="ln">1280 </span></a>} 
+<a name="l1281"><span class="ln">1281 </span></a></span></pre>
+</body>
+</html>

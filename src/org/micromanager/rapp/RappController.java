@@ -825,8 +825,8 @@ public class RappController extends  MMFrame implements OnStateListener {
 
     ///////////////////////////////# Read the all The Marked ROis and Shoot on Them #///////////////////////////
     public void createMultiPointAndShootFromRoeList() {
-     //   makeRunnableAsync(
-      //      () -> {
+        makeRunnableAsync(
+            () -> {
                 ImagePlus image;
 
                 RoiManager rm = RoiManager.getInstance();
@@ -884,10 +884,10 @@ public class RappController extends  MMFrame implements OnStateListener {
                     }
                 }  else ReportingUtils.showError("Please set / Add Rois Manager before Shooting  ");
 
-       // }).run();
+        }).run();
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
-    public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title) {
+    public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title, boolean addRoi) {
         ImagePlus imp = new Duplicator().run(impproc);
         impproc.setTitle(title);
         imp.setTitle("Working on : "+ title );
@@ -895,7 +895,10 @@ public class RappController extends  MMFrame implements OnStateListener {
         imp.updateAndRepaintWindow();
 
         IJ.run(imp,"Threshold...", "Default B&W");
-        IJ.run(imp,"Analyze Particles...", "size=0-infinity pixel summarize add");   //change range for cell size filtering
+        if (addRoi){
+            IJ.run(imp,"Analyze Particles...", "size=0-infinity pixel summarize add");  //change range for cell size filtering
+        }else {  IJ.run(imp,"Analyze Particles...", "size=0-infinity pixel summarize ");}
+
 
         ij.measure.ResultsTable resTab = Analyzer.getResultsTable();
         int resCount = resTab.getCounter();
@@ -928,54 +931,108 @@ public class RappController extends  MMFrame implements OnStateListener {
     }
 
     public void shootFromSegmentationListPoint(ArrayList[] segmentatio_pt) {
+        ImagePlus image;
 
-            if (segmentatio_pt.length != 0 ) {
-                ImagePlus iplus_ = IJ.getImage();
-                double[] failsArrayX =  new double[segmentatio_pt[0].size()];
-                double[] failsArrayY =  new double[segmentatio_pt[1].size()];
-                System.out.println(" SIze: "+ segmentatio_pt[1].size());
-                System.out.println(" Val: "+ segmentatio_pt.toString());
-                for (int i =0 ; i < segmentatio_pt[0].size(); i++)
-                {
-                    if (SeqAcqController.stopAcqRequested_.get()) {
-                       // ReportingUtils.showMessage("Acquisition Stop.");
-                        break;
-                    }
-                    //iterate over the elements of the list
-                    System.out.println( " Xval" + segmentatio_pt[0].get(i).toString());
-                    System.out.println(" Yval" + segmentatio_pt[1].get(i).toString());
+        RoiManager rm = RoiManager.getInstance();
 
-                    System.out.println("_________________________________");
+        if (rm != null) {
+            int roiCount = rm.getCount();
+            Roi[] roiArray = rm.getRoisAsArray();
+            image = IJ.getImage();
+            ArrayList widthRoiPosArray = new ArrayList(roiCount);
+            ArrayList heightRoiPosArray = new ArrayList(roiCount);
+            ArrayList xcRoiPosArray = new ArrayList(roiCount);
+            ArrayList ycRoiPosArray = new ArrayList(roiCount);
 
-                    failsArrayX[i] = Double.parseDouble(segmentatio_pt[0].get(i).toString()); //store each element as a double in the array
-                    failsArrayY[i] = Double.parseDouble(segmentatio_pt[1].get(i).toString()); //store each element as a double in the array
+            if (roiCount != 0){
+                for (int i = 0; i < roiCount; i++) {
+                    widthRoiPosArray.add(roiArray[i].getFloatWidth());
+                    heightRoiPosArray.add(roiArray[i].getFloatHeight());
+                    xcRoiPosArray.add(roiArray[i].getXBase() + Math.round(roiArray[i].getFloatWidth() / 2));
+                    ycRoiPosArray.add(roiArray[i].getYBase() + Math.round(roiArray[i].getFloatHeight() / 2));
+                }
+            }  else ReportingUtils.showError("No Cell Coordinate were found on this Image Segmented, Click Ok to Continue ");
 
-                    final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), iplus_,
-                            new Point2D.Double(failsArrayX[i], failsArrayY[i]));
-                    System.out.println(devP);
+            double[] failsArrayX = new double[xcRoiPosArray.size()];
+            double[] failsArrayY = new double[ycRoiPosArray.size()];
+            System.out.println(xcRoiPosArray.size());
 
-                    final Configuration originalConfig = prepareChannel();
-                    final boolean originalShutterState = prepareShutter();
-                    try {
-                        //Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
-//                            if (galvoPos != devP){
-//                                // core_.setGalvoIlluminationState(galvo, false);
-//                                Thread.sleep(200);
-//                                core_.setGalvoPosition(galvo, devP.x, devP.y);
-//                                Thread.sleep(200);
-//                                //core_.setGalvoIlluminationState(galvo,true);
-//                                //core_.waitForDevice(galvo);
-//                            }else ReportingUtils.showError("Please Try Again! Galvo problem");
-                        displaySpot(devP.x, devP.y);
-                        returnShutter(originalShutterState);
-                        returnChannel(originalConfig);
-                        Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
-                    }catch (Exception ec){
-                        ReportingUtils.showError(ec);
-                    }
+            for (int i = 0; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
+                failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
+                failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
+
+                final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), image,
+                        new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+                System.out.println(devP);
+
+                final Configuration originalConfig = prepareChannel();
+                final boolean originalShutterState = prepareShutter();
+                try {
+                    Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
+                    if (galvoPos != devP) {
+                        // core_.setGalvoIlluminationState(galvo, false);
+                        Thread.sleep(200);
+                        core_.setGalvoPosition(galvo, devP.x, devP.y);
+                        Thread.sleep(200);
+                        //core_.setGalvoIlluminationState(galvo,true);
+                        //core_.waitForDevice(galvo);
+                    } else ReportingUtils.showError("Please Try Again! Galvo problem");
+                    displaySpot(devP.x, devP.y);
+                    returnShutter(originalShutterState);
+                    returnChannel(originalConfig);
+                    Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
+                } catch (Exception ec) {
+                    ReportingUtils.showError(ec);
                 }
             }
-            else ReportingUtils.showError("Could not Point and shoot : No Cell  ");
+        }  else ReportingUtils.showError("Please set / Add Rois Manager before Shooting  ");
+//            if (segmentatio_pt.length != 0 ) {
+//                ImagePlus iplus_ = IJ.getImage();
+//                double[] failsArrayX =  new double[segmentatio_pt[0].size()];
+//                double[] failsArrayY =  new double[segmentatio_pt[1].size()];
+//                System.out.println(" SIze: "+ segmentatio_pt[1].size());
+//                System.out.println(" Val: "+ segmentatio_pt.toString());
+//                for (int i =0 ; i < segmentatio_pt[0].size(); i++)
+//                {
+//                    if (SeqAcqController.stopAcqRequested_.get()) {
+//                       // ReportingUtils.showMessage("Acquisition Stop.");
+//                        break;
+//                    }
+//                    //iterate over the elements of the list
+//                    System.out.println( " Xval" + segmentatio_pt[0].get(i).toString());
+//                    System.out.println(" Yval" + segmentatio_pt[1].get(i).toString());
+//
+//                    System.out.println("_________________________________");
+//
+//                    failsArrayX[i] = Double.parseDouble(segmentatio_pt[0].get(i).toString()); //store each element as a double in the array
+//                    failsArrayY[i] = Double.parseDouble(segmentatio_pt[1].get(i).toString()); //store each element as a double in the array
+//
+//                    final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), iplus_,
+//                            new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+//                    System.out.println(devP);
+//
+//                    final Configuration originalConfig = prepareChannel();
+//                    final boolean originalShutterState = prepareShutter();
+//                    try {
+//                        //Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
+////                            if (galvoPos != devP){
+////                                // core_.setGalvoIlluminationState(galvo, false);
+////                                Thread.sleep(200);
+////                                core_.setGalvoPosition(galvo, devP.x, devP.y);
+////                                Thread.sleep(200);
+////                                //core_.setGalvoIlluminationState(galvo,true);
+////                                //core_.waitForDevice(galvo);
+////                            }else ReportingUtils.showError("Please Try Again! Galvo problem");
+//                        displaySpot(devP.x, devP.y);
+//                        returnShutter(originalShutterState);
+//                        returnChannel(originalConfig);
+//                        Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
+//                    }catch (Exception ec){
+//                        ReportingUtils.showError(ec);
+//                    }
+//                }
+//            }
+//            else ReportingUtils.showError("Could not Point and shoot : No Cell  ");
     }
 
 

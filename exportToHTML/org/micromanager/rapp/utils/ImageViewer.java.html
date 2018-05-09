@@ -1,0 +1,179 @@
+<html>
+<head>
+<title>ImageViewer.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+.s3 { color: rgb(104,151,187); }
+.s4 { color: rgb(98,151,85); font-style: italic; }
+.s5 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ImageViewer.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">package </span><span class="s1">org.micromanager.rapp.utils</span><span class="s0">;</span><span class="s1"> 
+<a name="l2"><span class="ln">2    </span></a></span><span class="s0">import </span><span class="s1">javax.swing.*</span><span class="s0">;</span><span class="s1"> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s0">import </span><span class="s1">java.awt.*</span><span class="s0">;</span><span class="s1"> 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s0">import </span><span class="s1">java.io.File</span><span class="s0">;</span><span class="s1"> 
+<a name="l5"><span class="ln">5    </span></a></span><span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span><span class="s1"> 
+<a name="l6"><span class="ln">6    </span></a> 
+<a name="l7"><span class="ln">7    </span></a></span><span class="s0">public class </span><span class="s1">ImageViewer </span><span class="s0">extends </span><span class="s1">JInternalFrame { 
+<a name="l8"><span class="ln">8    </span></a>    </span><span class="s0">private </span><span class="s1">URL default_path = </span><span class="s0">this</span><span class="s1">.getClass().getResource(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l9"><span class="ln">9    </span></a>    </span><span class="s0">private </span><span class="s1">String path = default_path.toString().substring(</span><span class="s3">6</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l10"><span class="ln">10   </span></a>    </span><span class="s4">/** 
+<a name="l11"><span class="ln">11   </span></a>     * Creates new form Images_From_Folder_Navigation 
+<a name="l12"><span class="ln">12   </span></a>     */</span><span class="s1"> 
+<a name="l13"><span class="ln">13   </span></a>    </span><span class="s0">public </span><span class="s1">ImageViewer() { 
+<a name="l14"><span class="ln">14   </span></a>        initComponents()</span><span class="s0">;</span><span class="s1"> 
+<a name="l15"><span class="ln">15   </span></a>        </span><span class="s5">// display first image</span><span class="s1"> 
+<a name="l16"><span class="ln">16   </span></a>        showImage(pos)</span><span class="s0">;</span><span class="s1"> 
+<a name="l17"><span class="ln">17   </span></a>    } 
+<a name="l18"><span class="ln">18   </span></a> 
+<a name="l19"><span class="ln">19   </span></a>    </span><span class="s5">// the index of the images</span><span class="s1"> 
+<a name="l20"><span class="ln">20   </span></a>    </span><span class="s0">int </span><span class="s1">pos = </span><span class="s3">0</span><span class="s0">;</span><span class="s1"> 
+<a name="l21"><span class="ln">21   </span></a> 
+<a name="l22"><span class="ln">22   </span></a>    </span><span class="s5">// get images list</span><span class="s1"> 
+<a name="l23"><span class="ln">23   </span></a>    </span><span class="s0">public </span><span class="s1">String[] getImages() 
+<a name="l24"><span class="ln">24   </span></a>    { 
+<a name="l25"><span class="ln">25   </span></a>        File file = </span><span class="s0">new </span><span class="s1">File(path.concat(</span><span class="s2">&quot;Resources/Images/&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+<a name="l26"><span class="ln">26   </span></a> 
+<a name="l27"><span class="ln">27   </span></a>        String[] imagesList = file.list()</span><span class="s0">;</span><span class="s1"> 
+<a name="l28"><span class="ln">28   </span></a>        </span><span class="s0">return </span><span class="s1">imagesList</span><span class="s0">;</span><span class="s1"> 
+<a name="l29"><span class="ln">29   </span></a>    } 
+<a name="l30"><span class="ln">30   </span></a> 
+<a name="l31"><span class="ln">31   </span></a>    </span><span class="s5">// display the image by index</span><span class="s1"> 
+<a name="l32"><span class="ln">32   </span></a>    </span><span class="s0">public void </span><span class="s1">showImage(</span><span class="s0">int </span><span class="s1">index) 
+<a name="l33"><span class="ln">33   </span></a>    { 
+<a name="l34"><span class="ln">34   </span></a>        String[] imagesList = getImages()</span><span class="s0">;</span><span class="s1"> 
+<a name="l35"><span class="ln">35   </span></a>        String imageName = imagesList[index]</span><span class="s0">;</span><span class="s1"> 
+<a name="l36"><span class="ln">36   </span></a>        System.out.println(</span><span class="s2">&quot;Image : &quot;</span><span class="s1">+imageName)</span><span class="s0">;</span><span class="s1"> 
+<a name="l37"><span class="ln">37   </span></a>        ImageIcon icon = </span><span class="s0">new </span><span class="s1">ImageIcon(path.concat(imageName))</span><span class="s0">;</span><span class="s1"> 
+<a name="l38"><span class="ln">38   </span></a>        Image image = icon.getImage().getScaledInstance(</span><span class="s3">400</span><span class="s0">, </span><span class="s3">400</span><span class="s0">, </span><span class="s1">Image.SCALE_SMOOTH)</span><span class="s0">;</span><span class="s1"> 
+<a name="l39"><span class="ln">39   </span></a>        jLabel_Image.setIcon(</span><span class="s0">new </span><span class="s1">ImageIcon(image))</span><span class="s0">;</span><span class="s1"> 
+<a name="l40"><span class="ln">40   </span></a>    } 
+<a name="l41"><span class="ln">41   </span></a> 
+<a name="l42"><span class="ln">42   </span></a> 
+<a name="l43"><span class="ln">43   </span></a>    </span><span class="s4">/** 
+<a name="l44"><span class="ln">44   </span></a>     * This method is called from within the constructor to initialize the form. 
+<a name="l45"><span class="ln">45   </span></a>     * WARNING: Do NOT modify this code. The content of this method is always 
+<a name="l46"><span class="ln">46   </span></a>     * regenerated by the Form Editor. 
+<a name="l47"><span class="ln">47   </span></a>     */</span><span class="s1"> 
+<a name="l48"><span class="ln">48   </span></a> 
+<a name="l49"><span class="ln">49   </span></a>    @SuppressWarnings(</span><span class="s2">&quot;unchecked&quot;</span><span class="s1">) 
+<a name="l50"><span class="ln">50   </span></a>    </span><span class="s5">// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;</span><span class="s1"> 
+<a name="l51"><span class="ln">51   </span></a>    </span><span class="s0">private void </span><span class="s1">initComponents() { 
+<a name="l52"><span class="ln">52   </span></a>        Box button_box  = Box.createHorizontalBox()</span><span class="s0">;</span><span class="s1"> 
+<a name="l53"><span class="ln">53   </span></a>        jLabel_Image = </span><span class="s0">new </span><span class="s1">JLabel()</span><span class="s0">;</span><span class="s1"> 
+<a name="l54"><span class="ln">54   </span></a>        JButton jButton1 = </span><span class="s0">new </span><span class="s1">JButton()</span><span class="s0">;</span><span class="s1"> 
+<a name="l55"><span class="ln">55   </span></a>        JButton jButton_Next = </span><span class="s0">new </span><span class="s1">JButton()</span><span class="s0">;</span><span class="s1"> 
+<a name="l56"><span class="ln">56   </span></a>        JButton jButton_Previous = </span><span class="s0">new </span><span class="s1">JButton()</span><span class="s0">;</span><span class="s1"> 
+<a name="l57"><span class="ln">57   </span></a>        JButton jButton_Last = </span><span class="s0">new </span><span class="s1">JButton()</span><span class="s0">;</span><span class="s1"> 
+<a name="l58"><span class="ln">58   </span></a> 
+<a name="l59"><span class="ln">59   </span></a>        jButton1.setFont(</span><span class="s0">new </span><span class="s1">java.awt.Font(</span><span class="s2">&quot;Tahoma&quot;</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">14</span><span class="s1">))</span><span class="s0">; </span><span class="s5">// NOI18N</span><span class="s1"> 
+<a name="l60"><span class="ln">60   </span></a>        ImageIcon icon = </span><span class="s0">new </span><span class="s1">ImageIcon(path.concat(</span><span class="s2">&quot;Resources/Images/first.jpg&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+<a name="l61"><span class="ln">61   </span></a>        Image img = icon.getImage() </span><span class="s0">;</span><span class="s1"> 
+<a name="l62"><span class="ln">62   </span></a>        Image newimg = img.getScaledInstance( </span><span class="s3">30</span><span class="s0">, </span><span class="s3">20</span><span class="s0">,  </span><span class="s1">java.awt.Image.SCALE_SMOOTH ) </span><span class="s0">;</span><span class="s1"> 
+<a name="l63"><span class="ln">63   </span></a>        jButton1.setIcon(</span><span class="s0">new </span><span class="s1">ImageIcon( newimg ))</span><span class="s0">; </span><span class="s5">// NOI18N</span><span class="s1"> 
+<a name="l64"><span class="ln">64   </span></a>        jButton1.setText(</span><span class="s2">&quot;First&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l65"><span class="ln">65   </span></a>        jButton1.setIconTextGap(</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l66"><span class="ln">66   </span></a>        jButton1.addActionListener(</span><span class="s0">new </span><span class="s1">java.awt.event.ActionListener() { 
+<a name="l67"><span class="ln">67   </span></a>            </span><span class="s0">public void </span><span class="s1">actionPerformed(java.awt.event.ActionEvent evt) { 
+<a name="l68"><span class="ln">68   </span></a>                jButton1ActionPerformed(evt)</span><span class="s0">;</span><span class="s1"> 
+<a name="l69"><span class="ln">69   </span></a>            } 
+<a name="l70"><span class="ln">70   </span></a>        })</span><span class="s0">;</span><span class="s1"> 
+<a name="l71"><span class="ln">71   </span></a> 
+<a name="l72"><span class="ln">72   </span></a>        jButton_Next.setFont(</span><span class="s0">new </span><span class="s1">java.awt.Font(</span><span class="s2">&quot;Tahoma&quot;</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">14</span><span class="s1">))</span><span class="s0">; </span><span class="s5">// NOI18N</span><span class="s1"> 
+<a name="l73"><span class="ln">73   </span></a>        ImageIcon icon_next = </span><span class="s0">new </span><span class="s1">ImageIcon(path.concat(</span><span class="s2">&quot;Resources/Images/next.png&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+<a name="l74"><span class="ln">74   </span></a>        Image img_next = icon_next.getImage() </span><span class="s0">;</span><span class="s1"> 
+<a name="l75"><span class="ln">75   </span></a>        Image new_img_next = img_next.getScaledInstance( </span><span class="s3">30</span><span class="s0">, </span><span class="s3">20</span><span class="s0">,  </span><span class="s1">java.awt.Image.SCALE_SMOOTH ) </span><span class="s0">;</span><span class="s1"> 
+<a name="l76"><span class="ln">76   </span></a>        jButton_Next.setIcon(</span><span class="s0">new </span><span class="s1">ImageIcon(new_img_next))</span><span class="s0">; </span><span class="s5">// NOI18N</span><span class="s1"> 
+<a name="l77"><span class="ln">77   </span></a>        jButton_Next.setText(</span><span class="s2">&quot;Next&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l78"><span class="ln">78   </span></a>        jButton_Next.setIconTextGap(</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l79"><span class="ln">79   </span></a>        jButton_Next.addActionListener(</span><span class="s0">new </span><span class="s1">java.awt.event.ActionListener() { 
+<a name="l80"><span class="ln">80   </span></a>            </span><span class="s0">public void </span><span class="s1">actionPerformed(java.awt.event.ActionEvent evt) { 
+<a name="l81"><span class="ln">81   </span></a>                jButton_NextActionPerformed(evt)</span><span class="s0">;</span><span class="s1"> 
+<a name="l82"><span class="ln">82   </span></a>            } 
+<a name="l83"><span class="ln">83   </span></a>        })</span><span class="s0">;</span><span class="s1"> 
+<a name="l84"><span class="ln">84   </span></a> 
+<a name="l85"><span class="ln">85   </span></a>        jButton_Previous.setFont(</span><span class="s0">new </span><span class="s1">java.awt.Font(</span><span class="s2">&quot;Tahoma&quot;</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">14</span><span class="s1">))</span><span class="s0">; </span><span class="s5">// NOI18N</span><span class="s1"> 
+<a name="l86"><span class="ln">86   </span></a>        ImageIcon icon_previous = </span><span class="s0">new </span><span class="s1">ImageIcon(path.concat(</span><span class="s2">&quot;Resources/Images/previous.png&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+<a name="l87"><span class="ln">87   </span></a>        Image img_previous = icon_previous.getImage() </span><span class="s0">;</span><span class="s1"> 
+<a name="l88"><span class="ln">88   </span></a>        Image new_img_previous= img_previous.getScaledInstance( </span><span class="s3">30</span><span class="s0">, </span><span class="s3">20</span><span class="s0">,  </span><span class="s1">java.awt.Image.SCALE_SMOOTH ) </span><span class="s0">;</span><span class="s1"> 
+<a name="l89"><span class="ln">89   </span></a>        jButton_Previous.setIcon(</span><span class="s0">new </span><span class="s1">ImageIcon(new_img_previous))</span><span class="s0">; </span><span class="s5">// NOI18N</span><span class="s1"> 
+<a name="l90"><span class="ln">90   </span></a>        jButton_Previous.setText(</span><span class="s2">&quot;Previous&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l91"><span class="ln">91   </span></a>        jButton_Previous.setIconTextGap(</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l92"><span class="ln">92   </span></a>        jButton_Previous.addActionListener(evt -&gt; jButton_PreviousActionPerformed(evt))</span><span class="s0">;</span><span class="s1"> 
+<a name="l93"><span class="ln">93   </span></a> 
+<a name="l94"><span class="ln">94   </span></a>        jButton_Last.setFont(</span><span class="s0">new </span><span class="s1">java.awt.Font(</span><span class="s2">&quot;Tahoma&quot;</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">14</span><span class="s1">))</span><span class="s0">; </span><span class="s5">// NOI18N</span><span class="s1"> 
+<a name="l95"><span class="ln">95   </span></a>        ImageIcon icon_last= </span><span class="s0">new </span><span class="s1">ImageIcon(path.concat(</span><span class="s2">&quot;Resources/Images/last.png&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+<a name="l96"><span class="ln">96   </span></a>        Image img_last = icon_last.getImage() </span><span class="s0">;</span><span class="s1"> 
+<a name="l97"><span class="ln">97   </span></a>        Image new_img_last= img_last.getScaledInstance( </span><span class="s3">30</span><span class="s0">, </span><span class="s3">20</span><span class="s0">,  </span><span class="s1">java.awt.Image.SCALE_SMOOTH ) </span><span class="s0">;</span><span class="s1"> 
+<a name="l98"><span class="ln">98   </span></a>        jButton_Last.setIcon(</span><span class="s0">new </span><span class="s1">ImageIcon(new_img_last))</span><span class="s0">; </span><span class="s5">// NOI18N</span><span class="s1"> 
+<a name="l99"><span class="ln">99   </span></a>        jButton_Last.setText(</span><span class="s2">&quot;Last&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l100"><span class="ln">100  </span></a>        jButton_Last.setIconTextGap(</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l101"><span class="ln">101  </span></a>        jButton_Last.addActionListener(evt -&gt; jButton_LastActionPerformed(evt))</span><span class="s0">;</span><span class="s1"> 
+<a name="l102"><span class="ln">102  </span></a> 
+<a name="l103"><span class="ln">103  </span></a> 
+<a name="l104"><span class="ln">104  </span></a>        getContentPane().add(jLabel_Image)</span><span class="s0">;</span><span class="s1"> 
+<a name="l105"><span class="ln">105  </span></a>        jLabel_Image.setBounds(</span><span class="s3">100</span><span class="s0">,</span><span class="s3">1</span><span class="s0">,</span><span class="s3">400</span><span class="s0">,</span><span class="s3">400</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l106"><span class="ln">106  </span></a>        jLabel_Image.setBackground(Color.black)</span><span class="s0">;</span><span class="s1"> 
+<a name="l107"><span class="ln">107  </span></a> 
+<a name="l108"><span class="ln">108  </span></a>        getContentPane().add(button_box)</span><span class="s0">;</span><span class="s1"> 
+<a name="l109"><span class="ln">109  </span></a>        button_box.setBounds(</span><span class="s3">100</span><span class="s0">,</span><span class="s3">400</span><span class="s0">, </span><span class="s3">400</span><span class="s0">,</span><span class="s3">30</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+<a name="l110"><span class="ln">110  </span></a>        button_box.add(jButton1)</span><span class="s0">;</span><span class="s1"> 
+<a name="l111"><span class="ln">111  </span></a>        button_box.add(jButton_Previous)</span><span class="s0">;</span><span class="s1"> 
+<a name="l112"><span class="ln">112  </span></a>        button_box.add(jButton_Next)</span><span class="s0">;</span><span class="s1"> 
+<a name="l113"><span class="ln">113  </span></a>        button_box.add(jButton_Last)</span><span class="s0">;</span><span class="s1"> 
+<a name="l114"><span class="ln">114  </span></a> 
+<a name="l115"><span class="ln">115  </span></a>        </span><span class="s5">//pack();</span><span class="s1"> 
+<a name="l116"><span class="ln">116  </span></a>    } 
+<a name="l117"><span class="ln">117  </span></a> 
+<a name="l118"><span class="ln">118  </span></a>    </span><span class="s5">// The First , Next , Previous ,Last Navigation Buttons</span><span class="s1"> 
+<a name="l119"><span class="ln">119  </span></a> 
+<a name="l120"><span class="ln">120  </span></a>    </span><span class="s5">// First</span><span class="s1"> 
+<a name="l121"><span class="ln">121  </span></a>    </span><span class="s0">private void </span><span class="s1">jButton1ActionPerformed(java.awt.event.ActionEvent evt) { 
+<a name="l122"><span class="ln">122  </span></a> 
+<a name="l123"><span class="ln">123  </span></a>        pos = </span><span class="s3">0</span><span class="s0">;</span><span class="s1"> 
+<a name="l124"><span class="ln">124  </span></a>        showImage(pos)</span><span class="s0">;</span><span class="s1"> 
+<a name="l125"><span class="ln">125  </span></a> 
+<a name="l126"><span class="ln">126  </span></a>    } 
+<a name="l127"><span class="ln">127  </span></a> 
+<a name="l128"><span class="ln">128  </span></a>    </span><span class="s5">// Next</span><span class="s1"> 
+<a name="l129"><span class="ln">129  </span></a>    </span><span class="s0">private void </span><span class="s1">jButton_NextActionPerformed(java.awt.event.ActionEvent evt) { 
+<a name="l130"><span class="ln">130  </span></a>        pos = pos + </span><span class="s3">1</span><span class="s0">;</span><span class="s1"> 
+<a name="l131"><span class="ln">131  </span></a>        </span><span class="s0">if</span><span class="s1">(pos &gt;= getImages().length) 
+<a name="l132"><span class="ln">132  </span></a>        { 
+<a name="l133"><span class="ln">133  </span></a>            pos  = getImages().length - </span><span class="s3">1</span><span class="s0">;</span><span class="s1"> 
+<a name="l134"><span class="ln">134  </span></a>        } 
+<a name="l135"><span class="ln">135  </span></a>        showImage(pos)</span><span class="s0">;</span><span class="s1"> 
+<a name="l136"><span class="ln">136  </span></a>    } 
+<a name="l137"><span class="ln">137  </span></a> 
+<a name="l138"><span class="ln">138  </span></a>    </span><span class="s5">// Previous</span><span class="s1"> 
+<a name="l139"><span class="ln">139  </span></a>    </span><span class="s0">private void </span><span class="s1">jButton_PreviousActionPerformed(java.awt.event.ActionEvent evt) { 
+<a name="l140"><span class="ln">140  </span></a>        pos = pos - </span><span class="s3">1</span><span class="s0">;</span><span class="s1"> 
+<a name="l141"><span class="ln">141  </span></a>        </span><span class="s0">if</span><span class="s1">(pos &lt; </span><span class="s3">0</span><span class="s1">) 
+<a name="l142"><span class="ln">142  </span></a>        { 
+<a name="l143"><span class="ln">143  </span></a>            pos = </span><span class="s3">0</span><span class="s0">;</span><span class="s1"> 
+<a name="l144"><span class="ln">144  </span></a>        } 
+<a name="l145"><span class="ln">145  </span></a>        showImage(pos)</span><span class="s0">;</span><span class="s1"> 
+<a name="l146"><span class="ln">146  </span></a>    } 
+<a name="l147"><span class="ln">147  </span></a> 
+<a name="l148"><span class="ln">148  </span></a>    </span><span class="s5">// Last</span><span class="s1"> 
+<a name="l149"><span class="ln">149  </span></a>    </span><span class="s0">private void </span><span class="s1">jButton_LastActionPerformed(java.awt.event.ActionEvent evt) { 
+<a name="l150"><span class="ln">150  </span></a>        pos = getImages().length - </span><span class="s3">1</span><span class="s0">;</span><span class="s1"> 
+<a name="l151"><span class="ln">151  </span></a>        showImage(pos)</span><span class="s0">;</span><span class="s1"> 
+<a name="l152"><span class="ln">152  </span></a>    } 
+<a name="l153"><span class="ln">153  </span></a> 
+<a name="l154"><span class="ln">154  </span></a>    </span><span class="s0">private </span><span class="s1">javax.swing.JLabel jLabel_Image</span><span class="s0">;</span><span class="s1"> 
+<a name="l155"><span class="ln">155  </span></a>    </span><span class="s5">// End of variables declaration</span><span class="s1"> 
+<a name="l156"><span class="ln">156  </span></a>}</span></pre>
+</body>
+</html>

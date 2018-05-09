@@ -53,7 +53,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     private Preferences mainPrefs_;
     private MMOptions options_;
     private SeqAcqGui acquisition_;
-    //private SimpleObjectProperty<SeqAcqGui> acquisition_ = new SimpleObjectProperty<>(this, "acquisition_");
+    // private SimpleObjectProperty<SeqAcqGui> acquisition_ = new SimpleObjectProperty<>(this, "acquisition_");
     private CellPointInternalFrame tablePointFrame;
     private static ImageViewer imageViewer_;
     private static RappGui appInterface_;
@@ -76,7 +76,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     protected JSpinner delayField_ = new JSpinner(model_forDelay);
     private JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
     private JInternalFrame asButtonPanel = new JInternalFrame();
-    private JToggleButton LiveMode_btn;
+    protected JToggleButton LiveMode_btn;
     private JToggleButton pointAndShootOnOff_btn;
     protected JButton calibrate_btn;
     private JButton browseXmlFIle_btn;
@@ -303,7 +303,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                     LiveMode_btn.setBackground(Color.decode("#27ae60"));
                     MMStudio.getInstance().enableLiveMode(false);
                     ImageWindow snap =  SnapLiveManager_.getSnapLiveWindow();
-                    snap.close();
+                    if(snap != null)snap.close();
                 }
                // createFrame();
               //   LiveModeButton(e);
@@ -543,7 +543,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             }
             if (image !=null) {
                 image.show();
-                ArrayList[] ll = rappController_ref.brightFieldSegmenter(image, image.getTitle());
+                ArrayList[] ll = rappController_ref.brightFieldSegmenter(image, image.getTitle(), true);
                 rappController_ref.shootFromSegmentationListPoint(ll);
             }else ReportingUtils.showMessage(" No Image were chosen ");
         });
@@ -858,6 +858,15 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
     @Override
     public void liveModeEnabled(boolean b) {
+        LiveMode_btn.setSelected(b);
+        LiveMode_btn.setText(  b ? "Stop Live View" : "Start Live View" );
+        LiveMode_btn.setBackground(b? Color.decode("#d35400") :Color.decode("#d35400") );
+        LiveMode_btn.setUI(new MetalToggleButtonUI() {
+            @Override
+            protected Color getSelectColor() {
+                return (b? Color.decode("#d35400") :Color.decode("#d35400") );
+            }
+        });
 
     }
 

@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>RappDevice.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(204,120,50); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+RappDevice.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">///////////////////////////////////////////////////////////////////////////////</span><span class="s1"> 
+<a name="l2"><span class="ln">2    </span></a></span><span class="s0">//FILE:          ProjectionDevice.java</span><span class="s1"> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s0">//PROJECT:       Micro-Manager</span><span class="s1"> 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s0">//SUBSYSTEM:     Projector plugin</span><span class="s1"> 
+<a name="l5"><span class="ln">5    </span></a></span><span class="s0">//-----------------------------------------------------------------------------</span><span class="s1"> 
+<a name="l6"><span class="ln">6    </span></a></span><span class="s0">//AUTHOR:        Arthur Edelstein</span><span class="s1"> 
+<a name="l7"><span class="ln">7    </span></a></span><span class="s0">//COPYRIGHT:     University of California, San Francisco, 2010-2014</span><span class="s1"> 
+<a name="l8"><span class="ln">8    </span></a></span><span class="s0">//LICENSE:       This file is distributed under the BSD license.</span><span class="s1"> 
+<a name="l9"><span class="ln">9    </span></a></span><span class="s0">//               License text is included with the source distribution.</span><span class="s1"> 
+<a name="l10"><span class="ln">10   </span></a></span><span class="s0">//               This file is distributed in the hope that it will be useful,</span><span class="s1"> 
+<a name="l11"><span class="ln">11   </span></a></span><span class="s0">//               but WITHOUT ANY WARRANTY; without even the implied warranty</span><span class="s1"> 
+<a name="l12"><span class="ln">12   </span></a></span><span class="s0">//               of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><span class="s1"> 
+<a name="l13"><span class="ln">13   </span></a></span><span class="s0">//               IN NO EVENT SHALL THE COPYRIGHT OWNER OR</span><span class="s1"> 
+<a name="l14"><span class="ln">14   </span></a></span><span class="s0">//               CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,</span><span class="s1"> 
+<a name="l15"><span class="ln">15   </span></a></span><span class="s0">//               INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.</span><span class="s1"> 
+<a name="l16"><span class="ln">16   </span></a> 
+<a name="l17"><span class="ln">17   </span></a></span><span class="s2">package </span><span class="s1">org.micromanager.rapp</span><span class="s2">;</span><span class="s1"> 
+<a name="l18"><span class="ln">18   </span></a> 
+<a name="l19"><span class="ln">19   </span></a></span><span class="s2">import </span><span class="s1">ij.process.FloatPolygon</span><span class="s2">;</span><span class="s1"> 
+<a name="l20"><span class="ln">20   </span></a></span><span class="s2">import </span><span class="s1">java.util.List</span><span class="s2">;</span><span class="s1"> 
+<a name="l21"><span class="ln">21   </span></a> 
+<a name="l22"><span class="ln">22   </span></a></span><span class="s2">public interface </span><span class="s1">RappDevice { 
+<a name="l23"><span class="ln">23   </span></a>   </span><span class="s0">// Properties of device.</span><span class="s1"> 
+<a name="l24"><span class="ln">24   </span></a>   </span><span class="s2">public </span><span class="s1">String getName()</span><span class="s2">;</span><span class="s1"> 
+<a name="l25"><span class="ln">25   </span></a>   </span><span class="s2">public </span><span class="s1">String getChannel()</span><span class="s2">;</span><span class="s1"> 
+<a name="l26"><span class="ln">26   </span></a>   </span><span class="s2">public double </span><span class="s1">getXRange()</span><span class="s2">;</span><span class="s1"> 
+<a name="l27"><span class="ln">27   </span></a>   </span><span class="s2">public double </span><span class="s1">getYRange()</span><span class="s2">;</span><span class="s1"> 
+<a name="l28"><span class="ln">28   </span></a>   </span><span class="s2">public double </span><span class="s1">getXMinimum()</span><span class="s2">;</span><span class="s1"> 
+<a name="l29"><span class="ln">29   </span></a>   </span><span class="s2">public double </span><span class="s1">getYMinimum()</span><span class="s2">;</span><span class="s1"> 
+<a name="l30"><span class="ln">30   </span></a>  
+<a name="l31"><span class="ln">31   </span></a>   </span><span class="s0">// ## Alert when something has changed.</span><span class="s1"> 
+<a name="l32"><span class="ln">32   </span></a>   </span><span class="s2">public void </span><span class="s1">addOnStateListener(<a href="OnStateListener.java.html">OnStateListener</a> listener)</span><span class="s2">;</span><span class="s1"> 
+<a name="l33"><span class="ln">33   </span></a> 
+<a name="l34"><span class="ln">34   </span></a>   </span><span class="s0">// ## Get/set internal exposure setting</span><span class="s1"> 
+<a name="l35"><span class="ln">35   </span></a>   </span><span class="s2">public long </span><span class="s1">getExposure()</span><span class="s2">;</span><span class="s1"> 
+<a name="l36"><span class="ln">36   </span></a>   </span><span class="s2">public void </span><span class="s1">setExposure(</span><span class="s2">long </span><span class="s1">interval_us)</span><span class="s2">;</span><span class="s1"> 
+<a name="l37"><span class="ln">37   </span></a> 
+<a name="l38"><span class="ln">38   </span></a>   </span><span class="s0">// ## Control illumination</span><span class="s1"> 
+<a name="l39"><span class="ln">39   </span></a>   </span><span class="s2">public void </span><span class="s1">turnOn()</span><span class="s2">;</span><span class="s1"> 
+<a name="l40"><span class="ln">40   </span></a>   </span><span class="s2">public void </span><span class="s1">turnOff()</span><span class="s2">;</span><span class="s1"> 
+<a name="l41"><span class="ln">41   </span></a>   </span><span class="s2">public void </span><span class="s1">displaySpot(</span><span class="s2">double </span><span class="s1">x</span><span class="s2">, double </span><span class="s1">y)</span><span class="s2">;</span><span class="s1"> 
+<a name="l42"><span class="ln">42   </span></a>   </span><span class="s2">public void </span><span class="s1">activateAllPixels()</span><span class="s2">;</span><span class="s1"> 
+<a name="l43"><span class="ln">43   </span></a> 
+<a name="l44"><span class="ln">44   </span></a>   </span><span class="s0">// ## ROIs</span><span class="s1"> 
+<a name="l45"><span class="ln">45   </span></a>   </span><span class="s2">public void </span><span class="s1">loadRois(List&lt;FloatPolygon&gt; rois)</span><span class="s2">;</span><span class="s1"> 
+<a name="l46"><span class="ln">46   </span></a>   </span><span class="s2">public void </span><span class="s1">setPolygonRepetitions(</span><span class="s2">int </span><span class="s1">reps)</span><span class="s2">;</span><span class="s1"> 
+<a name="l47"><span class="ln">47   </span></a>   </span><span class="s2">public void </span><span class="s1">runPolygons()</span><span class="s2">;</span><span class="s1"> 
+<a name="l48"><span class="ln">48   </span></a> 
+<a name="l49"><span class="ln">49   </span></a>   </span><span class="s2">public void </span><span class="s1">waitForDevice()</span><span class="s2">;</span><span class="s1"> 
+<a name="l50"><span class="ln">50   </span></a>} 
+<a name="l51"><span class="ln">51   </span></a></span></pre>
+</body>
+</html>

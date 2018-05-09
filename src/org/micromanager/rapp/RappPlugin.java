@@ -4,7 +4,7 @@
 //SUBSYSTEM:     RAPP plugin
 //-----------------------------------------------------------------------------
 //AUTHOR:        FLorial,
-//SOURCE :       ProjectorPlugin, Arthur Edelstein
+//SOURCE :       ProjectorPlugin, Arthur Edelstein,
 //COPYRIGHT:     ZMBH, University of Heidelberg, 2017-2018
 //LICENSE:       This file is distributed under the
 /////////////////////////////////////////////////////////////////////////////////
@@ -22,13 +22,16 @@ import mmcorej.TaggedImage;
 import org.micromanager.MMStudio;
 import org.micromanager.acquisition.AcquisitionEngine;
 import org.micromanager.acquisition.AcquisitionWrapperEngine;
+import org.micromanager.api.MMListenerInterface;
 import org.micromanager.api.MMPlugin;
 import org.micromanager.api.ScriptInterface;
+import org.micromanager.internalinterfaces.LiveModeListener;
 import org.micromanager.utils.GUIUtils;
 import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -36,25 +39,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 /////////////////  Micro-Manager Package ////////////////////////
 
 
-public class RappPlugin implements MMPlugin  {
+public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListener {
 
     private RappGui form_;
     public static final String menuName = "Rapp control";
     public static final String tooltipDescription = "Automated cell recognition for killing and sorting ";
-    //private MMStudioMainFrame app_;
-
     private static ScriptInterface app_;
     private static CMMCore core_;
-    private MMStudio mgui_;
-    private MMStudio.DisplayImageRoutine displayImageRoutine_;
-    private AcquisitionEngine acq_;
-    private final String ACQ_NAME = "Rapp control";
-    private int multiChannelCameraNrCh_;
-
-    public static AcquisitionWrapperEngine getAcquisitionWrapperEngine() {
-        AcquisitionWrapperEngine engineWrapper = (AcquisitionWrapperEngine) MMStudio.getInstance().getAcquisitionEngine();
-        return engineWrapper;
-    }
 
     public static CMMCore getMMcore(){
         return  core_;
@@ -75,19 +66,8 @@ public class RappPlugin implements MMPlugin  {
     @Override  // MM
     public void setApp(ScriptInterface app) {
         app_ = app;
-        mgui_ = (MMStudio)  app_;
+        MMStudio mgui_ = (MMStudio) app_;
         core_ = app_.getMMCore();
-
-        displayImageRoutine_ = new MMStudio.DisplayImageRoutine() {
-            @Override
-            public void show(final TaggedImage ti) {
-                try {
-                    mgui_.addImage(ACQ_NAME, ti, true, true);
-                } catch (MMScriptException e) {
-                    ReportingUtils.logError(e);
-                }
-            }
-        };
 
     }
 
@@ -97,31 +77,12 @@ public class RappPlugin implements MMPlugin  {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 
-            if (mgui_.acquisitionExists(ACQ_NAME))
-                mgui_.closeAcquisition(ACQ_NAME);
-
             if (core_.getCameraDevice().length()==0 && core_.getGalvoDevice().length()==0 ) {
                 ReportingUtils.showMessage("Please load a Camera Devices " +
                         "And a Galvo-based phototargeting device : Rapp UGA-42  " +
                         "before using the RappPlugin plugin.");
                 return;
             }
-
-            LinkedBlockingQueue<TaggedImage> imageQueue_ =
-                    new LinkedBlockingQueue<TaggedImage>();
-            multiChannelCameraNrCh_ = (int) core_.getNumberOfCameraChannels();
-
-            mgui_.openAcquisition(ACQ_NAME, "tmp", core_.getRemainingImageCount(),
-                    multiChannelCameraNrCh_, 1, true);
-
-            String camera = core_.getCameraDevice();
-            long width = core_.getImageWidth();
-            long height = core_.getImageHeight();
-            long depth = core_.getBytesPerPixel();
-            long bitDepth = core_.getImageBitDepth();
-
-         //   mgui_.initializeAcquisition(ACQ_NAME, (int) width,(int) height, (int) depth, (int)bitDepth);
-          //  mgui_.runDisplayThread(imageQueue_, displayImageRoutine_);
 
         }
         catch (Exception ex) {
@@ -135,7 +96,6 @@ public class RappPlugin implements MMPlugin  {
             ReportingUtils.showMessage("Please Try Again! The Gui Couldn't load properly");
             e.printStackTrace();
         }
-        //gui_.getContentPane().add( );
     }
 
     // #Show the ImageJ Roi Manager and return a reference to it.
@@ -174,4 +134,74 @@ public class RappPlugin implements MMPlugin  {
     }
 
 
+    @Override
+    public void liveModeEnabled(boolean b) {
+
+        RappGui.getInstance().LiveMode_btn.setSelected(b);
+        RappGui.getInstance().LiveMode_btn.setText(  b ? "Stop Live View" : "Start Live View" );
+        RappGui.getInstance().LiveMode_btn.setBackground(b? Color.decode("#d35400") :Color.decode("#d35400") );
+        RappGui.getInstance().LiveMode_btn.setUI(new MetalToggleButtonUI() {
+            @Override
+            protected Color getSelectColor() {
+                return (b? Color.decode("#d35400") :Color.decode("#d35400") );
+            }
+        });
+
+    }
+
+    @Override
+    public void propertiesChangedAlert() {
+        System.out.println("liveModeEnabled");
+
+        if (! MMStudio.getInstance().isLiveModeOn()) {
+            System.out.println("PropertyChangeEvent");
+//            RappGui.getInstance().LiveMode_btn.setSelected(false);
+//            RappGui.getInstance().LiveMode_btn.setUI(new MetalToggleButtonUI() {
+//                @Override
+//                protected Color getSelectColor() {
+//                    return Color.decode("#d35400");
+//                }
+//            });
+        }  else  System.out.println("000000");
+    }
+
+    @Override
+    public void propertyChangedAlert(String s, String s1, String s2) {
+
+    }
+
+    @Override
+    public void configGroupChangedAlert(String s, String s1) {
+
+    }
+
+    @Override
+    public void systemConfigurationLoaded() {
+
+    }
+
+    @Override
+    public void pixelSizeChangedAlert(double v) {
+
+    }
+
+    @Override
+    public void stagePositionChangedAlert(String s, double v) {
+
+    }
+
+    @Override
+    public void xyStagePositionChanged(String s, double v, double v1) {
+
+    }
+
+    @Override
+    public void exposureChanged(String s, double v) {
+
+    }
+
+    @Override
+    public void slmExposureChanged(String s, double v) {
+
+    }
 }
