@@ -279,18 +279,18 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    public final void createEmptyPanels() {
       panelList_ = new ArrayList<JPanel>();
 
-      channelsPanel_ = (CheckBoxPanel) createPanel("Channels", 3, 1, 510, 160, true);
-      segmentationPanel_= (CheckBoxPanel) createPanel("Segmentation", 515,1,705,160,true );
-      buttonPanel =  createPanel("Run" , 715, 1, 880, 285);
+      channelsPanel_ = (CheckBoxPanel) createPanel("Channels", 3, 1, 510, 170, true);
+      segmentationPanel_= (CheckBoxPanel) createPanel("Segmentation", 515,1,705,170,true );
+      buttonPanel =  createPanel("Run", 715, 1, 880, 290);
 
       //framesPanel_ = (CheckBoxPanel) createPanel("Time points", 5, 308, 220, 451, true); // (text, left, top, right, bottom)
-      savePanel_ = (CheckBoxPanel) createPanel("Save images", 3, 170, 510, 285, true);
-      positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 170, 705, 285, true);
+      savePanel_ = (CheckBoxPanel) createPanel("Save images", 3, 175, 510, 290, true);
+      positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 175, 705, 290, true);
       afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
 
-      summaryPanel_ = createPanel("Summary", 515, 295, 705, 430);
-      acquisitionOrderPanel_ = createPanel("Acquisition order", 715, 295, 880, 430);
-      commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 295, 510,430,false);
+      summaryPanel_ = createPanel("Summary", 515, 300, 705, 435);
+      acquisitionOrderPanel_ = createPanel("Acquisition order", 715, 300, 880, 435);
+      commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 300, 510,435,false);
 
    }
 
@@ -685,7 +685,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
       channelTablePane_ = new JScrollPane();
       channelTablePane_.setFont(new Font("Arial", Font.PLAIN, 10));
-      channelTablePane_.setBounds(10, 45, 414, 90);
+      channelTablePane_.setBounds(10, 45, 485, 90);
       channelsPanel_.add(channelTablePane_);
 
       final JButton addButton = new JButton();
@@ -704,7 +704,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
       addButton.setText("New");
       addButton.setToolTipText("Create new channel for currently selected channel group");
-      addButton.setBounds(430, 45, 68, 22);
+      addButton.setBounds(70, 139, 68, 22);
       channelsPanel_.add(addButton);
 
       final JButton removeButton = new JButton();
@@ -727,7 +727,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       });
       removeButton.setText("Remove");
       removeButton.setToolTipText("Remove currently selected channel");
-      removeButton.setBounds(430, 69, 68, 22);
+      removeButton.setBounds(160, 139, 68, 22);
       channelsPanel_.add(removeButton);
 
       final JButton upButton = new JButton();
@@ -750,7 +750,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       upButton.setText("Up");
       upButton.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip(
               "Move currently selected channel up (Channels higher on list are acquired first)"));
-      upButton.setBounds(430, 93, 68, 22);
+      upButton.setBounds(250, 139, 68, 22);
       channelsPanel_.add(upButton);
 
       final JButton downButton = new JButton();
@@ -773,7 +773,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       downButton.setText("Down");
       downButton.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip(
               "Move currently selected channel down (Channels lower on list are acquired later)"));
-      downButton.setBounds(430, 117, 68, 22);
+      downButton.setBounds(340, 139, 68, 22);
       channelsPanel_.add(downButton);
 
       chanKeepShutterOpenCheckBox_ = new JCheckBox();
@@ -963,7 +963,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       progressBar = new JProgressBar(0, 100);
       progressBar.setPreferredSize(new Dimension(180, 40));
       this.add(progressBar);
-      progressBar.setBounds(80, 440, 320, 60);
+      progressBar.setBounds(80, 445, 320, 60);
       progressBar.setValue(0);
       progressBar.setStringPainted(true);
 
@@ -974,7 +974,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       taskOutput.setLineWrap(true);
       taskOutput.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
       JScrollPane jScrollPane_ = new JScrollPane(taskOutput);
-      jScrollPane_.setBounds(410, 440, 320, 60);
+      jScrollPane_.setBounds(410, 445, 320, 60);
       jScrollPane_.setViewportView(taskOutput);
       this.add(jScrollPane_);
 
@@ -1613,7 +1613,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
                "</body></html>",
                "Insufficient memory warning",
                JOptionPane.YES_NO_OPTION);
-         return answer == 0 ? true : false;
+         return answer == 0;
       }
       return true;
    }

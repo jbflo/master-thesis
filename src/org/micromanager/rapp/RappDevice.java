@@ -21,30 +21,30 @@ import java.util.List;
 
 public interface RappDevice {
    // Properties of device.
-   public String getName();
-   public String getChannel();
-   public double getXRange();
-   public double getYRange();
-   public double getXMinimum();
-   public double getYMinimum();
+   String getName();
+   String getChannel();
+   double getXRange();
+   double getYRange();
+   double getXMinimum();
+   double getYMinimum();
  
    // ## Alert when something has changed.
-   public void addOnStateListener(OnStateListener listener);
+   void addOnStateListener(OnStateListener listener);
 
    // ## Get/set internal exposure setting
-   public long getExposure();
-   public void setExposure(long interval_us);
+   long getExposure();
+   void setExposure(long interval_us);
 
    // ## Control illumination
-   public void turnOn();
-   public void turnOff();
-   public void displaySpot(double x, double y);
-   public void activateAllPixels();
+   void turnOn();
+   void turnOff();
+   void displaySpot(double x, double y);
+   void activateAllPixels();
 
    // ## ROIs
-   public void loadRois(List<FloatPolygon> rois);
-   public void setPolygonRepetitions(int reps);
-   public void runPolygons();
+   void loadRois(List<FloatPolygon> rois);
+   void setPolygonRepetitions(int reps);
+   void runPolygons();
 
-   public void waitForDevice();
+   void waitForDevice();
 }

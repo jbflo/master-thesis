@@ -90,13 +90,13 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
          combo_.addActionListener(e -> {
             channel_.color = new Color(colorPrefs_.getInt(
                     "Color_" + acqEng_.getChannelGroup() + "_" +
-                            (String) combo_.getSelectedItem(), Color.white.getRGB()));
+                            combo_.getSelectedItem(), Color.white.getRGB()));
             channel_.exposure = exposurePrefs_.getDouble(
                     "Exposure_" + acqEng_.getChannelGroup() + "_" +
-                            (String) combo_.getSelectedItem(), 10.0);
+                            combo_.getSelectedItem(), 10.0);
             channel_.laser_exposure = exposurePrefs_.getDouble(
                     "Exposure_" + acqEng_.getChannelGroup() + "_" +
-                            (String) combo_.getSelectedItem(), 10.0);
+                            combo_.getSelectedItem(), 10.0);
             this.fireEditingStopped();
          });
 

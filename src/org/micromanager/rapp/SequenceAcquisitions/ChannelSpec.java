@@ -9,7 +9,7 @@ import java.awt.*;
 public class ChannelSpec {
     public static final String DEFAULT_CHANNEL_GROUP = "Channel";
     public static final double Version = 1.0D;
-    public Boolean doSegmentation = true;
+    // public Boolean doSegmentation ;
     public String config = "";
     public Boolean KillCell = false;
     public double exposure = 10.0D;
@@ -22,7 +22,7 @@ public class ChannelSpec {
     public ChannelSpec() {
         this.color = Color.gray;
         this.useChannel = true;
-        this.doSegmentation = true;
+       // this.doSegmentation = false;
         this.camera = "";
         this.contrast = new org.micromanager.utils.ContrastSettings(0, 65535);
         this.color = Color.WHITE;
@@ -35,7 +35,7 @@ public class ChannelSpec {
 
     public static ChannelSpec fromJSONStream(String stream) {
         Gson gson = new Gson();
-        ChannelSpec cs = (ChannelSpec)gson.fromJson(stream, ChannelSpec.class);
+        ChannelSpec cs = gson.fromJson(stream, ChannelSpec.class);
         return cs;
     }
 

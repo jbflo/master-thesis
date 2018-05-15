@@ -37,7 +37,7 @@ public class Galvo implements RappDevice {
    HashSet<OnStateListener> onStateListeners_ = new HashSet<OnStateListener>();
    long interval_us_ ;
 
-   public Galvo(CMMCore mmc) throws Exception {
+   public Galvo(CMMCore mmc) {
       mmc_ = mmc;
       galvo_ = mmc_.getGalvoDevice();
       galvoExecutor_ = Executors.newSingleThreadExecutor();

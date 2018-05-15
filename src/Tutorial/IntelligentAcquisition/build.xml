@@ -1,4 +1,0 @@
-<project name="IntelligentAcquisition" default="jar">
-	<property name="plugin.path" value="Acquisition_Tools"/>
-	<import file="../javapluginbuild.xml"/>
-</project>

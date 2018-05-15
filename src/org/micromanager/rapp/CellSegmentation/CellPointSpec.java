@@ -33,7 +33,7 @@ public class CellPointSpec {
 
     public static CellPointSpec fromJSONStream(String stream) {
         Gson gson = new Gson();
-        CellPointSpec cs = (CellPointSpec)gson.fromJson(stream, CellPointSpec.class);
+        CellPointSpec cs = gson.fromJson(stream, CellPointSpec.class);
         return cs;
     }
 

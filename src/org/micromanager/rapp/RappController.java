@@ -27,6 +27,7 @@ import ij.plugin.Duplicator;
 import ij.plugin.filter.Analyzer;
 import ij.plugin.filter.GaussianBlur;
 import ij.plugin.frame.RoiManager;
+import ij.process.ImageConverter;
 import ij.process.ImageProcessor;
 import mmcorej.CMMCore;
 import mmcorej.Configuration;
@@ -393,7 +394,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         String nodeStr = prefs.toString();
         if (mappingNode_ == null || !nodeStr.contentEquals(mappingNode_)) {
             mappingNode_ = nodeStr;
-            mapping_ = (Map<Polygon, AffineTransform>) JavaUtils.getObjectFromPrefs(
+            mapping_ = JavaUtils.getObjectFromPrefs(
                     prefs,
                     dev_.getName(),
                     new HashMap<Polygon, AffineTransform>());
@@ -887,18 +888,25 @@ public class RappController extends  MMFrame implements OnStateListener {
         }).run();
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
-    public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title, boolean addRoi) {
-        ImagePlus imp = new Duplicator().run(impproc);
+    public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title, String path, boolean addRoi, boolean save) {
+        //ImagePlus imp = new Duplicator().run(impproc);
 
-        impproc.setTitle(title);
-        imp.setTitle("Working on : "+ title );
-        imp.show(title);
-        imp.updateAndRepaintWindow();
+//        if(!save) {
+//            IJ.run(impproc, "8-bit", "");
+//            System.out.println("Not save");
+//            ImageConverter ic = new ImageConverter(impproc);
+//            ic.convertToGray8();
+//            impproc.updateAndDraw();
+//        }
 
-        IJ.run(imp,"Threshold...", "Default B&W");
+        impproc.setTitle("Working on : "+ title );
+        impproc.show();
+
+        impproc.updateAndRepaintWindow();
+        IJ.run(impproc,"Threshold...", "Default B&W");
         if (addRoi){
-            IJ.run(imp,"Analyze Particles...", "size=0-infinity pixel summarize add");  //change range for cell size filtering
-        }else {  IJ.run(imp,"Analyze Particles...", "size=0-infinity pixel summarize ");}
+            IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel summarize add");  //change range for cell size filtering
+        }else {  IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel summarize ");}
 
 
         ij.measure.ResultsTable resTab = Analyzer.getResultsTable();
@@ -921,13 +929,17 @@ public class RappController extends  MMFrame implements OnStateListener {
             x[i]=xx;
             y[i]=yy;
             r[i]= new Roi(xx,yy,10,10);
-            imp.setRoi(new Roi(xx,yy,10,10));
-            //IJ.run("Draw");
+            impproc.setRoi(new Roi(xx,yy,10,10));
+            IJ.run("Draw");
         }
         //imp.setRoi(r);
         System.out.println( " Xcord "+ xTab);
         System.out.println(" Ycord "+ yTab);
-        imp.updateAndRepaintWindow();
+        impproc.updateAndRepaintWindow();
+        if(path !=null){
+            IJ.save(impproc, path+ "_"+"Segmented.tif");
+        }
+
         return new ArrayList[]{xTab, yTab};
     }
 

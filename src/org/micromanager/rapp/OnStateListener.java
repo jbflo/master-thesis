@@ -18,5 +18,5 @@
 package org.micromanager.rapp;
 
 public interface OnStateListener {
-   public void stateChanged(boolean onState);
+   void stateChanged(boolean onState);
 }

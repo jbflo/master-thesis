@@ -140,9 +140,7 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
    @Override
    public boolean isCellEditable(int nRow, int nCol) {
       if (nCol == 4) {
-         if (!acqEng_.isDoSegmentationEnabled()) {
-            return false;
-        }
+          return acqEng_.isDoSegmentationEnabled();
       }
       return true;
    }

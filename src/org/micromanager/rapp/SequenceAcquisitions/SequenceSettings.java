@@ -23,6 +23,7 @@ public class SequenceSettings {
     public boolean killCell = false;
 
     public SequenceSettings() {
+
     }
 
     public static String toJSONStream(SequenceSettings settings) {

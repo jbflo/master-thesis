@@ -54,28 +54,28 @@ import java.util.List;
 public interface AcquisitionEngine {
    
 
-   public static final String cameraGroup_ = "Camera";
-   public static final DecimalFormat FMT2 = new DecimalFormat("#0.00");
-   public static final String DEFAULT_ROOT_NAME = "C:/AcquisitionData";
+   String cameraGroup_ = "Camera";
+   DecimalFormat FMT2 = new DecimalFormat("#0.00");
+   String DEFAULT_ROOT_NAME = "C:/AcquisitionData";
    
    // initialization
-   public void setCore(CMMCore core_, AutofocusManager afMgr);
+   void setCore(CMMCore core_, AutofocusManager afMgr);
 
    /**
     * Sets the global position list attached to the parent Micro-Manager gui.
     */
-   public void setPositionList(PositionList posList);
+   void setPositionList(PositionList posList);
 
    /**
     * Provides the acquisition engine with the parent Micro-Manager gui.
     */
-   public void setParentGUI(ScriptInterface parent);
+   void setParentGUI(ScriptInterface parent);
 
 
    /**
     * Sets whether the Live window will be updated during acquistion
     */
-   public void setUpdateLiveWindow(boolean b);
+   void setUpdateLiveWindow(boolean b);
    
    // run-time control
 
@@ -85,67 +85,67 @@ public interface AcquisitionEngine {
     * @throws MMException
   //  * @throws MMAcqDataException
     */
-   public String acquire() throws MMException;
+   String acquire() throws MMException;
 
    /**
     * Stops a running Acquisition
     * @param   interrupted when set, multifield acquisition will also be stopped
     */
-   public void stop(boolean interrupted);
+   void stop(boolean interrupted);
 
 
    /**
     * Request immediate abort of current task
     */
-   public boolean abortRequest();
+   boolean abortRequest();
 
    /**
     * Signals that a running acquisition is done.
     */
-   public void setFinished();
+   void setFinished();
 
    /**
     * Returns true when Acquisition is running
     */
-   public boolean isAcquisitionRunning();
+   boolean isAcquisitionRunning();
 
    /**
     * Determines if a multi-field acquistion is running
     */
-   public boolean isMultiFieldRunning();
+   boolean isMultiFieldRunning();
 
 
    /**
     * enables/diasables the use of custom time points
     * @param enable 
     */
-   public void enableCustomTimeIntervals(boolean enable);
+   void enableCustomTimeIntervals(boolean enable);
    
    /*
     * returns true if acquisition engine is se p to use custom time intervals
     */
-   public boolean customTimeIntervalsEnabled(); 
+   boolean customTimeIntervalsEnabled();
    
    /**
     * Used to provide acquisition with custom time intervals in between frames
     * passing null resets to default time points
     */
-   public void setCustomTimeIntervals(double[] customTimeIntervalsMs);
+   void setCustomTimeIntervals(double[] customTimeIntervalsMs);
 
    /*
     * returns list of custom time intervals, or null if none are specified   
     */
-   public double[] getCustomTimeIntervals();
+   double[] getCustomTimeIntervals();
 
    /**
     * Unconditional shutdown.  Will stop acuiqistion and multi-field acquisition
     */
-   public void shutdown();
+   void shutdown();
 
    /**
     * Pause/Unpause a running acquistion
     */
-   public void setPause(boolean state);
+   void setPause(boolean state);
    
    // settings
 
@@ -154,60 +154,60 @@ public interface AcquisitionEngine {
    /**
     * Sets channel specification in the given row
     */
-   public void setChannel(int row, ChannelSpec channel);
+   void setChannel(int row, ChannelSpec channel);
 
    /**
     * Find out which groups are available
     */
-   public String getFirstConfigGroup();
+   String getFirstConfigGroup();
 
    /**
     * Find out which channels are currently available for the selected channel group.
     * @return - list of channel (preset) names
     */
-   public String[] getChannelConfigs();
+   String[] getChannelConfigs();
 
    /**
     * Returns the configuration preset group currently selected in the Multi-Dimensional Acquistion Window
     */
-   public String getChannelGroup();
+   String getChannelGroup();
 
    /**
     * Set the channel group if the current hardware configuration permits.
     * @param newGroup
     * @return - true if successful
     */
-   public boolean setChannelGroup(String newGroup);
+   boolean setChannelGroup(String newGroup);
 
    /**
     * Resets the engine
     */
-   public void clear();
+   void clear();
 
 
 
    /*
     * Returns whether channels will be included in the acquired dimensions.
     */
-   public boolean isChannelsSettingEnabled();
+   boolean isChannelsSettingEnabled();
 
    /*
     * Sets whether channels are to be included in the settings. If this
     * value is set to false, then only a single channel is acquired, with
     * whatever the current device settings are.
     */
-   public void enableChannelsSetting(boolean enable);
+   void enableChannelsSetting(boolean enable);
     /*
      * Returns whether channels will be included in the acquired dimensions.
      */
-    public boolean isKillCellEnabled();
+    boolean isKillCellEnabled();
 
     /*
      * Sets whether channels are to be included in the settings. If this
      * value is set to false, then only a single channel is acquired, with
      * whatever the current device settings are.
      */
-    public void enableKillCell(boolean enable);
+    void enableKillCell(boolean enable);
 
 
 
@@ -217,32 +217,32 @@ public interface AcquisitionEngine {
     * open for channel imaging.  This only has an effect when autoshutter is on, and when
     * mode "Channels First" has been chosen.
     */
-   public void keepShutterOpenForChannels(boolean open);
+    void keepShutterOpenForChannels(boolean open);
 
    /**
     * Returns flag indicating whether to override autoshutter behavior
     * during channel acquisition
     */
-   public boolean isShutterOpenForChannels();
+   boolean isShutterOpenForChannels();
 
    /**
     * Sets a flag that signals whether multiple positions will be acquired
     * @param selected - acquires at multiple stage positions when true
     */
-   public void enableMultiPosition(boolean selected);
+   void enableMultiPosition(boolean selected);
 
    /**
     * Returns true when multiple positions will be acquired
     * @return whether or not acquisition will be executed at multiple stage
     * positions
     */
-   public boolean isMultiPositionEnabled();
+   boolean isMultiPositionEnabled();
 
     /**
      * Sets a flag that signals whether multiple positions will be acquired
      * @param selected - acquires at multiple stage positions when true
      */
-    public void enableSegmentation(boolean selected);
+    void enableSegmentation(boolean selected);
 
     /**
      * Returns true when multiple positions will be acquired
@@ -255,45 +255,45 @@ public interface AcquisitionEngine {
     * Access to the channels used in this acquisition
     * @return - Channels used in this acquisition
     */
-   public ArrayList<ChannelSpec> getChannels();
+    ArrayList<ChannelSpec> getChannels();
 
    /**
     * Sets the channels to be used in this acquisition
     * @param channels
     */
-   public void setChannels(ArrayList<ChannelSpec> channels);
+   void setChannels(ArrayList<ChannelSpec> channels);
 
    /**
     * Returns path to the location where the acquisitions will be stored on
     * disk
     */
-   public String getRootName();
+   String getRootName();
 
    /**
     * Sets the absolute path for where the acquisitions will be stored on disk.
     * @param absolutePath
     */
-   public void setRootName(String absolutePath);
+   void setRootName(String absolutePath);
 
 
 
    /**
     * @Deprecated
     */
-   public void setCameraConfig(String config);
+   void setCameraConfig(String config);
 
    /**
     * Sets the name for the directory in which the images and data are
     * contained. Also known as the "prefix". This dir will be nested inside the root
     * directory specified by setRootName.
     */
-   public void setDirName(String text);
+   void setDirName(String text);
 
    /*
     * Sets the default comment to be included in the acquisition's summary metadata.
     * Equivalent to the comment box in the Multi-Dimensional Acquisition setup window.
     */
-   public void setComment(String text);
+   void setComment(String text);
 
 
    /**
@@ -302,8 +302,8 @@ public interface AcquisitionEngine {
 //   public boolean addChannel(String name, double exp, double offset,
 //           ContrastSettings s8, ContrastSettings s16, int skip, Color c);
 
-   public boolean addChannel(String name, double exp, double LaserExp, Boolean killCell,
-                             ContrastSettings s8, ContrastSettings s16, Color c);
+   boolean addChannel(String name, double exp, double LaserExp, Boolean killCell,
+                      ContrastSettings s8, ContrastSettings s16, Color c);
 
 
    /*
@@ -357,145 +357,145 @@ public interface AcquisitionEngine {
     * Returns the settings that if true, indicates images will be saved
     * to disk during acquisition.
     */
-   public boolean getSaveFiles();
+   boolean getSaveFiles();
 
    /**
     * @Deprecated
     */
-   public int getDisplayMode();
+   int getDisplayMode();
 
    /**
     * @Deprecated
     */
-   public void setDisplayMode(int mode);
+   void setDisplayMode(int mode);
 
 
    /**
     * Returns the setting for the order of the four dimensions (P, T, C, Z).
     * Possible values are enumerated in org.micromanager.utils.AcqOrderMode
     */
-   public int getAcqOrderMode();
+   int getAcqOrderMode();
 
    /**
     * Sets the value for the order of the four dimensions (P, T, C, Z).
     * Possible values are enumerated in org.micromanager.utils.AcqOrderMode
     */
-   public void setAcqOrderMode(int mode);
+   void setAcqOrderMode(int mode);
 
    /*
     * If set to true, autofocus will be used during the acquisition.
     */
-   public void enableAutoFocus(boolean enabled);
+   void enableAutoFocus(boolean enabled);
 
    /*
     * Returns true if autofocus is requested for the acquisition.
     */
-   public boolean isAutoFocusEnabled();
+   boolean isAutoFocusEnabled();
 
 
     /*
     * @Deprecated
     */
-   public void setSingleWindow(boolean selected);
+    void setSingleWindow(boolean selected);
 
    /*
     * @Deprecated
     */
-   public String installAutofocusPlugin(String className);
+   String installAutofocusPlugin(String className);
    
    // utility
-   public String getVerboseSummary();
+   String getVerboseSummary();
 
    
-   public boolean isConfigAvailable(String config_);
+   boolean isConfigAvailable(String config_);
 
    /*
     * @Deprecated
     * Returns available configurations for the camera group.
     */
-   public String[] getCameraConfigs();
+   String[] getCameraConfigs();
 
    /*
     * Returns the available groups in Micro-Manager's configuration settings.
     */
-   public String[] getAvailableGroups();
+   String[] getAvailableGroups();
 
 
    /*
     * Returns true if the acquisition is currently paused.
     */
-   public boolean isPaused();
+   boolean isPaused();
 
    /**
     * Adds an image processor to the DataProcessor pipeline.
     */
-   public void addImageProcessor(DataProcessor<TaggedImage> processor);
+   void addImageProcessor(DataProcessor<TaggedImage> processor);
 
    /**
     * Removes an image processor from the DataProcessor pipeline.
     */
-   public void removeImageProcessor(DataProcessor<TaggedImage> taggedImageProcessor);
+   void removeImageProcessor(DataProcessor<TaggedImage> taggedImageProcessor);
 
    /**
     * Replace the current DataProcessor pipeline with the provided one.
     */
-   public void setImageProcessorPipeline(List<DataProcessor<TaggedImage>> pipeline);
+   void setImageProcessorPipeline(List<DataProcessor<TaggedImage>> pipeline);
 
    /**
     * Return a copy of the entire DataProcessor pipeline.
     */
-   public ArrayList<DataProcessor<TaggedImage>> getImageProcessorPipeline();
+   ArrayList<DataProcessor<TaggedImage>> getImageProcessorPipeline();
 
    /**
     * Register a DataProcessor class for later use under a unique name.
     */
-   public void registerProcessorClass(Class<? extends DataProcessor<TaggedImage>> processorClass, String name);
+   void registerProcessorClass(Class<? extends DataProcessor<TaggedImage>> processorClass, String name);
 
    /**
     * Get a sorted list of registered DataProcessor names.
     */
-   public List<String> getSortedDataProcessorNames();
+   List<String> getSortedDataProcessorNames();
 
    /**
     * Given a DataProcessor name (see above), create a new DataProcessor
     * and add it to the image processor pipeline.
     */
-   public DataProcessor<TaggedImage> makeProcessor(String Name, ScriptInterface gui);
+   DataProcessor<TaggedImage> makeProcessor(String Name, ScriptInterface gui);
 
    /**
     * Return the first DataProcessor in the pipeline registered under the 
     * given name, or null if there is none.
     */
-   public DataProcessor<TaggedImage> getProcessorRegisteredAs(String name);
+   DataProcessor<TaggedImage> getProcessorRegisteredAs(String name);
 
    /**
     * Return the String under which the given DataProcessor type is 
     * registered, or null if there is none.
     */
-   public String getNameForProcessorClass(Class<? extends DataProcessor<TaggedImage>> processor);
+   String getNameForProcessorClass(Class<? extends DataProcessor<TaggedImage>> processor);
 
    /**
     * Dispose of the GUIs generated by all DataProcessors we know about.
     */
-   public void disposeProcessors();
+   void disposeProcessors();
 
    /*
     * Returns true if abortRequest() has been called -- the acquisition may
     * still be running.
     */
-   public boolean abortRequested();
+   boolean abortRequested();
 
    /*
     * Returns a time (in milliseconds) indicating when the next image is
     * expected to be acquired.
     */
-   public long getNextWakeTime();
+   long getNextWakeTime();
 
    /*
     * Returns true if the acquisition has finished running and no more hardware
     * events will be run.
     */
-   public boolean isFinished();
+   boolean isFinished();
    
    /*
     * Attach a runnable to the acquisition engine. Each index (f, p, c, s) can
@@ -505,31 +505,31 @@ public interface AcquisitionEngine {
     *
     * Subject to change.
     */
-   public void attachRunnable(int frame, int position, int channel, int slice, Runnable runnable);
+   void attachRunnable(int frame, int position, int channel, int slice, Runnable runnable);
 
 
    /*
     * Remove runnables from the acquisition engine
     */
-   public void clearRunnables();
+   void clearRunnables();
 
    /*
     * Get the summary metadata for the most recent acquisition.
     */
-   public JSONObject getSummaryMetadata();
+   JSONObject getSummaryMetadata();
 
     /*
      * Get the image cache for the most recent acquisition.
      */
-    public ImageCache getImageCache();
+    ImageCache getImageCache();
 
-    public List<DataProcessor<TaggedImage>> getImageProcessors();
+    List<DataProcessor<TaggedImage>> getImageProcessors();
 
-    public String getComment();
+    String getComment();
 
-    public void addSettingsListener(AcqSettingsListener listener);
+    void addSettingsListener(AcqSettingsListener listener);
 
-    public void removeSettingsListener(AcqSettingsListener listener);
+    void removeSettingsListener(AcqSettingsListener listener);
     
-    public boolean getZAbsoluteMode();
+    boolean getZAbsoluteMode();
 }
