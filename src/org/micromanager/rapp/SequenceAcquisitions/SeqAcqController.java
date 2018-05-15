@@ -160,7 +160,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                 ArrayList[] ll =  rappController_ref.brightFieldSegmenter(iPlus, presetConfig.config.toString(), "", presetConfig.KillCell, saveFiles_);
                                 if (presetConfig.KillCell) {
                                     app_.enableLiveMode(true); //  Open the live mode before shooting
-                                    rappController_ref.shootFromSegmentationListPoint(ll);
+                                    rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
                                 }
                             }
 
@@ -174,7 +174,8 @@ public class SeqAcqController implements AcquisitionEngine {
                                     ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString(), path_seq, presetConfig.KillCell, saveFiles_);
                                     if (presetConfig.KillCell) {
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
-                                        rappController_ref.shootFromSegmentationListPoint(ll);
+                                        rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
+
                                     }
                                 }
 
@@ -188,7 +189,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                     ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString(), path_seq, presetConfig.KillCell, saveFiles_);
                                     if (presetConfig.KillCell) {
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
-                                        rappController_ref.shootFromSegmentationListPoint(ll);
+                                        rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
                                     }
                                 }
                             }

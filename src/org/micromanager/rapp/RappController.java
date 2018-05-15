@@ -324,8 +324,8 @@ public class RappController extends  MMFrame implements OnStateListener {
      */
     public void setExposure(double intervalUs) {
         long previousExposure = dev_.getExposure();
-        RappGui.getInstance().spiner.setText(String.valueOf(dev_.getExposure()));
-        System.out.println( RappGui.getInstance().spiner.getText());
+       // RappGui.getInstance().spiner.setText(String.valueOf(dev_.getExposure()));
+      //  System.out.println( RappGui.getInstance().spiner.getText());
         long newExposure = (long) intervalUs;
         if ( previousExposure != newExposure) {
             dev_.setExposure(newExposure);
@@ -875,6 +875,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                                 //core_.setGalvoIlluminationState(galvo,true);
                                 //core_.waitForDevice(galvo);
                             } else ReportingUtils.showError("Please Try Again! Galvo problem");
+                            Thread.sleep(dev_.getExposure());
                             displaySpot(devP.x, devP.y);
                             returnShutter(originalShutterState);
                             returnChannel(originalConfig);
@@ -943,7 +944,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         return new ArrayList[]{xTab, yTab};
     }
 
-    public void shootFromSegmentationListPoint(ArrayList[] segmentatio_pt) {
+    public void shootFromSegmentationListPoint(ArrayList[] segmentatio_pt, long laser_exp) {
         ImagePlus image;
 
         RoiManager rm = RoiManager.getInstance();
@@ -993,6 +994,8 @@ public class RappController extends  MMFrame implements OnStateListener {
                         //core_.setGalvoIlluminationState(galvo,true);
                         //core_.waitForDevice(galvo);
                     } else ReportingUtils.showError("Please Try Again! Galvo problem");
+                    //this.setExposure(laser_exp);
+                    Thread.sleep( laser_exp);
                     displaySpot(devP.x, devP.y);
                     returnShutter(originalShutterState);
                     returnChannel(originalConfig);
