@@ -1,5 +1,5 @@
 
-package org.micromanager.rapp;
+package org.micromanager.rapp.utils;
 
 import ij.process.FloatPolygon;
 import java.awt.Polygon;

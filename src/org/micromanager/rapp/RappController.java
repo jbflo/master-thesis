@@ -40,6 +40,7 @@ import org.micromanager.acquisition.TaggedImageStorageMultipageTiff;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqController;
+import org.micromanager.rapp.utils.*;
 import org.micromanager.rapp.utils.FileDialog;
 import org.micromanager.utils.*;
 
@@ -67,7 +68,7 @@ import java.util.prefs.Preferences;
 public class RappController extends  MMFrame implements OnStateListener {
     private URL default_path = this.getClass().getResource("");
     private String path = default_path.toString().substring(6);
-    private final RappDevice  dev_;
+    private final RappDevice dev_;
     private static RappPlugin rappPlugin = new RappPlugin() ;
     private final MouseListener pointAndShootMouseListener;
     private final AtomicBoolean pointAndShooteModeOn_ = new AtomicBoolean(false);
@@ -890,15 +891,20 @@ public class RappController extends  MMFrame implements OnStateListener {
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
     public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title, String path, boolean addRoi, boolean save) {
-        //ImagePlus imp = new Duplicator().run(impproc);
 
-//        if(!save) {
-//            IJ.run(impproc, "8-bit", "");
-//            System.out.println("Not save");
-//            ImageConverter ic = new ImageConverter(impproc);
-//            ic.convertToGray8();
-//            impproc.updateAndDraw();
-//        }
+//        ImagePlus imp = new Duplicator().run(impproc);
+////        ImageProcessor ip = imp.getProcessor();
+////        ip.createImage();
+////        imp.setTitle("Original :" + title);
+////        imp.show();
+
+        if(!save) {
+            IJ.run(impproc, "16-bit", "");
+            System.out.println("Not save");
+            ImageConverter ic = new ImageConverter(impproc);
+            ic.convertToGray8();
+            impproc.updateAndDraw();
+        }
 
         impproc.setTitle("Working on : "+ title );
         impproc.show();
@@ -946,7 +952,6 @@ public class RappController extends  MMFrame implements OnStateListener {
 
     public void shootFromSegmentationListPoint(ArrayList[] segmentatio_pt, long laser_exp) {
         ImagePlus image;
-
         RoiManager rm = RoiManager.getInstance();
 
         if (rm != null) {
@@ -994,7 +999,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                         //core_.setGalvoIlluminationState(galvo,true);
                         //core_.waitForDevice(galvo);
                     } else ReportingUtils.showError("Please Try Again! Galvo problem");
-                    //this.setExposure(laser_exp);
+                    // this.setExposure(laser_exp);
                     Thread.sleep( laser_exp);
                     displaySpot(devP.x, devP.y);
                     returnShutter(originalShutterState);

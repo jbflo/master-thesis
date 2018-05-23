@@ -2,6 +2,7 @@ package org.micromanager.rapp.SequenceAcquisitions;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.plugin.Duplicator;
 import mmcorej.*;
 import org.json.JSONObject;
 import org.micromanager.api.DataProcessor;
@@ -170,12 +171,15 @@ public class SeqAcqController implements AcquisitionEngine {
                                 if(acquisitionSettings.useSegmentation){
                                     String path_seq = rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase();
                                     ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
+
+                                    ImagePlus imp = new Duplicator().run(iPlus);
+                                    imp.setTitle("Original :" + presetConfig.config);
+                                    imp.show();
                                     // Execute the Segmentation depends on the Colors.
                                     ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString(), path_seq, presetConfig.KillCell, saveFiles_);
                                     if (presetConfig.KillCell) {
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
                                         rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
-
                                     }
                                 }
 
