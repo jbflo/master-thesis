@@ -106,7 +106,7 @@ public class SeqAcqController implements AcquisitionEngine {
     }
 
     protected String runSeqAcquisition(SequenceSettings acquisitionSettings) {
-        app_.enableLiveMode(false);
+        //app_.enableLiveMode(false);
         ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
         String chanelGroup_ = acquisitionSettings.channelGroup;
 
@@ -139,16 +139,18 @@ public class SeqAcqController implements AcquisitionEngine {
                                 //ReportingUtils.showMessage("Acquisition Stop.");
                                 break;
                             }
-
                             // Set the Chanel Exposure Time
-                            app_.enableLiveMode(false); // Make sure the Live Mode is off
+                            //app_.enableLiveMode(false); // Make sure the Live Mode is off
                             app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
                             // Then Change The Chanel Config (Preset )
                             core_.setConfig(chanelGroup_, presetConfig.config.toString());
-
                             // Take a Photo for each fix chanel
-                            //core_.snapImage();
-                            app_.snapSingleImage();
+                           //   core_.waitForConfig(chanelGroup_, presetConfig.config.toString());
+                           //  core_.waitForDevice(core_.getCameraDevice());
+
+                           Thread.sleep(1000 + (long)presetConfig.exposure);
+
+                            // app_.snapSingleImage();
                             iPlus = IJ.getImage();
 
                             if (channels.subList(0, channels.size()).get(0).config.equals(presetConfig.config)){
@@ -167,14 +169,15 @@ public class SeqAcqController implements AcquisitionEngine {
 
                             if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
                                 // The acquires Images are saving as separate Image.
+
                                 IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
                                 if(acquisitionSettings.useSegmentation){
                                     String path_seq = rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase();
                                     ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
 
-                                    ImagePlus imp = new Duplicator().run(iPlus);
-                                    imp.setTitle("Original :" + presetConfig.config);
-                                    imp.show();
+                                   // ImagePlus imp = new Duplicator().run(iPlus);
+                                  //  imp.setTitle("Original :" + presetConfig.config);
+                                 //   imp.show();
                                     // Execute the Segmentation depends on the Colors.
                                     ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString(), path_seq, presetConfig.KillCell, saveFiles_);
                                     if (presetConfig.KillCell) {

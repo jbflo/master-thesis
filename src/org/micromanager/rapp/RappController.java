@@ -836,7 +836,7 @@ public class RappController extends  MMFrame implements OnStateListener {
 
                 if (rm != null) {
                     int roiCount = rm.getCount();
-                    Roi[] roiArray = rm.getRoisAsArray();
+                    Roi[] roiArray =   rm.getSelectedRoisAsArray();
                     image = IJ.getImage();
                     ArrayList widthRoiPosArray = new ArrayList(roiCount);
                     ArrayList heightRoiPosArray = new ArrayList(roiCount);
@@ -890,7 +890,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         }).run();
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
-    public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title, String path, boolean addRoi, boolean save) {
+    public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title, String path, boolean kill , boolean save) {
 
 //        ImagePlus imp = new Duplicator().run(impproc);
 ////        ImageProcessor ip = imp.getProcessor();
@@ -898,22 +898,22 @@ public class RappController extends  MMFrame implements OnStateListener {
 ////        imp.setTitle("Original :" + title);
 ////        imp.show();
 
-        if(!save) {
-            IJ.run(impproc, "16-bit", "");
-            System.out.println("Not save");
-            ImageConverter ic = new ImageConverter(impproc);
-            ic.convertToGray8();
-            impproc.updateAndDraw();
-        }
+
 
         impproc.setTitle("Working on : "+ title );
         impproc.show();
 
         impproc.updateAndRepaintWindow();
-        IJ.run(impproc,"Threshold...", "Default B&W");
-        if (addRoi){
-            IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel summarize add");  //change range for cell size filtering
-        }else {  IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel summarize ");}
+        //IJ.run(impproc,"Threshold...", "Default B&W");
+        IJ.run(impproc, "Gaussian Blur...", "sigma=5");
+        if (kill){
+            //IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel add");  //change range for cell size filtering
+            IJ.run(impproc, "Find Maxima...", "noise=20 output=List add");
+        }else {  //IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel summarize ");
+                 IJ.run(impproc, "Find Maxima...", "noise=20 output=List exclude");
+        }
+
+
 
 
         ij.measure.ResultsTable resTab = Analyzer.getResultsTable();
@@ -923,6 +923,8 @@ public class RappController extends  MMFrame implements OnStateListener {
         double[] x = new double[resCount];
         double[] y = new double[resCount];
         Roi[] r = new Roi[resCount];
+        RoiManager rm = RoiManager.getInstance();
+
 
         for (int i=0; i<resCount; i++){
             if (SeqAcqController.stopAcqRequested_.get()) {
@@ -939,7 +941,7 @@ public class RappController extends  MMFrame implements OnStateListener {
             impproc.setRoi(new Roi(xx,yy,10,10));
             IJ.run("Draw");
         }
-        //imp.setRoi(r);
+       // impproc.setRoi(r);
         System.out.println( " Xcord "+ xTab);
         System.out.println(" Ycord "+ yTab);
         impproc.updateAndRepaintWindow();
