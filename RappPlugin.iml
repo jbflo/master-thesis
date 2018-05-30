@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/src/TestLiveView" />
       <excludeFolder url="file://$MODULE_DIR$/src/Tutorial" />
       <excludeFolder url="file://$MODULE_DIR$/src/Tutorial/SlideExplorer" />
+      <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/LineageTracker" />
       <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/SequenceAcquisition" />
       <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/acquisition" />
       <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/dialogs" />

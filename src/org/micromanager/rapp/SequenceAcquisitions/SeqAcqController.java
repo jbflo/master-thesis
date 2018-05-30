@@ -175,10 +175,6 @@ public class SeqAcqController implements AcquisitionEngine {
                                     String path_seq = rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase();
                                     ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
 
-                                   // ImagePlus imp = new Duplicator().run(iPlus);
-                                  //  imp.setTitle("Original :" + presetConfig.config);
-                                 //   imp.show();
-                                    // Execute the Segmentation depends on the Colors.
                                     ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString(), path_seq, presetConfig.KillCell, saveFiles_);
                                     if (presetConfig.KillCell) {
                                         app_.enableLiveMode(true); //  Open the live mode before shooting

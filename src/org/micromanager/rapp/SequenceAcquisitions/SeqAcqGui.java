@@ -34,6 +34,7 @@ import org.micromanager.api.ScriptInterface;
 import org.micromanager.dialogs.AdvancedOptionsDialog;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.rapp.RappGui;
+import org.micromanager.rapp.utils.AcqOrderMode;
 import org.micromanager.rapp.RappPlugin;
 import org.micromanager.utils.*;
 
@@ -579,15 +580,15 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       acqOrderBox_.setBounds(6, 36, 160, 22);
       acquisitionOrderPanel_.add(acqOrderBox_);
 
-      acqOrderModes_ = new AcqOrderMode[4];
-      acqOrderModes_[0] = new AcqOrderMode(AcqOrderMode.TIME_POS_SLICE_CHANNEL);
-      acqOrderModes_[1] = new AcqOrderMode(AcqOrderMode.TIME_POS_CHANNEL_SLICE);
-      acqOrderModes_[2] = new AcqOrderMode(AcqOrderMode.POS_TIME_SLICE_CHANNEL);
-      acqOrderModes_[3] = new AcqOrderMode(AcqOrderMode.POS_TIME_CHANNEL_SLICE);
+      acqOrderModes_ = new AcqOrderMode[1];
+      acqOrderModes_[0] = new AcqOrderMode(AcqOrderMode.SEGMENTATION_POS_KILL_CHANNEL);
+//      acqOrderModes_[1] = new AcqOrderMode(AcqOrderMode.TIME_POS_CHANNEL_SLICE);
+//      acqOrderModes_[2] = new AcqOrderMode(AcqOrderMode.POS_TIME_SLICE_CHANNEL);
+//      acqOrderModes_[3] = new AcqOrderMode(AcqOrderMode.POS_TIME_CHANNEL_SLICE);
       acqOrderBox_.addItem(acqOrderModes_[0]);
-      acqOrderBox_.addItem(acqOrderModes_[1]);
-      acqOrderBox_.addItem(acqOrderModes_[2]);
-      acqOrderBox_.addItem(acqOrderModes_[3]);
+//      acqOrderBox_.addItem(acqOrderModes_[1]);
+//      acqOrderBox_.addItem(acqOrderModes_[2]);
+//      acqOrderBox_.addItem(acqOrderModes_[3]);
 
 
       // Summary panel
@@ -1238,7 +1239,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       segmentationPanel_.setSelected(acqEng_.isDoSegmentationEnabled());
       segmentationPanel_.repaint();
 
-      acqEng_.enableKillCell(acqPrefs_.getBoolean(ACQ_ENABLE_SEGMENTATION, acqEng_.isDoSegmentationEnabled()));
+      acqEng_.enableKillCell(acqPrefs_.getBoolean(ACQ_ENABLE_SEGMENTATION, acqEng_.isKillCellEnabled()));
 
       savePanel_.setSelected(acqPrefs_.getBoolean(ACQ_SAVE_FILES, false));
 
@@ -1730,7 +1731,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       afPanel_.setSelected(acqEng_.isAutoFocusEnabled());
 //      acqOrderBox_.setEnabled(positionsPanel_.isSelected() || framesPanel_.isSelected()
 //        || slicesPanel_.isSelected()      || channelsPanel_.isSelected());
-      acqOrderBox_.setEnabled(positionsPanel_.isSelected() ||  channelsPanel_.isSelected());
+      acqOrderBox_.setEnabled(positionsPanel_.isSelected() || segmentationPanel_.isSelected() ||  channelsPanel_.isSelected());
 
       //afSkipInterval_.setEnabled(acqEng_.isAutoFocusEnabled());
 
@@ -1755,8 +1756,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
 
       for (AcqOrderMode mode : acqOrderModes_) {
-         mode.setEnabled(false, positionsPanel_.isSelected(),
-                 false, channelsPanel_.isSelected());
+         mode.setEnabled(segmentationPanel_.isSelected(), positionsPanel_.isSelected(), true, channelsPanel_.isSelected());
 //         mode.setEnabled(framesPanel_.isSelected(), positionsPanel_.isSelected(),
 //                 slicesPanel_.isSelected(), channelsPanel_.isSelected());
       }
