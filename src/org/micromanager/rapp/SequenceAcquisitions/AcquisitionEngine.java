@@ -210,8 +210,6 @@ public interface AcquisitionEngine {
     void enableKillCell(boolean enable);
 
 
-
-
     /**
     * Flag indicating whether to override autoshutter behavior and keep the shutter
     * open for channel imaging.  This only has an effect when autoshutter is on, and when

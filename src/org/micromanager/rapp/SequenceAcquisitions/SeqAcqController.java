@@ -262,7 +262,6 @@ public class SeqAcqController implements AcquisitionEngine {
         } else {
             numKillChannels = 1;
         }
-
         return numKillChannels;
     }
 
@@ -504,10 +503,8 @@ public class SeqAcqController implements AcquisitionEngine {
     }
 
 
-
     @Override
     public void enableCustomTimeIntervals(boolean enable) {
-
     }
 
     @Override
@@ -517,7 +514,6 @@ public class SeqAcqController implements AcquisitionEngine {
 
     @Override
     public void setCustomTimeIntervals(double[] customTimeIntervalsMs) {
-
     }
 
     @Override
@@ -534,8 +530,6 @@ public class SeqAcqController implements AcquisitionEngine {
     public void setPause(boolean state) {
 
     }
-
-
 
     @Override
     public void setChannel(int row, ChannelSpec channel) {
@@ -558,7 +552,6 @@ public class SeqAcqController implements AcquisitionEngine {
     }
 
 
-
     @Override
     public String getChannelGroup(){
         return this.core_.getChannelGroup();
@@ -576,7 +569,6 @@ public class SeqAcqController implements AcquisitionEngine {
                 } catch (Exception var4) {
                     ReportingUtils.showError(var4);
                 }
-
                 return false;
             }
         } else {
@@ -589,15 +581,11 @@ public class SeqAcqController implements AcquisitionEngine {
         if (this.channels_ != null) {
             this.channels_.clear();
         }
-
       //  this.numFrames_ = 0;
     }
 
-
-
     @Override
     public boolean isChannelsSettingEnabled() {
-
         return this.useChannels_;
     }
 
@@ -616,7 +604,6 @@ public class SeqAcqController implements AcquisitionEngine {
           this.killCell_ = selected;
     }
 
-
     @Override
     public void keepShutterOpenForChannels(boolean open) {
         this.keepShutterOpenForChannels_ = open;
@@ -626,8 +613,6 @@ public class SeqAcqController implements AcquisitionEngine {
     public boolean isShutterOpenForChannels() {
         return this.keepShutterOpenForChannels_;
     }
-
-
 
     @Override
     public void enableMultiPosition(boolean selected) {

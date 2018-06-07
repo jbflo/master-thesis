@@ -136,6 +136,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private static final String ACQ_ENABLE_MULTI_POSITION = "enableMultiPosition";
    private static final String ACQ_ENABLE_MULTI_CHANNEL = "enableMultiChannels";
    private static final String ACQ_ENABLE_SEGMENTATION = "enableSegmentation";
+   private static final String ACQ_ENABLE_KILLCELL = "killCell";
    private static final String ACQ_ORDER_MODE = "acqOrderMode";
    private static final String ACQ_CHANNEL_GROUP = "acqChannelGroup";
    private static final String ACQ_NUM_CHANNELS = "acqNumchannels";
@@ -1239,7 +1240,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       segmentationPanel_.setSelected(acqEng_.isDoSegmentationEnabled());
       segmentationPanel_.repaint();
 
-      acqEng_.enableKillCell(acqPrefs_.getBoolean(ACQ_ENABLE_SEGMENTATION, acqEng_.isKillCellEnabled()));
+      acqEng_.enableKillCell(acqPrefs_.getBoolean(ACQ_ENABLE_KILLCELL, acqEng_.isKillCellEnabled()));
 
       savePanel_.setSelected(acqPrefs_.getBoolean(ACQ_SAVE_FILES, false));
 
@@ -1756,9 +1757,13 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
 
       for (AcqOrderMode mode : acqOrderModes_) {
-         mode.setEnabled(segmentationPanel_.isSelected(), positionsPanel_.isSelected(), true, channelsPanel_.isSelected());
-//         mode.setEnabled(framesPanel_.isSelected(), positionsPanel_.isSelected(),
-//                 slicesPanel_.isSelected(), channelsPanel_.isSelected());
+         ArrayList<ChannelSpec> channels = acqEng_.getChannels();
+
+         if (channels.iterator().hasNext()) {
+            mode.setEnabled(segmentationPanel_.isSelected(), positionsPanel_.isSelected(), channels.iterator().next().KillCell, channelsPanel_.isSelected());
+         }else {
+            mode.setEnabled(segmentationPanel_.isSelected(), positionsPanel_.isSelected(), false, channelsPanel_.isSelected());
+         }
       }
 
       // add correct acquisition order options
@@ -1857,6 +1862,11 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          acqEng_.enableChannelsSetting(channelsPanel_.isSelected());
          acqEng_.setChannels(((ChannelTableModel) channelTable_.getModel()).getChannels());
          acqEng_.enableSegmentation(segmentationPanel_.isSelected());
+         ArrayList<ChannelSpec> channels = acqEng_.getChannels();
+         if (channels.iterator().hasNext()) {
+            acqEng_.enableKillCell(channels.iterator().next().KillCell);
+         }
+
          //acqEng_.enableFramesSetting(framesPanel_.isSelected());
 //         acqEng_.enableFramesSetting(false);
 //         acqEng_.setFrames((Integer) numFrames_.getValue(),

@@ -462,10 +462,12 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         right_box_setup.add(presetConfList_jcb, gbc);
         presetConfList_jcb.setPreferredSize(new Dimension(150, 30));
         presetConfList_jcb.addActionListener(e -> {
+            // here we set the default chanel, so when we run the acquisition the chanel change from fluorescence to BF
+            rappController_ref.setTargetingChannel(presetConfList_jcb.getSelectedItem().toString());
 
             String GroupConfN = Objects.requireNonNull(groupConfList_jcb.getSelectedItem()).toString();
             String PresetName = Objects.requireNonNull(presetConfList_jcb.getSelectedItem()).toString();
-            // # Here we Apply the set form the Group configuration Settings
+            // # Here we Apply the settings form the Group configuration
             rappController_ref.ChangeConfigSet(GroupConfN, PresetName);
         });
         gbc.gridy++;
@@ -660,12 +662,12 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         try {
             if (imageViewer_== null) {
-                imageViewer_= new ImageViewer();
+//                imageViewer_= new ImageViewer();
             }
-            imageViewer_.setPreferredSize(new Dimension(910, 575));
-            right_box_learning.add(imageViewer_);
-            imageViewer_.setVisible(true);
-            imageViewer_.repaint();
+//            imageViewer_.setPreferredSize(new Dimension(910, 575));
+ ///           right_box_learning.add(imageViewer_);
+//            imageViewer_.setVisible(true);
+//            imageViewer_.repaint();
 
             //acquisition_.
         } catch (Exception var2) {
