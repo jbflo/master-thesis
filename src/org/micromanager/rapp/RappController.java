@@ -939,9 +939,9 @@ public class RappController extends  MMFrame implements OnStateListener {
             impproc.setRoi(new Roi(xx-5,yy-5,10,10));
 
             ip = impproc.getProcessor();
-            Font font = new Font("SansSerif", Font.PLAIN, 24);
+            Font font = new Font("SansSerif", Font.PLAIN, 32);
             ip.setFont(font);
-            ip.setColor(new Color(255, 255, 255));
+            ip.setColor(new Color(255, 255, 0));
             ip.drawString(text, (int) xx, (int)yy);
             impproc.updateAndDraw();
 
@@ -1005,10 +1005,11 @@ public class RappController extends  MMFrame implements OnStateListener {
 //                                //core_.waitForDevice(galvo);
 //                            }else ReportingUtils.showError("Please Try Again! Galvo problem");//
                     // this.setExposure(laser_exp);
-                    displaySpot(devP.x, devP.y);
-                    Thread.sleep( laser_exp); // Do Nothing and let the spot in this position the value of laser_exp
                     returnShutter(originalShutterState);
                     returnChannel(originalConfig);
+                    displaySpot(devP.x, devP.y);
+                    Thread.sleep( laser_exp); // Do Nothing and let the spot in this position the value of laser_exp
+
                     Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
                 }catch (Exception ec){
                     ReportingUtils.showError(ec);

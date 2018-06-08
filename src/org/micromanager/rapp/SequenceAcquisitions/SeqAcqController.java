@@ -176,6 +176,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                     ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
 
                                     ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString(), path_seq, presetConfig.KillCell, saveFiles_);
+                                    System.out.println(presetConfig.KillCell);
                                     if (presetConfig.KillCell) {
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
                                         rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
