@@ -121,10 +121,7 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
           } else if (col == 2) {
              channel.exposure = ((Double) value);
              exposurePrefs_.putDouble("Exposure_" + acqEng_.getChannelGroup() + "_" + channel.config,channel.exposure);
-             if (options_.syncExposureMainAndMDA_) {
-                studio_.setChannelExposureTime(acqEng_.getChannelGroup(),
-                        channel.config, channel.exposure);
-             }
+
           } else if (col == 3) {
              channel.laser_exposure = ((Double) value);
           } else if (col == 4) {

@@ -5,6 +5,7 @@ import ij.ImagePlus;
 import ij.plugin.Duplicator;
 import mmcorej.*;
 import org.json.JSONObject;
+import org.micromanager.MMOptions;
 import org.micromanager.api.DataProcessor;
 import org.micromanager.api.ImageCache;
 import org.micromanager.api.PositionList;
@@ -48,7 +49,6 @@ public class SeqAcqController implements AcquisitionEngine {
 
 
     public SeqAcqController (){
-
         this.core_ = RappPlugin.getMMcore();
         this.app_ = RappPlugin.getScripI();
         posList_ = new PositionList();
@@ -141,17 +141,19 @@ public class SeqAcqController implements AcquisitionEngine {
                             }
                             // Set the Chanel Exposure Time
                             //app_.enableLiveMode(false); // Make sure the Live Mode is off
+
                             app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
+
+
                             // Then Change The Chanel Config (Preset )
-                            core_.setConfig(chanelGroup_, presetConfig.config.toString());
+                            core_.setConfig(chanelGroup_, presetConfig.config);
                             // Take a Photo for each fix chanel
                            //   core_.waitForConfig(chanelGroup_, presetConfig.config.toString());
                            //  core_.waitForDevice(core_.getCameraDevice());
-
-                           Thread.sleep(1000 + (long)presetConfig.exposure);
-
-                            // app_.snapSingleImage();
+                          // Thread.sleep(1000 + (long)presetConfig.exposure);
+                           // app_.snapSingleImage();
                             iPlus = IJ.getImage();
+                         //   Thread.sleep(1000);
 
                             if (channels.subList(0, channels.size()).get(0).config.equals(presetConfig.config)){
                                 System.out.println( "You Are :" + presetConfig.config);
