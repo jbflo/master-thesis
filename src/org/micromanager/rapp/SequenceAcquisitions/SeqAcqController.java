@@ -139,19 +139,17 @@ public class SeqAcqController implements AcquisitionEngine {
                                 //ReportingUtils.showMessage("Acquisition Stop.");
                                 break;
                             }
-                            // Set the Chanel Exposure Time
+
                             //app_.enableLiveMode(false); // Make sure the Live Mode is off
-
-                            app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
-
 
                             // Then Change The Chanel Config (Preset )
                             core_.setConfig(chanelGroup_, presetConfig.config);
+                            // Set the Chanel Exposure Time
+                            app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
                             // Take a Photo for each fix chanel
-                           //   core_.waitForConfig(chanelGroup_, presetConfig.config.toString());
-                           //  core_.waitForDevice(core_.getCameraDevice());
-                          // Thread.sleep(1000 + (long)presetConfig.exposure);
-                           // app_.snapSingleImage();
+                            core_.waitForConfig(chanelGroup_, presetConfig.config.toString());
+                            Thread.sleep(1000 + (long)presetConfig.exposure);
+
                             iPlus = IJ.getImage();
                          //   Thread.sleep(1000);
 
@@ -212,6 +210,7 @@ public class SeqAcqController implements AcquisitionEngine {
                         }
                         JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
                                 + (!stopAcqRequested_.get() ? "finished." : "canceled."));
+                        System.out.println(core_.getCurrentConfig("Channel"));
                     } catch (Exception e) {
                         ReportingUtils.showError(e);
                         e.printStackTrace();

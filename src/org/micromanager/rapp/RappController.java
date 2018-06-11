@@ -85,6 +85,8 @@ public class RappController extends  MMFrame implements OnStateListener {
     AtomicBoolean stopRequested_ = new AtomicBoolean(false);
     AtomicBoolean isRunning_ = new AtomicBoolean(false);
     private String targetingShutter_;
+    private static String defaultGroupConfig_;
+    private static String defaultConfPrest_;
     private Boolean disposing_ = false;
     private static VirtualAcquisitionDisplay display_;
     private final MMStudio gui_;
@@ -901,7 +903,7 @@ public class RappController extends  MMFrame implements OnStateListener {
 
         impproc.updateAndRepaintWindow();
         //IJ.run(impproc,"Threshold...", "Default B&W");
-        IJ.run(impproc, "Gaussian Blur...", "sigma=5");
+       // IJ.run(impproc, "Gaussian Blur...", "sigma=5");
         if (kill){
             //IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel add");  //change range for cell size filtering
             IJ.run(impproc, "Find Maxima...", "noise=20 output=List add");
@@ -968,6 +970,16 @@ public class RappController extends  MMFrame implements OnStateListener {
             double[] failsArrayX =  new double[segmentatio_pt[0].size()];
             double[] failsArrayY =  new double[segmentatio_pt[1].size()];
 
+            if (defaultGroupConfig_ != null && defaultConfPrest_ != null){
+                System.out.println(defaultGroupConfig_ + "__" + defaultConfPrest_);
+                try {
+                    core_.setConfig(defaultGroupConfig_, defaultConfPrest_);
+                    app_.setChannelExposureTime(defaultGroupConfig_, defaultConfPrest_, 10);
+                }catch (Exception ex){
+                    ReportingUtils.showError("Unable to change Default Configuration Group Name and Preset ");
+                }
+
+            }else System.out.println("Sam so fe a nill");
             System.out.println(" SIze: "+ segmentatio_pt[1].size());
             System.out.println(" Val: "+ segmentatio_pt.toString());
             for (int i =0 ; i < segmentatio_pt[0].size(); i++)
@@ -987,10 +999,10 @@ public class RappController extends  MMFrame implements OnStateListener {
 
                 //failsArrayX[i] = Double.parseDouble(segmentatio_pt[0].get(i).toString()); //store each element as a double in the array
                 //failsArrayY[i] = Double.parseDouble(segmentatio_pt[1].get(i).toString()); //store each element as a double in the array
-                Point2D.Double devP = transformPoint(loadMapping(), new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+                  Point2D.Double devP = transformPoint(loadMapping(), new Point2D.Double(failsArrayX[i], failsArrayY[i]));
                 //final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), iplus_,
                     //    new Point2D.Double(failsArrayX[i], failsArrayY[i]));
-                System.out.println(devP);
+             //   System.out.println(devP);
 
                 final Configuration originalConfig = prepareChannel();
                 final boolean originalShutterState = prepareShutter();
@@ -1004,15 +1016,15 @@ public class RappController extends  MMFrame implements OnStateListener {
 //                                //core_.setGalvoIlluminationState(galvo,true);
 //                                //core_.waitForDevice(galvo);
 //                            }else ReportingUtils.showError("Please Try Again! Galvo problem");//
-                    // this.setExposure(laser_exp);
+                    this.setExposure(laser_exp);
                     returnShutter(originalShutterState);
                     returnChannel(originalConfig);
                     displaySpot(devP.x, devP.y);
                     Thread.sleep( laser_exp); // Do Nothing and let the spot in this position the value of laser_exp
 
-                    Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
                 }catch (Exception ec){
                     ReportingUtils.showError(ec);
+                    break;
                 }
             }
         }
@@ -1086,6 +1098,9 @@ public class RappController extends  MMFrame implements OnStateListener {
                 core_.waitForDevice(core_.getCameraDevice());
                 if (groupName != null && configName != null){
                     core_.setConfig(groupName, configName);
+                    defaultGroupConfig_ = groupName;
+                    defaultConfPrest_ = configName;
+                    //System.out.println(defaultGroupConfig_ + "__" + defaultConfPrest_);
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());

@@ -544,9 +544,8 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                 e1.printStackTrace();
             }
             if (image !=null) {
-                image.show();
                 ArrayList[] ll = rappController_ref.brightFieldSegmenter(image, image.getTitle(), "", true, false);
-                rappController_ref.shootFromSegmentationListPoint(ll, 4);
+                rappController_ref.shootFromSegmentationListPoint(ll, Long.parseLong(exposureT_laser_spinner.getValue().toString()));
             }else ReportingUtils.showMessage(" No Image were chosen ");
         });
 
