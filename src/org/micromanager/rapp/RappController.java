@@ -902,13 +902,13 @@ public class RappController extends  MMFrame implements OnStateListener {
         impproc.show();
 
         impproc.updateAndRepaintWindow();
-        IJ.run(impproc,"Threshold...", "Default B&W");
-        //IJ.run(impproc, "Gaussian Blur...", "sigma=5");
+        //IJ.run(impproc,"Threshold...", "Default B&W");
+        IJ.run(impproc, "Gaussian Blur...", "sigma=5");
         if (kill){
-            IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel add");  //change range for cell size filtering
-             //IJ.run(impproc, "Find Maxima...", "noise=20 output=List add");
-        }else {  IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel summarize ");
-                // IJ.run(impproc, "Find Maxima...", "noise=20 output=List exclude");
+           // IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel add");  //change range for cell size filtering
+             IJ.run(impproc, "Find Maxima...", "noise=20 output=List add");
+        }else {  //IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel summarize ");
+                IJ.run(impproc, "Find Maxima...", "noise=20 output=List exclude");
         }
 
 
