@@ -31,6 +31,7 @@ import org.micromanager.utils.ReportingUtils;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.plaf.InternalFrameUI;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
@@ -116,16 +117,16 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             ReportingUtils.logError(var9);
         }
 
-        try
-        {
-            for (UIManager.LookAndFeelInfo lnf :
-                    UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(lnf.getName())) {
-                    UIManager.setLookAndFeel(lnf.getClassName());
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (Exception e) { /* Lazy handling this >.> */ }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
         UIManager.getDefaults().put("SplitPane.border", BorderFactory.createEmptyBorder());
 
 //        try {
@@ -362,13 +363,13 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         gbc.gridy++;
         right_box_setup.add( new JSeparator(SwingConstants.HORIZONTAL),  gbc, 1); this.right_box_setup.getComponent(1).setPreferredSize(new Dimension(150,10));
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font size='4'  color='white'>Set Chanel Group Configuration  :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font size='4'  color='white'>Set Default Chanel Group Configuration  :</font></html>"),gbc);
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font size='4' color='white'>Chanel Exposure time (ms)  :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font size='4' color='white'>Default Chanel Exposure time (ms)  :</font></html>"),gbc);
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font  size='4' color='white'>Set Configuration Preset.       :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font  size='4' color='white'>Set Default Configuration Preset.       :</font></html>"),gbc);
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font  size='4' color='white'>Try Sequence .       :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font  size='4' color='white'>Try Sequence Acquisition :</font></html>"),gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridy = 0;
@@ -500,7 +501,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Shoot laser on point from ROis Manager  :</font></html>"),gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Run a BrightField Segmentation and kill All Detected  Cell :</font></html>"),gbc1);
+        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Run Segmentation and kill All Detected  Cell :</font></html>"),gbc1);
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Shoot laser on Selected point from cell detection :</font></html>"), gbc1);
 
@@ -571,6 +572,8 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         }
 
         JInternalFrame buttonFrame = new JInternalFrame();
+
+
         try {
             BasicInternalFrameUI bi = (BasicInternalFrameUI)buttonFrame.getUI();
             bi.setNorthPane(null);
@@ -680,7 +683,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         asButtonPanel.setPreferredSize(new Dimension(910, 545));   // vertical box
         asButtonPanel.setVisible(false);
         asButtonPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Imaging Options",0,0,Font.getFont("arial"),  Color.WHITE));
+                BorderFactory.createEtchedBorder(), "Imaging Options",0,0,Font.getFont("arial"),  Color.decode("#34495e")));
         asButtonPanel.setVisible(true);
         BasicInternalFrameUI AsButtonPanel_bi = (BasicInternalFrameUI) asButtonPanel.getUI();
         AsButtonPanel_bi.setNorthPane(null);
@@ -710,7 +713,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         splitPaneTop.setOneTouchExpandable(false);
         splitPaneTop.setContinuousLayout(false);
 
-        this.setBackground(Color.blue);
+       // this.setBackground(Color.blue);
         this.setSize(1150, 700);
         this.setVisible(true);
 

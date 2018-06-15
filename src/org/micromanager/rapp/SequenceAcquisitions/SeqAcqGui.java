@@ -258,6 +258,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
       thePanel.setTitleFont(new Font("Dialog", Font.BOLD, 12));
       thePanel.setForeground(Color.decode("#34495e"));
+
       panelList_.add(thePanel);
       thePanel.setBounds(left, top, right - left, bottom - top);
       dayBorder_ = BorderFactory.createEtchedBorder();
@@ -282,6 +283,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       panelList_ = new ArrayList<JPanel>();
 
       channelsPanel_ = (CheckBoxPanel) createPanel("Channels", 3, 1, 510, 170, true);
+
       segmentationPanel_= (CheckBoxPanel) createPanel("Segmentation", 515,1,705,170,true );
       buttonPanel =  createPanel("Run", 715, 1, 880, 290);
 
@@ -290,8 +292,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 175, 705, 290, true);
       afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
 
-      summaryPanel_ = createPanel("Summary", 515, 300, 705, 435);
-      acquisitionOrderPanel_ = createPanel("Acquisition order", 715, 300, 880, 435);
+      summaryPanel_ = createPanel("Summary", 715, 300, 880, 505);
+      acquisitionOrderPanel_ = createPanel("Acquisition order", 515, 300, 705, 435);
       commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 300, 510,435,false);
 
    }
@@ -336,14 +338,16 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    public SeqAcqGui(AcquisitionEngine acqEng, Preferences prefs,
                     ScriptInterface gui, MMOptions options) {
       super();
-      try {
-         setDefaultLookAndFeelDecorated(true);
-         UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-
-      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-         e.printStackTrace();
-      }
-
+//      try {
+//         for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+//            if ("Nimbus".equals(info.getName())) {
+//               UIManager.setLookAndFeel(info.getClassName());
+//               break;
+//            }
+//         }
+//      } catch (Exception e) {
+//         // If Nimbus is not available, you can set the GUI to another look and feel.
+//      }
       prefs_ = prefs;
       studio_ = gui;
       core_ = RappPlugin.getMMcore();
@@ -367,7 +371,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       bi.setNorthPane(null);
       createEmptyPanels();
       setLocation(0,0);
-
 
       // Frames panel
       JPanel defaultPanel = new JPanel();
@@ -597,7 +600,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       summaryTextArea_ = new JTextArea();
       summaryTextArea_.setFont(new Font("Arial", Font.PLAIN, 11));
       summaryTextArea_.setEditable(false);
-      summaryTextArea_.setBounds(4, 19, 350, 120);
+      summaryTextArea_.setBounds(4, 19, 340, 200);
       summaryTextArea_.setMargin(new Insets(2, 2, 2, 2));
       summaryTextArea_.setOpaque(false);
       summaryPanel_.add(summaryTextArea_);
@@ -965,7 +968,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       progressBar = new JProgressBar(0, 100);
       progressBar.setPreferredSize(new Dimension(180, 40));
       this.add(progressBar);
-      progressBar.setBounds(80, 445, 320, 60);
+      progressBar.setBounds(30, 445, 320, 60);
       progressBar.setValue(0);
       progressBar.setStringPainted(true);
 
@@ -976,7 +979,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       taskOutput.setLineWrap(true);
       taskOutput.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
       JScrollPane jScrollPane_ = new JScrollPane(taskOutput);
-      jScrollPane_.setBounds(410, 445, 320, 60);
+      jScrollPane_.setBounds(385, 445, 320, 60);
       jScrollPane_.setViewportView(taskOutput);
       this.add(jScrollPane_);
 

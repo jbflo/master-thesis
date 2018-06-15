@@ -75,7 +75,7 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
     public void show() {
         /// (Try) calling the Interface Class on Package TestGui
         try {
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+
 
             if (core_.getCameraDevice().length()==0 && core_.getGalvoDevice().length()==0 ) {
                 ReportingUtils.showMessage("Please load a Camera Devices " +
@@ -83,11 +83,10 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
                         "before using the RappPlugin plugin.");
                 return;
             }
-
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        } // end of Try Catch
+
 
 
         try {
