@@ -159,7 +159,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
                             // if the Images was not save , we do the segmentation for the image in Memory
                             if(!saveFiles_  && acquisitionSettings.useSegmentation){
-                                IJ.open();
+                                iPlus.show();
                                 ArrayList[] ll =  rappController_ref.brightFieldSegmenter(iPlus, presetConfig.config.toString(), "", presetConfig.KillCell, saveFiles_);
                                 if (presetConfig.KillCell) {
                                     app_.enableLiveMode(true); //  Open the live mode before shooting
@@ -187,9 +187,10 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // The acquires Images are saving as a stack Image.
                                 IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
                                 IJ.open(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
-                                String path_seq = rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase();
-                                ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
+
                                 if(acquisitionSettings.useSegmentation){
+                                    String path_seq = rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase();
+                                    ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
                                     ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString(), path_seq, presetConfig.KillCell, saveFiles_);
                                     if (presetConfig.KillCell) {
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
