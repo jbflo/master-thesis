@@ -338,6 +338,20 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
     }
 
+    public  void setCameraExposureTime(double value){
+
+        try{
+
+            if(value != Double.compare(value, 0.0)){
+            core_.setExposure(value);
+            }
+        }
+        catch (Exception ex){
+
+        }
+
+    }
+
     /**
      * Turns the projection device on or off.
      * @param onState on=true

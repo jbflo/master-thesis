@@ -73,7 +73,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     private SpinnerModel model_forDelay = new SpinnerNumberModel(0, 0, 9999, 1);
     private SpinnerModel model_forFilterExposure = new SpinnerNumberModel(100, 0, 999999, 1);
     private JSpinner exposureT_laser_spinner;
-    private JSpinner exposureT_filter_spinner;
+    private JSpinner exposureT_camera_spinner;
     protected JSpinner delayField_ = new JSpinner(model_forDelay);
     private JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
     private JInternalFrame asButtonPanel = new JInternalFrame();
@@ -376,12 +376,12 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         gbc.gridx++;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
-        /// # Set Exposure Time Event  # ///
+        /// # Set Exposure Time For the Laser # ///
         exposureT_laser_spinner =  new JSpinner(model_forExposure);
         exposureT_laser_spinner.setPreferredSize(new Dimension(150, 30));
         right_box_setup.add(exposureT_laser_spinner, gbc);
         exposureT_laser_spinner.addChangeListener(e -> {
-            rappController_ref.setExposure(Double.parseDouble(exposureT_laser_spinner.getValue().toString()));
+            rappController_ref.setExposure(1000 *Double.parseDouble(exposureT_laser_spinner.getValue().toString()));
             System.out.println( exposureT_laser_spinner.getValue().toString());
 
         });
@@ -448,14 +448,13 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             Sequence_jcb.setModel(model2);
             Sequence_jcb.addItem("Apply ALL Sequence");
         });
-        /// # Set Exposure Time Event  # ///
+        /// # Set Camera Exposure Time Event  # ///
         gbc.gridy++;
-        exposureT_filter_spinner =  new JSpinner(model_forFilterExposure);
-        exposureT_filter_spinner.setPreferredSize(new Dimension(150, 30));
-        right_box_setup.add(exposureT_filter_spinner, gbc);
-        exposureT_filter_spinner.addChangeListener(e -> {
-            //rappController_ref.setExposure(1000 * Double.parseDouble(exposureT_filter_spinner.getValue().toString()));
-           // System.out.println( exposureT_filter_spinner.getValue().toString());
+        exposureT_camera_spinner =  new JSpinner(model_forFilterExposure);
+        exposureT_camera_spinner.setPreferredSize(new Dimension(150, 30));
+        right_box_setup.add(exposureT_camera_spinner, gbc);
+        exposureT_camera_spinner.addChangeListener(e -> {
+            rappController_ref.setCameraExposureTime(Double.parseDouble(exposureT_camera_spinner.getValue().toString()));
         });
 
         gbc.gridy++;
