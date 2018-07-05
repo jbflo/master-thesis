@@ -168,6 +168,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private static final FileDialogs.FileType ACQ_SETTINGS_FILE = new FileDialogs.FileType("ACQ_SETTINGS_FILE", "Acquisition settings",
            System.getProperty("user.home") + "/AcqSettings.xml",
            true, "xml");
+   private static final String ACQ_NUMBER_X_WELLS = "acqNXWells";
+   private static final String ACQ_NUMBER_Y_WELLS = "acqNYWells";
+   private static final String ACQ_WELL_WIDTH = "acqWellWidth";
+   private static final String ACQ_WELL_DISTANCE = "acqWellDistance";
+   private static final String ACQ_FIELD_OF_VIEW = "acqFieldOfView";
+   private static final String ACQ_ENABLE_WELL_PLATE = "acqWellPlate";
    private int columnWidth_[];
    private int columnOrder_[];
    private final JPanel framesSubPanel_;
@@ -1260,6 +1266,18 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       acqEng_.keepShutterOpenForChannels(acqPrefs_.getBoolean(ACQ_CHANNELS_KEEP_SHUTTER_OPEN, false));
       //acqEng_.keepShutterOpenForStack(acqPrefs_.getBoolean(ACQ_STACK_KEEP_SHUTTER_OPEN, false));
 
+
+      boolean doWholePlate = acqPrefs_.getBoolean(ACQ_ENABLE_WELL_PLATE, false);
+      if (doWholePlate) {
+         acqEng_.setWholePlate(
+                 acqPrefs_.getInt(ACQ_NUMBER_X_WELLS, acqEng_.getNumberXWells()),
+                 acqPrefs_.getInt(ACQ_NUMBER_Y_WELLS, acqEng_.getNumberYWells()),
+                 acqPrefs_.getDouble(ACQ_WELL_WIDTH, acqEng_.getWellWidth()),
+                 acqPrefs_.getDouble(ACQ_WELL_DISTANCE, acqEng_.getWellDistance()),
+                 acqPrefs_.getDouble(ACQ_FIELD_OF_VIEW, acqEng_.getFieldOfView())
+         );
+      }
+
       ArrayList<Double> customIntervals = new ArrayList<Double>();
       int h = 0;
       while (acqPrefs_.getDouble(CUSTOM_INTERVAL_PREFIX + h, -1) >= 0.0) {
@@ -1339,6 +1357,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       //acqPrefs_.putInt(ACQ_AF_SKIP_INTERVAL, acqEng_.getAfSkipInterval());
       acqPrefs_.putBoolean(ACQ_CHANNELS_KEEP_SHUTTER_OPEN, acqEng_.isShutterOpenForChannels());
       //acqPrefs_.putBoolean(ACQ_STACK_KEEP_SHUTTER_OPEN, acqEng_.isShutterOpenForStack());
+      acqPrefs_.putBoolean(ACQ_ENABLE_WELL_PLATE, acqEng_.isWholePlateEnabled());
+      acqPrefs_.putInt(ACQ_NUMBER_X_WELLS, acqEng_.getNumberXWells());
+      acqPrefs_.putInt(ACQ_NUMBER_Y_WELLS, acqEng_.getNumberYWells());
+      acqPrefs_.putDouble(ACQ_WELL_WIDTH, acqEng_.getWellWidth());
+      acqPrefs_.putDouble(ACQ_WELL_DISTANCE, acqEng_.getWellDistance());
+      acqPrefs_.putDouble(ACQ_FIELD_OF_VIEW, acqEng_.getFieldOfView());
 
       acqPrefs_.put(ACQ_CHANNEL_GROUP, acqEng_.getChannelGroup());
       ArrayList<ChannelSpec> channels = acqEng_.getChannels();

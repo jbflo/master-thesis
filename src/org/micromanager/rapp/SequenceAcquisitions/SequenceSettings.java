@@ -21,6 +21,13 @@ public class SequenceSettings {
     public boolean usePositionList = false;
     public boolean useSegmentation = false;
     public boolean killCell = false;
+    public boolean imagePlate = false;
+    public int numberOfXWells = 1;
+    public int numberOfYWells = 1;
+    public double wellDistance = 0;
+    public double wellWidth = 0;
+    public double fieldOfView = 220;
+    public boolean useWholePlateImaging = false;
 
     public SequenceSettings() {
 

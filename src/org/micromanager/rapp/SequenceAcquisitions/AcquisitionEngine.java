@@ -237,6 +237,29 @@ public interface AcquisitionEngine {
    boolean isMultiPositionEnabled();
 
     /**
+     * Enables whole-plate imaging for the given plate dimensions.
+     * @param numberWellsX - number of wells in the horizontal direction.
+     * @param numberWellsY - number of wells in the vertical direction.
+     * @param wellWidth - width in micrometers of a single well.
+     * @param wellDistance - distance in micrometers between two wells.
+     * @param fieldOfView - size of a single side of a field of view in micrometers.
+     */
+    void setWholePlate(int numberWellsX, int numberWellsY,
+                       double wellWidth, double wellDistance, double fieldOfView);
+
+    /**
+     * Checks, whether an AcquisitionEngine is set up for whole-plate imaging.
+     * @return whether a whole plate will be imaged.
+     */
+    boolean isWholePlateEnabled();
+
+    int getNumberXWells();
+    int getNumberYWells();
+    double getWellWidth();
+    double getWellDistance();
+    double getFieldOfView();
+
+    /**
      * Sets a flag that signals whether multiple positions will be acquired
      * @param selected - acquires at multiple stage positions when true
      */
