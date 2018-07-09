@@ -660,7 +660,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         app_.enableLiveMode(false);
         if (!isRunning_.get()) {
             stopRequested_.set(false);
-            Thread th = new Thread("Projector calibration thread") {
+            Thread th = new Thread("RappPlugin calibration thread") {
                 @Override
                 public void run() {
                     try {
