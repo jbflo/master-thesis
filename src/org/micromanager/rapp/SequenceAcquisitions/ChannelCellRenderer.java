@@ -62,8 +62,13 @@ public class ChannelCellRenderer extends JLabel implements TableCellRenderer {
             setText(NumberUtils.doubleToDisplayString(channel.laser_exposure));
          } else {
             if (colIndex == 4) {
-               JCheckBox check = new JCheckBox("", channel.KillCell);
+               JCheckBox check = new JCheckBox("", channel.useSegmentation);
                check.setEnabled(acqEng_.isDoSegmentationEnabled() && table.isEnabled());
+
+               if(!acqEng_.isDoSegmentationEnabled()){
+                  check.setSelected(false);
+                  channel.useSegmentation = false;
+               }
                if (isSelected) {
                   check.setBackground(table.getSelectionBackground());
                   check.setOpaque(true);
@@ -73,11 +78,27 @@ public class ChannelCellRenderer extends JLabel implements TableCellRenderer {
                }
                return check;
             } else if (colIndex == 5) {
-               setText("");
-               setBackground(channel.color);
-               setOpaque(true);
+               JCheckBox check = new JCheckBox("", channel.KillCell);
+               check.setEnabled(channel.useSegmentation && table.isEnabled());
+               if (!channel.useSegmentation){
+                  check.setEnabled(false);
+                  check.setSelected(false);
+               }
+               if (isSelected) {
+                  check.setBackground(table.getSelectionBackground());
+                  check.setOpaque(true);
+               } else {
+                  check.setOpaque(false);
+                  check.setBackground(table.getBackground());
+               }
+               return check;
+//               setText("");
+//               setBackground(channel.color);
+//               setOpaque(true);
             }
+
          }
+
 
 
          if (isSelected) {
@@ -104,9 +125,11 @@ public class ChannelCellRenderer extends JLabel implements TableCellRenderer {
 
    @Override
    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+
    }
 
    @Override
    public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
+
    }
 }

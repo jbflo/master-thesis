@@ -48,7 +48,8 @@ public class SequenceSettings {
         String channelGroup = "Channel";
         s.channels = new ArrayList();
         ChannelSpec ch1 = new ChannelSpec();
-        s.killCell = true;
+        s.killCell = false;
+        s.useSegmentation=false;
         ch1.config = "DAPI";
         ch1.exposure = 5.0D;
         s.channels.add(ch1);

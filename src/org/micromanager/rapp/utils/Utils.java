@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author nico
+ * @author Florial
  */
 public class Utils {
 
@@ -24,5 +24,10 @@ public class Utils {
          roiPolygons.add(p);
       }
       return roiPolygons;
+   }
+
+   public static String[]  getSegmenterAlgoListe(){
+
+      return new String[]{" ", "Find Peak", "Analyse Particles"};
    }
 }

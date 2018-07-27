@@ -9,23 +9,24 @@ import java.awt.*;
 public class ChannelSpec {
     public static final String DEFAULT_CHANNEL_GROUP = "Channel";
     public static final double Version = 1.0D;
-    // public Boolean doSegmentation ;
     public String config = "";
     public Boolean KillCell = false;
     public double exposure = 10.0D;
     public double laser_exposure = 10.0D;
     public Color color;
     public org.micromanager.utils.ContrastSettings contrast;
+    public boolean useSegmentation ;
     public boolean useChannel;
     public String camera;
 
     public ChannelSpec() {
         this.color = Color.gray;
         this.useChannel = true;
-       // this.doSegmentation = false;
         this.camera = "";
         this.contrast = new org.micromanager.utils.ContrastSettings(0, 65535);
-        this.color = Color.WHITE;
+        //this.KillCell= false;
+       // this.useSegmentation = false;
+       // this.color = Color.WHITE;
     }
 
     public static String toJSONStream(ChannelSpec cs) {

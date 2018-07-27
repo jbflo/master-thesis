@@ -12,6 +12,7 @@
 package org.micromanager.rapp;
 
 
+import bsh.util.Util;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.ImageWindow;
@@ -26,6 +27,7 @@ import org.micromanager.rapp.SequenceAcquisitions.SeqAcqController;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqGui;
 import org.micromanager.rapp.utils.FileDialog;
 import org.micromanager.rapp.utils.ImageViewer;
+import org.micromanager.rapp.utils.Utils;
 import org.micromanager.utils.GUIUtils;
 import org.micromanager.utils.ReportingUtils;
 
@@ -72,9 +74,9 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     private SpinnerModel model_forExposure = new SpinnerNumberModel(100, 0, 999999, 1);
     private SpinnerModel model_forDelay = new SpinnerNumberModel(0, 0, 9999, 1);
     private SpinnerModel model_forFilterExposure = new SpinnerNumberModel(100, 0, 999999, 1);
-    private JSpinner exposureT_laser_spinner;
-    private JSpinner exposureT_camera_spinner;
-    protected JSpinner delayField_ = new JSpinner(model_forDelay);
+    private JSpinner exposureT_laser_spinner = new JSpinner(model_forExposure);;
+    private JSpinner exposureT_camera_spinner = new JSpinner(model_forFilterExposure);
+   // protected JSpinner delayField_ = new JSpinner(model_forDelay);
     private JToggleButton lightOnOff_jbtn = new JToggleButton("Open Light");
     private JInternalFrame asButtonPanel = new JInternalFrame();
     protected JToggleButton LiveMode_btn;
@@ -83,8 +85,9 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     private JButton browseXmlFIle_btn;
     private JButton runSegmentation_btn;
     private JComboBox<String> presetConfList_jcb ;
-    private JComboBox<String> Sequence_jcb ;
+    //private JComboBox<String> Sequence_jcb ;
     private JComboBox<String> groupConfList_jcb;
+    private JComboBox<String> segmenterAlgoList_jcb;
     private JTextField xml_rootField_2;
     private JLabel  jLabel_Image;
     // the index of the images
@@ -117,25 +120,25 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             ReportingUtils.logError(var9);
         }
 
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
-        }
+//        try {
+//            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (Exception e) {
+//            // If Nimbus is not available, you can set the GUI to another look and feel.
+//        }
         UIManager.getDefaults().put("SplitPane.border", BorderFactory.createEmptyBorder());
 
-//        try {
-//            setDefaultLookAndFeelDecorated(true);
-//            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-//
-//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-//           e.printStackTrace();
-//        }
+        try {
+            setDefaultLookAndFeelDecorated(true);
+            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+           e.printStackTrace();
+        }
 
         this.setTitle("Rapp UGA-42 Control");
 
@@ -156,6 +159,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         JLabel headerLabel = new JLabel("<html><font color='#34495e'> Interface for controlling microscope and laser system </font></html>" );
         headerLabel.setFont(new Font("Arial", Font.BOLD, 20));
         topPanel.add(headerLabel);
+
         ///////////// Left Panel Content ////////////////////////////
         JPanel leftPanel = new JPanel();
         leftPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
@@ -163,6 +167,17 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                 BorderFactory.createEtchedBorder(), "Menu" ,0,0,Font.getFont("arial"),  Color.white ));
 
         leftPanel.setBackground(Color.decode("#34495e"));
+
+        //////////////////// Right Panel Content ////////////////////////////////
+        JPanel rightPanel = new JPanel();
+        rightPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
+        rightPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Options",0,0,Font.getFont("arial"),  Color.decode("#192a56")));
+
+        ////////////////////////////////////////////////////
+        JSplitPane splitPaneBody = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        JSplitPane splitPaneTop = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, splitPaneBody );
+
         ///////////// we put all the component from the left into a Horizontal Box //////////////////////////////////
         Box left_box = Box.createVerticalBox();
         leftPanel.add(left_box);
@@ -200,6 +215,8 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                     learnOption_btn.setSelected(false);
                     acquisitionOption_btn.setSelected(false);
 
+                    RappGui.getInstance().setSize(730, 590);
+
                 }
 
             }
@@ -226,6 +243,8 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                     shootOption_btn.setSelected(false);
                     setupOption_btn.setSelected(false);
                     acquisitionOption_btn.setSelected(false);
+
+                    RappGui.getInstance().setSize(730, 700);
                 }
             }
         });
@@ -248,6 +267,8 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                 setupOption_btn.setSelected(false);
                 learnOption_btn.setSelected(false);
                 shootOption_btn.setSelected(false);
+
+                RappGui.getInstance().setSize(1150, 700);
             }
         });
 
@@ -271,8 +292,11 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                     setupOption_btn.setSelected(false);
                     learnOption_btn.setSelected(false);
                     acquisitionOption_btn.setSelected(false);
+
+
                 }
 
+                RappGui.getInstance().setSize(710, 590);
 
             }
         } );
@@ -331,10 +355,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
 
         ////////////////////// #Mange Right panel an Content here#  /////////////////////////////////////
-        JPanel rightPanel = new JPanel();
-        rightPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.decode("#34495e"), Color.decode("#ecf0f1")));
-        rightPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Options",0,0,Font.getFont("arial"),  Color.decode("#192a56")));
+
 
         ////////////////////////////////  right_box_Settings Content //////////////////////////////////
         rightPanel.setBackground(Color.decode("#ecf0f1"));
@@ -342,7 +363,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         right_box_learning.setBackground(Color.decode("#34495e"));
         right_box_shoot.setBackground(Color.decode("#34495e"));
 
-        right_box_setup.setPreferredSize(new Dimension(775, 430));
+        right_box_setup.setPreferredSize(new Dimension(490, 430));
         rightPanel.add(right_box_setup);
         right_box_setup.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -356,8 +377,8 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         right_box_setup.add(new JLabel("<html><font size='4' color='white'>Laser Exposure Time (ms) :</font></html>"),gbc);
         gbc.gridy++;
         right_box_setup.add(new JLabel("<html><font size='4'  color='white'>Turn Laser Illumination ON/OFF, MM Side  :</font></html>"), gbc);
-        gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font size='4' color='white'>Calibration Delays (ms)    :</font></html>"), gbc);
+//        gbc.gridy++;
+//        right_box_setup.add(new JLabel("<html><font size='4' color='white'>Calibration Delays (ms)    :</font></html>"), gbc);
         gbc.gridy++;
         right_box_setup.add(new JLabel("<html><font size='4'  color='white'>Start Calibration :</font></html>"),gbc);
         gbc.gridy++;
@@ -368,8 +389,8 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         right_box_setup.add(new JLabel("<html><font size='4' color='white'>Default Chanel Exposure time (ms)  :</font></html>"),gbc);
         gbc.gridy++;
         right_box_setup.add(new JLabel("<html><font  size='4' color='white'>Set Default Configuration Preset.       :</font></html>"),gbc);
-        gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font  size='4' color='white'>Try Sequence Acquisition :</font></html>"),gbc);
+//        gbc.gridy++;
+//        right_box_setup.add(new JLabel("<html><font  size='4' color='white'>Try Sequence Acquisition :</font></html>"),gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridy = 0;
@@ -377,7 +398,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
         /// # Set Exposure Time For the Laser # ///
-        exposureT_laser_spinner =  new JSpinner(model_forExposure);
+
         exposureT_laser_spinner.setPreferredSize(new Dimension(150, 30));
         right_box_setup.add(exposureT_laser_spinner, gbc);
         exposureT_laser_spinner.addChangeListener(e -> {
@@ -408,9 +429,10 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                 rappController_ref.setOnState(false);
             }
         });
-        gbc.gridy++;
-        delayField_.setPreferredSize(new Dimension(150, 30));
-        right_box_setup.add(delayField_, gbc);
+        // Calibration delay is not working properly
+//        gbc.gridy++;
+//        delayField_.setPreferredSize(new Dimension(150, 30));
+//        right_box_setup.add(delayField_, gbc);
         gbc.gridy++;
 
         calibrate_btn = new JButton("Start Calibration!");
@@ -445,12 +467,11 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(rappController_ref.getConfigPreset(GroupConfN));
             DefaultComboBoxModel<String> model2 = new DefaultComboBoxModel<>(rappController_ref.getConfigPreset(GroupConfN));
             presetConfList_jcb.setModel(model);
-            Sequence_jcb.setModel(model2);
-            Sequence_jcb.addItem("Apply ALL Sequence");
+    //      Sequence_jcb.setModel(model2);
+    //      Sequence_jcb.addItem("Apply ALL Sequence");
         });
         /// # Set Camera Exposure Time Event  # ///
         gbc.gridy++;
-        exposureT_camera_spinner =  new JSpinner(model_forFilterExposure);
         exposureT_camera_spinner.setPreferredSize(new Dimension(150, 30));
         right_box_setup.add(exposureT_camera_spinner, gbc);
         exposureT_camera_spinner.addChangeListener(e -> {
@@ -473,19 +494,19 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         gbc.gridy++;
 
 
-        Sequence_jcb = new JComboBox<String>(new DefaultComboBoxModel<>());
-        right_box_setup.add(Sequence_jcb, gbc);
-        Sequence_jcb.setPreferredSize(new Dimension(150, 30));
-        Sequence_jcb.addActionListener(e -> {
-            String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
-            String SequenceName = Sequence_jcb.getSelectedItem().toString();
-            rappController_ref.fluorescenceSequence(GroupConfN, SequenceName,confirmSaving());
-
-        });
-
+ //       Sequence_jcb = new JComboBox<String>(new DefaultComboBoxModel<>());
+//        right_box_setup.add(Sequence_jcb, gbc);
+//        Sequence_jcb.setPreferredSize(new Dimension(150, 30));
+//        Sequence_jcb.addActionListener(e -> {
+//            String GroupConfN = groupConfList_jcb.getSelectedItem().toString();
+//            String SequenceName = Sequence_jcb.getSelectedItem().toString();
+//            rappController_ref.fluorescenceSequence(GroupConfN, SequenceName,confirmSaving());
+//
+//        });
         ////////////////////////////////  right_box_shoot (SHOOT OPTION) Content //////////////////////////////////
 
         rightPanel.add(right_box_shoot);
+        right_box_shoot.setPreferredSize(new Dimension(475, 430));
         right_box_shoot.setVisible(false);
         right_box_shoot.setLayout(new GridBagLayout());
         GridBagConstraints gbc1 = new GridBagConstraints();
@@ -500,9 +521,14 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Shoot laser on point from ROis Manager  :</font></html>"),gbc1);
         gbc1.gridy++;
+        right_box_shoot.add( new JSeparator(SwingConstants.HORIZONTAL),  gbc1, 1); this.right_box_shoot.getComponent(1).setPreferredSize(new Dimension(150,10));
+        gbc1.gridy++;
+        right_box_shoot.add(new JLabel("<html><font  size='4' color='white'>Choose Segmenter Algorithm :</font></html>"),gbc1);
+        gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Run Segmentation and kill All Detected  Cell :</font></html>"),gbc1);
         gbc1.gridy++;
-        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Shoot laser on Selected point from cell detection :</font></html>"), gbc1);
+
+//      right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Shoot laser on Selected point from cell detection :</font></html>"), gbc1);
 
         gbc1.anchor = GridBagConstraints.WEST;
         gbc1.gridy = 0;
@@ -531,127 +557,161 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         shootonMarkpoint_btn.addActionListener(e -> rappController_ref.createMultiPointAndShootFromRoeList());
 
         gbc1.gridy++;
-        JButton loadImage_btn = new JButton("Kill Detected Cells");
-        loadImage_btn.setBackground(new Color(0x2dce98));
-        loadImage_btn.setForeground(Color.white);
-        right_box_shoot.add(loadImage_btn, gbc1);
-        loadImage_btn.setPreferredSize(new Dimension(140,28));
-        loadImage_btn.addActionListener(e -> {
-            ImagePlus image = IJ.openImage(fileDialog_.ChooseFileDialog("Please Choose a BrightField Tiff Image with Cells"));
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            }
-            if (image !=null) {
-                ArrayList[] ll = rappController_ref.brightFieldSegmenter(image, image.getTitle(), "", true, false);
-                rappController_ref.shootFromSegmentationListPoint(ll, Long.parseLong(exposureT_laser_spinner.getValue().toString()));
-            }else ReportingUtils.showMessage(" No Image were chosen ");
+        right_box_shoot.add( new JSeparator(SwingConstants.HORIZONTAL),  gbc1, 2); this.right_box_shoot.getComponent(2).setPreferredSize(new Dimension(140,10));
+
+        gbc1.gridy++;
+
+        String ListSegmenterAlgogGroup[] = Utils.getSegmenterAlgoListe();
+        // / Liste of available Segmeter Algo
+        segmenterAlgoList_jcb = new JComboBox<>(ListSegmenterAlgogGroup);
+        right_box_shoot.add(segmenterAlgoList_jcb,gbc1);
+        segmenterAlgoList_jcb.setPreferredSize(new Dimension(140, 30));
+
+        segmenterAlgoList_jcb.addActionListener(e -> {
+            String segmenter = Objects.requireNonNull(segmenterAlgoList_jcb.getSelectedItem()).toString();
+
         });
 
         gbc1.gridy++;
-        JButton shootOnLearningP_btn = new JButton("Shoot on Learning");
-        right_box_shoot.add(shootOnLearningP_btn, gbc1);
-        shootOnLearningP_btn.setPreferredSize(new Dimension(140,28));
+        JButton SegImageAndKillCell_btn = new JButton("Kill Detected Cells");
+        SegImageAndKillCell_btn.setBackground(new Color(0x2dce98));
+        SegImageAndKillCell_btn.setForeground(Color.white);
+        right_box_shoot.add(SegImageAndKillCell_btn, gbc1);
+        SegImageAndKillCell_btn.setPreferredSize(new Dimension(140,28));
+        SegImageAndKillCell_btn.addActionListener(e -> {
+            String algo = segmenterAlgoList_jcb.getSelectedItem().toString();
+            if (segmenterAlgoList_jcb.getSelectedIndex() != 0) {
+                String action = chooseWhereToTakeTheImage();
+                if (action == "disk") {
+                    ImagePlus image = IJ.openImage(fileDialog_.ChooseFileDialog("Please Choose a BrightField Tiff Image with Cells"));
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                    if (image != null) {
+                        ArrayList[] ll = rappController_ref.imageSegmentation(image, image.getTitle(), "",  algo, true, false);
+                        rappController_ref.shootFromSegmentationListPoint(ll, Long.parseLong(exposureT_laser_spinner.getValue().toString()));
+                    } else ReportingUtils.showMessage(" No Image were chosen ");
+                }
+                else if (action =="live"){
+                    ImagePlus  iPlus = IJ.getImage();
+                    iPlus.show(); iPlus.setTitle("Live view");
+                    ArrayList[] ll = rappController_ref.imageSegmentation(iPlus, iPlus.getTitle(), "",  algo, true, false);
+                    rappController_ref.shootFromSegmentationListPoint(ll, Long.parseLong(exposureT_laser_spinner.getValue().toString()));
+                }
+
+            }else ReportingUtils.showMessage(" Please choose a Segmenter Algorithm");
+
+        });
+
+
+
+
+        /// # Set Camera Exposure Time Event  # ///
+       // gbc.gridy++;
+//        JButton shootOnLearningP_btn = new JButton("Shoot on Learning");
+//        right_box_shoot.add(shootOnLearningP_btn, gbc1);
+//        shootOnLearningP_btn.setPreferredSize(new Dimension(140,28));
        // shootOnLearningP_btn.addActionListener(e -> rappController_ref.getListofROIs());
-        gbc1.gridy++;
+  //      gbc1.gridy++;
         // Point Table Internal Frame
-        try {
-            if (tablePointFrame == null) {
-                tablePointFrame= new CellPointInternalFrame();
-            }
-            tablePointFrame.setPreferredSize(new Dimension(700, 320));
-            tablePointFrame.setVisible(true);
-            right_box_shoot.add(tablePointFrame);
-            tablePointFrame.repaint();
-
-            //acquisition_.
-        } catch (Exception var2) {
-            ReportingUtils.showError(var2, "\nFrame invalid or corrupted settings.\nTry resetting .");
-        }
-
-        JInternalFrame buttonFrame = new JInternalFrame();
-
-
-        try {
-            BasicInternalFrameUI bi = (BasicInternalFrameUI)buttonFrame.getUI();
-            bi.setNorthPane(null);
-            buttonFrame.setPreferredSize(new Dimension(200, 320));
-            buttonFrame.setVisible(true);
-            right_box_shoot.add(buttonFrame);
-            buttonFrame.repaint();
-
-            JLabel rootLabel_2 = new JLabel();
-            rootLabel_2.setFont(new Font("Arial", Font.PLAIN, 10));
-            rootLabel_2.setText("XML configuration file :");
-            rootLabel_2.setBounds(10, 30, 150, 30);
-            buttonFrame.add(rootLabel_2);
-
-            xml_rootField_2 = new JTextField();
-            xml_rootField_2.setEnabled(false);
-            xml_rootField_2.setFont(new Font("Arial", Font.PLAIN, 8));
-            xml_rootField_2.setBounds(5, 55, 125, 30);
-            buttonFrame.add(xml_rootField_2);
-
-            browseXmlFIle_btn = new JButton();
-            browseXmlFIle_btn.addActionListener(e -> {
-                String xmlPath = fileDialog_.xmlFileChooserDialog();
-                if (xmlPath != null) {
-                    xml_rootField_2.setText(xmlPath);
-                }
-            });
-            browseXmlFIle_btn.setMargin(new Insets(2, 5, 2, 5));
-            browseXmlFIle_btn.setFont(new Font("Dialog", Font.PLAIN, 10));
-            browseXmlFIle_btn.setText("...");
-            browseXmlFIle_btn.setBounds(135, 55, 50, 30);
-            buttonFrame.add(browseXmlFIle_btn);
-            browseXmlFIle_btn.setToolTipText("Browse");
-
-
-            JLabel filter_exposureLabel = new JLabel();
-            filter_exposureLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-            filter_exposureLabel.setText("FIlter Exposure Time (ms) :");
-            filter_exposureLabel.setBounds(5, 95, 150, 30);
-            buttonFrame.add(filter_exposureLabel);
-
-            JSpinner exposureT_filter_spinner2 =  new JSpinner(model_forExposure);
-            exposureT_filter_spinner2.setBounds(132, 95, 60, 30);
-            buttonFrame.add(exposureT_filter_spinner2);
-            exposureT_filter_spinner2.addChangeListener(e -> {
-               // rappController_ref.setExposure(1000 * Double.parseDouble(exposureT_filter_spinner.getValue().toString()));
-                System.out.println( exposureT_filter_spinner2.getValue().toString());
-            });
-
-            runSegmentation_btn = new JButton();
-            runSegmentation_btn.addActionListener(e -> {
-                if ( xml_rootField_2.getText().equals("")){
-                    ReportingUtils.showMessage("Please Try Again! "
-                            +"The XML Field is Empty");
-                }
-                else {
-                    String taggPath = fileDialog_.ChooseFileDialog("Please Choose a Bright Field Tiff Image with Cells");
-                    if ( taggPath != null ){
-                        rappController_ref.runSegmentation(xml_rootField_2.getText(), taggPath);
-                    }
-                    else {
-                        ReportingUtils.showMessage("Please Try Again! "
-                                +"No Image were chosen");
-                    }
-                }
-            });
-            runSegmentation_btn.setMargin(new Insets(2, 5, 2, 5));
-            runSegmentation_btn.setFont(new Font("Dialog", Font.PLAIN, 10));
-            runSegmentation_btn.setText("Run Segmentation");
-            runSegmentation_btn.setBounds(50, 135, 102, 30);
-            buttonFrame.add(runSegmentation_btn);
-            runSegmentation_btn.setToolTipText("Run Segmentation with Bright Field Image");
-
-            buttonFrame.add(new JLabel(""));
-            //////////////////////////////////////////////////////////////////////////////////////////////////
-            // acquisition_.
-        } catch (Exception var2) {
-            ReportingUtils.showError(var2, "\nFrame invalid or corrupted settings.\nTry resetting .");
-        }
+//        try {
+//            if (tablePointFrame == null) {
+//                tablePointFrame= new CellPointInternalFrame();
+//            }
+//            tablePointFrame.setPreferredSize(new Dimension(700, 320));
+//            tablePointFrame.setVisible(true);
+//            right_box_shoot.add(tablePointFrame);
+//            tablePointFrame.repaint();
+//
+//            //acquisition_.
+//        } catch (Exception var2) {
+//            ReportingUtils.showError(var2, "\nFrame invalid or corrupted settings.\nTry resetting .");
+//        }
+//
+//        JInternalFrame buttonFrame = new JInternalFrame();
+//
+//
+//        try {
+//            BasicInternalFrameUI bi = (BasicInternalFrameUI)buttonFrame.getUI();
+//            bi.setNorthPane(null);
+//            buttonFrame.setPreferredSize(new Dimension(200, 320));
+//            buttonFrame.setVisible(true);
+//            right_box_shoot.add(buttonFrame);
+//            buttonFrame.repaint();
+//
+//            JLabel rootLabel_2 = new JLabel();
+//            rootLabel_2.setFont(new Font("Arial", Font.PLAIN, 10));
+//            rootLabel_2.setText("XML configuration file :");
+//            rootLabel_2.setBounds(10, 30, 150, 30);
+//            buttonFrame.add(rootLabel_2);
+//
+//            xml_rootField_2 = new JTextField();
+//            xml_rootField_2.setEnabled(false);
+//            xml_rootField_2.setFont(new Font("Arial", Font.PLAIN, 8));
+//            xml_rootField_2.setBounds(5, 55, 125, 30);
+//            buttonFrame.add(xml_rootField_2);
+//
+//            browseXmlFIle_btn = new JButton();
+//            browseXmlFIle_btn.addActionListener(e -> {
+//                String xmlPath = fileDialog_.xmlFileChooserDialog();
+//                if (xmlPath != null) {
+//                    xml_rootField_2.setText(xmlPath);
+//                }
+//            });
+//            browseXmlFIle_btn.setMargin(new Insets(2, 5, 2, 5));
+//            browseXmlFIle_btn.setFont(new Font("Dialog", Font.PLAIN, 10));
+//            browseXmlFIle_btn.setText("...");
+//            browseXmlFIle_btn.setBounds(135, 55, 50, 30);
+//            buttonFrame.add(browseXmlFIle_btn);
+//            browseXmlFIle_btn.setToolTipText("Browse");
+//
+//
+//            JLabel filter_exposureLabel = new JLabel();
+//            filter_exposureLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+//            filter_exposureLabel.setText("FIlter Exposure Time (ms) :");
+//            filter_exposureLabel.setBounds(5, 95, 150, 30);
+//            buttonFrame.add(filter_exposureLabel);
+//
+//            JSpinner exposureT_filter_spinner2 =  new JSpinner(model_forExposure);
+//            exposureT_filter_spinner2.setBounds(132, 95, 60, 30);
+//            buttonFrame.add(exposureT_filter_spinner2);
+//            exposureT_filter_spinner2.addChangeListener(e -> {
+//               // rappController_ref.setExposure(1000 * Double.parseDouble(exposureT_filter_spinner.getValue().toString()));
+//                System.out.println( exposureT_filter_spinner2.getValue().toString());
+//            });
+//
+//            runSegmentation_btn = new JButton();
+//            runSegmentation_btn.addActionListener(e -> {
+//                if ( xml_rootField_2.getText().equals("")){
+//                    ReportingUtils.showMessage("Please Try Again! "
+//                            +"The XML Field is Empty");
+//                }
+//                else {
+//                    String taggPath = fileDialog_.ChooseFileDialog("Please Choose a Bright Field Tiff Image with Cells");
+//                    if ( taggPath != null ){
+//                        rappController_ref.runSegmentation(xml_rootField_2.getText(), taggPath);
+//                    }
+//                    else {
+//                        ReportingUtils.showMessage("Please Try Again! "
+//                                +"No Image were chosen");
+//                    }
+//                }
+//            });
+//            runSegmentation_btn.setMargin(new Insets(2, 5, 2, 5));
+//            runSegmentation_btn.setFont(new Font("Dialog", Font.PLAIN, 10));
+//            runSegmentation_btn.setText("Run Segmentation");
+//            runSegmentation_btn.setBounds(50, 135, 102, 30);
+//            buttonFrame.add(runSegmentation_btn);
+//            runSegmentation_btn.setToolTipText("Run Segmentation with Bright Field Image");
+//
+//            buttonFrame.add(new JLabel(""));
+//            //////////////////////////////////////////////////////////////////////////////////////////////////
+//            // acquisition_.
+//        } catch (Exception var2) {
+//            ReportingUtils.showError(var2, "\nFrame invalid or corrupted settings.\nTry resetting .");
+//        }
 
 
 
@@ -666,7 +726,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 //                imageViewer_= new ImageViewer();
             }
 //            imageViewer_.setPreferredSize(new Dimension(910, 575));
- ///           right_box_learning.add(imageViewer_);
+//            right_box_learning.add(imageViewer_);
 //            imageViewer_.setVisible(true);
 //            imageViewer_.repaint();
 
@@ -704,8 +764,8 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         ///////////////////////// # Utilities # /////////////////////////////////////////////////////////
 
-        JSplitPane splitPaneBody = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
-        JSplitPane splitPaneTop = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, splitPaneBody );
+
+
         splitPaneTop.setDividerLocation(80);
         splitPaneBody.setDividerLocation(200);
         this.add(splitPaneTop,BorderLayout.CENTER);
@@ -802,6 +862,23 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             studio_.makeActive();
         }
         else  GUIUtils.recallPosition(appInterface_);
+    }
+
+    private String chooseWhereToTakeTheImage() {
+        int n = JOptionPane.showConfirmDialog(appInterface_,
+                "Would you like to take an Image from disk?", "Choose Image", JOptionPane.YES_NO_OPTION);
+        if (n == JOptionPane.YES_OPTION) {
+           return "disk";
+        }
+        else  {
+            int n1 = JOptionPane.showConfirmDialog(appInterface_,
+                    "Would you like to snap an Image from Live View?", "Choose Image", JOptionPane.YES_NO_OPTION);
+            if (n1 == JOptionPane.YES_OPTION) {
+                return "live";
+            }
+
+        }
+        return "cancel" ;
     }
 
     //  Avoid user to accidentally close the window by this fonction

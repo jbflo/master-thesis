@@ -474,12 +474,12 @@ public class RappController extends  MMFrame implements OnStateListener {
             // if we add "dev_.waitForDevice(), then the RAPP UGA-40 will already have ended
             // its exposure before returning control
             // For now, wait for a user specified delay
-            int delayMs = Integer.parseInt(RappGui.getInstance().delayField_.getValue().toString());
-            Thread.sleep(delayMs);
+        //    int delayMs = Integer.parseInt(RappGui.getInstance().delayField_.getValue().toString());
+          //  Thread.sleep(delayMs);
             core_.snapImage();
             // NS: just make sure to wait until the spot is no longer displayed
             // JonD: time to wait is simply the exposure time less any delay
-            Thread.sleep((int) (dev_.getExposure()/1000) - delayMs);
+   //         Thread.sleep((int) (dev_.getExposure()/1000) - delayMs);
             // JonD: see earlier comment => commenting out next line
             // dev_.setExposure(originalExposure);
             TaggedImage taggedImage2 = core_.getTaggedImage();
@@ -660,7 +660,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         app_.enableLiveMode(false);
         if (!isRunning_.get()) {
             stopRequested_.set(false);
-            Thread th = new Thread("Projector calibration thread") {
+            Thread th = new Thread("RappPlugin calibration thread") {
                 @Override
                 public void run() {
                     try {
@@ -909,21 +909,34 @@ public class RappController extends  MMFrame implements OnStateListener {
         }).run();
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
-    public ArrayList[] brightFieldSegmenter(ImagePlus impproc, String title, String path, boolean kill , boolean save) {
+    public ArrayList[] imageSegmentation(ImagePlus impproc, String title, String path, String Algo,  boolean kill , boolean save) {
 
 
         impproc.setTitle("Working on : "+ title );
         impproc.show();
 
         impproc.updateAndRepaintWindow();
-        //IJ.run(impproc,"Threshold...", "Default B&W");
-        IJ.run(impproc, "Gaussian Blur...", "sigma=5");
-        if (kill){
-           // IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel add");  //change range for cell size filtering
-             IJ.run(impproc, "Find Maxima...", "noise=20 output=List add");
-        }else {  //IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel summarize ");
+
+        if (Algo == "Find Peak"){
+            IJ.run(impproc, "Gaussian Blur...", "sigma=5");
+            if (kill){
+                IJ.run(impproc, "Find Maxima...", "noise=20 output=List add");
+            }else {
                 IJ.run(impproc, "Find Maxima...", "noise=20 output=List exclude");
+            }
+
+        }else if (Algo == ""){
+
+            IJ.run(impproc,"Threshold...", "Default B&W");
+            if (kill){
+                 IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel add");  //change range for cell size filtering
+
+            }else {
+                IJ.run(impproc,"Analyze Particles...", "size=0-infinity pixel summarize ");
+
+            }
         }
+
 
 
         ij.measure.ResultsTable resTab = Analyzer.getResultsTable();
@@ -967,7 +980,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         System.out.println( " Xcord "+ xTab);
         System.out.println(" Ycord "+ yTab);
         impproc.updateAndRepaintWindow();
-        if(path !=null){
+        if(path !=null && save){
             IJ.save(impproc, path+ "_"+"Segmented.tif");
         }
 
@@ -993,7 +1006,8 @@ public class RappController extends  MMFrame implements OnStateListener {
                     ReportingUtils.showError("Unable to change Default Configuration Group Name and Preset ");
                 }
 
-            }else System.out.println("Sam so fe a nill");
+            }else System.out.println("___"); // Don't need to do anything
+
             System.out.println(" SIze: "+ segmentatio_pt[1].size());
             System.out.println(" Val: "+ segmentatio_pt.toString());
             for (int i =0 ; i < segmentatio_pt[0].size(); i++)
@@ -1079,6 +1093,11 @@ public class RappController extends  MMFrame implements OnStateListener {
             }
         };
     }
+
+    /////////////////////// Liste of Segmenter Algoritme //////////////////////////////////
+
+
+
     // Sleep until the designated clock time.
     private static void sleepUntil(long clockTimeMillis) {
         long delta = clockTimeMillis - System.currentTimeMillis();

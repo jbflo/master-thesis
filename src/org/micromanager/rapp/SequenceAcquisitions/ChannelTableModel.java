@@ -33,8 +33,9 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       "Configuration",
       "Exposure (ms) ",
       "Laser Exposure (ms)",
-      "Kill Cells ?",
-      "Color"
+      "Segmented ?",
+      "Kill Cells ?"
+     // "Color"
    };
 
    private final String[] TOOLTIPS = new String[]{
@@ -95,9 +96,9 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
          } else if (columnIndex == 3) {
             return channels_.get(rowIndex).laser_exposure;
          } else if (columnIndex == 4) {
-            return channels_.get(rowIndex).KillCell;
+            return channels_.get(rowIndex).useSegmentation;
          } else if (columnIndex == 5) {
-            return channels_.get(rowIndex).color;
+            return channels_.get(rowIndex).KillCell;
          }
       }
       return null;
@@ -121,13 +122,12 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
           } else if (col == 2) {
              channel.exposure = ((Double) value);
              exposurePrefs_.putDouble("Exposure_" + acqEng_.getChannelGroup() + "_" + channel.config,channel.exposure);
-
           } else if (col == 3) {
              channel.laser_exposure = ((Double) value);
           } else if (col == 4) {
-            channel.KillCell = ((Boolean) value);
+            channel.useSegmentation = ((Boolean) value);
           } else if (col == 5) {
-             channel.color = (Color) value;
+             channel.KillCell = ((Boolean) value);
           }
           acqEng_.setChannel(row, channel);
        }
@@ -136,8 +136,12 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
 
    @Override
    public boolean isCellEditable(int nRow, int nCol) {
+
       if (nCol == 4) {
           return acqEng_.isDoSegmentationEnabled();
+      }
+      if (nCol == 5) {
+        return channels_.get(nRow).useSegmentation;
       }
       return true;
    }
@@ -159,10 +163,12 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
       ChannelSpec channel = channels_.get(row);
       TableModel model = (TableModel) e.getSource();
 
-      if (col == 5) {
-         Color color = (Color) model.getValueAt(row, col);
-         colorPrefs_.putInt("Color_" + acqEng_.getChannelGroup() + "_" + channel.config, color.getRGB());
-      }
+
+//      if (col == 5) {
+//         Color color = (Color) model.getValueAt(row, col);
+//         colorPrefs_.putInt("Color_" + acqEng_.getChannelGroup() + "_" + channel.config, color.getRGB());
+//      }
+
    }
 
    public void setChannels(ArrayList<ChannelSpec> ch) {
@@ -196,9 +202,9 @@ public class ChannelTableModel extends AbstractTableModel implements TableModelL
          if (channel.config.length() == 0) {
             ReportingUtils.showMessage("No more channels are available\nin this channel group.");
          } else {
-            channel.color = new Color(colorPrefs_.getInt(
-                    "Color_" + acqEng_.getChannelGroup() + "_" +
-                    channel.config, Color.white.getRGB()));
+//            channel.color = new Color(colorPrefs_.getInt(
+//                    "Color_" + acqEng_.getChannelGroup() + "_" +
+//                    channel.config, Color.white.getRGB()));
             channel.exposure = exposurePrefs_.getDouble(
                     "Exposure_" + acqEng_.getChannelGroup() + "_" +
                     channel.config, 10.0);
