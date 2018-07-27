@@ -378,7 +378,6 @@ public interface AcquisitionEngine {
     * Sets the value for the order of the four dimensions (P, T, C, Z).
     * Possible values are enumerated in org.micromanager.utils.AcqOrderMode
     */
-   void setAcqOrderMode(int mode);
 
    /*
     * If set to true, autofocus will be used during the acquisition.

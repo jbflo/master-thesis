@@ -33,9 +33,11 @@ import org.micromanager.acquisition.ComponentTitledBorder;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.dialogs.AdvancedOptionsDialog;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
+import org.micromanager.rapp.RappController;
 import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.utils.AcqOrderMode;
 import org.micromanager.rapp.RappPlugin;
+import org.micromanager.rapp.utils.Utils;
 import org.micromanager.utils.*;
 
 import javax.swing.*;
@@ -73,30 +75,31 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
    private static final long serialVersionUID = 1L;
    protected JButton listButton_;
-   private final JButton afButton_;
+
    private JSpinner afSkipInterval_;
-   private final JComboBox acqOrderBox_;
+   protected static JComboBox acqOrderBox_;
+   protected static JComboBox listOfsegmenter_jcb;
    public static final String NEW_ACQFILE_NAME = "MMAcquistion.xml";
    public static final String ACQ_SETTINGS_NODE = "AcquistionSettings";
    public static final String COLOR_SETTINGS_NODE = "ColorSettings";
    private static final String EXPOSURE_SETTINGS_NODE = "AcqExposureSettings";
-   private JComboBox channelGroupCombo_;
+   private static JComboBox channelGroupCombo_;
    private final JTextArea commentTextArea_;
-   private final JComboBox zValCombo_;
+   //private final JComboBox zValCombo_;
    private final JTextField nameField_;
    private final JTextField rootField_;
    private final JTextField rootField_2;
-   private final JTextArea summaryTextArea_;
+   private static  JTextArea summaryTextArea_;
    private final JComboBox timeUnitCombo_;
    private final JFormattedTextField interval_;
-   private final JFormattedTextField zStep_;
-   private final JFormattedTextField zTop_;
-   private final JFormattedTextField zBottom_;
-   private AcquisitionEngine acqEng_;
+  // private final JFormattedTextField zStep_;
+  // private final JFormattedTextField zTop_;
+  // private final JFormattedTextField zBottom_;
+   private static AcquisitionEngine acqEng_;
    private final JScrollPane channelTablePane_;
-   private JTable channelTable_;
+   private static JTable channelTable_;
    private final JSpinner numFrames_;
-   private ChannelTableModel model_;
+   private static ChannelTableModel model_;
    private final MMOptions options_;
    private final Preferences prefs_;
    private final Preferences acqPrefs_;
@@ -106,26 +109,27 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private String acqDir_;
    private int zVals_ = 0;
    protected static  JButton acquireButton_;
-   private final JButton setBottomButton_;
-   private final JButton setTopButton_;
+  // private final JButton setBottomButton_;
+  // private final JButton setTopButton_;
    protected JComboBox displayModeCombo_;
    private ScriptInterface studio_;
    private final GUIColors guiColors_;
    private final NumberFormat numberFormat_;
    private final JLabel namePrefixLabel_;
    private final JLabel saveTypeLabel_;
-   private final JRadioButton singleButton_;
-   private final JRadioButton multiButton_;
+   private static  JRadioButton singleButton_;
+   private static JRadioButton multiButton_;
    private final JLabel rootLabel_;
-   private final JLabel rootLabel_2;
+   private final JLabel choose_segmenter;
+   private final JLabel xml_Seg_Label_2;
    private final JButton browseRootButton_;
    private final JButton browseRootButton_2;
    private final JLabel displayMode_;
-   private final JCheckBox stackKeepShutterOpenCheckBox_;
-   private final JCheckBox chanKeepShutterOpenCheckBox_;
+   //private final JCheckBox stackKeepShutterOpenCheckBox_;
+  // private final JCheckBox chanKeepShutterOpenCheckBox_;
    protected static JProgressBar progressBar;
    protected static JTextArea taskOutput;
-   private final AcqOrderMode[] acqOrderModes_;
+   private static  AcqOrderMode[] acqOrderModes_;
    private AdvancedOptionsDialog advancedOptionsWindow_;
    //persistent properties (app settings);
    private static final String ACQ_FILE_DIR = "dir";
@@ -140,8 +144,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private static final String ACQ_ORDER_MODE = "acqOrderMode";
    private static final String ACQ_CHANNEL_GROUP = "acqChannelGroup";
    private static final String ACQ_NUM_CHANNELS = "acqNumchannels";
-   private static final String ACQ_CHANNELS_KEEP_SHUTTER_OPEN = "acqChannelsKeepShutterOpen";
-   private static final String ACQ_STACK_KEEP_SHUTTER_OPEN = "acqStackKeepShutterOpen";
+//   private static final String ACQ_CHANNELS_KEEP_SHUTTER_OPEN = "acqChannelsKeepShutterOpen";
+//   private static final String ACQ_STACK_KEEP_SHUTTER_OPEN = "acqStackKeepShutterOpen";
    private static final String CHANNEL_NAME_PREFIX = "acqChannelName";
    private static final String CHANNEL_USE_PREFIX = "acqChannelUse";
    private static final String SEGMENTATION_USE_PREFIX = "acqSegmentationUse";
@@ -170,26 +174,27 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
            true, "xml");
    private int columnWidth_[];
    private int columnOrder_[];
-   private final JPanel framesSubPanel_;
-   private final CardLayout framesSubPanelLayout_;
+ //  private final JPanel framesSubPanel_;
+ //  private static final CardLayout framesSubPanelLayout_;
    private static final String DEFAULT_FRAMES_PANEL_NAME = "Default frames panel";
    private static final String OVERRIDE_FRAMES_PANEL_NAME = "Override frames panel";
    protected JPanel buttonPanel;
-   private CheckBoxPanel channelsPanel_;
-   private CheckBoxPanel segmentationPanel_;
-   protected CheckBoxPanel positionsPanel_;
-   private JPanel acquisitionOrderPanel_;
-   private CheckBoxPanel afPanel_;
+   private static CheckBoxPanel channelsPanel_;
+   private static CheckBoxPanel segmentationPanel_;
+   protected static CheckBoxPanel positionsPanel_;
+  // private JPanel acquisitionOrderPanel_;
+  // private CheckBoxPanel afPanel_;
    private JPanel summaryPanel_;
    private CheckBoxPanel savePanel_;
    private ComponentTitledPanel commentsPanel_;
    private Border dayBorder_;
    private Border nightBorder_;
    private ArrayList<JPanel> panelList_;
-   private boolean disableGUItoSettings_ = false;
+   private static boolean disableGUItoSettings_ = false;
    protected static boolean saveMultiTiff_ = true;
    private SnapLiveManager SnapLiveManager_;
    private CMMCore core_;
+
 
    public final void createChannelTable() {
       model_ = new ChannelTableModel(studio_, acqEng_, exposurePrefs_, colorPrefs_, options_);
@@ -227,18 +232,18 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          if (colIndex < 0) {
             colIndex = k;
          }
-         if (colIndex == model_.getColumnCount() - 1) {
-            ColorRenderer cr = new ColorRenderer(true);
-            ColorEditor ce = new ColorEditor(model_, model_.getColumnCount() - 1);
-            TableColumn column = new TableColumn(model_.getColumnCount() - 1, 200, cr, ce);
-            column.setPreferredWidth(columnWidth_[model_.getColumnCount() - 1]);
-            channelTable_.addColumn(column);
-
-         } else {
-            TableColumn column = new TableColumn(colIndex, 200, cellRenderer, cellEditor);
+//         if (colIndex == model_.getColumnCount() - 1) {
+//            ColorRenderer cr = new ColorRenderer(true);
+//            ColorEditor ce = new ColorEditor(model_, model_.getColumnCount() - 1);
+//            TableColumn column = new TableColumn(model_.getColumnCount() - 1, 300, cr, ce);
+//            column.setPreferredWidth(columnWidth_[model_.getColumnCount() - 1]);
+//            channelTable_.addColumn(column);
+//
+//         } else {
+            TableColumn column = new TableColumn(colIndex, 300, cellRenderer, cellEditor);
             column.setPreferredWidth(columnWidth_[colIndex]);
             channelTable_.addColumn(column);
-         }
+      //   }
       }
       channelTablePane_.setViewportView(channelTable_);
    }
@@ -282,25 +287,25 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    public final void createEmptyPanels() {
       panelList_ = new ArrayList<JPanel>();
 
-      channelsPanel_ = (CheckBoxPanel) createPanel("Channels", 3, 1, 510, 170, true);
+      channelsPanel_ = (CheckBoxPanel) createPanel("Channels", 3, 1, 705, 170, true);
 
-      segmentationPanel_= (CheckBoxPanel) createPanel("Segmentation", 515,1,705,170,true );
-      buttonPanel =  createPanel("Run", 715, 1, 880, 290);
+      segmentationPanel_= (CheckBoxPanel) createPanel("Segmentation", 710,1,890,170,true );
+      buttonPanel =  createPanel("Run", 710, 175, 880, 435);
 
       //framesPanel_ = (CheckBoxPanel) createPanel("Time points", 5, 308, 220, 451, true); // (text, left, top, right, bottom)
       savePanel_ = (CheckBoxPanel) createPanel("Save images", 3, 175, 510, 290, true);
       positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 175, 705, 290, true);
-      afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
+  //    afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
 
-      summaryPanel_ = createPanel("Summary", 715, 300, 880, 505);
-      acquisitionOrderPanel_ = createPanel("Acquisition order", 515, 300, 705, 435);
+      summaryPanel_ = createPanel("Summary", 515, 300, 705, 435);
+      // acquisitionOrderPanel_ = createPanel("Acquisition order", 515, 300, 705, 435);
       commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 300, 510,435,false);
 
    }
 
    private void createToolTips() {
       positionsPanel_.setToolTipText("Acquire images from a series of positions in the XY plane");
-      //String imageName = getClass().getResource("/org/micromanager/icons/acq_order_figure.png").toString();
+      // String imageName = getClass().getResource("/org/micromanager/icons/acq_order_figure.png").toString();
       String acqOrderToolTip =
               "<html> The acquisition order is Automatically selected when you have a multiple dimensions<br>"
               + "(i.e.  X positions, Channel, Segmentation, Cell Killing, and or Saving)  is selected. <br>"
@@ -311,18 +316,20 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
                       // + "<img src=" + imageName + ">
               + "</html>"
               ;
-      acquisitionOrderPanel_.setToolTipText(acqOrderToolTip);
+      //acquisitionOrderPanel_.setToolTipText(acqOrderToolTip);
       acqOrderBox_.setToolTipText(acqOrderToolTip);
-      afPanel_.setToolTipText("Toggle autofocus on/off");
+      //afPanel_.setToolTipText("Toggle autofocus on/off");
       channelsPanel_.setToolTipText("Lets you acquire images in multiple channels (groups of "
               + "properties with multiple preset values");
       savePanel_.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip("If the Save images option is selected, "
-              + "images will be saved to disk continuously during the acquisition. If this option is not selected, images "
-              + "are accumulated only in the 5D-Image window, and once the acquisition is finished, image data can be saved"
-              + " to disk. However, saving files automatically during acquisition secures the acquired data against an "
-              + "unexpected computer failure or accidental closing of image window. Even when saving to disk, some of the"
-              + " acquired images are still kept in memory, facilitating fast playback. If such behavior is not desired, "
-              + "check the 'Conserve RAM' option (Tools | Options)"));
+              + "images will be saved to disk continuously during the acquisition." //+
+             // " If this option is not selected, images "
+          //    + "are accumulated only in the 5D-Image window, and once the acquisition is finished, image data can be saved"
+            //  + " to disk. However, saving files automatically during acquisition secures the acquired data against an "
+           //   + "unexpected computer failure or accidental closing of image window. Even when saving to disk, some of the"
+      //        + " acquired images are still kept in memory, facilitating fast playback. If such behavior is not desired, "
+      //        + "check the 'Conserve RAM' option (Tools | Options)"
+      ));
       segmentationPanel_.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip("The Segmentation panel should be selected for the killing available " +
                       "If the Segmentation panel is selected  Images will be segmented before .... "));
    }
@@ -392,8 +399,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       overridePanel.add(disableCustomIntervalsButton, BorderLayout.PAGE_END);
 
       //framesPanel_.setLayout(new BorderLayout());
-      framesSubPanelLayout_ = new CardLayout();
-      framesSubPanel_ = new JPanel(framesSubPanelLayout_);
+      //framesSubPanelLayout_ = new CardLayout();
+      //framesSubPanel_ = new JPanel(framesSubPanelLayout_);
 
 
       final JLabel numberLabel = new JLabel();
@@ -481,100 +488,100 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 //         }
 //      });
 
-      final JLabel zbottomLabel = new JLabel();
-      zbottomLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-      zbottomLabel.setText("Z-start [um]");
-      zbottomLabel.setBounds(30, 30, 69, 15);
-     // slicesPanel_.add(zbottomLabel);
-
-      zBottom_ = new JFormattedTextField(numberFormat_);
-      zBottom_.setFont(new Font("Arial", Font.PLAIN, 10));
-      zBottom_.setBounds(95, 27, 54, 21);
-      zBottom_.setValue(1.0);
-      zBottom_.addPropertyChangeListener("value", this);
+//      final JLabel zbottomLabel = new JLabel();
+//      zbottomLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+//      zbottomLabel.setText("Z-start [um]");
+//      zbottomLabel.setBounds(30, 30, 69, 15);
+//     // slicesPanel_.add(zbottomLabel);
+//
+//      zBottom_ = new JFormattedTextField(numberFormat_);
+//      zBottom_.setFont(new Font("Arial", Font.PLAIN, 10));
+//      zBottom_.setBounds(95, 27, 54, 21);
+//      zBottom_.setValue(1.0);
+//      zBottom_.addPropertyChangeListener("value", this);
     //  slicesPanel_.add(zBottom_);
 
-      setBottomButton_ = new JButton();
-      setBottomButton_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(final ActionEvent e) {
-            setBottomPosition();
-         }
-      });
-      setBottomButton_.setMargin(new Insets(-5, -5, -5, -5));
-      setBottomButton_.setFont(new Font("", Font.PLAIN, 10));
-      setBottomButton_.setText("Set");
-      setBottomButton_.setToolTipText("Set value as microscope's current Z position");
-      setBottomButton_.setBounds(150, 27, 50, 22);
-    //  slicesPanel_.add(setBottomButton_);
-
-      final JLabel ztopLabel = new JLabel();
-      ztopLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-      ztopLabel.setText("Z-end [um]");
-      ztopLabel.setBounds(30, 53, 69, 15);
+//      setBottomButton_ = new JButton();
+//      setBottomButton_.addActionListener(new ActionListener() {
+//
+//         @Override
+//         public void actionPerformed(final ActionEvent e) {
+//            setBottomPosition();
+//         }
+//      });
+//      setBottomButton_.setMargin(new Insets(-5, -5, -5, -5));
+//      setBottomButton_.setFont(new Font("", Font.PLAIN, 10));
+//      setBottomButton_.setText("Set");
+//      setBottomButton_.setToolTipText("Set value as microscope's current Z position");
+//      setBottomButton_.setBounds(150, 27, 50, 22);
+//    //  slicesPanel_.add(setBottomButton_);
+//
+//      final JLabel ztopLabel = new JLabel();
+//      ztopLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+//      ztopLabel.setText("Z-end [um]");
+//      ztopLabel.setBounds(30, 53, 69, 15);
     //  slicesPanel_.add(ztopLabel);
 
-      zTop_ = new JFormattedTextField(numberFormat_);
-      zTop_.setFont(new Font("Arial", Font.PLAIN, 10));
-      zTop_.setBounds(95, 50, 54, 21);
-      zTop_.setValue(1.0);
-      zTop_.addPropertyChangeListener("value", this);
-     // slicesPanel_.add(zTop_);
-
-      setTopButton_ = new JButton();
-      setTopButton_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(final ActionEvent e) {
-            setTopPosition();
-         }
-      });
-      setTopButton_.setMargin(new Insets(-5, -5, -5, -5));
-      setTopButton_.setFont(new Font("Dialog", Font.PLAIN, 10));
-      setTopButton_.setText("Set");
-      setTopButton_.setToolTipText("Set value as microscope's current Z position");
-      setTopButton_.setBounds(150, 50, 50, 22);
+//      zTop_ = new JFormattedTextField(numberFormat_);
+//      zTop_.setFont(new Font("Arial", Font.PLAIN, 10));
+//      zTop_.setBounds(95, 50, 54, 21);
+//      zTop_.setValue(1.0);
+//      zTop_.addPropertyChangeListener("value", this);
+//     // slicesPanel_.add(zTop_);
+//
+//      setTopButton_ = new JButton();
+//      setTopButton_.addActionListener(new ActionListener() {
+//
+//         @Override
+//         public void actionPerformed(final ActionEvent e) {
+//            setTopPosition();
+//         }
+//      });
+//      setTopButton_.setMargin(new Insets(-5, -5, -5, -5));
+//      setTopButton_.setFont(new Font("Dialog", Font.PLAIN, 10));
+//      setTopButton_.setText("Set");
+//      setTopButton_.setToolTipText("Set value as microscope's current Z position");
+//      setTopButton_.setBounds(150, 50, 50, 22);
     //  slicesPanel_.add(setTopButton_);
 
-      final JLabel zstepLabel = new JLabel();
-      zstepLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-      zstepLabel.setText("Z-step [um]");
-      zstepLabel.setBounds(30, 76, 69, 15);
+//      final JLabel zstepLabel = new JLabel();
+//      zstepLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+//      zstepLabel.setText("Z-step [um]");
+//      zstepLabel.setBounds(30, 76, 69, 15);
      // slicesPanel_.add(zstepLabel);
 
-      zStep_ = new JFormattedTextField(numberFormat_);
-      zStep_.setFont(new Font("Arial", Font.PLAIN, 10));
-      zStep_.setBounds(95, 73, 54, 21);
-      zStep_.setValue(1.0);
-      zStep_.addPropertyChangeListener("value", this);
+//      zStep_ = new JFormattedTextField(numberFormat_);
+//      zStep_.setFont(new Font("Arial", Font.PLAIN, 10));
+//      zStep_.setBounds(95, 73, 54, 21);
+//      zStep_.setValue(1.0);
+//      zStep_.addPropertyChangeListener("value", this);
     //  slicesPanel_.add(zStep_);
 
-      zValCombo_ = new JComboBox();
-      zValCombo_.setFont(new Font("Arial", Font.PLAIN, 10));
-      zValCombo_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(final ActionEvent e) {
-            zValCalcChanged();
-         }
-      });
-      zValCombo_.setModel(new DefaultComboBoxModel(new String[]{"relative Z", "absolute Z"}));
-      zValCombo_.setBounds(30, 97, 110, 22);
+//      zValCombo_ = new JComboBox();
+//      zValCombo_.setFont(new Font("Arial", Font.PLAIN, 10));
+//      zValCombo_.addActionListener(new ActionListener() {
+//
+//         @Override
+//         public void actionPerformed(final ActionEvent e) {
+//            zValCalcChanged();
+//         }
+//      });
+//      zValCombo_.setModel(new DefaultComboBoxModel(new String[]{"relative Z", "absolute Z"}));
+//      zValCombo_.setBounds(30, 97, 110, 22);
      // slicesPanel_.add(zValCombo_);
 
-      stackKeepShutterOpenCheckBox_ = new JCheckBox();
-      stackKeepShutterOpenCheckBox_.setText("Keep shutter open");
-      stackKeepShutterOpenCheckBox_.setFont(new Font("Arial", Font.PLAIN, 10));
-      stackKeepShutterOpenCheckBox_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(final ActionEvent e) {
-            applySettings();
-         }
-      });
-      stackKeepShutterOpenCheckBox_.setSelected(false);
-      stackKeepShutterOpenCheckBox_.setBounds(60, 121, 150, 22);
+//      stackKeepShutterOpenCheckBox_ = new JCheckBox();
+//      stackKeepShutterOpenCheckBox_.setText("Keep shutter open");
+//      stackKeepShutterOpenCheckBox_.setFont(new Font("Arial", Font.PLAIN, 10));
+//      stackKeepShutterOpenCheckBox_.addActionListener(new ActionListener() {
+//
+//         @Override
+//         public void actionPerformed(final ActionEvent e) {
+//            applySettings();
+//         }
+//      });
+//      stackKeepShutterOpenCheckBox_.setSelected(false);
+//      stackKeepShutterOpenCheckBox_.setBounds(60, 121, 150, 22);
       //slicesPanel_.add(stackKeepShutterOpenCheckBox_);
 
       // Acquisition order panel
@@ -582,7 +589,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       acqOrderBox_ = new JComboBox();
       acqOrderBox_.setFont(new Font("", Font.PLAIN, 10));
       acqOrderBox_.setBounds(6, 36, 160, 22);
-      acquisitionOrderPanel_.add(acqOrderBox_);
+      //acquisitionOrderPanel_.add(acqOrderBox_);
 
       acqOrderModes_ = new AcqOrderMode[1];
       acqOrderModes_[0] = new AcqOrderMode(AcqOrderMode.SEGMENTATION_POS_KILL_CHANNEL);
@@ -600,48 +607,50 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       summaryTextArea_ = new JTextArea();
       summaryTextArea_.setFont(new Font("Arial", Font.PLAIN, 11));
       summaryTextArea_.setEditable(false);
-      summaryTextArea_.setBounds(4, 19, 340, 200);
+      summaryTextArea_.setBounds(4, 19, 160, 200);
       summaryTextArea_.setMargin(new Insets(2, 2, 2, 2));
+      summaryTextArea_.setLineWrap(true);
+      summaryTextArea_.setWrapStyleWord(true);
       summaryTextArea_.setOpaque(false);
       summaryPanel_.add(summaryTextArea_);
 
       // Autofocus panel
 
-      afPanel_.addActionListener(new ActionListener() {
+//      afPanel_.addActionListener(new ActionListener() {
+//
+//         @Override
+//         public void actionPerformed(ActionEvent arg0) {
+//            applySettings();
+//         }
+//      });
 
-         @Override
-         public void actionPerformed(ActionEvent arg0) {
-            applySettings();
-         }
-      });
-
-      afButton_ = new JButton();
-      afButton_.setToolTipText("Set autofocus options");
-      afButton_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(ActionEvent arg0) {
-            afOptions();
-         }
-      });
-      afButton_.setText("Options...");
-      afButton_.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "icons/wrench_orange.png"));
-      afButton_.setMargin(new Insets(2, 5, 2, 5));
-      afButton_.setFont(new Font("Dialog", Font.PLAIN, 10));
-      afButton_.setBounds(32, 33, 100, 28);
-      afPanel_.add(afButton_);
-
-
-      final JLabel afSkipFrame1 = new JLabel();
-      afSkipFrame1.setFont(new Font("Dialog", Font.PLAIN, 10));
-      afSkipFrame1.setText("Skip frame(s): ");
-      afSkipFrame1.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip("The number of 'frames skipped' corresponds"
-              + "to the number of time intervals of image acquisition that pass before micromanager autofocuses again.  Micromanager "
-              + "will always autofocus when moving to a new position regardless of this value"));
+//      afButton_ = new JButton();
+//      afButton_.setToolTipText("Set autofocus options");
+//      afButton_.addActionListener(new ActionListener() {
+//
+//         @Override
+//         public void actionPerformed(ActionEvent arg0) {
+//            afOptions();
+//         }
+//      });
+//      afButton_.setText("Options...");
+//      afButton_.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "icons/wrench_orange.png"));
+//      afButton_.setMargin(new Insets(2, 5, 2, 5));
+//      afButton_.setFont(new Font("Dialog", Font.PLAIN, 10));
+//      afButton_.setBounds(32, 33, 100, 28);
+//      afPanel_.add(afButton_);
 
 
-      afSkipFrame1.setBounds(20, 75, 70, 21);
-      afPanel_.add(afSkipFrame1);
+//      final JLabel afSkipFrame1 = new JLabel();
+//      afSkipFrame1.setFont(new Font("Dialog", Font.PLAIN, 10));
+//      afSkipFrame1.setText("Skip frame(s): ");
+//      afSkipFrame1.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip("The number of 'frames skipped' corresponds"
+//              + "to the number of time intervals of image acquisition that pass before micromanager autofocuses again.  Micromanager "
+//              + "will always autofocus when moving to a new position regardless of this value"));
+//
+//
+//      afSkipFrame1.setBounds(20, 75, 70, 21);
+//      afPanel_.add(afSkipFrame1);
 
 
 
@@ -656,7 +665,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
       final JLabel channelsLabel = new JLabel();
       channelsLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-      channelsLabel.setBounds(90, 19, 80, 24);
+      channelsLabel.setBounds(20, 139, 80, 24);
       channelsLabel.setText("Channel group:");
       channelsPanel_.add(channelsLabel);
 
@@ -685,12 +694,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
             }
          }
       });
-      channelGroupCombo_.setBounds(165, 20, 150, 22);
+      channelGroupCombo_.setBounds(100, 140, 150, 22);
       channelsPanel_.add(channelGroupCombo_);
 
       channelTablePane_ = new JScrollPane();
       channelTablePane_.setFont(new Font("Arial", Font.PLAIN, 10));
-      channelTablePane_.setBounds(10, 45, 485, 90);
+      channelTablePane_.setBounds(10, 25, 680, 104);
       channelsPanel_.add(channelTablePane_);
 
       final JButton addButton = new JButton();
@@ -709,7 +718,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
       addButton.setText("New");
       addButton.setToolTipText("Create new channel for currently selected channel group");
-      addButton.setBounds(70, 139, 68, 22);
+      addButton.setBounds(350, 139, 68, 22);
       channelsPanel_.add(addButton);
 
       final JButton removeButton = new JButton();
@@ -732,7 +741,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       });
       removeButton.setText("Remove");
       removeButton.setToolTipText("Remove currently selected channel");
-      removeButton.setBounds(160, 139, 68, 22);
+      removeButton.setBounds(430, 139, 68, 22);
       channelsPanel_.add(removeButton);
 
       final JButton upButton = new JButton();
@@ -755,7 +764,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       upButton.setText("Up");
       upButton.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip(
               "Move currently selected channel up (Channels higher on list are acquired first)"));
-      upButton.setBounds(250, 139, 68, 22);
+      upButton.setBounds(510, 139, 68, 22);
       channelsPanel_.add(upButton);
 
       final JButton downButton = new JButton();
@@ -778,22 +787,22 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       downButton.setText("Down");
       downButton.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip(
               "Move currently selected channel down (Channels lower on list are acquired later)"));
-      downButton.setBounds(340, 139, 68, 22);
+      downButton.setBounds(600, 139, 68, 22);
       channelsPanel_.add(downButton);
 
-      chanKeepShutterOpenCheckBox_ = new JCheckBox();
-      chanKeepShutterOpenCheckBox_.setText("Keep shutter open");
-      chanKeepShutterOpenCheckBox_.setFont(new Font("Arial", Font.PLAIN, 10));
-      chanKeepShutterOpenCheckBox_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(final ActionEvent e) {
-            applySettings();
-         }
-      });
-      chanKeepShutterOpenCheckBox_.setSelected(false);
-      chanKeepShutterOpenCheckBox_.setBounds(330, 20, 150, 22);
-      channelsPanel_.add(chanKeepShutterOpenCheckBox_);
+//      chanKeepShutterOpenCheckBox_ = new JCheckBox();
+//      chanKeepShutterOpenCheckBox_.setText("Keep shutter open");
+//      chanKeepShutterOpenCheckBox_.setFont(new Font("Arial", Font.PLAIN, 10));
+//      chanKeepShutterOpenCheckBox_.addActionListener(new ActionListener() {
+//
+//         @Override
+//         public void actionPerformed(final ActionEvent e) {
+//            applySettings();
+//         }
+//      });
+//      chanKeepShutterOpenCheckBox_.setSelected(false);
+//      chanKeepShutterOpenCheckBox_.setBounds(260, 139, 150, 22);
+//      channelsPanel_.add(chanKeepShutterOpenCheckBox_);
 
 
       // Save panel
@@ -848,7 +857,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       browseRootButton_.setMargin(new Insets(2, 5, 2, 5));
       browseRootButton_.setFont(new Font("Dialog", Font.PLAIN, 10));
       browseRootButton_.setText("...");
-      browseRootButton_.setBounds(445, 30, 47, 24);
+      browseRootButton_.setBounds(452, 30, 47, 24);
       savePanel_.add(browseRootButton_);
       browseRootButton_.setToolTipText("Browse");
 
@@ -897,24 +906,41 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
        segmentationPanel_.addActionListener(e -> {
            if (!segmentationPanel_.isSelected()) {
-              // displayModeCombo_.setSelectedIndex(0);
+             acqEng_.enableKillCell(false) ;
+             acqEng_.enableSegmentation(false);
            }
            applySettings();
        });
 
-       rootLabel_2 = new JLabel();
-       rootLabel_2.setFont(new Font("Arial", Font.PLAIN, 10));
-       rootLabel_2.setText("XML configuration file :");
-       rootLabel_2.setBounds(10, 30, 150, 22);
-       segmentationPanel_.add(rootLabel_2);
+      choose_segmenter = new JLabel();
+      choose_segmenter.setFont(new Font("Arial", Font.PLAIN, 10));
+      choose_segmenter.setText("Choose Segmenter Algorithm :");
+      choose_segmenter.setBounds(10, 30, 150, 22);
+      segmentationPanel_.add(choose_segmenter);
 
-       rootField_2 = new JTextField();
-       rootField_2.setFont(new Font("Arial", Font.PLAIN, 10));
-       rootField_2.setBounds(10, 60, 120, 22);
-       segmentationPanel_.add(rootField_2);
 
-       browseRootButton_2 = new JButton();
-       browseRootButton_2.addActionListener(new ActionListener() {
+      String ListSegmenterAlgogGroup[] = Utils.getSegmenterAlgoListe();
+      // / Liste of available Segmeter Algo
+      listOfsegmenter_jcb = new JComboBox<>(ListSegmenterAlgogGroup);
+      listOfsegmenter_jcb.setFont(new Font("", Font.PLAIN, 10));
+      listOfsegmenter_jcb.setBounds(10, 60, 160, 22);
+      segmentationPanel_.add(listOfsegmenter_jcb);
+
+
+
+      xml_Seg_Label_2 = new JLabel();
+      xml_Seg_Label_2.setFont(new Font("Arial", Font.PLAIN, 10));
+      xml_Seg_Label_2.setText("XML configuration file :");
+      xml_Seg_Label_2.setBounds(10, 90, 150, 22);
+      segmentationPanel_.add(xml_Seg_Label_2);
+
+      rootField_2 = new JTextField();
+      rootField_2.setFont(new Font("Arial", Font.PLAIN, 10));
+      rootField_2.setBounds(10, 120, 120, 22);
+      segmentationPanel_.add(rootField_2);
+
+      browseRootButton_2 = new JButton();
+      browseRootButton_2.addActionListener(new ActionListener() {
 
            @Override
            public void actionPerformed(final ActionEvent e) {
@@ -924,7 +950,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
        browseRootButton_2.setMargin(new Insets(2, 5, 2, 5));
        browseRootButton_2.setFont(new Font("Dialog", Font.PLAIN, 10));
        browseRootButton_2.setText("...");
-       browseRootButton_2.setBounds(135, 60, 47, 24);
+       browseRootButton_2.setBounds(135, 120, 44, 24);
        segmentationPanel_.add(browseRootButton_2);
        browseRootButton_2.setToolTipText("Browse");
       //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1049,15 +1075,16 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       saveAsButton.setMargin(new Insets(-5, -5, -5, -5));
       buttonPanel.add(saveAsButton);
 
-      final JButton advancedButton = new JButton();
-      advancedButton.setFont(new Font("Arial", Font.PLAIN, 10));
-      advancedButton.addActionListener(e -> {
-         showAdvancedDialog();
-         updateGUIContents();
-      });
-      advancedButton.setText("Advanced");
-      advancedButton.setBounds(50, 175, 80, 30);
-      buttonPanel.add(advancedButton);
+//      final JButton advancedButton = new JButton();
+//      advancedButton.setFont(new Font("Arial", Font.PLAIN, 10));
+//      advancedButton.addActionListener(e -> {
+//         showAdvancedDialog();
+//         updateGUIContents();
+//      });
+//
+//      advancedButton.setText("Advanced");
+//      advancedButton.setBounds(50, 175, 80, 30);
+//      buttonPanel.add(advancedButton);
 
 
 
@@ -1166,7 +1193,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    }
 
 
-   public final void updateSavingTypeButtons() {
+   public static   final void updateSavingTypeButtons() {
       if (!saveMultiTiff_){
          singleButton_.setSelected(true);
       } else if (saveMultiTiff_) {
@@ -1232,9 +1259,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       positionsPanel_.setSelected(acqEng_.isMultiPositionEnabled());
       positionsPanel_.repaint();
 
-     // slicesPanel_.setSelected(acqEng_.isZSliceSettingEnabled());
-     // slicesPanel_.repaint();
-
       acqEng_.enableChannelsSetting(acqPrefs_.getBoolean(ACQ_ENABLE_MULTI_CHANNEL, false));
       channelsPanel_.setSelected(acqEng_.isChannelsSettingEnabled());
       channelsPanel_.repaint();
@@ -1251,13 +1275,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       String os_name = System.getProperty("os.name", "");
       rootField_.setText(acqPrefs_.get(ACQ_ROOT_NAME, System.getProperty("user.home") + "/AcquisitionData"));
 
-      acqEng_.setAcqOrderMode(acqPrefs_.getInt(ACQ_ORDER_MODE, acqEng_.getAcqOrderMode()));
 
       acqEng_.setDisplayMode(acqPrefs_.getInt(ACQ_DISPLAY_MODE, acqEng_.getDisplayMode()));
       acqEng_.enableAutoFocus(acqPrefs_.getBoolean(ACQ_AF_ENABLE, acqEng_.isAutoFocusEnabled()));
       acqEng_.setChannelGroup(acqPrefs_.get(ACQ_CHANNEL_GROUP, acqEng_.getFirstConfigGroup()));
-      afPanel_.setSelected(acqEng_.isAutoFocusEnabled());
-      acqEng_.keepShutterOpenForChannels(acqPrefs_.getBoolean(ACQ_CHANNELS_KEEP_SHUTTER_OPEN, false));
+     // afPanel_.setSelected(acqEng_.isAutoFocusEnabled());
+     // acqEng_.keepShutterOpenForChannels(acqPrefs_.getBoolean(ACQ_CHANNELS_KEEP_SHUTTER_OPEN, false));
       //acqEng_.keepShutterOpenForStack(acqPrefs_.getBoolean(ACQ_STACK_KEEP_SHUTTER_OPEN, false));
 
       ArrayList<Double> customIntervals = new ArrayList<Double>();
@@ -1337,7 +1360,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       acqPrefs_.putInt(ACQ_DISPLAY_MODE, acqEng_.getDisplayMode());
       acqPrefs_.putBoolean(ACQ_AF_ENABLE, acqEng_.isAutoFocusEnabled());
       //acqPrefs_.putInt(ACQ_AF_SKIP_INTERVAL, acqEng_.getAfSkipInterval());
-      acqPrefs_.putBoolean(ACQ_CHANNELS_KEEP_SHUTTER_OPEN, acqEng_.isShutterOpenForChannels());
+     // acqPrefs_.putBoolean(ACQ_CHANNELS_KEEP_SHUTTER_OPEN, acqEng_.isShutterOpenForChannels());
       //acqPrefs_.putBoolean(ACQ_STACK_KEEP_SHUTTER_OPEN, acqEng_.isShutterOpenForStack());
 
       acqPrefs_.put(ACQ_CHANNEL_GROUP, acqEng_.getChannelGroup());
@@ -1395,12 +1418,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       return null;
    }
 
-   protected void enableZSliceControls(boolean state) {
-      zBottom_.setEnabled(state);
-      zTop_.setEnabled(state);
-      zStep_.setEnabled(state);
-      zValCombo_.setEnabled(state);
-   }
+//   protected void enableZSliceControls(boolean state) {
+//      zBottom_.setEnabled(state);
+//      zTop_.setEnabled(state);
+//      zStep_.setEnabled(state);
+//      zValCombo_.setEnabled(state);
+//   }
 
    protected void setRootDirectory() {
       File result = FileDialogs.openDir(RappGui.getInstance(),
@@ -1503,18 +1526,19 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          numFrames = Math.max(1, h);
       }
 
-      double zTop, zBottom, zStep;
-      try {
-         zTop = NumberUtils.displayStringToDouble(zTop_.getText());
-         zBottom = NumberUtils.displayStringToDouble(zBottom_.getText());
-         zStep = NumberUtils.displayStringToDouble(zStep_.getText());
-      } catch (ParseException ex) {
-         ReportingUtils.showError("Invalid Z-Stacks input value");
-         return -1;
-      }
+//      double zTop, zBottom, zStep;
+//      try {
+//         zTop = NumberUtils.displayStringToDouble(zTop_.getText());
+//         zBottom = NumberUtils.displayStringToDouble(zBottom_.getText());
+//         zStep = NumberUtils.displayStringToDouble(zStep_.getText());
+//      } catch (ParseException ex) {
+//         ReportingUtils.showError("Invalid Z-Stacks input value");
+//         return -1;
+//      }
+//
+//      int numSlices = Math.max(1, (int) (1 + Math.floor(
+//              (Math.abs(zTop - zBottom) /  zStep))));
 
-      int numSlices = Math.max(1, (int) (1 + Math.floor(
-              (Math.abs(zTop - zBottom) /  zStep))));
       int numPositions = 1;
       try {
          numPositions = Math.max(1, studio_.getPositionList().getNumberOfPositions());
@@ -1549,7 +1573,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       } else {
          numImages = 1;
          if (slices) {
-            numImages *= numSlices;
+          //  numImages *= numSlices;
          }
          if (frames) {
             numImages *= numFrames;
@@ -1694,15 +1718,15 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       return -1;
    }
 
-   private void checkForCustomTimeIntervals() {
-      if (acqEng_.customTimeIntervalsEnabled()) {
-         framesSubPanelLayout_.show(framesSubPanel_, OVERRIDE_FRAMES_PANEL_NAME);
-      } else {
-         framesSubPanelLayout_.show(framesSubPanel_, DEFAULT_FRAMES_PANEL_NAME);
-      }
-   }
+//   private static void checkForCustomTimeIntervals() {
+//      if (acqEng_.customTimeIntervalsEnabled()) {
+//         framesSubPanelLayout_.show(framesSubPanel_, OVERRIDE_FRAMES_PANEL_NAME);
+//      } else {
+//         framesSubPanelLayout_.show(framesSubPanel_, DEFAULT_FRAMES_PANEL_NAME);
+//      }
+//   }
 
-   public final void updateGUIContents() {
+   public static final void updateGUIContents() {
       if (disableGUItoSettings_) {
          return;
       }
@@ -1728,11 +1752,11 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 //            co.setEnabled(framesEnabled);
 
 
-      checkForCustomTimeIntervals();
+     // checkForCustomTimeIntervals();
      // slicesPanel_.setSelected(acqEng_.isZSliceSettingEnabled());
       positionsPanel_.setSelected(acqEng_.isMultiPositionEnabled());
       segmentationPanel_.setSelected(acqEng_.isDoSegmentationEnabled());
-      afPanel_.setSelected(acqEng_.isAutoFocusEnabled());
+      //afPanel_.setSelected(acqEng_.isAutoFocusEnabled());
 //      acqOrderBox_.setEnabled(positionsPanel_.isSelected() || framesPanel_.isSelected()
 //        || slicesPanel_.isSelected()      || channelsPanel_.isSelected());
       acqOrderBox_.setEnabled(positionsPanel_.isSelected() || segmentationPanel_.isSelected() ||  channelsPanel_.isSelected());
@@ -1801,9 +1825,9 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       acqOrderBox_.setSelectedItem(acqOrderModes_[acqEng_.getAcqOrderMode()]);
 
 
-      zValCombo_.setSelectedIndex(zVals_);
+     // zValCombo_.setSelectedIndex(zVals_);
      // stackKeepShutterOpenCheckBox_.setSelected(acqEng_.isShutterOpenForStack());
-      chanKeepShutterOpenCheckBox_.setSelected(acqEng_.isShutterOpenForChannels());
+    //  chanKeepShutterOpenCheckBox_.setSelected(acqEng_.isShutterOpenForChannels());
 
       channelTable_.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
@@ -1850,38 +1874,30 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          ae.stopCellEditing();
       }
 
-      try {
-         double zStep = NumberUtils.displayStringToDouble(zStep_.getText());
+      // double zStep = NumberUtils.displayStringToDouble(zStep_.getText());
 //         if (Math.abs(zStep) < acqEng_.getMinZStepUm()) {
 //            zStep = acqEng_.getMinZStepUm();
 //         }
 //         acqEng_.setSlices(NumberUtils.displayStringToDouble(zBottom_.getText()), NumberUtils.displayStringToDouble(zTop_.getText()), zStep, zVals_ == 0 ? false : true);
 //        // acqEng_.enableZSliceSetting(slicesPanel_.isSelected());
-         acqEng_.enableMultiPosition(positionsPanel_.isSelected());
+      acqEng_.enableMultiPosition(positionsPanel_.isSelected());
 
 
-        // acqEng_.setDisplayMode(((DisplayMode) displayModeCombo_.getSelectedItem()).getID());
-         acqEng_.setAcqOrderMode(((AcqOrderMode) acqOrderBox_.getSelectedItem()).getID());
-         acqEng_.enableChannelsSetting(channelsPanel_.isSelected());
-         acqEng_.setChannels(((ChannelTableModel) channelTable_.getModel()).getChannels());
-         acqEng_.enableSegmentation(segmentationPanel_.isSelected());
-         ArrayList<ChannelSpec> channels = acqEng_.getChannels();
-         if (channels.iterator().hasNext()) {
-            acqEng_.enableKillCell(channels.iterator().next().KillCell);
-         }
+      acqEng_.enableChannelsSetting(channelsPanel_.isSelected());
+      acqEng_.setChannels(((ChannelTableModel) channelTable_.getModel()).getChannels());
+      acqEng_.enableSegmentation(segmentationPanel_.isSelected());
+      ArrayList<ChannelSpec> channels = acqEng_.getChannels();
+      if (channels.iterator().hasNext()) {
+         acqEng_.enableKillCell(channels.iterator().next().KillCell);
+      }
 
-         //acqEng_.enableFramesSetting(framesPanel_.isSelected());
+      //acqEng_.enableFramesSetting(framesPanel_.isSelected());
 //         acqEng_.enableFramesSetting(false);
 //         acqEng_.setFrames((Integer) numFrames_.getValue(),
 //         convertTimeToMs(NumberUtils.displayStringToDouble(interval_.getText()), timeUnitCombo_.getSelectedIndex()));
       //   acqEng_.setAfSkipInterval(NumberUtils.displayStringToInt(afSkipInterval_.getValue().toString()));
-         acqEng_.keepShutterOpenForChannels(chanKeepShutterOpenCheckBox_.isSelected());
-       //  acqEng_.keepShutterOpenForStack(stackKeepShutterOpenCheckBox_.isSelected());
-
-      } catch (ParseException p) {
-         ReportingUtils.showError(p);
-         // TODO: throw error
-      }
+      //  acqEng_.keepShutterOpenForChannels(chanKeepShutterOpenCheckBox_.isSelected());
+      //  acqEng_.keepShutterOpenForStack(stackKeepShutterOpenCheckBox_.isSelected());
 
       acqEng_.setSaveFiles(savePanel_.isSelected());
       // avoid dangerous characters in the name that will be used as a directory name
@@ -1893,7 +1909,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
       acqEng_.setComment(commentTextArea_.getText());
 
-      acqEng_.enableAutoFocus(afPanel_.isSelected());
+     // acqEng_.enableAutoFocus(afPanel_.isSelected());
 
       disableGUItoSettings_ = false;
       updateGUIContents();
@@ -1931,45 +1947,45 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       return intervalMs;
    }
 
-   private void zValCalcChanged() {
-      if (zValCombo_.getSelectedIndex() == 0) {
-         setTopButton_.setEnabled(false);
-         setBottomButton_.setEnabled(false);
-      } else {
-         setTopButton_.setEnabled(true);
-         setBottomButton_.setEnabled(true);
-      }
-
-      if (zVals_ == zValCombo_.getSelectedIndex()) {
-         return;
-      }
-
-      zVals_ = zValCombo_.getSelectedIndex();
-      double zBottomUm, zTopUm;
-      try {
-         zBottomUm = NumberUtils.displayStringToDouble(zBottom_.getText());
-         zTopUm = NumberUtils.displayStringToDouble(zTop_.getText());
-      } catch (ParseException e) {
-         ReportingUtils.logError(e);
-         return;
-      }
-
-    //  double curZ = acqEng_.getCurrentZPos();
-
-      double newTop, newBottom;
-//      if (zVals_ == 0) {
-//         // convert from absolute to relative
-//         newTop = zTopUm - curZ;
-//         newBottom = zBottomUm - curZ;
+//   private void zValCalcChanged() {
+//      if (zValCombo_.getSelectedIndex() == 0) {
+//         setTopButton_.setEnabled(false);
+//         setBottomButton_.setEnabled(false);
 //      } else {
-//         // convert from relative to absolute
-//         newTop = zTopUm + curZ;
-//         newBottom = zBottomUm + curZ;
+//         setTopButton_.setEnabled(true);
+//         setBottomButton_.setEnabled(true);
 //      }
-//      zBottom_.setText(NumberUtils.doubleToDisplayString(newBottom));
-//      zTop_.setText(NumberUtils.doubleToDisplayString(newTop));
-      applySettings();
-   }
+//
+//      if (zVals_ == zValCombo_.getSelectedIndex()) {
+//         return;
+//      }
+//
+//      zVals_ = zValCombo_.getSelectedIndex();
+//      double zBottomUm, zTopUm;
+//      try {
+//         zBottomUm = NumberUtils.displayStringToDouble(zBottom_.getText());
+//         zTopUm = NumberUtils.displayStringToDouble(zTop_.getText());
+//      } catch (ParseException e) {
+//         ReportingUtils.logError(e);
+//         return;
+//      }
+//
+//    //  double curZ = acqEng_.getCurrentZPos();
+//
+//      double newTop, newBottom;
+////      if (zVals_ == 0) {
+////         // convert from absolute to relative
+////         newTop = zTopUm - curZ;
+////         newBottom = zBottomUm - curZ;
+////      } else {
+////         // convert from relative to absolute
+////         newTop = zTopUm + curZ;
+////         newBottom = zBottomUm + curZ;
+////      }
+////      zBottom_.setText(NumberUtils.doubleToDisplayString(newBottom));
+////      zTop_.setText(NumberUtils.doubleToDisplayString(newTop));
+//      applySettings();
+//   }
 
    /**
     * This method is called from the Options dialog, to set the background style

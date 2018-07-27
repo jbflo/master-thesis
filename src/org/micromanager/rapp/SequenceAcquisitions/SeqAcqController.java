@@ -14,6 +14,7 @@ import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.rapp.RappController;
 import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.RappPlugin;
+import org.micromanager.rapp.utils.AcqOrderMode;
 import org.micromanager.utils.*;
 
 import javax.swing.*;
@@ -134,6 +135,7 @@ public class SeqAcqController implements AcquisitionEngine {
                         int progress = 0;
                         SeqAcqGui.taskOutput.setText("");
                         RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                        String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
                         for (ChannelSpec presetConfig : channels){
                             if (stopAcqRequested_.get()) {
                                 //ReportingUtils.showMessage("Acquisition Stop.");
@@ -158,9 +160,9 @@ public class SeqAcqController implements AcquisitionEngine {
                             }
 
                             // if the Images was not save , we do the segmentation for the image in Memory
-                            if(!saveFiles_  && acquisitionSettings.useSegmentation){
+                            if(!saveFiles_  &&  presetConfig.useSegmentation){
                                 iPlus.show();
-                                ArrayList[] ll =  rappController_ref.brightFieldSegmenter(iPlus, presetConfig.config.toString(), "", presetConfig.KillCell, saveFiles_);
+                                ArrayList[] ll =  rappController_ref.imageSegmentation(iPlus, presetConfig.config.toString(), "",algo, presetConfig.KillCell, saveFiles_);
                                 if (presetConfig.KillCell) {
                                     app_.enableLiveMode(true); //  Open the live mode before shooting
                                     rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
@@ -171,13 +173,14 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // The acquires Images are saving as separate Image.
 
                                 IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
-                                if(acquisitionSettings.useSegmentation){
+                                if(presetConfig.useSegmentation){
                                     String path_seq = rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase();
                                     ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
 
-                                    ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString(), path_seq, presetConfig.KillCell, saveFiles_);
+                                    ArrayList[] ll =  rappController_ref.imageSegmentation(image_, presetConfig.config.toString(), path_seq, algo, presetConfig.KillCell, saveFiles_);
                                     System.out.println(presetConfig.KillCell);
                                     if (presetConfig.KillCell) {
+                                        System.out.println("Ou FOut" + presetConfig.KillCell );
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
                                         rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
                                     }
@@ -188,10 +191,10 @@ public class SeqAcqController implements AcquisitionEngine {
                                 IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
                                 IJ.open(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
 
-                                if(acquisitionSettings.useSegmentation){
+                                if(presetConfig.useSegmentation){
                                     String path_seq = rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase();
                                     ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
-                                    ArrayList[] ll =  rappController_ref.brightFieldSegmenter(image_, presetConfig.config.toString(), path_seq, presetConfig.KillCell, saveFiles_);
+                                    ArrayList[] ll =  rappController_ref.imageSegmentation(image_, presetConfig.config.toString(), path_seq, algo, presetConfig.KillCell, saveFiles_);
                                     if (presetConfig.KillCell) {
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
                                         rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
@@ -262,8 +265,6 @@ public class SeqAcqController implements AcquisitionEngine {
                     ++numKillChannels;
                 }
             }
-        } else {
-            numKillChannels = 1;
         }
         return numKillChannels;
     }
@@ -686,10 +687,9 @@ public class SeqAcqController implements AcquisitionEngine {
             channel.useChannel = use;
             channel.exposure = exp;
             channel.laser_exposure = laserExp;
-           // channel.doSegmentation = doSegmentation;
+            channel.useSegmentation = doSegmentation;
             channel.KillCell= killCell;
             channel.contrast = con;
-            channel.color = c;
             this.channels_.add(channel);
             return true;
         } else {
@@ -725,10 +725,7 @@ public class SeqAcqController implements AcquisitionEngine {
     public int getAcqOrderMode(){return this.acqOrderMode_;
     }
 
-    @Override
-    public void setAcqOrderMode(int mode) {
-        this.acqOrderMode_ = mode;
-    }
+
     @Override
     public void enableAutoFocus(boolean enabled) {
         this.useAutoFocus_ = enabled;
@@ -763,27 +760,16 @@ public class SeqAcqController implements AcquisitionEngine {
         double remainSec = totalDurationSec - (double)(hrs * 3600);
         int mins = (int)(remainSec / 60.0D);
         remainSec -= (double)(mins * 60);
-        String txt = "\nNumber of positions: " + numPositions +  "\nNumber of channels: " + numChannels + "\nNumber of Chanel to Kill: " + numKillChannels + "\nTotal images: " + totalImages + "\nTotal memory: " + (totalMB <= 1024L ? totalMB + " MB" : NumberUtils.doubleToDisplayString((double)totalMB / 1024.0D) + " GB") + "\nDuration: " + hrs + "h " + mins + "m " + NumberUtils.doubleToDisplayString(remainSec) + "s";
+        String txt = "\nNumber of positions: " + numPositions +  "\nNumber of channels: " + numChannels + "\nNumber of Chanel to Kill: " + numKillChannels + "\nTotal images: " + totalImages  +" "+ " Total memory: " + (totalMB <= 1024L ? totalMB + " MB" : NumberUtils.doubleToDisplayString((double)totalMB / 1024.0D) + " GB") + "\nDuration: " + hrs + "h " + mins + "m " + NumberUtils.doubleToDisplayString(remainSec) + "s";
         if (!this.useMultiPosition_ && !this.useChannels_ && !this.useSegmentation_) {
             return txt;
         } else {
             StringBuffer order = new StringBuffer("\nOrder: ");
 
-             if (this.useMultiPosition_) {
-                order.append("Position");
-            }
+            order.append(SeqAcqGui.acqOrderBox_.getSelectedItem().toString());
 
-            else if (this.useChannels_) {
-                order.append("Channel");
-            }
-             else if (this.useSegmentation_) {
-                 order.append("Segmentation_");
-             }
-            else if (this.killCell_) {
-                order.append("Kill");
-            }
 
-            return txt + order.toString();
+            return  order.toString() + "\n"+ txt ;
         }
     }
 

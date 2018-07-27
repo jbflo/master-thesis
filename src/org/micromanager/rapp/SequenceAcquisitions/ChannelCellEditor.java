@@ -65,13 +65,14 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
          checkBox_.setSelected((Boolean) value);
          return checkBox_;
       } else if (colIndex != 2 && colIndex != 3) {
-         if (colIndex == 4 ) {
+         if (colIndex == 4 || colIndex ==5 ) {
          checkBox_.setSelected((Boolean) value);
          return checkBox_;
 
           } else if (colIndex != 1) {
-             return this.colorLabel_;
-          }else {
+             return this.checkBox_;
+         }
+         else {
              // remove old listeners
              this.combo_.removeAllItems();
          // channel
@@ -88,9 +89,9 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
 
          // end editing on selection change
          combo_.addActionListener(e -> {
-            channel_.color = new Color(colorPrefs_.getInt(
-                    "Color_" + acqEng_.getChannelGroup() + "_" +
-                            combo_.getSelectedItem(), Color.white.getRGB()));
+//            channel_.color = new Color(colorPrefs_.getInt(
+//                    "Color_" + acqEng_.getChannelGroup() + "_" +
+//                            combo_.getSelectedItem(), Color.white.getRGB()));
             channel_.exposure = exposurePrefs_.getDouble(
                     "Exposure_" + acqEng_.getChannelGroup() + "_" +
                             combo_.getSelectedItem(), 10.0);
@@ -128,10 +129,9 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
             return combo_.getSelectedItem();
          } else if (editCol_ == 2 || editCol_ == 3) {
             return NumberUtils.displayStringToDouble(text_.getText());
-         } else if (editCol_ == 4 ) {
+         } else if (editCol_ == 4 || editCol_ == 5) {
            return checkBox_.isSelected();
-         } else if (editCol_ == 5) {
-             return colorLabel_.getBackground();
+
          } else {
              return "Internal error: unknown column";
          }

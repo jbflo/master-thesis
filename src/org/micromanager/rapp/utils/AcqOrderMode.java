@@ -48,8 +48,6 @@ public class AcqOrderMode {
             }
         } else if (this.segmentationEnable_) {
             name.append("Segmentation");
-        } else if (this.killEnabled_) {
-            name.append("Kill");
         }
 
         return name.toString();
