@@ -149,7 +149,7 @@ public class SeqAcqController implements AcquisitionEngine {
                         int wellCountX = 1;
                         int wellCountY = 1;
 
-                        if (isWholePlateEnabled()) {
+                        if (false) { //isWholePlateEnabled()) {//Fred disabled
                             stepSize = getFieldOfView();
                             stepCountX = (int)(getWellWidth() / stepSize + 1);
                             stepCountY = stepCountX;
@@ -161,9 +161,25 @@ public class SeqAcqController implements AcquisitionEngine {
                         String stage = core_.getXYStageDevice();
 
                         for (int idxWell = 0; idxWell < wellCountX; idxWell++) {
+                            if (stopAcqRequested_.get()) {
+                                //ReportingUtils.showMessage("Acquisition Stop.");
+                                break;
+                            }
                             for (int idyWell = 0; idyWell < wellCountY; idyWell++) {
+                                if (stopAcqRequested_.get()) {
+                                    //ReportingUtils.showMessage("Acquisition Stop.");
+                                    break;
+                                }
                                 for (int idx = 0; idx < stepCountX; idx++) {
+                                    if (stopAcqRequested_.get()) {
+                                        //ReportingUtils.showMessage("Acquisition Stop.");
+                                        break;
+                                    }
                                     for (int idy = 0; idy < stepCountY; idy++) {
+                                        if (stopAcqRequested_.get()) {
+                                            //ReportingUtils.showMessage("Acquisition Stop.");
+                                            break;
+                                        }
                                         for (ChannelSpec presetConfig : channels){
                                             if (stopAcqRequested_.get()) {
                                                 //ReportingUtils.showMessage("Acquisition Stop.");
@@ -234,20 +250,24 @@ public class SeqAcqController implements AcquisitionEngine {
                                             SeqAcqGui.taskOutput.append(String.format("Completed %d%% of Sequence Task.\n", progress));
                                         }
                                         // Move to next row:
-                                        core_.setRelativeXYPosition(stage, 0, stepSize);
+                                        //core_.setRelativeXYPosition(stage, 0, stepSize); //Fred enabled
+                                        //Thread.sleep(100);//Fred enabled
                                     }
                                     // Move to next column, start from the top row:
-                                    core_.setRelativeXYPosition(stage, stepSize, - stepSize * stepCountY);
+                                    //core_.setRelativeXYPosition(stage, stepSize, - stepSize * stepCountY);//Fred enabled
+                                    //Thread.sleep(100);//Fred enabled
                                 }
-                                core_.setRelativeXYPosition(stage, -stepSize * stepCountX, wellStepSize);
+                                //core_.setRelativeXYPosition(stage, -stepSize * stepCountX, wellStepSize);//Fred enabled
+                                //Thread.sleep(1000);//Fred enabled
                             }
-                            core_.setRelativeXYPosition(
-                                    stage, wellStepSize,
-                                    -stepSize * stepCountY * wellCountY - wellStepSize * (wellCountY - 1)
-                            );
+                            //core_.setRelativeXYPosition(//Fred enabled
+                                    //stage, wellStepSize,//Fred enabled
+                                    //-stepSize * stepCountY * wellCountY - wellStepSize * (wellCountY - 1)//Fred enabled
+                            //);//Fred enabled
+                            Thread.sleep(1000);
                         }
 
-                        if (isWholePlateEnabled()) {
+                        if (false) { //isWholePlateEnabled()) {//Fred enabled
                             core_.setRelativeXYPosition(
                                     stage,
                                     -stepSize * stepCountX * wellCountX - wellStepSize * (wellCountX - 1),
