@@ -1324,14 +1324,21 @@ public class RappController extends  MMFrame implements OnStateListener {
 
          //write image
          try{
-             ImagePlus iPlus = IJ.getImage();
-             iPlus.show();
+
+             //core_.setOriginX();
+
+           //  core_.setXYPosition(5, 5);
+
+//             ImagePlus iPlus = IJ.getImage();
+//             iPlus.show();
+//
+//
+//             String path = fileDialog_.ChooseDirectoryDialog();
+//             if(path != null) {
+//                 IJ.saveAs(iPlus, ".tif", path +core_.getCurrentConfig(core_.getChannelGroup()));
+//             }
 
 
-             String path = fileDialog_.ChooseDirectoryDialog();
-             if(path != null) {
-                 IJ.saveAs(iPlus, ".tif", path +core_.getCurrentConfig(core_.getChannelGroup()));
-             }
             // app_.snapSingleImage();
              // core_.snapImage();
 //             TaggedImage tmp = core_.getTaggedImage();
