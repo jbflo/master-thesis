@@ -6,10 +6,7 @@ import ij.plugin.Duplicator;
 import mmcorej.*;
 import org.json.JSONObject;
 import org.micromanager.MMOptions;
-import org.micromanager.api.DataProcessor;
-import org.micromanager.api.ImageCache;
-import org.micromanager.api.PositionList;
-import org.micromanager.api.ScriptInterface;
+import org.micromanager.api.*;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.rapp.RappController;
 import org.micromanager.rapp.RappGui;
@@ -20,6 +17,8 @@ import org.micromanager.utils.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -123,120 +122,160 @@ public class SeqAcqController implements AcquisitionEngine {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         //for (ChannelSpec presetConfig : channels){
         //     channelsConf.add(presetConfig.config.toString());
         //    }
 
         saveFiles_ = this.imagesSaving();
         if (!isRunning_.get()) {
-            stopAcqRequested_.set(false);
-            SeqAcqGui.progressBar.setIndeterminate(true);
-            Thread th = new Thread("Sequence Acquisition thread") {
-                @Override
-                public void run() {
-                    try {
-                        SeqAcqGui.acquireButton_.setEnabled(false);
-                        isRunning_.set(true);
-                        ImagePlus iPlus ;
-                        int progress = 0;
-                        SeqAcqGui.taskOutput.setText("");
-                        RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                        String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
-                        for (ChannelSpec presetConfig : channels){
-                            if (stopAcqRequested_.get()) {
-                                //ReportingUtils.showMessage("Acquisition Stop.");
-                                break;
-                            }
 
-                            //app_.enableLiveMode(false); // Make sure the Live Mode is off
+                stopAcqRequested_.set(false);
+                SeqAcqGui.progressBar.setIndeterminate(true);
+                Thread th = new Thread("Sequence Acquisition thread") {
+                    @Override
+                    public void run() {
+                        try {
+                            SeqAcqGui.acquireButton_.setEnabled(false);
+                            isRunning_.set(true);
+                            ImagePlus iPlus;
+                            int progress = 0;
+                            SeqAcqGui.taskOutput.setText("");
+                            RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                            String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
+                            for (ChannelSpec presetConfig : channels) {
 
-                            // Then Change The Chanel Config (Preset )
-                            core_.setConfig(chanelGroup_, presetConfig.config);
-                            // Set the Chanel Exposure Time
-                            app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
-                            // Take a Photo for each fix chanel
-                            core_.waitForConfig(chanelGroup_, presetConfig.config.toString());
-                            Thread.sleep(1000 + (long)presetConfig.exposure);
-
-                            iPlus = IJ.getImage();
-                            //   Thread.sleep(1000);
-
-                            if (channels.subList(0, channels.size()).get(0).config.equals(presetConfig.config)){
-                                System.out.println( "You Are :" + presetConfig.config);
-                            }
-
-                            // if the Images was not save , we do the segmentation for the image in Memory
-                            if(!saveFiles_  &&  presetConfig.useSegmentation){
-                                iPlus.show();
-                                ArrayList[] ll =  rappController_ref.imageSegmentation(iPlus, presetConfig.config.toString(), "",algo, presetConfig.KillCell, saveFiles_);
-                                if (presetConfig.KillCell) {
-                                    app_.enableLiveMode(true); //  Open the live mode before shooting
-                                    rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
+                                if (stopAcqRequested_.get()) {
+                                    //ReportingUtils.showMessage("Acquisition Stop.");
+                                    break;
                                 }
-                            }
+                                if (presetConfig.useSegmentation && algo == " " ){
+                                    ReportingUtils.showMessage("Acquisition Stop. Please Choose a Segmenter Algo before running Acquisition or deselected" +
+                                            " Segmenter CheckBox form the Table ");
+                                    stopAcqRequested_.set(true);
+                                    isRunning_.set(false);
+                                    break;
 
-                            if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
-                                // The acquires Images are saving as separate Image.
-
-                                IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
-                                if(presetConfig.useSegmentation){
-                                    String path_seq = rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase();
-                                    ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
-
-                                    ArrayList[] ll =  rappController_ref.imageSegmentation(image_, presetConfig.config.toString(), path_seq, algo, presetConfig.KillCell, saveFiles_);
-                                    System.out.println(presetConfig.KillCell);
-                                    if (presetConfig.KillCell) {
-                                        System.out.println("Ou FOut" + presetConfig.KillCell );
-                                        app_.enableLiveMode(true); //  Open the live mode before shooting
-                                        rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
-                                    }
                                 }
 
-                            } else if(saveFiles_ && SeqAcqGui.saveMultiTiff_){
-                                // The acquires Images are saving as a stack Image.
-                                IJ.save(iPlus, rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
-                                IJ.open(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
+                                //app_.enableLiveMode(false); // Make sure the Live Mode is off
 
-                                if(presetConfig.useSegmentation){
-                                    String path_seq = rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase();
-                                    ImagePlus image_ =   IJ.openImage(rootName_ +  "\\"+ dirName_+ "_"+ presetConfig.config.toLowerCase() + ".tif");
-                                    ArrayList[] ll =  rappController_ref.imageSegmentation(image_, presetConfig.config.toString(), path_seq, algo, presetConfig.KillCell, saveFiles_);
+                                // Then Change The Chanel Config (Preset )
+                                core_.setConfig(chanelGroup_, presetConfig.config);
+                                // Set the Chanel Exposure Time
+                                app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
+                                // Make sure the chanel was set
+                                core_.waitForConfig(chanelGroup_, presetConfig.config.toString());
+                                Thread.sleep(1000 + (long) presetConfig.exposure);
+
+                                // Take an image from the live view
+                                iPlus = IJ.getImage();
+                                //   Thread.sleep(1000);
+
+//                                if (channels.subList(0, channels.size()).get(0).config.equals(presetConfig.config)) {
+//                                    System.out.println("You Are :" + presetConfig.config);
+//                                }
+
+                                // if the Images was not save , we do the segmentation for the image in Memory
+                                if (!saveFiles_ && presetConfig.useSegmentation) {
+
+                                    ImagePlus image_dup_ori = iPlus.duplicate();
+                                    image_dup_ori.setTitle("Img_Original_" + presetConfig.config +"_"+ algo);
+                                    image_dup_ori.show();
+
+                                    ImagePlus image_dup = iPlus.duplicate();
+                                    image_dup.setTitle("_Segmented_"+ presetConfig.config );
+
+                                    ArrayList[] ll = rappController_ref.imageSegmentation(image_dup, "", algo, presetConfig.KillCell, saveFiles_);
                                     if (presetConfig.KillCell) {
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
                                         rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
                                     }
                                 }
+
+                                if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
+                                    // The acquires Images are saving as separate Image.
+                                    iPlus.setTitle(dirName_+ "_" +presetConfig.config.toLowerCase()+ "");
+                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config + ".tif");
+
+                                    if (presetConfig.useSegmentation) {
+
+                                        String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
+                                        ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + ".tif");
+                                        image_.setTitle(dirName_+ "_" +"_Segmented_" +presetConfig.config.toString());
+
+                                        ArrayList[] ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
+                                        System.out.println(presetConfig.KillCell);
+                                        if (presetConfig.KillCell) {
+                                            app_.enableLiveMode(true); //  Open the live mode before shooting
+                                            rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
+                                        }
+                                    }
+
+                                } else if (saveFiles_ && SeqAcqGui.saveMultiTiff_) {
+                                    // we save The acquires images  as separate Image first and open it.
+                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
+
+                                    // We Open the Original Image
+                                    ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
+                                    image_.setTitle(dirName_ +"_" + presetConfig.config.toString());
+                                    image_.show();
+
+                                    // We Duplicate the original image , and segmented the duplicate one
+                                    ImagePlus image_dup = iPlus.duplicate();
+                                    image_dup.setTitle(dirName_ +"_Segmented_"+ presetConfig.config );
+
+
+                                    if (presetConfig.useSegmentation) {
+                                        String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
+                                        ArrayList[] ll = rappController_ref.imageSegmentation(image_dup, path_seq, algo, presetConfig.KillCell, false);
+
+                                        if (presetConfig.KillCell) {
+                                            app_.enableLiveMode(true); //  Open the live mode before shooting
+                                            rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
+                                        }
+                                    }
+
+                                    // Here we delete the separate images
+                                    File file = new File(rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
+                                    file.delete();
+                                }
+
+                                progress += 100 / channels.size();
+                                SeqAcqGui.progressBar.setValue(progress);
+                                SeqAcqGui.taskOutput.append(String.format("Completed %d%% of Sequence Task.\n", progress));
                             }
 
-                            progress  +=  100 / channels.size();
-                            SeqAcqGui.progressBar.setValue(progress);
-                            SeqAcqGui.taskOutput.append(String.format("Completed %d%% of Sequence Task.\n", progress));
-                        }
+                            if (saveFiles_ && SeqAcqGui.saveMultiTiff_ && !stopAcqRequested_.get()) {
 
-                        if(saveFiles_ && SeqAcqGui.saveMultiTiff_){
-                            IJ.run("Images to Stack", "name=Stack title=[] use");
-                            IJ.saveAs("Tiff", rootName_ +  "\\"+ dirName_+ "_"+ "Stack" + ".tif");
+                                // We turn off the live view to avoid adding wrong images
+                                app_.enableLiveMode(false); // Make sure the Live Mode is off
+                                // After the loop we saves all the Images as a stack Image.
+                                Thread.sleep(500); // we wait to be sure the live view is turn off.
+                                IJ.run("Images to Stack", "name=Stack title=[] use");
+                                IJ.saveAs("Tiff", rootName_ + "\\" + dirName_ + "_" + "Stack" + ".tif");
+                            }
+                            JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
+                                    + (!stopAcqRequested_.get() ? "finished." : "canceled."));
+                            System.out.println(core_.getCurrentConfig("Channel"));
+                        } catch (Exception e) {
+                            ReportingUtils.showError(e);
+                            e.printStackTrace();
+                            ReportingUtils.showMessage("Acquisition Stop Due to some Error," +
+                                    " Please check your input data. " +
+                                    " We are Sorry about that"
+                            );
+                        } finally {
+                            SwingUtilities.invokeLater(() -> SeqAcqGui.progressBar.setIndeterminate(false));
+                            RappGui.getInstance().setCursor(null); // turn off the wait cursor
+                            SeqAcqGui.acquireButton_.setEnabled(true); // Activate the Button again
+                            isRunning_.set(false);
+                            stopAcqRequested_.set(false);
                         }
-                        JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
-                                + (!stopAcqRequested_.get() ? "finished." : "canceled."));
-                        System.out.println(core_.getCurrentConfig("Channel"));
-                    } catch (Exception e) {
-                        ReportingUtils.showError(e);
-                        e.printStackTrace();
-                        ReportingUtils.showMessage("Acquisition Stop Due to some Error," +
-                                " Please check your input data. "+
-                                " We are Sorry about that"
-                        );
-                    } finally {
-                        SwingUtilities.invokeLater(() -> SeqAcqGui.progressBar.setIndeterminate(false));
-                        RappGui.getInstance().setCursor(null); // turn off the wait cursor
-                        SeqAcqGui.acquireButton_.setEnabled(true); // Activate the Button again
-                        isRunning_.set(false);
-                        stopAcqRequested_.set(false);
                     }
-                }
-            };
-            th.start();
+                };
+                th.start();
+
         }
         return null;
     }

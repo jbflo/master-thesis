@@ -55,7 +55,7 @@ public class FileDialog  {
     public String SaveFileDialog() {
 
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Specify a file to save");
+        fileChooser.setDialogTitle("Specify Directory to save the file");
         File fileToSave = null;
         int userSelection = fileChooser.showSaveDialog(RappGui.getInstance());
         if (userSelection == JFileChooser.APPROVE_OPTION) {
@@ -70,15 +70,15 @@ public class FileDialog  {
     public String ChooseDirectoryDialog() {
 
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Specify a file to save");
+        fileChooser.setDialogTitle("Specify Directory to save the file");
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         File dirToSave = null;
         int userSelection = fileChooser.showSaveDialog(RappGui.getInstance());
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             dirToSave = fileChooser.getSelectedFile();
-            System.out.println("Save as file: " + dirToSave.getAbsolutePath());
-            return dirToSave.getAbsolutePath();
+            System.out.println("Save as file: " + dirToSave.getAbsolutePath()+"\\");
+            return dirToSave.getAbsolutePath()+"\\";
         }
 
         return null;

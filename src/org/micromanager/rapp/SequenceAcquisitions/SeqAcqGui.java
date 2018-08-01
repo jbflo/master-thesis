@@ -724,7 +724,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
       addButton.setText("New");
       addButton.setToolTipText("Create new channel for currently selected channel group");
-      addButton.setBounds(350, 139, 68, 22);
+      addButton.setBounds(330, 139, 68, 22);
       channelsPanel_.add(addButton);
 
       final JButton removeButton = new JButton();
@@ -747,7 +747,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       });
       removeButton.setText("Remove");
       removeButton.setToolTipText("Remove currently selected channel");
-      removeButton.setBounds(430, 139, 68, 22);
+      removeButton.setBounds(420, 139, 68, 22);
       channelsPanel_.add(removeButton);
 
       final JButton upButton = new JButton();

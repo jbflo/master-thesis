@@ -343,7 +343,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         snapAndSave_btn.setForeground(Color.white);
         left_box.add(snapAndSave_btn);
         snapAndSave_btn.addActionListener(e -> {
-          //  rappController_ref.snapAndSaveImage();
+            rappController_ref.snapAndSaveImage();
         });
         left_box.add(Box.createVerticalStrut(5));
         // Illuminate the center of the photo targeting device's range
@@ -583,21 +583,38 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             if (segmenterAlgoList_jcb.getSelectedIndex() != 0) {
                 String action = chooseWhereToTakeTheImage();
                 if (action == "disk") {
-                    ImagePlus image = IJ.openImage(fileDialog_.ChooseFileDialog("Please Choose a BrightField Tiff Image with Cells"));
+                    ImagePlus image = IJ.openImage(fileDialog_.ChooseFileDialog("Please Choose a Tiff Image with Cells"));
+                    image.setTitle("Img_Original_"+ algo);
+                    image.show();
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }
                     if (image != null) {
-                        ArrayList[] ll = rappController_ref.imageSegmentation(image, image.getTitle(), "",  algo, true, false);
+
+
+                        ImagePlus image_dup_ori = image.duplicate();
+                        image_dup_ori.setTitle("Img_Segmented_"+ algo);
+                        image_dup_ori.show();
+
+                        ArrayList[] ll = rappController_ref.imageSegmentation(image_dup_ori, "",  algo, true, false);
                         rappController_ref.shootFromSegmentationListPoint(ll, Long.parseLong(exposureT_laser_spinner.getValue().toString()));
                     } else ReportingUtils.showMessage(" No Image were chosen ");
                 }
                 else if (action =="live"){
+                    app.enableLiveMode(true);
                     ImagePlus  iPlus = IJ.getImage();
-                    iPlus.show(); iPlus.setTitle("Live view");
-                    ArrayList[] ll = rappController_ref.imageSegmentation(iPlus, iPlus.getTitle(), "",  algo, true, false);
+                    iPlus.show();
+
+                    ImagePlus image_dup_ori = iPlus.duplicate();
+                    image_dup_ori.setTitle("Img_Original_"+ algo);
+                    image_dup_ori.show();
+
+                    ImagePlus image_dup = iPlus.duplicate();
+                    image_dup.setTitle("Img_Segmented_"+ algo);
+                    image_dup.show();
+                    ArrayList[] ll = rappController_ref.imageSegmentation(image_dup,  "",  algo, true, false);
                     rappController_ref.shootFromSegmentationListPoint(ll, Long.parseLong(exposureT_laser_spinner.getValue().toString()));
                 }
 

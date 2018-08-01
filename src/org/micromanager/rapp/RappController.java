@@ -909,12 +909,11 @@ public class RappController extends  MMFrame implements OnStateListener {
         }).run();
     }
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
-    public ArrayList[] imageSegmentation(ImagePlus impproc, String title, String path, String Algo,  boolean kill , boolean save) {
+    public ArrayList[] imageSegmentation(ImagePlus impproc, String path, String Algo,  boolean kill , boolean save) {
 
 
-        impproc.setTitle("Working on : "+ title );
+
         impproc.show();
-
         impproc.updateAndRepaintWindow();
 
         if (Algo == "Find Peak"){
@@ -1307,39 +1306,47 @@ public class RappController extends  MMFrame implements OnStateListener {
     }
 
     //#################################  Method for Saving Image ###############################################
-     public void snapAndSaveImage(ImagePlus img) {
+     public void snapAndSaveImage() {
 
-         ImagePlus iPlus = img; //=  IJ.openImage(path.concat("Resources/img.tif")); ;
-         JFileChooser fileChooser = new JFileChooser();
-         fileChooser.setDialogTitle("Specify a file to save");
-         File fileToSave = null;
-         int userSelection = fileChooser.showSaveDialog(this);
-         if (userSelection == JFileChooser.APPROVE_OPTION) {
-              fileToSave = fileChooser.getSelectedFile();
-             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-         }
+        app_.enableLiveMode(true);
 
-         BlockingQueue<TaggedImage> engineOutputQueue;
+        //=  IJ.openImage(path.concat("Resources/img.tif")); ;
+//         JFileChooser fileChooser = new JFileChooser();
+//         fileChooser.setDialogTitle("Specify a file to save");
+//         File fileToSave = null;
+//         int userSelection = fileChooser.showSaveDialog(this);
+//         if (userSelection == JFileChooser.APPROVE_OPTION) {
+//              fileToSave = fileChooser.getSelectedFile();
+//             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+//         }
+
+
 
          //write image
          try{
-             app_.enableLiveMode(false);
-            // app_.snapSingleImage();
+             ImagePlus iPlus = IJ.getImage();
+             iPlus.show();
 
-            // core_.snapImage();
-             TaggedImage tmp = core_.getTaggedImage();
-             app_.openAcquisition(fileToSave.getAbsolutePath(),fileToSave.getAbsolutePath(), 2,1,1,3,true,false );
 
-             System.out.println(app_.getPositionList().getNumberOfPositions());
-             iPlus = IJ.getImage();
-             if (iPlus.getStackSize() <= 1) {
-                 IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
-             }else{
-                 for (int i=0; i< iPlus.getStackSize(); i++){
-                     IJ.save(iPlus, fileToSave.getAbsolutePath() + ".ome.tif");
-                 }
+             String path = fileDialog_.ChooseDirectoryDialog();
+             if(path != null) {
+                 IJ.saveAs(iPlus, ".tif", path +core_.getCurrentConfig(core_.getChannelGroup()));
              }
-             System.out.println(iPlus.getStackSize());
+            // app_.snapSingleImage();
+             // core_.snapImage();
+//             TaggedImage tmp = core_.getTaggedImage();
+//             app_.openAcquisition(fileToSave.getAbsolutePath(),fileToSave.getAbsolutePath(), 2,1,1,3,true,false );
+//
+//             System.out.println(app_.getPositionList().getNumberOfPositions());
+//             iPlus = IJ.getImage();
+//             if (iPlus.getStackSize() <= 1) {
+//                 IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
+//             }else{
+//                 for (int i=0; i< iPlus.getStackSize(); i++){
+//                     IJ.save(iPlus, fileToSave.getAbsolutePath() + ".ome.tif");
+//                 }
+//             }
+//             System.out.println(iPlus.getStackSize());
          } catch (Exception e) {
              e.printStackTrace();
          }
