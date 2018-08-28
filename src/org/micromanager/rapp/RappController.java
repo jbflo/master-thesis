@@ -1320,16 +1320,26 @@ public class RappController extends  MMFrame implements OnStateListener {
 //             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
 //         }
 
-
-
          //write image
          try{
 
              //core_.setOriginX();
+            double xoff = 41150;
+            double yoff = -43735;
 
-          //   core_.setXYPosition(16.630005 ,8.989995);
+         //   double defXoff = 1wellx - xStagepos;
+          //   double defyoff = 1welly - yStagepos ;
 
+            double xpos = 12.18 * 1000;
+            double ypos = 8.74 * 1000;
+
+             core_.setXYPosition(xpos+xoff ,ypos+yoff);
+
+          //   core_.setXYPosition(55061.30082047731,-37577.600559949875);
           System.out.println("pos: " +core_.getXYStagePosition());
+
+
+
 
 
 
