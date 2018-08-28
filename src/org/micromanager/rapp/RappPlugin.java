@@ -46,6 +46,7 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
     public static final String tooltipDescription = "Automated cell recognition for killing and sorting ";
     private static ScriptInterface app_;
     private static CMMCore core_;
+    private MMStudio studio_;
 
     public static CMMCore getMMcore(){
         return  core_;
@@ -66,7 +67,7 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
     @Override  // MM
     public void setApp(ScriptInterface app) {
         app_ = app;
-        MMStudio mgui_ = (MMStudio) app_;
+        studio_ = (MMStudio) app_;
         core_ = app_.getMMCore();
 
     }
@@ -91,6 +92,7 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
 
         try {
             form_ = RappGui.showAppInterface(core_, app_);
+            studio_.addMMBackgroundListener(form_);
         } catch (Exception e) {
             ReportingUtils.showMessage("Please Try Again! The Gui Couldn't load properly");
             e.printStackTrace();
@@ -119,7 +121,7 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
 
     @Override
     public String getInfo() {
-        return "Gui to Control Laser Machine";
+        return "Interface for controlling microscope and laser system";
     }
 
     @Override
@@ -129,7 +131,7 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
 
     @Override
     public String getCopyright() {
-        return "Heidelberg University / Knop Lab, 2018";
+        return "ZMBH, Heidelberg University / Knop Lab, 2018";
     }
 
 

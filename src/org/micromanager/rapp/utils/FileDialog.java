@@ -33,22 +33,20 @@ public class FileDialog  {
 
     }
 
-    public String xmlFileChooserDialog() {
+    public static String xmlFileChooserDialog(String title) {
 
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter(
                 "xml files (*.xml)", "xml");
-
-        fileChooser.setDialogTitle("Choose the needed file ");
+        fileChooser.setDialogTitle(title);
         fileChooser.setFileFilter(xmlfilter);
         File fileToSave = null;
-        int userSelection = fileChooser.showSaveDialog(RappGui.getInstance());
+        int userSelection = fileChooser.showOpenDialog(RappGui.getInstance());
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             fileToSave = fileChooser.getSelectedFile();
-            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+            //System.out.println("Save as file: " + fileToSave.getAbsolutePath());
             return fileToSave.getAbsolutePath();
         }
-
         return null;
     }
 

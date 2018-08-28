@@ -6,6 +6,7 @@ import ij.plugin.Duplicator;
 import mmcorej.*;
 import org.json.JSONObject;
 import org.micromanager.MMOptions;
+import org.micromanager.MMStudio;
 import org.micromanager.api.*;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
 import org.micromanager.rapp.RappController;
@@ -15,8 +16,11 @@ import org.micromanager.rapp.utils.AcqOrderMode;
 import org.micromanager.utils.*;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -151,7 +155,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                 }
                                 if (presetConfig.useSegmentation && algo == " " ){
                                     ReportingUtils.showMessage("Acquisition Stop. Please Choose a Segmenter Algo before running Acquisition or deselected" +
-                                            " Segmenter CheckBox form the Table ");
+                                            "Segmenter CheckBox form the Table ");
                                     stopAcqRequested_.set(true);
                                     isRunning_.set(false);
                                     break;
@@ -178,7 +182,6 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                 // if the Images was not save , we do the segmentation for the image in Memory
                                 if (!saveFiles_ && presetConfig.useSegmentation) {
-
                                     ImagePlus image_dup_ori = iPlus.duplicate();
                                     image_dup_ori.setTitle("Img_Original_" + presetConfig.config +"_"+ algo);
                                     image_dup_ori.show();
@@ -199,7 +202,6 @@ public class SeqAcqController implements AcquisitionEngine {
                                     IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config + ".tif");
 
                                     if (presetConfig.useSegmentation) {
-
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
                                         ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + ".tif");
                                         image_.setTitle(dirName_+ "_" +"_Segmented_" +presetConfig.config.toString());
@@ -255,9 +257,24 @@ public class SeqAcqController implements AcquisitionEngine {
                                 IJ.run("Images to Stack", "name=Stack title=[] use");
                                 IJ.saveAs("Tiff", rootName_ + "\\" + dirName_ + "_" + "Stack" + ".tif");
                             }
+
+                            if (saveFiles_ && !stopAcqRequested_.get()){
+                                // We save the comment text and the summary of the current sequence in a txt FIle
+                                String path_summary = rootName_ + "\\" + dirName_ +"_";
+
+                                BufferedWriter writer = new BufferedWriter(new FileWriter(path_summary + "comment.txt"));
+                                writer.write(summaryTxt());
+                                System.out.println(summaryTxt());
+
+                                writer.close();
+
+
+                            }
+
                             JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
                                     + (!stopAcqRequested_.get() ? "finished." : "canceled."));
                             System.out.println(core_.getCurrentConfig("Channel"));
+
                         } catch (Exception e) {
                             ReportingUtils.showError(e);
                             e.printStackTrace();
@@ -541,7 +558,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
     private int getNumChannelsToKill() {
         int numKillChannels = 0;
-        if (this.useChannels_ && this.killCell_) {
+        if (this.useChannels_ ) {
             Iterator i$ = this.channels_.iterator();
 
             while(i$.hasNext()) {
@@ -753,6 +770,28 @@ public class SeqAcqController implements AcquisitionEngine {
         this.fieldOfView_ = ss.fieldOfView;
     }
 
+    public String summaryTxt (){
+        StringBuffer summary_txt  = new StringBuffer();
+
+        System.out.println("Are you null" + SeqAcqGui.commentTextArea_.getText());
+        if(SeqAcqGui.commentTextArea_.getText() != null ){
+            summary_txt.append(SeqAcqGui.commentTextArea_.getText() + " \r\n\r\n  ");
+        }
+        if (getVerboseSummary() != null){
+            summary_txt.append(getVerboseSummary());
+
+        }
+
+
+        return summary_txt.toString();
+    }
+
+    public void UpdateGui(){
+        SeqAcqGui.updateGUIContents();
+        SeqAcqGui.applySettings();
+
+    }
+
 
     @Override
     public void setCore(CMMCore core_, AutofocusManager afMgr) {
@@ -773,7 +812,27 @@ public class SeqAcqController implements AcquisitionEngine {
 
     @Override
     public void setUpdateLiveWindow(boolean b) {
+        if (b) {
+            System.out.println("PropertyChangeEvent");
+//            RappGui.getInstance().LiveMode_btn.setSelected(false);
+//            RappGui.getInstance().LiveMode_btn.setUI(new MetalToggleButtonUI() {
+//                @Override
+//                protected Color getSelectColor() {
+//                    return Color.decode("#d35400");
+//                }
+//            });
+        }  else  System.out.println("000000");
 
+        if (! MMStudio.getInstance().isLiveModeOn()) {
+            System.out.println("PropertyChangeEvent");
+//            RappGui.getInstance().LiveMode_btn.setSelected(false);
+//            RappGui.getInstance().LiveMode_btn.setUI(new MetalToggleButtonUI() {
+//                @Override
+//                protected Color getSelectColor() {
+//                    return Color.decode("#d35400");
+//                }
+//            });
+        }  else  System.out.println("000000");
     }
 
     @Override
@@ -1102,16 +1161,16 @@ public class SeqAcqController implements AcquisitionEngine {
         double remainSec = totalDurationSec - (double)(hrs * 3600);
         int mins = (int)(remainSec / 60.0D);
         remainSec -= (double)(mins * 60);
-        String txt = "\nNumber of positions: " + numPositions +  "\nNumber of channels: " + numChannels + "\nNumber of Chanel to Kill: " + numKillChannels + "\nTotal images: " + totalImages  +" "+ " Total memory: " + (totalMB <= 1024L ? totalMB + " MB" : NumberUtils.doubleToDisplayString((double)totalMB / 1024.0D) + " GB") + "\nDuration: " + hrs + "h " + mins + "m " + NumberUtils.doubleToDisplayString(remainSec) + "s";
+        String txt = " \r\n Number of positions: " + numPositions +  " \r\n Number of channels: " + numChannels + " \r\n Number of Chanel to Kill: " + numKillChannels + " \r\n Total images: " + totalImages  +" "+ " \r\n Total memory: " + (totalMB <= 1024L ? totalMB + " MB" : NumberUtils.doubleToDisplayString((double)totalMB / 1024.0D) + " GB") + " \r\n Duration: " + hrs + "h " + mins + "m " + NumberUtils.doubleToDisplayString(remainSec) + "s";
         if (!this.useMultiPosition_ && !this.useChannels_ && !this.useSegmentation_) {
             return txt;
         } else {
-            StringBuffer order = new StringBuffer("\nOrder: ");
+            StringBuffer order = new StringBuffer("Order: ");
 
             order.append(SeqAcqGui.acqOrderBox_.getSelectedItem().toString());
 
 
-            return  order.toString() + "\n"+ txt ;
+            return  order.toString() + "\r\n"+ txt ;
         }
     }
 

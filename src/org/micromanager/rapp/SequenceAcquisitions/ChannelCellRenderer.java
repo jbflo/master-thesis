@@ -6,6 +6,7 @@ import org.micromanager.utils.NumberUtils;
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
@@ -17,7 +18,7 @@ public class ChannelCellRenderer extends JLabel implements TableCellRenderer {
 
    private static final long serialVersionUID = -4328340719459382679L;
    private AcquisitionEngine acqEng_;
-
+   private SeqAcqController secAC = new SeqAcqController();
    // This method is called each time a cell in a column
    // using this renderer needs to be rendered.
    public ChannelCellRenderer(AcquisitionEngine acqEng) {
@@ -65,9 +66,10 @@ public class ChannelCellRenderer extends JLabel implements TableCellRenderer {
                JCheckBox check = new JCheckBox("", channel.useSegmentation);
                check.setEnabled(acqEng_.isDoSegmentationEnabled() && table.isEnabled());
 
-               if(!acqEng_.isDoSegmentationEnabled()){
+               if(  !channel.useChannel || !acqEng_.isDoSegmentationEnabled()){
                   check.setSelected(false);
                   channel.useSegmentation = false;
+                  channel.KillCell = false;
                }
                if (isSelected) {
                   check.setBackground(table.getSelectionBackground());
@@ -80,9 +82,11 @@ public class ChannelCellRenderer extends JLabel implements TableCellRenderer {
             } else if (colIndex == 5) {
                JCheckBox check = new JCheckBox("", channel.KillCell);
                check.setEnabled(channel.useSegmentation && table.isEnabled());
-               if (!channel.useSegmentation){
+
+               if ( !channel.useChannel || !channel.useSegmentation){
                   check.setEnabled(false);
                   check.setSelected(false);
+                  channel.KillCell = false;
                }
                if (isSelected) {
                   check.setBackground(table.getSelectionBackground());

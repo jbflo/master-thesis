@@ -37,17 +37,17 @@ public class AcqOrderMode {
 
 
         if ((this.segmentationEnable_ || this.posEnabled_) && (this.channelEnabled_ || this.killEnabled_)) {
-            name.append(", ");
+        //    name.append(", ");
         }
 
         if (this.segmentationEnable_ && this.killEnabled_) {
             if (this.id_ != 1 && this.id_ != 3) {
-                name.append("Segmentation, Kill");
+                name.append(", Segmentation, Kill");
             } else {
-                name.append("Segmentation, Kill");
+                name.append(", Segmentation, Kill");
             }
-        } else if (this.segmentationEnable_) {
-            name.append("Segmentation");
+        } else if (this.channelEnabled_ && this.segmentationEnable_) {
+            name.append(", Segmentation");
         }
 
         return name.toString();

@@ -25,7 +25,7 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
    int editCol_ = -1;
    int editRow_ = -1;
    ChannelSpec channel_ = null;
-
+   private SeqAcqController secAC = new SeqAcqController();
    private AcquisitionEngine acqEng_;
    private Preferences exposurePrefs_;
    private Preferences colorPrefs_;
@@ -67,6 +67,10 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
       } else if (colIndex != 2 && colIndex != 3) {
          if (colIndex == 4 || colIndex ==5 ) {
          checkBox_.setSelected((Boolean) value);
+         checkBox_.addActionListener(e -> {
+               secAC.UpdateGui();
+         });
+
          return checkBox_;
 
           } else if (colIndex != 1) {

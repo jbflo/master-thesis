@@ -25,6 +25,7 @@ import org.micromanager.internalinterfaces.LiveModeListener;
 import org.micromanager.rapp.CellSegmentation.CellPointInternalFrame;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqController;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqGui;
+import org.micromanager.rapp.utils.AboutGui;
 import org.micromanager.rapp.utils.FileDialog;
 import org.micromanager.rapp.utils.ImageViewer;
 import org.micromanager.rapp.utils.Utils;
@@ -66,7 +67,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     private  static  RappController rappController_ref;
     private SnapLiveManager SnapLiveManager_;
     private URL default_path = this.getClass().getResource("");
-    private String path = default_path.toString().substring(6);
+    public String path = default_path.toString().substring(6);
     private JPanel right_box_setup = new JPanel();
     private Box right_box_learning  = Box.createVerticalBox();
     private JPanel right_box_shoot = new JPanel();
@@ -82,6 +83,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     protected JToggleButton LiveMode_btn;
     private JToggleButton pointAndShootOnOff_btn;
     protected JButton calibrate_btn;
+    protected JButton about_btn;
     private JButton browseXmlFIle_btn;
     private JButton runSegmentation_btn;
     private JComboBox<String> presetConfList_jcb ;
@@ -93,6 +95,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     // the index of the images
     private int pos = 0;
     MMStudio studio_;
+    protected AboutGui  dlgAbout;
 
 
 
@@ -102,7 +105,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
      */
     public RappGui(CMMCore core, ScriptInterface app) throws Exception {
         studio_ = (MMStudio) app;
-        org.micromanager.rapp.utils.FileDialog fileDialog_ = new FileDialog();
+        FileDialog fileDialog_ = new FileDialog();
 
         SeqAcqController engine_ = new SeqAcqController();
         rappController_ref =  new RappController(core, app);
@@ -307,7 +310,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         // Start or Stop the the Live Mode
         LiveMode_btn = new JToggleButton("Start Live View");
-        LiveMode_btn.setMaximumSize(new Dimension(145, 50));
+        LiveMode_btn.setMaximumSize(new Dimension(145, 60));
         LiveMode_btn.setBackground(Color.decode("#27ae60"));
         LiveMode_btn.setForeground(Color.white);
         left_box.add(LiveMode_btn);
@@ -335,24 +338,48 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             }
         } );
 
-        left_box.add(Box.createVerticalStrut(5));
+        left_box.add(Box.createVerticalStrut(12));
         // Start or Stop the the Live Mode
         JButton snapAndSave_btn = new JButton("Snap And Save Image");
-        snapAndSave_btn.setMaximumSize(new Dimension(145, 50));
+        snapAndSave_btn.setMaximumSize(new Dimension(145, 60));
         snapAndSave_btn.setBackground(Color.decode("#3498db"));
         snapAndSave_btn.setForeground(Color.white);
         left_box.add(snapAndSave_btn);
         snapAndSave_btn.addActionListener(e -> {
             rappController_ref.snapAndSaveImage();
         });
-        left_box.add(Box.createVerticalStrut(5));
+        left_box.add(Box.createVerticalStrut(12));
         // Illuminate the center of the photo targeting device's range
-        JButton showCenterSpot_btn = new JButton("Show Center Spot");
-        showCenterSpot_btn.setBackground(Color.decode("#3498db"));
-        showCenterSpot_btn.setMaximumSize((new Dimension(145, 50)));
+        JButton showCenterSpot_btn = new JButton("Display Spot at the center");
+        shootOption_btn.setToolTipText("Display laser Spot at the center");
+        showCenterSpot_btn.setBackground(Color.decode("#27ae60"));
+        showCenterSpot_btn.setForeground(Color.white);
+        showCenterSpot_btn.setMaximumSize((new Dimension(145, 60)));
         left_box.add(showCenterSpot_btn);
         showCenterSpot_btn.addActionListener(e -> rappController_ref.displayCenterSpot());
 
+        left_box.add(Box.createVerticalStrut(30));
+        about_btn = new JButton("About...");
+        about_btn.setBackground(Color.decode("#3498db"));
+        about_btn.setForeground(Color.white);
+        about_btn.setMaximumSize((new Dimension(145, 60)));
+        left_box.add(about_btn);
+        about_btn.addActionListener(e->{
+
+            JTextPane ModuleCopyright = new JTextPane();
+            ModuleCopyright.setEditable(false);
+            ModuleCopyright.setText("Cell Killing Interface\r\n\r\n" +
+                    "From The KnopLab (ZMBH) .\r\n" +
+                    "We present a tool for an automation of a fluorescence microscopy setup capable\n" +
+                    "of selective cell isolation based on UV lasers. \r\n"+
+
+                    "THIS SOFTWARE IS PROVIDED IN THE HOPE THAT IT MAY BE USEFUL, WITHOUT ANY REPRESENTATIONS OR WARRANTIES, INCLUDING WITHOUT LIMITATION THE WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL AUTHOR BE LIABLE FOR INDIRECT, EXEMPLARY, PUNITIVE, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING FROM USE OF THIS SOFTWARE, REGARDLESS OF THE FORM OF ACTION, AND WHETHER OR NOT THE AUTHOR HAS BEEN INFORMED OF, OR OTHERWISE MIGHT HAVE ANTICIPATED, THE POSSIBILITY OF SUCH DAMAGES.\r\n\r\n");
+            AboutGui.contentPanel.add(ModuleCopyright);
+
+            dlgAbout = new AboutGui(this, ModuleCopyright);
+            dlgAbout.setVisible(true);
+
+        });
 
         ////////////////////// #Mange Right panel an Content here#  /////////////////////////////////////
 
@@ -883,18 +910,27 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
     private String chooseWhereToTakeTheImage() {
         int n = JOptionPane.showConfirmDialog(appInterface_,
-                "Would you like to take an Image from disk?", "Choose Image", JOptionPane.YES_NO_OPTION);
+                "Would you like to take an Image from disk?", "Choose Image", JOptionPane.YES_NO_CANCEL_OPTION);
         if (n == JOptionPane.YES_OPTION) {
            return "disk";
+        }else if (n == JOptionPane.CANCEL_OPTION) {
+            ReportingUtils.showMessage("Canceled : NO Image were Chosen");
+            return "cancel" ;
         }
         else  {
             int n1 = JOptionPane.showConfirmDialog(appInterface_,
-                    "Would you like to snap an Image from Live View?", "Choose Image", JOptionPane.YES_NO_OPTION);
+                    "Would you like to snap an Image from Live View?", "Choose Image", JOptionPane.YES_NO_CANCEL_OPTION);
             if (n1 == JOptionPane.YES_OPTION) {
                 return "live";
             }
+            else if (n == JOptionPane.NO_OPTION) {
+                ReportingUtils.showMessage("Sorry: There is no Other Options, Please Try Again");
+                return "cancel" ;
+            }
+            else ReportingUtils.showMessage("Canceled : NO Image were Chosen");
 
         }
+
         return "cancel" ;
     }
 

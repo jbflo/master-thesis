@@ -1327,7 +1327,11 @@ public class RappController extends  MMFrame implements OnStateListener {
 
              //core_.setOriginX();
 
-           //  core_.setXYPosition(5, 5);
+          //   core_.setXYPosition(16.630005 ,8.989995);
+
+          System.out.println("pos: " +core_.getXYStagePosition());
+
+
 
 //             ImagePlus iPlus = IJ.getImage();
 //             iPlus.show();

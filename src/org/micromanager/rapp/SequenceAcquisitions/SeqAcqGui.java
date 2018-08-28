@@ -23,6 +23,8 @@ package org.micromanager.rapp.SequenceAcquisitions;
 
 
 import javax.swing.SwingWorker;
+
+import bsh.util.Util;
 import com.swtdesigner.SwingResourceManager;
 import javafx.concurrent.Task;
 import mmcorej.CMMCore;
@@ -33,10 +35,14 @@ import org.micromanager.acquisition.ComponentTitledBorder;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.dialogs.AdvancedOptionsDialog;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
+import org.micromanager.rapp.MultiFOV.BLframe;
+import org.micromanager.rapp.MultiFOV.MultiFOV_Controller;
+import org.micromanager.rapp.MultiFOV.MultiFOV_GUI;
 import org.micromanager.rapp.RappController;
 import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.utils.AcqOrderMode;
 import org.micromanager.rapp.RappPlugin;
+import org.micromanager.rapp.utils.FileDialog;
 import org.micromanager.rapp.utils.Utils;
 import org.micromanager.utils.*;
 
@@ -70,11 +76,13 @@ import static javax.swing.JFrame.setDefaultLookAndFeelDecorated;
  * Time-lapse, channel and z-stack acquisition setup dialog.
  * This dialog specifies all parameters for the MDA acquisition.
  */
-public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
+public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener ,
         AcqSettingsListener {
 
    private static final long serialVersionUID = 1L;
    protected JButton listButton_;
+   protected JCheckBox fullWellListe_jcb;
+   protected static int well_plate_type;
 
    private JSpinner afSkipInterval_;
    protected static JComboBox acqOrderBox_;
@@ -84,21 +92,22 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    public static final String COLOR_SETTINGS_NODE = "ColorSettings";
    private static final String EXPOSURE_SETTINGS_NODE = "AcqExposureSettings";
    private static JComboBox channelGroupCombo_;
-   private final JTextArea commentTextArea_;
+   protected static final JTextArea commentTextArea_ = new JTextArea();
    //private final JComboBox zValCombo_;
-   private final JTextField nameField_;
-   private final JTextField rootField_;
+   private static final JTextField nameField_ = new JTextField();
+   private static final JTextField rootField_ =new JTextField();
    private final JTextField rootField_2;
+   public static JTextField rootField_xmlWellFile;
    private static  JTextArea summaryTextArea_;
-   private final JComboBox timeUnitCombo_;
-   private final JFormattedTextField interval_;
+//   private final JComboBox timeUnitCombo_;
+//   private final JFormattedTextField interval_;
   // private final JFormattedTextField zStep_;
   // private final JFormattedTextField zTop_;
   // private final JFormattedTextField zBottom_;
-   private static AcquisitionEngine acqEng_;
+   protected static AcquisitionEngine acqEng_;
    private final JScrollPane channelTablePane_;
    private static JTable channelTable_;
-   private final JSpinner numFrames_;
+  // private final JSpinner numFrames_;
    private static ChannelTableModel model_;
    private final MMOptions options_;
    private final Preferences prefs_;
@@ -122,8 +131,10 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    private final JLabel rootLabel_;
    private final JLabel choose_segmenter;
    private final JLabel xml_Seg_Label_2;
+   private final JLabel txt_pos_Label;
    private final JButton browseRootButton_;
    private final JButton browseRootButton_2;
+   private  final JButton browseRootButton_plate;
    private final JLabel displayMode_;
    //private final JCheckBox stackKeepShutterOpenCheckBox_;
   // private final JCheckBox chanKeepShutterOpenCheckBox_;
@@ -191,7 +202,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
   // private JPanel acquisitionOrderPanel_;
   // private CheckBoxPanel afPanel_;
    private JPanel summaryPanel_;
-   private CheckBoxPanel savePanel_;
+   private static CheckBoxPanel savePanel_;
    private ComponentTitledPanel commentsPanel_;
    private Border dayBorder_;
    private Border nightBorder_;
@@ -200,6 +211,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    protected static boolean saveMultiTiff_ = true;
    private SnapLiveManager SnapLiveManager_;
    private CMMCore core_;
+   public static JFrame frame_;
 
 
    public final void createChannelTable() {
@@ -251,8 +263,10 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
             channelTable_.addColumn(column);
       //   }
       }
+
       channelTablePane_.setViewportView(channelTable_);
    }
+
 
    public JPanel createPanel(String text, int left, int top, int right, int bottom) {
       return createPanel(text, left, top, right, bottom, false);
@@ -295,32 +309,41 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
       channelsPanel_ = (CheckBoxPanel) createPanel("Channels", 3, 1, 705, 170, true);
 
-      segmentationPanel_= (CheckBoxPanel) createPanel("Segmentation", 710,1,890,170,true );
-      buttonPanel =  createPanel("Run", 710, 175, 880, 435);
+      segmentationPanel_= (CheckBoxPanel) createPanel("Segmentation", 710,1,885,170,true );
+      buttonPanel =  createPanel("Run", 710, 175, 885, 350);
 
-      //framesPanel_ = (CheckBoxPanel) createPanel("Time points", 5, 308, 220, 451, true); // (text, left, top, right, bottom)
+      // framesPanel_ = (CheckBoxPanel) createPanel("Time points", 5, 308, 220, 451, true); // (text, left, top, right, bottom)
       savePanel_ = (CheckBoxPanel) createPanel("Save images", 3, 175, 510, 290, true);
-      positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 175, 705, 290, true);
-  //    afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
+      positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 175, 705, 435, true);
+  //   afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
 
-      summaryPanel_ = createPanel("Summary", 515, 300, 705, 435);
+      summaryPanel_ = createPanel("Summary", 710, 350, 885, 570);
       // acquisitionOrderPanel_ = createPanel("Acquisition order", 515, 300, 705, 435);
       commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 300, 510,435,false);
-
    }
 
    private void createToolTips() {
-      positionsPanel_.setToolTipText("Acquire images from a series of positions in the XY plane");
-      // String imageName = getClass().getResource("/org/micromanager/icons/acq_order_figure.png").toString();
+    //  String position_list_tooltip_img = getClass().getResource("org/micromanager/rapp/Resources/Images/384-well-plate.jpg").toString();
+      String position_list_tooltip =
+              "<html> "
+                      + "Acquire images from a series of positions in the XY plane <br>"
+                      + "You Can Edit Position List to choose a specific position <br>" +
+                      " Or you can Enable Full well Imaging  <br>"
+                      + "<img src="
+     //                 + position_list_tooltip_img + " >"
+                      + "</html>"
+              ;
+      positionsPanel_.setToolTipText(position_list_tooltip);
+      //  String imageName = getClass().getResource("/org/micromanager/icons/acq_order_figure.png").toString();
       String acqOrderToolTip =
               "<html> The acquisition order is Automatically selected when you have a multiple dimensions<br>"
               + "(i.e.  X positions, Channel, Segmentation, Cell Killing, and or Saving)  is selected. <br>"
               + "During image acquisition, the values of each dimension are iterated automatically."
               + "The microscope will acquire images in the following order : "
               + "<br> \"Position\"and \"Channel\" always precede \" Chanel Saving? \" , \"Segmentation\" and \"Cell Killing\" <br><br>"
-              + "For example, you can only change the order of the Saving"
-                      // + "<img src=" + imageName + ">
-              + "</html>"
+              + "For example, you can only change the order of the Saving" + "<img src="
+                   //   + imageName + ">"
+                      + "</html>"
               ;
       //acquisitionOrderPanel_.setToolTipText(acqOrderToolTip);
       acqOrderBox_.setToolTipText(acqOrderToolTip);
@@ -385,103 +408,173 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       createEmptyPanels();
       setLocation(0,0);
 
-      // Frames panel
-      JPanel defaultPanel = new JPanel();
-      JPanel overridePanel = new JPanel();
-      defaultPanel.setLayout(null);
-      JLabel overrideLabel = new JLabel("Custom time intervals enabled");
+//      // Frames panel
+//      JPanel defaultPanel = new JPanel();
+//      JPanel overridePanel = new JPanel();
+//      defaultPanel.setLayout(null);
+//      JLabel overrideLabel = new JLabel("Custom time intervals enabled");
+//
+//      overrideLabel.setFont(new Font("Arial", Font.BOLD, 12));
+//      overrideLabel.setForeground(Color.red);
+//
+//      JButton disableCustomIntervalsButton = new JButton("Disable custom intervals");
+//      disableCustomIntervalsButton.addActionListener(e -> {
+//         acqEng_.enableCustomTimeIntervals(false);
+//         updateGUIContents();
+//      });
+//      disableCustomIntervalsButton.setFont(new Font("Arial", Font.PLAIN, 10));
+//
+//      overridePanel.add(overrideLabel, BorderLayout.PAGE_START);
+//      overridePanel.add(disableCustomIntervalsButton, BorderLayout.PAGE_END);
+//
+//      //framesPanel_.setLayout(new BorderLayout());
+//      //framesSubPanelLayout_ = new CardLayout();
+//      //framesSubPanel_ = new JPanel(framesSubPanelLayout_);
+//
+//
+//      final JLabel numberLabel = new JLabel();
+//      numberLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+//
+//      numberLabel.setText("Number");
+//      defaultPanel.add(numberLabel);
+//      numberLabel.setBounds(15, 0, 54, 24);
+//
+//      SpinnerModel sModel = new SpinnerNumberModel(
+//              new Integer(1),
+//              new Integer(1),
+//              null,
+//              new Integer(1));
+//
+//      numFrames_ = new JSpinner(sModel);
+//      ((JSpinner.DefaultEditor) numFrames_.getEditor()).getTextField().setFont(new Font("Arial", Font.PLAIN, 10));
+//
+//      defaultPanel.add(numFrames_);
+//      numFrames_.setBounds(60, 0, 70, 24);
+//      numFrames_.addChangeListener(new ChangeListener() {
+//
+//         @Override
+//         public void stateChanged(ChangeEvent e) {
+//            applySettings();
+//         }
+//      });
+//
+//      final JLabel intervalLabel = new JLabel();
+//      intervalLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+//      intervalLabel.setText("Interval");
+//      intervalLabel.setToolTipText("Interval between successive time points.  Setting an interval"
+//              + "of 0 will cause micromanager to acquire 'burts' of images as fast as possible");
+//      defaultPanel.add(intervalLabel);
+//      intervalLabel.setBounds(15, 27, 43, 24);
+//
+//      interval_ = new JFormattedTextField(numberFormat_);
+//      interval_.setFont(new Font("Arial", Font.PLAIN, 10));
+//      interval_.setValue(1.0);
+//      interval_.addPropertyChangeListener("value", this);
+//      defaultPanel.add(interval_);
+//      interval_.setBounds(60, 27, 55, 24);
+//
+//      timeUnitCombo_ = new JComboBox();
+//      timeUnitCombo_.addActionListener(new ActionListener() {
+//
+//         @Override
+//         public void actionPerformed(final ActionEvent e) {
+//           // interval_.setText(NumberUtils.doubleToDisplayString(convertMsToTime(acqEng_.getFrameIntervalMs(), timeUnitCombo_.getSelectedIndex())));
+//         }
+//      });
+//      timeUnitCombo_.setModel(new DefaultComboBoxModel(new String[]{"ms", "s", "min"}));
+//      timeUnitCombo_.setFont(new Font("Arial", Font.PLAIN, 10));
+//      timeUnitCombo_.setBounds(120, 27, 67, 24);
+//      defaultPanel.add(timeUnitCombo_);
 
-      overrideLabel.setFont(new Font("Arial", Font.BOLD, 12));
-      overrideLabel.setForeground(Color.red);
-
-      JButton disableCustomIntervalsButton = new JButton("Disable custom intervals");
-      disableCustomIntervalsButton.addActionListener(e -> {
-         acqEng_.enableCustomTimeIntervals(false);
-         updateGUIContents();
-      });
-      disableCustomIntervalsButton.setFont(new Font("Arial", Font.PLAIN, 10));
-
-      overridePanel.add(overrideLabel, BorderLayout.PAGE_START);
-      overridePanel.add(disableCustomIntervalsButton, BorderLayout.PAGE_END);
-
-      //framesPanel_.setLayout(new BorderLayout());
-      //framesSubPanelLayout_ = new CardLayout();
-      //framesSubPanel_ = new JPanel(framesSubPanelLayout_);
 
 
-      final JLabel numberLabel = new JLabel();
-      numberLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+       txt_pos_Label = new JLabel();
+       txt_pos_Label.setFont(new Font("Arial", Font.PLAIN, 10));
+       txt_pos_Label.setText("Load plate configuration file :");
+       txt_pos_Label.setBounds(10, 40, 150, 26);
+       positionsPanel_.add(txt_pos_Label);
 
-      numberLabel.setText("Number");
-      defaultPanel.add(numberLabel);
-      numberLabel.setBounds(15, 0, 54, 24);
+       rootField_xmlWellFile = new JTextField();
+       rootField_xmlWellFile.setFont(new Font("Arial", Font.PLAIN, 10));
+       rootField_xmlWellFile.setBounds(10, 70, 130, 22);
+       rootField_xmlWellFile.setEditable(false);
+       positionsPanel_.add(rootField_xmlWellFile);
 
-      SpinnerModel sModel = new SpinnerNumberModel(
-              new Integer(1),
-              new Integer(1),
-              null,
-              new Integer(1));
+       browseRootButton_plate = new JButton();
+       browseRootButton_plate.addActionListener(e->{
 
-      numFrames_ = new JSpinner(sModel);
-      ((JSpinner.DefaultEditor) numFrames_.getEditor()).getTextField().setFont(new Font("Arial", Font.PLAIN, 10));
+           String plateChoosed = chooseWellPlate();
 
-      defaultPanel.add(numFrames_);
-      numFrames_.setBounds(60, 0, 70, 24);
-      numFrames_.addChangeListener(new ChangeListener() {
+           if (plateChoosed != null & plateChoosed != "cancel"){
+               String path = FileDialog.xmlFileChooserDialog("Load plate configuration file :");
 
-         @Override
-         public void stateChanged(ChangeEvent e) {
-            applySettings();
-         }
-      });
+               if (plateChoosed == "384") {
+                   well_plate_type = 384;
+                   rootField_xmlWellFile.setText(path);
+                //
+               }
+               else if (plateChoosed =="96"){
+                   well_plate_type = 96;
+                   rootField_xmlWellFile.setText(path);
+               }
 
-      final JLabel intervalLabel = new JLabel();
-      intervalLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-      intervalLabel.setText("Interval");
-      intervalLabel.setToolTipText("Interval between successive time points.  Setting an interval"
-              + "of 0 will cause micromanager to acquire 'burts' of images as fast as possible");
-      defaultPanel.add(intervalLabel);
-      intervalLabel.setBounds(15, 27, 43, 24);
+           }//else ReportingUtils.showMessage(" Please Choose a plate ");
+       });
 
-      interval_ = new JFormattedTextField(numberFormat_);
-      interval_.setFont(new Font("Arial", Font.PLAIN, 10));
-      interval_.setValue(1.0);
-      interval_.addPropertyChangeListener("value", this);
-      defaultPanel.add(interval_);
-      interval_.setBounds(60, 27, 55, 24);
+       browseRootButton_plate.setMargin(new Insets(2, 5, 2, 5));
+       browseRootButton_plate.setFont(new Font("Dialog", Font.PLAIN, 10));
+       browseRootButton_plate.setText("...");
+       browseRootButton_plate.setBounds(145, 70, 40, 24);
+       positionsPanel_.add(browseRootButton_plate);
+       browseRootButton_plate.setToolTipText("Load well map configuration");
 
-      timeUnitCombo_ = new JComboBox();
-      timeUnitCombo_.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(final ActionEvent e) {
-           // interval_.setText(NumberUtils.doubleToDisplayString(convertMsToTime(acqEng_.getFrameIntervalMs(), timeUnitCombo_.getSelectedIndex())));
-         }
-      });
-      timeUnitCombo_.setModel(new DefaultComboBoxModel(new String[]{"ms", "s", "min"}));
-      timeUnitCombo_.setFont(new Font("Arial", Font.PLAIN, 10));
-      timeUnitCombo_.setBounds(120, 27, 67, 24);
-      defaultPanel.add(timeUnitCombo_);
+       //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
       // Positions (XY) panel
-
-
       listButton_ = new JButton();
-      listButton_.addActionListener(new ActionListener() {
+      listButton_.addActionListener(e->{
+          String file = rootField_xmlWellFile.getText();
 
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            studio_.showXYPositionList();
-         }
+          if (file.equals("")){
+              ReportingUtils.showMessage(" Please Choose well map configuration file ");
+          }
+          else {
+
+              boolean valide = MultiFOV_Controller.valideXml( MultiFOV_Controller.readXmlFile(file, well_plate_type));
+              if (valide){
+                  new MultiFOV_GUI();
+              }else {
+                  ReportingUtils.showMessage(" Please Choose a correct xml configuration file to load Well Map");
+              }
+              frame_ = new BLframe(core_);
+              frame_.setVisible(true);
+          }
       });
+
       listButton_.setToolTipText("Open XY list dialog");
-      listButton_.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "icons/application_view_list.png"));
+      listButton_.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "Resources/camera.png"));
       listButton_.setText("Edit position list...");
       listButton_.setMargin(new Insets(2, 5, 2, 5));
       listButton_.setFont(new Font("Dialog", Font.PLAIN, 10));
-      listButton_.setBounds(30, 40, 136, 26);
+      listButton_.setBounds(25, 120, 136, 26);
       positionsPanel_.add(listButton_);
+
+
+      fullWellListe_jcb = new JCheckBox();
+      fullWellListe_jcb.addActionListener(e->{
+
+      });
+     // path.concat("Resources/camera.png")
+      fullWellListe_jcb.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "Resources/camera.png"));
+
+      fullWellListe_jcb.setToolTipText("Full well Imaging of the Plate");
+      fullWellListe_jcb.setText("Enable Full well Imaging");
+      fullWellListe_jcb.setMargin(new Insets(2, 5, 2, 5));
+      fullWellListe_jcb.setFont(new Font("Dialog", Font.PLAIN, 10));
+      fullWellListe_jcb.setBounds(20, 160, 160, 26);
+      positionsPanel_.add(fullWellListe_jcb);
+
 
       // Slices panel
 
@@ -665,6 +758,11 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
          @Override
          public void actionPerformed(ActionEvent e) {
+            if (!channelsPanel_.isSelected()){
+               segmentationPanel_.setSelected(false);
+               positionsPanel_.setSelected(false);
+               savePanel_.setSelected(false);
+            }
             applySettings();
          }
       });
@@ -715,10 +813,10 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
 
          @Override
          public void actionPerformed(ActionEvent e) {
-            applySettings();
             System.out.println(acqEng_.isDoSegmentationEnabled());
             model_.addNewChannel();
             model_.fireTableStructureChanged();
+            applySettings();
          }
       });
 
@@ -736,13 +834,14 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          public void actionPerformed(ActionEvent e) {
             int sel = channelTable_.getSelectedRow();
             if (sel > -1) {
-               applySettings();
+
                model_.removeChannel(sel);
                model_.fireTableStructureChanged();
                if (channelTable_.getRowCount() > sel) {
                   channelTable_.setRowSelectionInterval(sel, sel);
                }
             }
+            applySettings();
          }
       });
       removeButton.setText("Remove");
@@ -763,8 +862,9 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
                int newSel = model_.rowUp(sel);
                model_.fireTableStructureChanged();
                channelTable_.setRowSelectionInterval(newSel, newSel);
-               applySettings();
+
             }
+            applySettings();
          }
       });
       upButton.setText("Up");
@@ -847,7 +947,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       rootLabel_.setBounds(10, 30, 72, 22);
       savePanel_.add(rootLabel_);
 
-      rootField_ = new JTextField();
+
       rootField_.setFont(new Font("Arial", Font.PLAIN, 10));
       rootField_.setBounds(90, 30, 354, 22);
       savePanel_.add(rootField_);
@@ -873,7 +973,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       namePrefixLabel_.setBounds(10, 55, 76, 22);
       savePanel_.add(namePrefixLabel_);
 
-      nameField_ = new JTextField();
+
       nameField_.setFont(new Font("Arial", Font.PLAIN, 10));
       nameField_.setBounds(90, 55, 354, 22);
       savePanel_.add(nameField_);
@@ -938,12 +1038,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       xml_Seg_Label_2.setFont(new Font("Arial", Font.PLAIN, 10));
       xml_Seg_Label_2.setText("XML configuration file :");
       xml_Seg_Label_2.setBounds(10, 90, 150, 22);
-      segmentationPanel_.add(xml_Seg_Label_2);
+    //  segmentationPanel_.add(xml_Seg_Label_2);
 
       rootField_2 = new JTextField();
       rootField_2.setFont(new Font("Arial", Font.PLAIN, 10));
       rootField_2.setBounds(10, 120, 120, 22);
-      segmentationPanel_.add(rootField_2);
+      //segmentationPanel_.add(rootField_2);
 
       browseRootButton_2 = new JButton();
       browseRootButton_2.addActionListener(new ActionListener() {
@@ -956,8 +1056,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
        browseRootButton_2.setMargin(new Insets(2, 5, 2, 5));
        browseRootButton_2.setFont(new Font("Dialog", Font.PLAIN, 10));
        browseRootButton_2.setText("...");
-       browseRootButton_2.setBounds(135, 120, 44, 24);
-       segmentationPanel_.add(browseRootButton_2);
+       browseRootButton_2.setBounds(135, 120, 35, 24);
+    //   segmentationPanel_.add(browseRootButton_2);
        browseRootButton_2.setToolTipText("Browse");
       //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -965,7 +1065,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       commentScrollPane.setBounds(10, 28, 485, 50);
       commentsPanel_.add(commentScrollPane);
 
-      commentTextArea_ = new JTextArea();
+
       commentScrollPane.setViewportView(commentTextArea_);
       commentTextArea_.setFont(new Font("", Font.PLAIN, 10));
       commentTextArea_.setToolTipText("Comment for the current acquistion");
@@ -982,7 +1082,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       final JButton closeButton = new JButton();
       closeButton.setFont(new Font("Arial", Font.PLAIN, 10));
       closeButton.addActionListener(new ActionListener() {
-
          @Override
          public void actionPerformed(ActionEvent e) {
             saveSettings();
@@ -1027,13 +1126,14 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
          }
          // Instances of javax.swing.SwingWorker are not reusuable, so
          // we create new instances as needed.
+
          runAcquisition();
+
       });
 
       acquireButton_.setText("Run Sequence!");
       acquireButton_.setBounds(25, 35, 120, 30);
       buttonPanel.add(acquireButton_);
-
 
       final JButton stopButton = new JButton();
       stopButton.addActionListener(new ActionListener() {
@@ -1255,7 +1355,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       acqEng_.clear();
 
       int unit = acqPrefs_.getInt(ACQ_TIME_UNIT, 0);
-      timeUnitCombo_.setSelectedIndex(unit);
+      //timeUnitCombo_.setSelectedIndex(unit);
 
       double bottom = acqPrefs_.getDouble(ACQ_ZBOTTOM, 0.0);
       double top = acqPrefs_.getDouble(ACQ_ZTOP, 0.0);
@@ -1362,7 +1462,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       acqPrefs_.putBoolean(ACQ_ENABLE_MULTI_CHANNEL, acqEng_.isChannelsSettingEnabled());
       //acqPrefs_.putInt(ACQ_NUMFRAMES, acqEng_.getNumFrames());
       //acqPrefs_.putDouble(ACQ_INTERVAL, acqEng_.getFrameIntervalMs());
-      acqPrefs_.putInt(ACQ_TIME_UNIT, timeUnitCombo_.getSelectedIndex());
+      //acqPrefs_.putInt(ACQ_TIME_UNIT, timeUnitCombo_.getSelectedIndex());
       //acqPrefs_.putDouble(ACQ_ZBOTTOM, acqEng_.getSliceZBottomUm());
       //acqPrefs_.putDouble(ACQ_ZTOP, acqEng_.getZTopUm());
       //acqPrefs_.putDouble(ACQ_ZSTEP, acqEng_.getSliceZStepUm());
@@ -1541,14 +1641,14 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       boolean slices = false;
       boolean positions = positionsPanel_.isSelected();
 
-      int numFrames = Math.max(1, (Integer) numFrames_.getValue());
-      if (acqEng_.customTimeIntervalsEnabled()) {
-         int h = 0;
-         while (acqPrefs_.getDouble(CUSTOM_INTERVAL_PREFIX + h, -1) >= 0.0) {
-            h++;
-         }
-         numFrames = Math.max(1, h);
-      }
+      //int numFrames = Math.max(1, (Integer) numFrames_.getValue());
+//      if (acqEng_.customTimeIntervalsEnabled()) {
+//         int h = 0;
+//         while (acqPrefs_.getDouble(CUSTOM_INTERVAL_PREFIX + h, -1) >= 0.0) {
+//            h++;
+//         }
+//         numFrames = Math.max(1, h);
+//      }
 
 //      double zTop, zBottom, zStep;
 //      try {
@@ -1600,7 +1700,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
           //  numImages *= numSlices;
          }
          if (frames) {
-            numImages *= numFrames;
+           // numImages *= numFrames;
          }
          if (positions) {
             numImages *= numPositions;
@@ -1887,7 +1987,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
    public void settingsChanged() {
    }
 
-   private void applySettings() {
+   protected static void applySettings() {
       if (disableGUItoSettings_) {
          return;
       }
@@ -1916,9 +2016,9 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       }
 
       //acqEng_.enableFramesSetting(framesPanel_.isSelected());
-//         acqEng_.enableFramesSetting(false);
-//         acqEng_.setFrames((Integer) numFrames_.getValue(),
-//         convertTimeToMs(NumberUtils.displayStringToDouble(interval_.getText()), timeUnitCombo_.getSelectedIndex()));
+//      acqEng_.enableFramesSetting(false);
+//      acqEng_.setFrames((Integer) numFrames_.getValue(),
+//      convertTimeToMs(NumberUtils.displayStringToDouble(interval_.getText()), timeUnitCombo_.getSelectedIndex()));
       //   acqEng_.setAfSkipInterval(NumberUtils.displayStringToInt(afSkipInterval_.getValue().toString()));
       //  acqEng_.keepShutterOpenForChannels(chanKeepShutterOpenCheckBox_.isSelected());
       //  acqEng_.keepShutterOpenForStack(stackKeepShutterOpenCheckBox_.isSelected());
@@ -1938,6 +2038,32 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener,
       disableGUItoSettings_ = false;
       updateGUIContents();
    }
+
+
+    private String chooseWellPlate() {
+        int n = JOptionPane.showConfirmDialog(this,
+                "Do you Have a 384 well plate ?", "Choose Plate", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (n == JOptionPane.YES_OPTION) {
+            return "384";
+        }else if (n == JOptionPane.CANCEL_OPTION) {
+            ReportingUtils.showMessage("Canceled : NO Plate were Chosen");
+            return "cancel" ;
+        }
+        else  {
+            int n1 = JOptionPane.showConfirmDialog(this,
+                    "Do you have a 96 well plate?", "Choose plate", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (n1 == JOptionPane.YES_OPTION) {
+                return "96";
+            }
+            else if (n == JOptionPane.NO_OPTION) {
+                ReportingUtils.showMessage("Sorry: There is no Other Options, Please Try Again");
+                return "cancel" ;
+            }
+            else ReportingUtils.showMessage("Canceled : NO plate were Chosen");
+        }
+        return "cancel" ;
+
+    }
 
    /**
     * Save settings to application properties.
