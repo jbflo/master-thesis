@@ -40,8 +40,8 @@ public class FOV_Controller {
     int rows = 16;
     String wellShape = "rectangle";
 
-    private ArrayList<Double> xTab = new ArrayList<>();
-    private ArrayList<Double> yTab = new ArrayList<>();
+    private static ArrayList<Double> xTab = new ArrayList<>();
+    private static ArrayList<Double> yTab = new ArrayList<>();
 
 
 
@@ -165,45 +165,51 @@ public class FOV_Controller {
     }
 
     public  void  getWholeData( ArrayList<FOV> fovs) {
-        Point2D.Double cornet_pos ;
-        double defXoff = 0.0 ;
-        double defyoff = 0.0 ;
-
-        try {
-           cornet_pos = core_.getXYStagePosition();
-           defXoff = xTab.get(0) - cornet_pos.getX();
-           defyoff = yTab.get(0) - cornet_pos.getY() ;
-       //    core_.setXYPosition((4)+defXoff ,(4)+defyoff);
-            System.out.println("pos: " +core_.getXYStagePosition());
-
-            System.out.println( " OffsetTTT :  "+ defXoff);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+       ArrayList<Double> xTab_ = new ArrayList<>();
+       ArrayList<Double> yTab_ = new ArrayList<>();
+//        Point2D.Double cornet_pos ;
+//        double defXoff = 0.0 ;
+//        double defyoff = 0.0 ;
+//
+//        try {
+//           cornet_pos = core_.getXYStagePosition();
+//           defXoff = xTab.get(0) - cornet_pos.getX();
+//           defyoff = yTab.get(0) - cornet_pos.getY() ;
+//       //    core_.setXYPosition((4)+defXoff ,(4)+defyoff);
+//            System.out.println("pos: " +core_.getXYStagePosition());
+//
+//            System.out.println( " OffsetTTT :  "+ defXoff);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         for (int i = 0; i< fovs.size() ; i++){
 
             double xx = fovs.get(i).getX();
             double yy = fovs.get(i).getY();
 
-            xTab.add(xx);
-            yTab.add(yy);
+            xTab_.add(xx);
+            yTab_.add(yy);
 
         }
 
+        xTab = xTab_;
+        yTab = yTab_;
+
         System.out.println( " DataSize :"+ fovs.size());
 
-        System.out.println( " Xcord : "+ xTab +100);
-        System.out.println(" Ycord  : "+ yTab + 200 );
-
-        System.out.println( " Offset :  "+ defXoff);
-        System.out.println( " True :  "+ xTab.get(0) * 2);
+        System.out.println( " Xcord : "+ xTab );
+        System.out.println(" Ycord  : "+ yTab );
 
     }
 
 
+
     public ArrayList[] positionlists() {
+
+        System.out.println( " Xcord : "+ xTab );
+        System.out.println(" Ycord  : "+ yTab );
 
             return new ArrayList[]{xTab   , yTab};
 
