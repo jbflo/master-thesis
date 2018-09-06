@@ -16,14 +16,14 @@ import mmcorej.CMMCore;
  */
 public class xyzFunctions {
 
-    private BLframe parent_;
+    private FOV_GUI parent_;
     private CMMCore core_;
-    static WellClass pp_;
+    static FOV_Controller FOV_control;
     private static final xyzFunctions fINSTANCE =  new xyzFunctions();
     public static int genMode = 0;
     
     public xyzFunctions() {
-        pp_ = WellClass.getInstance();
+        FOV_control = FOV_control.getInstance();
     }
     
     public static xyzFunctions getInstance() {
@@ -277,20 +277,20 @@ public class xyzFunctions {
     public static ArrayList<FOV> generateFOVs(int dCol, int dRow, int startCol, int startRow, int genMode) {
         double xF = 0;
         double yF = 0;
-        double wellSpaceX = pp_.getWellSpacingX(); 
-        double wellSpaceY = pp_.getWellSpacingY();
-        double wellOffX = pp_.getFirstWellOffX();
-        double wellOffY = pp_.getFirstWellOffY();
-        double FOVx = pp_.getFOVsizeX();
-        double FOVy = pp_.getFOVsizeY();
-        double wellX = pp_.getWellSizeX();
-        double wellY = pp_.getWellSizeY();
+        double wellSpaceX = FOV_control.getWellSpacingX();
+        double wellSpaceY = FOV_control.getWellSpacingY();
+        double wellOffX = FOV_control.getFirstWellOffX();
+        double wellOffY = FOV_control.getFirstWellOffY();
+        double FOVx = FOV_control.getFOVsizeX();
+        double FOVy = FOV_control.getFOVsizeY();
+        double wellX = FOV_control.getWellSizeX();
+        double wellY = FOV_control.getWellSizeY();
         
-        if (startCol+dCol>pp_.getColCount()){
-            dCol=pp_.getColCount()-startCol+1;
+        if (startCol+dCol>FOV_control.getColCount()){
+            dCol=FOV_control.getColCount()-startCol+1;
         }
-        if (startRow+dRow>pp_.getRowCount()){
-            dRow=pp_.getRowCount()-startRow+1;
+        if (startRow+dRow>FOV_control.getRowCount()){
+            dRow=FOV_control.getRowCount()-startRow+1;
         }
         
         ArrayList<FOV> fovs = new ArrayList<FOV>();

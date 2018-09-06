@@ -366,17 +366,15 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         left_box.add(about_btn);
         about_btn.addActionListener(e->{
 
-            JTextPane ModuleCopyright = new JTextPane();
-            ModuleCopyright.setEditable(false);
-            ModuleCopyright.setText("Cell Killing Interface\r\n\r\n" +
+
+         String msg =  ("Cell Killing Interface\r\n\r\n" +
                     "From The KnopLab (ZMBH) .\r\n" +
                     "We present a tool for an automation of a fluorescence microscopy setup capable\n" +
                     "of selective cell isolation based on UV lasers. \r\n"+
 
                     "THIS SOFTWARE IS PROVIDED IN THE HOPE THAT IT MAY BE USEFUL, WITHOUT ANY REPRESENTATIONS OR WARRANTIES, INCLUDING WITHOUT LIMITATION THE WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL AUTHOR BE LIABLE FOR INDIRECT, EXEMPLARY, PUNITIVE, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING FROM USE OF THIS SOFTWARE, REGARDLESS OF THE FORM OF ACTION, AND WHETHER OR NOT THE AUTHOR HAS BEEN INFORMED OF, OR OTHERWISE MIGHT HAVE ANTICIPATED, THE POSSIBILITY OF SUCH DAMAGES.\r\n\r\n");
-            AboutGui.contentPanel.add(ModuleCopyright);
 
-            dlgAbout = new AboutGui(this, ModuleCopyright);
+            dlgAbout = new AboutGui(this, msg);
             dlgAbout.setVisible(true);
 
         });
@@ -794,7 +792,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         try {
             if (acquisition_ == null) {
-                acquisition_ = (new SeqAcqGui(engine_, this.mainPrefs_, studio_, this.options_));
+                acquisition_ = (new SeqAcqGui(engine_, this.mainPrefs_, studio_, this.options_, core));
             }
             acquisition_.setPreferredSize(new Dimension(900, 545));
             acquisition_.setVisible(true);

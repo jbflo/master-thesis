@@ -22,7 +22,7 @@ public class AboutGui extends JDialog {
     /**
      * Create the dialog.
      */
-    public  AboutGui(RappGui parent, JTextPane msg) {
+    public  AboutGui(RappGui parent, String msg) {
         setModal(true);
         //+ parent.getVersion()
         setTitle("About Rapp UGA-42 Control : Interface for controlling microscope and laser system ");
@@ -32,15 +32,10 @@ public class AboutGui extends JDialog {
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new BorderLayout(0, 0));
         {
-            //JTextPane ModuleCopyright = new JTextPane();
-          //  ModuleCopyright.setEditable(false);
-//            ModuleCopyright.setText("Cell Killing Interface\r\n\r\n" +
-//                    "From The KnopLab (ZMBH) .\r\n" +
-//                    "We present a tool for an automation of a fluorescence microscopy setup capable\n" +
-//                    "of selective cell isolation based on UV lasers. \r\n"+
-//
-//                    "THIS SOFTWARE IS PROVIDED IN THE HOPE THAT IT MAY BE USEFUL, WITHOUT ANY REPRESENTATIONS OR WARRANTIES, INCLUDING WITHOUT LIMITATION THE WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL AUTHOR BE LIABLE FOR INDIRECT, EXEMPLARY, PUNITIVE, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING FROM USE OF THIS SOFTWARE, REGARDLESS OF THE FORM OF ACTION, AND WHETHER OR NOT THE AUTHOR HAS BEEN INFORMED OF, OR OTHERWISE MIGHT HAVE ANTICIPATED, THE POSSIBILITY OF SUCH DAMAGES.\r\n\r\n");
-            contentPanel.add(msg);
+            JTextPane ModuleCopyright = new JTextPane();
+            ModuleCopyright.setEditable(false);
+            ModuleCopyright.setText( msg);
+            contentPanel.add(ModuleCopyright);
         }
         {
             JPanel buttonPane = new JPanel();

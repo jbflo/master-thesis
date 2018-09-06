@@ -18,7 +18,7 @@ public class FOV implements Comparable<FOV> {
     double height_ = 200;   //40x obj
     
     String well_;
-    WellClass FOVclass_;
+    FOV_Controller FOVclass_;
     // initialise with nonsense - remove entirely?
 //    FOV(){
 //        x_ = 0;

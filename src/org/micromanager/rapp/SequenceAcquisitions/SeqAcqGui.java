@@ -22,11 +22,7 @@
 package org.micromanager.rapp.SequenceAcquisitions;
 
 
-import javax.swing.SwingWorker;
-
-import bsh.util.Util;
 import com.swtdesigner.SwingResourceManager;
-import javafx.concurrent.Task;
 import mmcorej.CMMCore;
 import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
@@ -35,10 +31,8 @@ import org.micromanager.acquisition.ComponentTitledBorder;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.dialogs.AdvancedOptionsDialog;
 import org.micromanager.internalinterfaces.AcqSettingsListener;
-import org.micromanager.rapp.MultiFOV.BLframe;
-import org.micromanager.rapp.MultiFOV.MultiFOV_Controller;
-import org.micromanager.rapp.MultiFOV.MultiFOV_GUI;
-import org.micromanager.rapp.RappController;
+import org.micromanager.rapp.MultiFOV.FOV_Controller;
+import org.micromanager.rapp.MultiFOV.FOV_GUI;
 import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.utils.AcqOrderMode;
 import org.micromanager.rapp.RappPlugin;
@@ -50,8 +44,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -66,11 +58,8 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Random;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-
-import static javax.swing.JFrame.setDefaultLookAndFeelDecorated;
 
 /**
  * Time-lapse, channel and z-stack acquisition setup dialog.
@@ -211,7 +200,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
    protected static boolean saveMultiTiff_ = true;
    private SnapLiveManager SnapLiveManager_;
    private CMMCore core_;
-   public static JFrame frame_;
 
 
    public final void createChannelTable() {
@@ -372,7 +360,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
     * @param options
     */
    public SeqAcqGui(AcquisitionEngine acqEng, Preferences prefs,
-                    ScriptInterface gui, MMOptions options) {
+                    ScriptInterface gui, MMOptions options, CMMCore core) {
       super();
 //      try {
 //         for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -386,10 +374,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
 //      }
       prefs_ = prefs;
       studio_ = gui;
-      core_ = RappPlugin.getMMcore();
+      core_ = core;
       guiColors_ = new GUIColors();
       options_ = options;
       SnapLiveManager_ = new SnapLiveManager((MMStudio) studio_, core_);
+
+      FOV_Controller  FOV_control = new FOV_Controller(core);
 
       Preferences root = Preferences.userNodeForPackage(this.getClass());
       acqPrefs_ = root.node(root.absolutePath() + "/" + ACQ_SETTINGS_NODE);
@@ -540,15 +530,14 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
               ReportingUtils.showMessage(" Please Choose well map configuration file ");
           }
           else {
-
-              boolean valide = MultiFOV_Controller.valideXml( MultiFOV_Controller.readXmlFile(file, well_plate_type));
+              boolean valide = FOV_control.valideXml( FOV_Controller.readXmlFile(file, well_plate_type));
               if (valide){
-                  new MultiFOV_GUI();
+               JFrame frame_ = new FOV_GUI(RappGui.getInstance(), core);
+               frame_.setVisible(true);
               }else {
                   ReportingUtils.showMessage(" Please Choose a correct xml configuration file to load Well Map");
               }
-              frame_ = new BLframe(core_);
-              frame_.setVisible(true);
+
           }
       });
 
@@ -561,19 +550,19 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
       positionsPanel_.add(listButton_);
 
 
-      fullWellListe_jcb = new JCheckBox();
-      fullWellListe_jcb.addActionListener(e->{
-
-      });
-     // path.concat("Resources/camera.png")
-      fullWellListe_jcb.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "Resources/camera.png"));
-
-      fullWellListe_jcb.setToolTipText("Full well Imaging of the Plate");
-      fullWellListe_jcb.setText("Enable Full well Imaging");
-      fullWellListe_jcb.setMargin(new Insets(2, 5, 2, 5));
-      fullWellListe_jcb.setFont(new Font("Dialog", Font.PLAIN, 10));
-      fullWellListe_jcb.setBounds(20, 160, 160, 26);
-      positionsPanel_.add(fullWellListe_jcb);
+//      fullWellListe_jcb = new JCheckBox();
+//      fullWellListe_jcb.addActionListener(e->{
+//
+//      });
+//     // path.concat("Resources/camera.png")
+//      fullWellListe_jcb.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "Resources/camera.png"));
+//
+//      fullWellListe_jcb.setToolTipText("Full well Imaging of the Plate");
+//      fullWellListe_jcb.setText("Enable Full well Imaging");
+//      fullWellListe_jcb.setMargin(new Insets(2, 5, 2, 5));
+//      fullWellListe_jcb.setFont(new Font("Dialog", Font.PLAIN, 10));
+//      fullWellListe_jcb.setBounds(20, 160, 160, 26);
+//      positionsPanel_.add(fullWellListe_jcb);
 
 
       // Slices panel

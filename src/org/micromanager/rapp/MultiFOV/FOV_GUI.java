@@ -1,35 +1,40 @@
 package org.micromanager.rapp.MultiFOV;
 
+import mmcorej.CMMCore;
 import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqGui;
 import org.micromanager.rapp.utils.AboutGui;
-import org.micromanager.rapp.utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;        // Using AWT's Graphics and Color
 import java.awt.event.*;  // Using AWT's event classes and listener interfaces
-import java.util.ArrayList;
-import javax.swing.*;     // Using Swing's components and containers
 import javax.swing.border.Border;
 
-public class MultiFOV_GUI  extends JFrame {
+public class FOV_GUI extends JFrame {
 
     protected JPanel main_well_panel;
+    FOV_Controller FOV_control;
 
     private JLabel title_lbl;
     private JButton about_btn ;
     private static RappGui parent_ = RappGui.getInstance();
     protected AboutGui  dlgAbout;
 
+    private  CMMCore core_ = new CMMCore();
+
 
     // Constructor to setup the UI components and event handlers
-    public MultiFOV_GUI(RappGui parent) {
+    public FOV_GUI(RappGui parent, CMMCore core) {
         parent_ = parent;
-
-        new MultiFOV_GUI();  // Let the constructor do the job
+        core_ = core;
+        new FOV_GUI();  // Let the constructor do the job
     }
 
-    public MultiFOV_GUI() {
+    public FOV_GUI() {
+
+        FOV_control = FOV_Controller.getInstance();
+
+        FOVTableModel FOVTableModel_ = new FOVTableModel(FOV_control);
 
         main_well_panel = new JPanel();
         main_well_panel.setLayout(null);
@@ -50,7 +55,7 @@ public class MultiFOV_GUI  extends JFrame {
         main_well_panel.add(well_panel);
 
 
-        posPanel xyPos_panel = new posPanel(this);
+        posPanel xyPos_panel = new posPanel(this, core_);
         xyPos_panel.setBackground(Color.decode("#edf3f3"));
 
         about_btn = new JButton();
@@ -58,15 +63,15 @@ public class MultiFOV_GUI  extends JFrame {
         about_btn.setBounds(20, 485, 120, 30);
         main_well_panel.add(about_btn);
         about_btn.addActionListener(evt->{
-            JTextPane ModuleCopyright = new JTextPane();
-            ModuleCopyright.setEditable(false);
-            ModuleCopyright.setText("Cell Killing Interface\r\n\r\n" +
-                    "From The KnopLab (ZMBH) .\r\n" +
-                    "We present a tool for an automation position of the camera stage setup capable\n" +
-                    "of ......... \r\n");
-            AboutGui.contentPanel.add(ModuleCopyright);
-            dlgAbout = new AboutGui(parent_, ModuleCopyright);
-            dlgAbout.setVisible(true);
+
+//            String msg = ("Cell Killing Interface\r\n\r\n" +
+//                    "From The KnopLab (ZMBH) .\r\n" +
+//                    "We present a tool for an automation position of the camera stage setup capable\n" +
+//                    "of ......... \r\n");
+//
+//            dlgAbout = new AboutGui(parent_, msg);
+//            dlgAbout.setVisible(true);
+           // FOVTableModel_.getWholeData();
         });
 
         JSplitPane splitPaneBody = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, main_well_panel, xyPos_panel);
@@ -94,7 +99,7 @@ public class MultiFOV_GUI  extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MultiFOV_GUI(parent_);  // Let the constructor do the job
+              //  new FOV_GUI(parent_, core_);  // Let the constructor do the job
             }
         });
     }

@@ -911,8 +911,6 @@ public class RappController extends  MMFrame implements OnStateListener {
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
     public ArrayList[] imageSegmentation(ImagePlus impproc, String path, String Algo,  boolean kill , boolean save) {
 
-
-
         impproc.show();
         impproc.updateAndRepaintWindow();
 
@@ -935,8 +933,6 @@ public class RappController extends  MMFrame implements OnStateListener {
 
             }
         }
-
-
 
         ij.measure.ResultsTable resTab = Analyzer.getResultsTable();
         int resCount = resTab.getCounter();

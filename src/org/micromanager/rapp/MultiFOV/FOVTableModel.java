@@ -14,27 +14,27 @@ import javax.swing.table.AbstractTableModel;
  * @author dk1109
  */
 public class FOVTableModel extends AbstractTableModel {
-    public static final int WELL_INDEX = 0;
-    public static final int X_INDEX = 1;
-    public static final int Y_INDEX = 2;
-    public static final int Z_INDEX = 3;
+    public static final int rowCount_INDEX = 0;
+    public static final int WELL_INDEX = 1;
+    public static final int X_INDEX = 2;
+    public static final int Y_INDEX = 3;
+   // public static final int Z_INDEX = 3;
 
     final static String um = "(" + "\u00B5" + "m)";
 
     private ArrayList<FOV> data_ = new ArrayList<FOV>();
-    private String[] colNames_ = {"Well", "X" + um, "Y" + um, "Z" + um};
+    private String[] colNames_ = {" ", "Well", "X" + um, "Y" + um};
 
-    private WellClass pp_;
+    private FOV_Controller FOV_control_;
 
-//    private SeqAcqProps sap_;
-    //TODO: remove duplicates!
-    public FOVTableModel(WellClass pp) {
-        pp_ = pp;
+
+    public FOVTableModel(FOV_Controller FOV_control) {
+        FOV_control_ = FOV_control;
     }
 
-    public FOVTableModel(String[] columnNames, WellClass pp) {
+    public FOVTableModel(String[] columnNames, FOV_Controller FOV_control) {
         this.colNames_ = columnNames;
-        pp_ = pp;
+        FOV_control_ = FOV_control;
     }
 
     @Override
@@ -46,14 +46,16 @@ public class FOVTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         FOV fov = data_.get(row);
         switch (col) {
+            case rowCount_INDEX:
+                return row +1;
             case WELL_INDEX:
                 return fov.getWell();
             case X_INDEX:
                 return fov.getX();
             case Y_INDEX:
                 return fov.getY();
-            case Z_INDEX:
-                return fov.getZ();
+//            case Z_INDEX:
+//                return fov.getZ();
             default:
                 return fov;
         }
@@ -67,12 +69,14 @@ public class FOVTableModel extends AbstractTableModel {
     @Override
     public Class getColumnClass(int column) {
         switch (column) {
+            case rowCount_INDEX:
+               return int.class;
             case WELL_INDEX:
                 return String.class;
             case X_INDEX:
             case Y_INDEX:
-            case Z_INDEX:
-                return Double.class;
+//            case Z_INDEX:
+//                return Double.class;
             default:
                 return FOV.class;
         }
@@ -120,11 +124,12 @@ public class FOVTableModel extends AbstractTableModel {
         data_.clear();
 
         data_.addAll(data);
-
         fireTableDataChanged();
+
 //        sap_.setDelaysArray(0, data_);
 //        this.addEmptyRow();
     }
+
 
     public void clearAllData() {
         data_.clear();
@@ -135,11 +140,13 @@ public class FOVTableModel extends AbstractTableModel {
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
+            case rowCount_INDEX:
+                return false;
             case WELL_INDEX:
                 return false;
             case X_INDEX:
             case Y_INDEX:
-            case Z_INDEX:
+//            case Z_INDEX:
                 return true;
             default:
                 return true;
@@ -159,9 +166,9 @@ public class FOVTableModel extends AbstractTableModel {
             case Y_INDEX:
                 fov.setY((Double) value);
                 break;
-            case Z_INDEX:
-                fov.setZ((Double) value);
-                break;
+//            case Z_INDEX:
+              //  fov.setZ((Double) value);
+             //   break;
             default:
                 System.out.println("invalid index");
         }
@@ -172,8 +179,8 @@ public class FOVTableModel extends AbstractTableModel {
         data_.set(row, fov);
     }
 
-    public void setPlateProps(WellClass pp) {
-        pp_ = pp;
+    public void setPlateProps(FOV_Controller FOV_control) {
+        FOV_control_ = FOV_control;
     }
 
 //    public void saveFOVTableModelAsSpreadsheet(){
@@ -199,7 +206,7 @@ public class FOVTableModel extends AbstractTableModel {
 //    // write row for row from table to sheet        
 //       for(int RowNum=0; RowNum<RowSize;RowNum++){
 //            HSSFRow row = sheet1.createRow(RowNum+1);
-//            HSSFCell cell0 = row.createCell(0);
+//            HSSFCell cell0 = row.createCell(0); m
 //            HSSFCell cell1 = row.createCell(1);
 //            HSSFCell cell2 = row.createCell(2);
 //            HSSFCell cell3 = row.createCell(3);

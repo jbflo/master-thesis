@@ -1,5 +1,8 @@
 package org.micromanager.rapp.MultiFOV;
 
+import mmcorej.CMMCore;
+import org.micromanager.api.ScriptInterface;
+import org.micromanager.rapp.RappPlugin;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -7,15 +10,54 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.awt.geom.Point2D;
 import java.io.File;
+import java.util.ArrayList;
 
-public class MultiFOV_Controller {
+public class FOV_Controller {
 
+    private CMMCore core_ = new CMMCore();
+    private static final FOV_Controller fINSTANCE =  new FOV_Controller();
     private static int wellPlateID;
     private static int colSize;
     private static int rowSize;
     private static int squareSize;
     private static int space;
+
+    // all dimensions in µm
+    String plateName = "MatriPlate Brooks";
+    double xPlate = 127760;
+    double yPlate = 85480;
+    double xWell = 3500;
+    double yWell = 2900;
+    double xOff = 12130;
+    double yOff = 8990;
+    double distWellsX = 4500;
+    double distWellsY = 4500;
+    double xFOV = 200;
+    double yFOV = 200;
+    int cols = 24;
+    int rows = 16;
+    String wellShape = "rectangle";
+
+    private ArrayList<Double> xTab = new ArrayList<>();
+    private ArrayList<Double> yTab = new ArrayList<>();
+
+
+
+    public FOV_Controller( CMMCore core) {
+
+        this.core_ = core;
+
+    }
+
+    public FOV_Controller() {
+
+    }
+
+    public static FOV_Controller getInstance() {
+        return fINSTANCE;
+    }
 
     public static boolean readXmlFile (String filePath, int wellNumber) {
         try {
@@ -100,12 +142,74 @@ public class MultiFOV_Controller {
         return space;
     }
 
+    public String getPlateName(){return plateName;}
+    public double getPlateHeight(){return yPlate;}
+    public double getPlateLength(){return xPlate;}
+    public double getWellSizeX(){return xWell;}
+    public double getWellSizeY(){return yWell;}
+    public double getWellSpacingX(){return distWellsX;}
+    public double getWellSpacingY(){return distWellsY;}
+    public double getFirstWellOffX(){return xOff;}
+    public double getFirstWellOffY(){return yOff;}
+    public double getFOVsizeX(){return xFOV;}
+    public double getFOVsizeY(){return yFOV;}
+    public int getColCount(){return cols;}
+    public int getRowCount(){return rows;}
+    public String getWellShape(){return wellShape;}
+
     public static boolean valideXml(boolean isXmlFIleValide){
 
         System.out.println("FIle" + isXmlFIleValide);
 
         return isXmlFIleValide;
     }
+
+    public  void  getWholeData( ArrayList<FOV> fovs) {
+        Point2D.Double cornet_pos ;
+        double defXoff = 0.0 ;
+        double defyoff = 0.0 ;
+
+        try {
+           cornet_pos = core_.getXYStagePosition();
+           defXoff = xTab.get(0) - cornet_pos.getX();
+           defyoff = yTab.get(0) - cornet_pos.getY() ;
+       //    core_.setXYPosition((4)+defXoff ,(4)+defyoff);
+            System.out.println("pos: " +core_.getXYStagePosition());
+
+            System.out.println( " OffsetTTT :  "+ defXoff);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i< fovs.size() ; i++){
+
+            double xx = fovs.get(i).getX();
+            double yy = fovs.get(i).getY();
+
+            xTab.add(xx);
+            yTab.add(yy);
+
+        }
+
+        System.out.println( " DataSize :"+ fovs.size());
+
+        System.out.println( " Xcord : "+ xTab +100);
+        System.out.println(" Ycord  : "+ yTab + 200 );
+
+        System.out.println( " Offset :  "+ defXoff);
+        System.out.println( " True :  "+ xTab.get(0) * 2);
+
+    }
+
+
+    public ArrayList[] positionlists() {
+
+            return new ArrayList[]{xTab   , yTab};
+
+    }
+
+
 
 
 }

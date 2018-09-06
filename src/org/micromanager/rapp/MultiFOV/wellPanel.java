@@ -10,11 +10,10 @@ public class wellPanel extends JPanel  {
     /**
      * This method is called from within the constructor to initialize the Table position.
      */
-    static  MultiFOV_GUI parent_;
+    static FOV_GUI parent_;
 
-    public  MultiFOV_Controller fov_controller = new MultiFOV_Controller();
 
-   // private static final MultiFOV_GUI fINSTANCE =  new MultiFOV_GUI(parent_);
+    private static final wellPanel fINSTANCE =  new wellPanel(parent_);
     Color bgColor = Color.LIGHT_GRAY;  // Panel's background color
     Point selectionStart_ = new Point();
     Point selectionEnd_ = new Point();
@@ -23,18 +22,18 @@ public class wellPanel extends JPanel  {
     ArrayList<ArrayList<Boolean>> wellsSelected_;
     Color transRed = new Color(128, 0, 0, 64);
 
-    static WellClass pp_;
+    static FOV_Controller FOV_control;
     //int col = 24; // pp_.getColCount();
-   // int row = 16; // pp_.getRowCount();
+    // int row = 16; // pp_.getRowCount();
 
-    private int wellplate = MultiFOV_Controller.getWellPlateID();
-    private int col = MultiFOV_Controller.getcolSize();
-    private int row = MultiFOV_Controller.getrowSize();
+    private int wellplate = FOV_Controller.getWellPlateID();
+    private int col = FOV_Controller.getcolSize();
+    private int row = FOV_Controller.getrowSize();
 
      //int square = 20;
-    private int square = MultiFOV_Controller.getSquareSize();
+    private int square = FOV_Controller.getSquareSize();
      //int space = 3;
-    private int space = MultiFOV_Controller.getWellSpace();
+    private int space = FOV_Controller.getWellSpace();
 
     int ccolS = 0;
     int rrowS = 0;
@@ -43,13 +42,19 @@ public class wellPanel extends JPanel  {
 
     int outerAccess = 0;
 
-   public wellPanel(MultiFOV_GUI parent){
+    public static wellPanel getInstance() {
+        return fINSTANCE;
+    }
+
+   public wellPanel(FOV_GUI parent){
 
     //   initComponents();
        //pp_ = WellClass.getInstance();
        selectionStart_ = new Point();
        selectionEnd_ = new Point();
        selection_ = new Rectangle();
+
+       FOV_control = FOV_Controller.getInstance();
 
 //      wellsSelected_ = new ArrayList<ArrayList<Boolean>>();
 
@@ -105,7 +110,7 @@ public class wellPanel extends JPanel  {
 
         // checks if is 96 or 382 well plate to adjust sqaure size
         //(other plates will work as well, everything with more than 24 col will have small squares)
-//        if (col<=MultiFOV_Controller.getcolSize()){
+//        if (col<=FOV_Controller.getcolSize()){
 //            generateWellMap(g, square, space, col, row, wellplate);
 //        }
 //        else{
@@ -134,6 +139,8 @@ public class wellPanel extends JPanel  {
         int dRow = rrowE - rrowS+1;
         ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, ccolS, rrowS, genMode);
         posPanel.tableModel_.addWholeData(fovs);
+
+        FOV_control.getWholeData(fovs);
     }
 
     private void generateWellMap(Graphics g, int square, int space, int col, int row, int wellPlate) {
