@@ -128,7 +128,7 @@ public class posPanel extends JPanel {
 //          fovs = xyzFunctions.concatLists(preFovs, fovs);
             fovs = xyzFunctions.sortList(fovs);
             tableModel_.addWholeData(fovs);
-            wellPanel_.drawFromOutsideClass(1, 24, 1, 16);
+           // wellPanel_.drawFromOutsideClass(1, 24, 1, 16);
             FOV_control.getWholeData(fovs);
         } );
 

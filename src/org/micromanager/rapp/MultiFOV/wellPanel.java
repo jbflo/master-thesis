@@ -142,7 +142,7 @@ public class wellPanel extends JPanel  {
         ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, ccolS, rrowS, genMode);
         posPanel.tableModel_.addWholeData(fovs);
 
-     //   FOV_control.getWholeData(fovs);
+        FOV_control.getWholeData(fovs);
         System.out.println("Values : " + dCol + " _ " + dRow + " _ " +ccolS + " _ " +rrowS+ " _ " + genMode);
 
     }
