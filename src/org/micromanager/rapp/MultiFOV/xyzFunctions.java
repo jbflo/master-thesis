@@ -318,8 +318,7 @@ public class xyzFunctions {
                     double newFOVy = countX*FOVy;
                     double diffX = newFOVx-FOVx;
                     double diffY = newFOVy-FOVy;
-                    
-                    
+
                     for (int iii = 1; iii <= countX; iii++){
                         for (int iiii = 1; iiii <= countY; iiii++){
                             FOV FOVtoAdd = new FOV(0,0,0,"A1");

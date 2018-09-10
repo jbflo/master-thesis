@@ -42,7 +42,7 @@ public class FOV_GUI extends JFrame {
 
 
 
-        title_lbl = new JLabel(" Interface for controlling Stage positioning ");
+        title_lbl = new JLabel(" Interface for controlling Stage position ");
         title_lbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
         title_lbl.setForeground(Color.decode("#dfe8f0"));
         title_lbl.setBounds(70, 25,500, 30);

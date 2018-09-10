@@ -137,10 +137,14 @@ public class wellPanel extends JPanel  {
         int genMode = xyzFunctions.genMode;
         int dCol = ccolE - ccolS+1;
         int dRow = rrowE - rrowS+1;
+
+
         ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, ccolS, rrowS, genMode);
         posPanel.tableModel_.addWholeData(fovs);
 
-        FOV_control.getWholeData(fovs);
+     //   FOV_control.getWholeData(fovs);
+        System.out.println("Values : " + dCol + " _ " + dRow + " _ " +ccolS + " _ " +rrowS+ " _ " + genMode);
+
     }
 
     private void generateWellMap(Graphics g, int square, int space, int col, int row, int wellPlate) {

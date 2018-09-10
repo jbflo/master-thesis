@@ -190,7 +190,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         left_box.add(Box.createVerticalStrut(10));
 
         JToggleButton setupOption_btn =  createJButton("Settings");
-        JToggleButton learnOption_btn = createJButton("Analysis");
+        JToggleButton learnOption_btn = createJButton("Stage Position");
         JToggleButton shootOption_btn = createJButton("Point And Shoot");
         JToggleButton acquisitionOption_btn = createJButton("Sequence Acquisition");
 

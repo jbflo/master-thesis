@@ -94,11 +94,43 @@ public class posPanel extends JPanel {
 
 
         SelectFOVsBottom.setText("Add All FOVs");
-        SelectFOVsBottom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SelectFOVsBottomActionPerformed(evt);
-            }
-        });
+        SelectFOVsBottom.addActionListener(evt->{
+            //String startF = StartFOVField.getText().toUpperCase();
+            // StartFOVField.setText(startF);
+
+//            int wellplate = FOV_Controller.getWellPlateID();
+//
+//            String startF = "A1";
+//            int startCol = xyzFunctions.getWellCol(startF);
+//            int startRow = xyzFunctions.getWellRow(startF);
+//
+//            // String stopF = StopFOVField.getText().toUpperCase();
+//
+//            String stopF = "A24";
+//            if (wellplate == 96) {
+//                stopF = "H12";
+//            } else if (wellplate == 384) {
+//                stopF = "P24";
+//            }
+//            // StopFOVField.setText(stopF);
+//            int stopCol = xyzFunctions.getWellCol(stopF);
+//            int stopRow = xyzFunctions.getWellRow(stopF);
+//
+//            int dCol = stopCol - startCol + 1;
+//            int dRow = stopRow - startRow + 1;
+//            FOV_control.getFirstWellOffX();
+            genMode = fullWellCombo.getSelectedIndex();
+            ArrayList<FOV> preFovs = new ArrayList<FOV>(tableModel_.getData());
+            tableModel_.clearAllData();
+          //  ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, startCol, startRow, genMode);
+
+            ArrayList<FOV> fovs = xyzFunctions.generateFOVs(24, 16, 1, 1, 0);
+//          fovs = xyzFunctions.concatLists(preFovs, fovs);
+            fovs = xyzFunctions.sortList(fovs);
+            tableModel_.addWholeData(fovs);
+            wellPanel_.drawFromOutsideClass(1, 24, 1, 16);
+            FOV_control.getWholeData(fovs);
+        } );
 
 //        StartFOVField.setText("A1");
 //        StartFOVField.addActionListener(new java.awt.event.ActionListener() {
@@ -149,43 +181,6 @@ public class posPanel extends JPanel {
 //        StopFOVField.setText(input);
 //    } //GEN-LAST:event_StopFOVFieldActionPerformed
 
-    private void SelectFOVsBottomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectFOVsBottomActionPerformed
-
-        //String startF = StartFOVField.getText().toUpperCase();
-       // StartFOVField.setText(startF);
-
-        int wellplate = FOV_Controller.getWellPlateID();
-
-        String startF = "A1";
-        int startCol = xyzFunctions.getWellCol(startF);
-        int startRow = xyzFunctions.getWellRow(startF);
-
-       // String stopF = StopFOVField.getText().toUpperCase();
-
-        String stopF = "A24";
-        if (wellplate == 96){
-            stopF = "H12";
-        }else if (wellplate == 384){
-            stopF = "P24";
-        }
-        // StopFOVField.setText(stopF);
-        int stopCol = xyzFunctions.getWellCol(stopF);
-        int stopRow = xyzFunctions.getWellRow(stopF);
-
-        int dCol = stopCol - startCol+1;
-        int dRow = stopRow - startRow+1;
-        FOV_control.getFirstWellOffX();
-        genMode = fullWellCombo.getSelectedIndex();
-        ArrayList<FOV> preFovs = new ArrayList<FOV>(tableModel_.getData());
-        tableModel_.clearAllData();
-        ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, startCol, startRow, genMode);
-        fovs = xyzFunctions.concatLists(preFovs, fovs);
-        fovs = xyzFunctions.sortList(fovs);
-        tableModel_.addWholeData(fovs);
-        //WellPanel.drawFromOutsideClass(startCol, stopCol, startRow, stopRow);
-        FOV_control.getWholeData(fovs);
-
-    }
 
 //    private void StartFOVFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartFOVFieldActionPerformed
 //        String input = StartFOVField.getText();
