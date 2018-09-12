@@ -167,6 +167,23 @@ public class SeqAcqController implements AcquisitionEngine {
                             double defXoff = 0.0 ;
                             double defyoff = 0.0 ;
 
+                            try {
+
+                                cornet_pos = core_.getXYStagePosition();
+
+                                defXoff = ( x_pos_ini - cornet_pos.getX()) ;
+
+                                defyoff = (y_pos_ini - cornet_pos.getY()) ;
+
+                                System.out.println("Xoff = " +defXoff + "__ Yoff= " + defyoff);
+
+                                Thread.sleep(1000 );
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                stopAcqRequested_.set(true);
+                                isRunning_.set(false);
+                            }
 
                             for (int i =0 ; i < posXY[0].size(); i++){
 
@@ -186,10 +203,16 @@ public class SeqAcqController implements AcquisitionEngine {
                                 x_pos[i] = (double) posXY[0].get(i); //store each element as a double in the array
                                 y_pos[i] = (double) posXY[1].get(i); //store each element as a double in the array
 
+                                System.out.println("X = " + x_pos[i] + "__ Y= " + y_pos[i]);
+
                                 try {
                                     cornet_pos = core_.getXYStagePosition();
+
                                     defXoff = x_pos_ini - cornet_pos.getX();
+
                                     defyoff = y_pos_ini - cornet_pos.getY() ;
+
+                                    System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
                                     core_.setXYPosition(x_pos[i]+ defXoff ,y_pos[i] + defyoff);
                                     Thread.sleep(1000 );
                                 } catch (Exception e) {
