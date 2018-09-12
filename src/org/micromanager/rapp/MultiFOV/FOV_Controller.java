@@ -26,18 +26,25 @@ public class FOV_Controller {
 
     // all dimensions in µm
     String plateName = "MatriPlate Brooks";
+
     double xPlate = 127760;
     double yPlate = 85480;
+
     double xWell = 3500;
     double yWell = 2900;
+
     double xOff = 12130;
     double yOff = 8990;
+
     double distWellsX = 4500;
     double distWellsY = 4500;
+
     double xFOV = 200;
     double yFOV = 200;
+
     int cols = 24;
     int rows = 16;
+
     String wellShape = "rectangle";
 
     private static ArrayList<Double> xTab = new ArrayList<>();
@@ -145,6 +152,7 @@ public class FOV_Controller {
     public String getPlateName(){return plateName;}
     public double getPlateHeight(){return yPlate;}
     public double getPlateLength(){return xPlate;}
+
     public double getWellSizeX(){return xWell;}
     public double getWellSizeY(){return yWell;}
     public double getWellSpacingX(){return distWellsX;}
@@ -153,8 +161,8 @@ public class FOV_Controller {
     public double getFirstWellOffY(){return yOff;}
     public double getFOVsizeX(){return xFOV;}
     public double getFOVsizeY(){return yFOV;}
-    public int getColCount(){return cols;}
-    public int getRowCount(){return rows;}
+    public int getColCount(){return colSize;}
+    public int getRowCount(){return rowSize;}
     public String getWellShape(){return wellShape;}
 
     public static boolean valideXml(boolean isXmlFIleValide){
@@ -197,10 +205,6 @@ public class FOV_Controller {
         }
 
 
-        System.out.println( " Xcord : "+ xTab );
-        System.out.println(" Ycord  : "+ yTab );
-
-        System.out.println( " True :  "+ xTab.get(0) * 2);
         System.out.println( " DataSize :"+ fovs.size());
 
         xTab = xTab_;
