@@ -213,7 +213,8 @@ public class SeqAcqController implements AcquisitionEngine {
                                     defyoff = y_pos_ini - cornet_pos.getY() ;
 
                                     System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
-                                    core_.setXYPosition(x_pos[i]+ defXoff ,y_pos[i] + defyoff);
+                                   // core_.setXYPosition(x_pos[i]+ defXoff ,y_pos[i] + defyoff);
+                                    core_.setRelativeXYPosition(x_pos[i]+ defXoff, y_pos[i] + defyoff );
                                     Thread.sleep(1000 );
                                 } catch (Exception e) {
                                     e.printStackTrace();

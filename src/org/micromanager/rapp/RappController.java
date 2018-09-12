@@ -38,7 +38,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.micromanager.MMStudio;
 import org.micromanager.acquisition.TaggedImageStorageMultipageTiff;
+import org.micromanager.api.MultiStagePosition;
+import org.micromanager.api.PositionList;
 import org.micromanager.api.ScriptInterface;
+import org.micromanager.api.StagePosition;
 import org.micromanager.imagedisplay.VirtualAcquisitionDisplay;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqController;
 import org.micromanager.rapp.utils.*;
@@ -1319,6 +1322,28 @@ public class RappController extends  MMFrame implements OnStateListener {
          //write image
          try{
 
+             PositionList list =  app_.getPositionList();
+
+
+//             MultiStagePosition mps = new MultiStagePosition();
+//             for(int i = 0; i < mps.size(); ++i) {
+//                 try {
+//                     StagePosition sp = mps.get(i);
+////                     if (sp.numAxes == 1) {
+////                         System.out.println("name: " + sp.stageName + " posx"+ sp.x);
+////                         core_.setPosition(sp.stageName, sp.x);
+////                     } else if (sp.numAxes == 2) {
+//                         System.out.println("Size: " + mps.size());
+//                         System.out.println("name: " + sp.stageName + " posx"+ sp.x + " posy"+ sp.y);
+//                         core_.setXYPosition(sp.stageName, sp.x, sp.y);
+//                   //  }
+//
+//                     core_.waitForDevice(sp.stageName);
+//                 } catch (Exception var4) {
+//                     throw new Exception("XY stage error");
+//                 }
+//             }
+
              //core_.setOriginX();
             double xoff = 41150;
             double yoff = -43735;
@@ -1329,7 +1354,9 @@ public class RappController extends  MMFrame implements OnStateListener {
             double xpos = 12.18 * 1000;
             double ypos = 8.74 * 1000;
 
-             core_.setXYPosition(xpos+xoff ,ypos+yoff);
+         //    core_.setXYPosition(xpos+xoff ,ypos+yoff);
+
+             core_.setRelativeXYPosition(xpos+xoff, ypos+yoff);
 
           //   core_.setXYPosition(55061.30082047731,-37577.600559949875);
           System.out.println("pos: " +core_.getXYStagePosition());
