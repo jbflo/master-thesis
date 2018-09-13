@@ -30,7 +30,7 @@ public class FOV_Controller {
     double xPlate = 127760;
     double yPlate = 85480;
 
-    double xWell = 3500;
+    double xWell = 2900;
     double yWell = 2900;
 
     double xOff = 12130;
