@@ -23,6 +23,7 @@ import org.micromanager.SnapLiveManager;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.internalinterfaces.LiveModeListener;
 import org.micromanager.rapp.CellSegmentation.CellPointInternalFrame;
+import org.micromanager.rapp.MultiFOV.FOV_GUI;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqController;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqGui;
 import org.micromanager.rapp.utils.AboutGui;
@@ -60,6 +61,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     // private SimpleObjectProperty<SeqAcqGui> acquisition_ = new SimpleObjectProperty<>(this, "acquisition_");
     private CellPointInternalFrame tablePointFrame;
     private static ImageViewer imageViewer_;
+    private static FOV_GUI fov_gui_;
     private static RappGui appInterface_;
     public static RappGui getInstance() {
         return appInterface_;
@@ -69,7 +71,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     private URL default_path = this.getClass().getResource("");
     public String path = default_path.toString().substring(6);
     private JPanel right_box_setup = new JPanel();
-    private Box right_box_learning  = Box.createVerticalBox();
+    private JInternalFrame right_box_fov  = new JInternalFrame();;
     private JPanel right_box_shoot = new JPanel();
     public  JLabel spiner = new JLabel("nothing");
     private SpinnerModel model_forExposure = new SpinnerNumberModel(100, 0, 999999, 1);
@@ -205,7 +207,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             public void actionPerformed(ActionEvent e) {
                 right_box_setup.setVisible(true);
                 right_box_shoot.setVisible(false);
-                right_box_learning.setVisible(false);
+                right_box_fov.setVisible(false);
                 asButtonPanel.setVisible(false);
                 if( setupOption_btn.isSelected() ){
                     // We set the other button color just to distinguish
@@ -232,7 +234,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         learnOption_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                right_box_learning.setVisible(true);
+                right_box_fov.setVisible(true);
                 right_box_shoot.setVisible(false);
                 right_box_setup.setVisible(false);
                 asButtonPanel.setVisible(false);
@@ -247,7 +249,8 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                     setupOption_btn.setSelected(false);
                     acquisitionOption_btn.setSelected(false);
 
-                    RappGui.getInstance().setSize(730, 700);
+                    RappGui.getInstance().setSize(1150, 700);
+                    fov_gui_.repaint();
                 }
             }
         });
@@ -258,7 +261,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             asButtonPanel.setVisible(true);
             right_box_shoot.setVisible(false);
             right_box_setup.setVisible(false);
-            right_box_learning.setVisible(false);
+            right_box_fov.setVisible(false);
 
             if( acquisitionOption_btn.isSelected() ){
                 // We set the other button color just to distinguish
@@ -284,7 +287,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             public void actionPerformed(ActionEvent e) {
                 right_box_shoot.setVisible(true);
                 right_box_setup.setVisible(false);
-                right_box_learning.setVisible(false);
+                right_box_fov.setVisible(false);
                 asButtonPanel.setVisible(false);
                 if( shootOption_btn.isSelected() ){
                     shootOption_btn.setForeground(Color.decode("#2980b9"));
@@ -385,7 +388,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         ////////////////////////////////  right_box_Settings Content //////////////////////////////////
         rightPanel.setBackground(Color.decode("#ecf0f1"));
         right_box_setup.setBackground(Color.decode("#34495e"));
-        right_box_learning.setBackground(Color.decode("#34495e"));
+        right_box_fov.setBackground(Color.decode("#34495e"));
         right_box_shoot.setBackground(Color.decode("#34495e"));
 
         right_box_setup.setPreferredSize(new Dimension(490, 430));
@@ -759,23 +762,31 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         /////////////////////////////////// #Image Viewer Center Panel# //////////////////////////////////////////JPanel centerPanel = new JPanel();
 
-        rightPanel.add(right_box_learning);
-        right_box_learning.setPreferredSize(new Dimension(910, 575));   // vertical box
-        right_box_learning.setVisible(false);
+        rightPanel.add(right_box_fov);
+        right_box_fov.setPreferredSize(new Dimension(910, 575));   // vertical box
+        right_box_fov.setVisible(false);
+
+        right_box_fov.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Stage Position List",0,0,Font.getFont("arial"),  Color.decode("#34495e")));
+        right_box_fov.setVisible(true);
+        BasicInternalFrameUI right_box_fov_bi = (BasicInternalFrameUI) right_box_fov.getUI();
+        right_box_fov_bi.setNorthPane(null);
+        right_box_fov.setBackground(Color.decode("#34495e"));
 
         try {
-            if (imageViewer_== null) {
-//                imageViewer_= new ImageViewer();
+            if (fov_gui_ == null) {
+                fov_gui_ = (new FOV_GUI(this, core));
             }
-//            imageViewer_.setPreferredSize(new Dimension(910, 575));
-//            right_box_learning.add(imageViewer_);
-//            imageViewer_.setVisible(true);
-//            imageViewer_.repaint();
+            fov_gui_.setPreferredSize(new Dimension(900, 545));
+            fov_gui_.setVisible(true);
+            right_box_fov.add(fov_gui_);
+            fov_gui_.repaint();
 
             //acquisition_.
         } catch (Exception var2) {
             ReportingUtils.showError(var2, "\nAcquistion window failed to open due to invalid or corrupted settings.\nTry resetting registry settings to factory defaults (Menu Tools|Options).");
         }
+
 
 
         //////////////////////////////////////# Imaging # ///////////////////////////////////////////////

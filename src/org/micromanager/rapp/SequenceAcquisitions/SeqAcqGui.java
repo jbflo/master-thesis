@@ -532,8 +532,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
           else {
               boolean valide = FOV_control.valideXml( FOV_Controller.readXmlFile(file, well_plate_type));
               if (valide){
-               JFrame frame_ = new FOV_GUI(RappGui.getInstance(), core);
-               frame_.setVisible(true);
+            //   JFrame frame_ = new FOV_GUI(RappGui.getInstance(), core);
+            //   frame_.setVisible(true);
               }else {
                   ReportingUtils.showMessage(" Please Choose a correct xml configuration file to load Well Map");
               }

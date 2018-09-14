@@ -19,31 +19,40 @@ public class FOV_Controller {
     private CMMCore core_ = new CMMCore();
     private static final FOV_Controller fINSTANCE =  new FOV_Controller();
     private static int wellPlateID;
-    private static int colSize;
-    private static int rowSize;
+    private static int numColumns_;
+    private static int numRows_;
     private static int squareSize;
     private static int space;
 
     // all dimensions in µm
-    String plateName = "MatriPlate Brooks";
+    private static String plateName ;
 
-    double xPlate = 127760;
-    double yPlate = 85480;
+    private static double sizeXUm_ ;
+    private static double sizeYUm_ ;
 
-    double xWell = 3500;
-    double yWell = 2900;
+    private static double wellSizeX_ ;
+    private static double wellSizeY_ ;
 
-    double xOff = 12130;
-    double yOff = 8990;
+    private static double firstWellX_ ;
+    private static double firstWellY_ ;
 
-    double distWellsX = 4500;
-    double distWellsY = 4500;
+    private static double wellSpacingX_ ;
+    private static double wellSpacingY_;
 
-    double xFOV = 200;
-    double yFOV = 200;
+    private static double sizeXFOV_ ;
+    private static double sizeYFOV_ ;
 
-    int cols = 24;
-    int rows = 16;
+    public static final String MATRI_6_WELL= "6WELL";
+    public static final String MATRI_12_WELL= "12WELL";
+    public static final String MATRI_24_WELL= "24WELL";
+    public static final String MATRI_48_WELL= "48WELL";
+    public static final String MATRI_96_WELL= "96WELL";
+    public static final String MATRI_384_WELL= "384WELL";
+    public static final String SLIDE_HOLDER ="SLIDES";
+   // public static final String IBIDI_24_WELL = "Ibidi-24WELL";
+    public static final String DEFAULT_XYSTAGE_NAME = "XYStage";
+    public static final String CUSTOM = "CUSTOM";
+    private static final String METADATA_SITE_PREFIX = "Site";
 
     String wellShape = "rectangle";
 
@@ -99,15 +108,30 @@ public class FOV_Controller {
                         if (Integer.parseInt(eElement.getAttribute("id")) == wellNumber ){
 
                             wellPlateID = Integer.parseInt(eElement.getAttribute("id"));
-                            colSize = Integer.parseInt(eElement.getElementsByTagName("colSize").item(0).getTextContent());
-                            rowSize = Integer.parseInt(eElement.getElementsByTagName("rowSize").item(0).getTextContent());
+                            numColumns_ = Integer.parseInt(eElement.getElementsByTagName("numColumns_").item(0).getTextContent());
+                            numRows_ = Integer.parseInt(eElement.getElementsByTagName("numRows_").item(0).getTextContent());
                             squareSize = Integer.parseInt(eElement.getElementsByTagName("squareSize").item(0).getTextContent());
                             space = Integer.parseInt(eElement.getElementsByTagName("space").item(0).getTextContent());
 
+                            sizeXUm_  = Double.parseDouble(eElement.getElementsByTagName("sizeXUm_").item(0).getTextContent());
+                            sizeYUm_ = Double.parseDouble(eElement.getElementsByTagName("sizeYUm_").item(0).getTextContent());
+
+                            wellSizeX_ = Double.parseDouble(eElement.getElementsByTagName("wellSizeX_").item(0).getTextContent());;
+                            wellSizeY_ = Double.parseDouble(eElement.getElementsByTagName("wellSizeY_").item(0).getTextContent());;
+
+                            firstWellX_ = Double.parseDouble(eElement.getElementsByTagName("firstWellX_").item(0).getTextContent());;
+                            firstWellY_ = Double.parseDouble(eElement.getElementsByTagName("firstWellY_").item(0).getTextContent());;
+
+                            wellSpacingX_ = Double.parseDouble(eElement.getElementsByTagName("wellSpacingX_").item(0).getTextContent());;
+                            wellSpacingY_= Double.parseDouble(eElement.getElementsByTagName("wellSpacingY_").item(0).getTextContent());;
+
+                            sizeXFOV_ = Double.parseDouble(eElement.getElementsByTagName("sizeXFOV_").item(0).getTextContent());;
+                            sizeYFOV_ = Double.parseDouble(eElement.getElementsByTagName("sizeYFOV_").item(0).getTextContent());;
+
                             System.out.println("----------------------------");
                             System.out.println("Well Types: " +eElement.getAttribute("id"));
-                            System.out.println("colSize : " + colSize);
-                            System.out.println("rowSize : " + rowSize);
+                            System.out.println("colSize : " + numColumns_);
+                            System.out.println("rowSize : " + numRows_);
                             System.out.println("squareSize : " + squareSize);
                             System.out.println("space : " + space);
 
@@ -134,11 +158,11 @@ public class FOV_Controller {
     }
 
     public static int getcolSize() {
-        return colSize;
+        return numColumns_;
     }
 
     public static int getrowSize() {
-        return rowSize;
+        return numRows_;
     }
 
     public static int getSquareSize() {
@@ -150,19 +174,25 @@ public class FOV_Controller {
     }
 
     public String getPlateName(){return plateName;}
-    public double getPlateHeight(){return yPlate;}
-    public double getPlateLength(){return xPlate;}
 
-    public double getWellSizeX(){return xWell;}
-    public double getWellSizeY(){return yWell;}
-    public double getWellSpacingX(){return distWellsX;}
-    public double getWellSpacingY(){return distWellsY;}
-    public double getFirstWellOffX(){return xOff;}
-    public double getFirstWellOffY(){return yOff;}
-    public double getFOVsizeX(){return xFOV;}
-    public double getFOVsizeY(){return yFOV;}
-    public int getColCount(){return colSize;}
-    public int getRowCount(){return rowSize;}
+
+    public double getPlateLength(){return sizeXUm_;}
+    public double getPlateHeight(){return sizeYUm_;}
+
+    public double getWellSizeX(){return wellSizeX_;}
+    public double getWellSizeY(){return wellSizeY_;}
+
+    public double getWellSpacingX(){return wellSpacingX_;}
+    public double getWellSpacingY(){return wellSpacingY_;}
+
+    public double getFirstWellOffX(){return firstWellX_;}
+    public double getFirstWellOffY(){return firstWellY_;}
+
+    public double getFOVsizeX(){return sizeXFOV_;}
+    public double getFOVsizeY(){return sizeYFOV_;}
+
+    public int getColCount(){return numColumns_;}
+    public int getRowCount(){return numRows_;}
     public String getWellShape(){return wellShape;}
 
     public static boolean valideXml(boolean isXmlFIleValide){
