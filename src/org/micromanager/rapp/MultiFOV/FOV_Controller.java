@@ -30,13 +30,12 @@ public class FOV_Controller {
     private static double sizeXUm_ ;
     private static double sizeYUm_ ;
 
-<<<<<<< HEAD
+
     private static double wellSizeX_ ;
     private static double wellSizeY_ ;
-=======
+
     double xWell = 2900;
     double yWell = 2900;
->>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
 
     private static double firstWellX_ ;
     private static double firstWellY_ ;

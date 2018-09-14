@@ -64,9 +64,7 @@ public class FOV_GUI extends JInternalFrame {
 //        main_well_panel.add(title_lbl);
 
 
-        well_panel = new wellPanel(this);
-        well_panel.setBounds(0, 70,590, 410);
-        well_panel.setBackground(Color.decode("#edf3f3"));
+
 
 
 
@@ -116,6 +114,9 @@ public class FOV_GUI extends JInternalFrame {
                 else {
                     boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFile(file, well_plate_type));
                     if (valide){
+                        well_panel = new wellPanel(FOV_GUI.this);
+                        well_panel.setBounds(0, 70,590, 410);
+                        well_panel.setBackground(Color.decode("#edf3f3"));
                         main_well_panel.add(well_panel);
                         well_panel.repaint();
 
