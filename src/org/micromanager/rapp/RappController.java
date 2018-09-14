@@ -1354,9 +1354,15 @@ public class RappController extends  MMFrame implements OnStateListener {
             double xpos = 12.18 * 1000;
             double ypos = 8.74 * 1000;
 
+<<<<<<< HEAD
             core_.setXYPosition(xpos+xoff ,ypos+yoff);
 
         //     core_.setRelativeXYPosition(xpos+xoff, ypos+yoff);
+=======
+             core_.setXYPosition(xpos + xoff ,ypos + yoff);
+
+          //   core_.setRelativeXYPosition(xpos+xoff, ypos+yoff);
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
 
           //   core_.setXYPosition(55061.30082047731,-37577.600559949875);
           System.out.println("pos: " +core_.getXYStagePosition());

@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+
 public class SeqAcqController implements AcquisitionEngine {
     private CMMCore core_;
     private ScriptInterface app_;
@@ -164,28 +165,31 @@ public class SeqAcqController implements AcquisitionEngine {
 
                             Point2D.Double cornet_pos ;
 
-                            double defXoff = 0.0 ;
-                            double defyoff = 0.0 ;
+                            double defXoff = 0 ;
+                            double defyoff = 0;
 
                             try {
 
                                 cornet_pos = core_.getXYStagePosition();
 
-                                defXoff = ( x_pos_ini - cornet_pos.getX()) ;
+                                defXoff = (x_pos_ini + cornet_pos.getX()) ;
 
-                                defyoff = (y_pos_ini - cornet_pos.getY()) ;
+                                defyoff = (-y_pos_ini + cornet_pos.getY()) ;
 
                                 System.out.println("Xoff = " +defXoff + "__ Yoff= " + defyoff);
 
                                 Thread.sleep(1000 );
 
                             } catch (Exception e) {
+
+
                                 e.printStackTrace();
                                 stopAcqRequested_.set(true);
                                 isRunning_.set(false);
                             }
 
                             for (int i =0 ; i < posXY[0].size(); i++){
+
 
                             for (ChannelSpec presetConfig : channels) {
 
@@ -206,15 +210,21 @@ public class SeqAcqController implements AcquisitionEngine {
                                 System.out.println("X = " + x_pos[i] + "__ Y= " + y_pos[i]);
 
                                 try {
-                                    cornet_pos = core_.getXYStagePosition();
+                                   // cornet_pos = core_.getXYStagePosition();
+//
+//                                    defXoff = (x_pos[i] - cornet_pos.getX());
+//
+//                                    defXoff = ((double) posXY[0].get(0) - cornet_pos.getX());
+//
+//                                    defyoff = ((double) posXY[1].get(0) - cornet_pos.getY());
+                                    System.out.println("Curent : " + i);
+                                   System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
+                                    double xxPos = -x_pos[i]+ defXoff;
+                                    double yxxPos = y_pos[i]+ defyoff;
+                                    System.out.println("xx = " + xxPos + "__ yy= " +yxxPos);
+                                    core_.setXYPosition(xxPos,yxxPos);
+                                   // core_.setRelativeXYPosition(x_pos[i]- defXoff, y_pos[i] - defyoff );
 
-                                    defXoff = x_pos_ini - cornet_pos.getX();
-
-                                    defyoff = y_pos_ini - cornet_pos.getY() ;
-
-                                    System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
-                                   // core_.setXYPosition(x_pos[i]+ defXoff ,y_pos[i] + defyoff);
-                                    core_.setRelativeXYPosition(x_pos[i]+ defXoff, y_pos[i] + defyoff );
                                     Thread.sleep(1000 );
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -259,13 +269,14 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                 if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
                                     // The acquires Images are saving as separate Image.
-                                    iPlus.setTitle(dirName_ + "_" + presetConfig.config.toLowerCase() + "");
-                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config + ".tif");
+                                    iPlus.setTitle(dirName_ + "_" + presetConfig.config.toLowerCase() + "_POS_" +  i );
+                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
 
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
-                                        ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + ".tif");
-                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config.toString());
+                                        ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
+
+                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config.toString() +"_POS_" +  i  );
 
                                         ArrayList[] ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
                                         System.out.println(presetConfig.KillCell);
@@ -277,16 +288,16 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                 } else if (saveFiles_ && SeqAcqGui.saveMultiTiff_) {
                                     // we save The acquires images  as separate Image first and open it.
-                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
+                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() +"_POS_" +  i +  ".tif");
 
                                     // We Open the Original Image
                                     ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
-                                    image_.setTitle(dirName_ + "_" + presetConfig.config.toString());
+                                    image_.setTitle(dirName_ + "_" + presetConfig.config.toString() +"_POS_" +  i  );
                                     image_.show();
 
                                     // We Duplicate the original image , and segmented the duplicate one
                                     ImagePlus image_dup = iPlus.duplicate();
-                                    image_dup.setTitle(dirName_ + "_Segmented_" + presetConfig.config);
+                                    image_dup.setTitle(dirName_ + "_Segmented_" + presetConfig.config +"_POS_" +  i  );
 
 
                                     if (presetConfig.useSegmentation) {

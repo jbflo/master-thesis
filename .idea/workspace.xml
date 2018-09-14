@@ -8,6 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3bd16c0-5336-44c0-8d6f-2b586ae6e16d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_Controller.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_Controller.class" />
       <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_GUI$1.class" afterPath="" />
       <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_GUI$2.class" afterPath="" />
@@ -31,6 +32,10 @@
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,8 +46,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/RappPlugin$MM.coverage" NAME="MM Coverage Results" MODIFIED="1535374389944" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/RappPlugin$Test.coverage" NAME="Test Coverage Results" MODIFIED="1520372486528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/RappPlugin$MM.coverage" NAME="MM Coverage Results" MODIFIED="1535374389944" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="ExportToHTMLSettings">
     <option name="printScope" value="4" />
@@ -55,6 +60,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
       <file leaf-file-name="ParentPlateGUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/ParentPlateGUI.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -81,6 +87,18 @@
             <state relative-caret-position="-708">
               <caret line="8" column="40" lean-forward="true" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
               <folding />
+=======
+      <file leaf-file-name="SBSPlate.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SBSPlate.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6236">
+              <caret line="530" column="21" lean-forward="false" selection-start-line="530" selection-start-column="21" selection-end-line="530" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#16240#16241#0" expanded="true" />
+                <element signature="e#16271#16272#0" expanded="true" />
+              </folding>
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
             </state>
           </provider>
         </entry>
@@ -88,8 +106,13 @@
       <file leaf-file-name="RappGui.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="334">
               <caret line="252" column="39" lean-forward="false" selection-start-line="252" selection-start-column="39" selection-end-line="252" selection-end-column="39" />
+=======
+            <state relative-caret-position="356">
+              <caret line="779" column="16" lean-forward="false" selection-start-line="779" selection-start-column="16" selection-end-line="779" selection-end-column="16" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
               <folding>
                 <element signature="e#14541#14769#0" expanded="true" />
                 <element signature="e#14768#14769#0" expanded="true" />
@@ -107,9 +130,38 @@
       <file leaf-file-name="SeqAcqGui.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="136">
               <caret line="73" column="40" lean-forward="false" selection-start-line="73" selection-start-column="3" selection-end-line="73" selection-end-column="40" />
               <folding />
+=======
+            <state relative-caret-position="180">
+              <caret line="17" column="37" lean-forward="false" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+              <folding>
+                <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+                <marker date="1439569898000" expanded="false" signature="146:334" ph="..." />
+                <marker date="1439569898000" expanded="true" signature="753:825" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="865:945" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="984:1252" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="1310:1685" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="1753:2112" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="2157:2427" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="2508:2745" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="2609:2737" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="2666:2685" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="2713:2727" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="2803:3025" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="2889:3017" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="2946:2965" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="2993:3007" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="3058:3440" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="3468:3529" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="3568:3579" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="3598:3604" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="3653:3664" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="3684:3690" ph=" }" />
+              </folding>
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
             </state>
           </provider>
         </entry>
@@ -117,8 +169,13 @@
       <file leaf-file-name="FOV_GUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="-200">
               <caret line="161" column="23" lean-forward="true" selection-start-line="161" selection-start-column="23" selection-end-line="161" selection-end-column="23" />
+=======
+            <state relative-caret-position="40">
+              <caret line="23" column="43" lean-forward="false" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
               <folding />
             </state>
           </provider>
@@ -127,8 +184,129 @@
       <file leaf-file-name="SeqAcqController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="297">
               <caret line="216" column="80" lean-forward="false" selection-start-line="216" selection-start-column="80" selection-end-line="216" selection-end-column="80" />
+=======
+            <state relative-caret-position="296">
+              <caret line="252" column="35" lean-forward="true" selection-start-line="252" selection-start-column="35" selection-end-line="252" selection-end-column="35" />
+              <folding>
+                <element signature="e#46066#46067#0" expanded="true" />
+                <element signature="e#46094#46095#0" expanded="true" />
+                <element signature="e#46152#46153#0" expanded="true" />
+                <element signature="e#46180#46181#0" expanded="true" />
+                <element signature="e#46327#46328#0" expanded="true" />
+                <element signature="e#46355#46356#0" expanded="true" />
+                <element signature="e#46511#46512#0" expanded="true" />
+                <element signature="e#46547#46548#0" expanded="true" />
+                <element signature="e#46736#46737#0" expanded="true" />
+                <element signature="e#46784#46785#0" expanded="true" />
+                <element signature="e#47321#47322#0" expanded="true" />
+                <element signature="e#47372#47373#0" expanded="true" />
+                <element signature="e#48140#48141#0" expanded="true" />
+                <element signature="e#48180#48181#0" expanded="true" />
+                <element signature="e#48251#48252#0" expanded="true" />
+                <element signature="e#48293#48294#0" expanded="true" />
+                <element signature="e#48349#48350#0" expanded="true" />
+                <element signature="e#48386#48387#0" expanded="true" />
+                <element signature="e#48452#48453#0" expanded="true" />
+                <element signature="e#48495#48496#0" expanded="true" />
+                <element signature="e#48569#48570#0" expanded="true" />
+                <element signature="e#48624#48625#0" expanded="true" />
+                <element signature="e#48687#48688#0" expanded="true" />
+                <element signature="e#48742#48743#0" expanded="true" />
+                <element signature="e#48813#48814#0" expanded="true" />
+                <element signature="e#48862#48863#0" expanded="true" />
+                <element signature="e#48923#48924#0" expanded="true" />
+                <element signature="e#48968#48969#0" expanded="true" />
+                <element signature="e#49454#49455#0" expanded="true" />
+                <element signature="e#49498#49499#0" expanded="true" />
+                <element signature="e#49548#49549#0" expanded="true" />
+                <element signature="e#49584#49585#0" expanded="true" />
+                <element signature="e#49634#49635#0" expanded="true" />
+                <element signature="e#49670#49671#0" expanded="true" />
+                <element signature="e#49720#49721#0" expanded="true" />
+                <element signature="e#49753#49754#0" expanded="true" />
+                <element signature="e#49806#49807#0" expanded="true" />
+                <element signature="e#49842#49843#0" expanded="true" />
+                <element signature="e#49894#49895#0" expanded="true" />
+                <element signature="e#49929#49930#0" expanded="true" />
+                <element signature="e#49999#50000#0" expanded="true" />
+                <element signature="e#50047#50048#0" expanded="true" />
+                <element signature="e#50109#50110#0" expanded="true" />
+                <element signature="e#50148#50149#0" expanded="true" />
+                <element signature="e#50213#50214#0" expanded="true" />
+                <element signature="e#50250#50251#0" expanded="true" />
+                <element signature="e#50328#50329#0" expanded="true" />
+                <element signature="e#50369#50370#0" expanded="true" />
+                <element signature="e#50418#50419#0" expanded="true" />
+                <element signature="e#50455#50456#0" expanded="true" />
+                <element signature="e#50521#50522#0" expanded="true" />
+                <element signature="e#50566#50567#0" expanded="true" />
+                <element signature="e#50694#50695#0" expanded="true" />
+                <element signature="e#50730#50731#0" expanded="true" />
+                <element signature="e#52265#52266#0" expanded="true" />
+                <element signature="e#52307#52308#0" expanded="true" />
+                <element signature="e#52357#52358#0" expanded="true" />
+                <element signature="e#52395#52396#0" expanded="true" />
+                <element signature="e#52444#52445#0" expanded="true" />
+                <element signature="e#52468#52469#0" expanded="true" />
+                <element signature="e#52681#52682#0" expanded="true" />
+                <element signature="e#52725#52726#0" expanded="true" />
+                <element signature="e#52782#52783#0" expanded="true" />
+                <element signature="e#52823#52824#0" expanded="true" />
+                <element signature="e#56439#56440#0" expanded="true" />
+                <element signature="e#56467#56468#0" expanded="true" />
+                <element signature="e#56876#56877#0" expanded="true" />
+                <element signature="e#56903#56904#0" expanded="true" />
+                <element signature="e#57110#57111#0" expanded="true" />
+                <element signature="e#57137#57138#0" expanded="true" />
+                <element signature="e#57240#57241#0" expanded="true" />
+                <element signature="e#57267#57268#0" expanded="true" />
+                <element signature="e#57360#57361#0" expanded="true" />
+                <element signature="e#57387#57388#0" expanded="true" />
+                <element signature="e#57502#57503#0" expanded="true" />
+                <element signature="e#57529#57530#0" expanded="true" />
+                <element signature="e#57642#57643#0" expanded="true" />
+                <element signature="e#57670#57671#0" expanded="true" />
+                <element signature="e#57721#57722#0" expanded="true" />
+                <element signature="e#57745#57746#0" expanded="true" />
+                <element signature="e#57794#57795#0" expanded="true" />
+                <element signature="e#57822#57823#0" expanded="true" />
+                <element signature="e#58062#58063#0" expanded="true" />
+                <element signature="e#58089#58090#0" expanded="true" />
+                <element signature="e#58144#58145#0" expanded="true" />
+                <element signature="e#58171#58172#0" expanded="true" />
+                <element signature="e#58253#58254#0" expanded="true" />
+                <element signature="e#58280#58281#0" expanded="true" />
+                <element signature="e#58328#58329#0" expanded="true" />
+                <element signature="e#58355#58356#0" expanded="true" />
+                <element signature="e#58412#58413#0" expanded="true" />
+                <element signature="e#58440#58441#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SeqAcqGui.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="979" column="13" lean-forward="false" selection-start-line="979" selection-start-column="13" selection-end-line="979" selection-end-column="13" />
+              <folding>
+                <element signature="e#41547#41548#0" expanded="true" />
+                <element signature="e#41594#41595#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FOV_Controller.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-240">
+              <caret line="30" column="26" lean-forward="false" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
               <folding />
             </state>
           </provider>
@@ -137,18 +315,31 @@
       <file leaf-file-name="xyzFunctions.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/xyzFunctions.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="22">
               <caret line="283" column="17" lean-forward="false" selection-start-line="283" selection-start-column="17" selection-end-line="283" selection-end-column="17" />
+=======
+            <state relative-caret-position="320">
+              <caret line="22" column="15" lean-forward="false" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="PlatePanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/PlatePanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-843">
               <caret line="32" column="17" lean-forward="false" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
+=======
+      <file leaf-file-name="RappController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="335">
+              <caret line="1347" column="10" lean-forward="false" selection-start-line="1347" selection-start-column="10" selection-end-line="1347" selection-end-column="10" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
               <folding />
             </state>
           </provider>
@@ -157,9 +348,57 @@
       <file leaf-file-name="RappController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="21">
               <caret line="1356" column="9" lean-forward="false" selection-start-line="1356" selection-start-column="9" selection-end-line="1356" selection-end-column="9" />
               <folding />
+=======
+            <state relative-caret-position="860">
+              <caret line="50" column="11" lean-forward="false" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="58" />
+              <folding>
+                <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+                <marker date="1439569898000" expanded="false" signature="144:273" ph="..." />
+                <marker date="1439569898000" expanded="true" signature="601:856" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="949:1383" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="1459:2101" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="2140:2151" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="2178:2184" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="2226:2237" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="2267:2273" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="2296:2307" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="2340:2346" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="2385:2396" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="2446:2452" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="2507:2518" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="2551:2557" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="2598:2845" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="2889:2900" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="2941:2947" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="2991:3091" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="3140:3412" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="3442:3453" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="3472:3478" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="3516:3527" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="3545:3551" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="3599:3610" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="3638:3644" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="3682:3693" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="3720:3726" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="3765:3776" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="3804:3810" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="3859:3870" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="3899:3905" ph=" }" />
+                <marker date="1439569898000" expanded="true" signature="3999:4517" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="4544:4848" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="4875:5179" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="5206:5509" ph="{...}" />
+                <marker date="1439569898000" expanded="true" signature="5564:5629" ph="{...}" />
+                <marker date="1439569898000" expanded="false" signature="5658:5669" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="5690:5696" ph=" }" />
+                <marker date="1439569898000" expanded="false" signature="5728:5739" ph=" { " />
+                <marker date="1439569898000" expanded="false" signature="5760:5766" ph=" }" />
+              </folding>
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
             </state>
           </provider>
         </entry>
@@ -267,12 +506,16 @@
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/TestSBSPlate.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/WellPositionList.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SiteGenerator.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java" />
+=======
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
       </list>
     </option>
   </component>
@@ -283,10 +526,17 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
+<<<<<<< HEAD
     <option name="x" value="41" />
     <option name="y" value="-14" />
     <option name="width" value="1616" />
     <option name="height" value="876" />
+=======
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="2576" />
+    <option name="height" value="1416" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -303,9 +553,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
       <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="Scope" />
+=======
+      <pane id="AndroidView" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -427,7 +681,9 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -630,41 +886,63 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+=======
+    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
     <layout>
-      <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4246507" sideWeight="0.49449036" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="simpleUML" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7718509" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25405404" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25504032" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18365385" sideWeight="0.5025707" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288423" sideWeight="0.49449036" order="2" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34324324" sideWeight="0.4974293" order="2" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3151751" sideWeight="0.4974293" order="2" side_tool="false" content_ui="tabs" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19280206" sideWeight="0.49596775" order="0" side_tool="false" content_ui="combo" />
+=======
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12082671" sideWeight="0.49596775" order="0" side_tool="false" content_ui="combo" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
       <window_info id="Learn" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.49449036" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.52162164" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15768462" sideWeight="0.50403225" order="6" side_tool="true" content_ui="tabs" />
+=======
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.52062255" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15768462" sideWeight="0.50403225" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4246507" sideWeight="0.49449036" order="3" side_tool="false" content_ui="tabs" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Stack Trace To UML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Analyze Dataflow to" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="simpleUML" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7718509" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5055096" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3266129" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UML design tool window" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984033" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4246507" sideWeight="0.49449036" order="3" side_tool="false" content_ui="tabs" />
@@ -730,7 +1008,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="76" />
+      <option name="time" value="85" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -853,7 +1131,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="24" column="18" lean-forward="false" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -873,6 +1150,19 @@
         <state />
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="11" column="7" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/AFPlane.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="777">
@@ -885,7 +1175,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="43" lean-forward="false" selection-start-line="0" selection-start-column="43" selection-end-line="0" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -897,6 +1186,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/TestSBSPlate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
@@ -936,6 +1226,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
     <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/PositionList.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -951,9 +1243,31 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/MultiStagePosition.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="903">
+=======
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/ParentPlateGUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/PlatePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="32" column="17" lean-forward="false" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/MultiStagePosition.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="860">
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
           <caret line="50" column="11" lean-forward="false" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="58" />
           <folding>
             <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
@@ -1002,15 +1316,61 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/WellPositionList.java">
+<<<<<<< HEAD
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
+          <caret line="22" column="15" lean-forward="false" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
+=======
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
           <caret line="22" column="15" lean-forward="false" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/TestSBSPlate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="23" column="43" lean-forward="false" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/utils/MMFrame.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="17" column="37" lean-forward="false" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+          <folding>
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="false" signature="146:334" ph="..." />
+            <marker date="1439569898000" expanded="true" signature="753:825" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="865:945" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="984:1252" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="1310:1685" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="1753:2112" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2157:2427" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2508:2745" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2609:2737" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="2666:2685" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2713:2727" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="2803:3025" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2889:3017" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="2946:2965" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2993:3007" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="3058:3440" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3468:3529" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="3568:3579" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="3598:3604" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="3653:3664" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="3684:3690" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="21">
           <caret line="1356" column="9" lean-forward="false" selection-start-line="1356" selection-start-column="9" selection-end-line="1356" selection-end-column="9" />
           <folding />
@@ -1112,7 +1472,155 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="225" column="29" lean-forward="false" selection-start-line="225" selection-start-column="29" selection-end-line="225" selection-end-column="29" />
+=======
+        <state relative-caret-position="335">
+          <caret line="1347" column="10" lean-forward="false" selection-start-line="1347" selection-start-column="10" selection-end-line="1347" selection-end-column="10" />
+>>>>>>> 65f0e7f695660d3a995168071e3ada99efe11a58
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SBSPlate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6236">
+          <caret line="530" column="21" lean-forward="false" selection-start-line="530" selection-start-column="21" selection-end-line="530" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#16240#16241#0" expanded="true" />
+            <element signature="e#16271#16272#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SiteGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="779" column="16" lean-forward="false" selection-start-line="779" selection-start-column="16" selection-end-line="779" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#14435#14436#0" expanded="true" />
+            <element signature="e#14472#14473#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-240">
+          <caret line="30" column="26" lean-forward="false" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="979" column="13" lean-forward="false" selection-start-line="979" selection-start-column="13" selection-end-line="979" selection-end-column="13" />
+          <folding>
+            <element signature="e#41547#41548#0" expanded="true" />
+            <element signature="e#41594#41595#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="252" column="35" lean-forward="true" selection-start-line="252" selection-start-column="35" selection-end-line="252" selection-end-column="35" />
+          <folding>
+            <element signature="e#46066#46067#0" expanded="true" />
+            <element signature="e#46094#46095#0" expanded="true" />
+            <element signature="e#46152#46153#0" expanded="true" />
+            <element signature="e#46180#46181#0" expanded="true" />
+            <element signature="e#46327#46328#0" expanded="true" />
+            <element signature="e#46355#46356#0" expanded="true" />
+            <element signature="e#46511#46512#0" expanded="true" />
+            <element signature="e#46547#46548#0" expanded="true" />
+            <element signature="e#46736#46737#0" expanded="true" />
+            <element signature="e#46784#46785#0" expanded="true" />
+            <element signature="e#47321#47322#0" expanded="true" />
+            <element signature="e#47372#47373#0" expanded="true" />
+            <element signature="e#48140#48141#0" expanded="true" />
+            <element signature="e#48180#48181#0" expanded="true" />
+            <element signature="e#48251#48252#0" expanded="true" />
+            <element signature="e#48293#48294#0" expanded="true" />
+            <element signature="e#48349#48350#0" expanded="true" />
+            <element signature="e#48386#48387#0" expanded="true" />
+            <element signature="e#48452#48453#0" expanded="true" />
+            <element signature="e#48495#48496#0" expanded="true" />
+            <element signature="e#48569#48570#0" expanded="true" />
+            <element signature="e#48624#48625#0" expanded="true" />
+            <element signature="e#48687#48688#0" expanded="true" />
+            <element signature="e#48742#48743#0" expanded="true" />
+            <element signature="e#48813#48814#0" expanded="true" />
+            <element signature="e#48862#48863#0" expanded="true" />
+            <element signature="e#48923#48924#0" expanded="true" />
+            <element signature="e#48968#48969#0" expanded="true" />
+            <element signature="e#49454#49455#0" expanded="true" />
+            <element signature="e#49498#49499#0" expanded="true" />
+            <element signature="e#49548#49549#0" expanded="true" />
+            <element signature="e#49584#49585#0" expanded="true" />
+            <element signature="e#49634#49635#0" expanded="true" />
+            <element signature="e#49670#49671#0" expanded="true" />
+            <element signature="e#49720#49721#0" expanded="true" />
+            <element signature="e#49753#49754#0" expanded="true" />
+            <element signature="e#49806#49807#0" expanded="true" />
+            <element signature="e#49842#49843#0" expanded="true" />
+            <element signature="e#49894#49895#0" expanded="true" />
+            <element signature="e#49929#49930#0" expanded="true" />
+            <element signature="e#49999#50000#0" expanded="true" />
+            <element signature="e#50047#50048#0" expanded="true" />
+            <element signature="e#50109#50110#0" expanded="true" />
+            <element signature="e#50148#50149#0" expanded="true" />
+            <element signature="e#50213#50214#0" expanded="true" />
+            <element signature="e#50250#50251#0" expanded="true" />
+            <element signature="e#50328#50329#0" expanded="true" />
+            <element signature="e#50369#50370#0" expanded="true" />
+            <element signature="e#50418#50419#0" expanded="true" />
+            <element signature="e#50455#50456#0" expanded="true" />
+            <element signature="e#50521#50522#0" expanded="true" />
+            <element signature="e#50566#50567#0" expanded="true" />
+            <element signature="e#50694#50695#0" expanded="true" />
+            <element signature="e#50730#50731#0" expanded="true" />
+            <element signature="e#52265#52266#0" expanded="true" />
+            <element signature="e#52307#52308#0" expanded="true" />
+            <element signature="e#52357#52358#0" expanded="true" />
+            <element signature="e#52395#52396#0" expanded="true" />
+            <element signature="e#52444#52445#0" expanded="true" />
+            <element signature="e#52468#52469#0" expanded="true" />
+            <element signature="e#52681#52682#0" expanded="true" />
+            <element signature="e#52725#52726#0" expanded="true" />
+            <element signature="e#52782#52783#0" expanded="true" />
+            <element signature="e#52823#52824#0" expanded="true" />
+            <element signature="e#56439#56440#0" expanded="true" />
+            <element signature="e#56467#56468#0" expanded="true" />
+            <element signature="e#56876#56877#0" expanded="true" />
+            <element signature="e#56903#56904#0" expanded="true" />
+            <element signature="e#57110#57111#0" expanded="true" />
+            <element signature="e#57137#57138#0" expanded="true" />
+            <element signature="e#57240#57241#0" expanded="true" />
+            <element signature="e#57267#57268#0" expanded="true" />
+            <element signature="e#57360#57361#0" expanded="true" />
+            <element signature="e#57387#57388#0" expanded="true" />
+            <element signature="e#57502#57503#0" expanded="true" />
+            <element signature="e#57529#57530#0" expanded="true" />
+            <element signature="e#57642#57643#0" expanded="true" />
+            <element signature="e#57670#57671#0" expanded="true" />
+            <element signature="e#57721#57722#0" expanded="true" />
+            <element signature="e#57745#57746#0" expanded="true" />
+            <element signature="e#57794#57795#0" expanded="true" />
+            <element signature="e#57822#57823#0" expanded="true" />
+            <element signature="e#58062#58063#0" expanded="true" />
+            <element signature="e#58089#58090#0" expanded="true" />
+            <element signature="e#58144#58145#0" expanded="true" />
+            <element signature="e#58171#58172#0" expanded="true" />
+            <element signature="e#58253#58254#0" expanded="true" />
+            <element signature="e#58280#58281#0" expanded="true" />
+            <element signature="e#58328#58329#0" expanded="true" />
+            <element signature="e#58355#58356#0" expanded="true" />
+            <element signature="e#58412#58413#0" expanded="true" />
+            <element signature="e#58440#58441#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
