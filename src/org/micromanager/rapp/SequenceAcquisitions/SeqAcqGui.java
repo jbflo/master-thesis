@@ -69,7 +69,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
         AcqSettingsListener {
 
    private static final long serialVersionUID = 1L;
-   protected JButton listButton_;
+  // protected JButton listButton_;
    protected JCheckBox fullWellListe_jcb;
    protected static int well_plate_type;
 
@@ -120,10 +120,10 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
    private final JLabel rootLabel_;
    private final JLabel choose_segmenter;
    private final JLabel xml_Seg_Label_2;
-   private final JLabel txt_pos_Label;
+//   private final JLabel txt_pos_Label;
    private final JButton browseRootButton_;
    private final JButton browseRootButton_2;
-   private  final JButton browseRootButton_plate;
+ //  private  final JButton browseRootButton_plate;
    private final JLabel displayMode_;
    //private final JCheckBox stackKeepShutterOpenCheckBox_;
   // private final JCheckBox chanKeepShutterOpenCheckBox_;
@@ -477,77 +477,77 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
 //      defaultPanel.add(timeUnitCombo_);
 
 
-
-       txt_pos_Label = new JLabel();
-       txt_pos_Label.setFont(new Font("Arial", Font.PLAIN, 10));
-       txt_pos_Label.setText("Load plate configuration file :");
-       txt_pos_Label.setBounds(10, 40, 150, 26);
-       positionsPanel_.add(txt_pos_Label);
-
-       rootField_xmlWellFile = new JTextField();
-       rootField_xmlWellFile.setFont(new Font("Arial", Font.PLAIN, 10));
-       rootField_xmlWellFile.setBounds(10, 70, 130, 22);
-       rootField_xmlWellFile.setEditable(false);
-       positionsPanel_.add(rootField_xmlWellFile);
-
-       browseRootButton_plate = new JButton();
-       browseRootButton_plate.addActionListener(e->{
-
-           String plateChoosed = chooseWellPlate();
-
-           if (plateChoosed != null & plateChoosed != "cancel"){
-               String path = FileDialog.xmlFileChooserDialog("Load plate configuration file :");
-
-               if (plateChoosed == "384") {
-                   well_plate_type = 384;
-                   rootField_xmlWellFile.setText(path);
-                //
-               }
-               else if (plateChoosed =="96"){
-                   well_plate_type = 96;
-                   rootField_xmlWellFile.setText(path);
-               }
-
-           }//else ReportingUtils.showMessage(" Please Choose a plate ");
-       });
-
-       browseRootButton_plate.setMargin(new Insets(2, 5, 2, 5));
-       browseRootButton_plate.setFont(new Font("Dialog", Font.PLAIN, 10));
-       browseRootButton_plate.setText("...");
-       browseRootButton_plate.setBounds(145, 70, 40, 24);
-       positionsPanel_.add(browseRootButton_plate);
-       browseRootButton_plate.setToolTipText("Load well map configuration");
+//
+//       txt_pos_Label = new JLabel();
+//       txt_pos_Label.setFont(new Font("Arial", Font.PLAIN, 10));
+//       txt_pos_Label.setText("Load plate configuration file :");
+//       txt_pos_Label.setBounds(10, 40, 150, 26);
+//       positionsPanel_.add(txt_pos_Label);
+//
+//       rootField_xmlWellFile = new JTextField();
+//       rootField_xmlWellFile.setFont(new Font("Arial", Font.PLAIN, 10));
+//       rootField_xmlWellFile.setBounds(10, 70, 130, 22);
+//       rootField_xmlWellFile.setEditable(false);
+//       positionsPanel_.add(rootField_xmlWellFile);
+//
+//       browseRootButton_plate = new JButton();
+//       browseRootButton_plate.addActionListener(e->{
+//
+//           String plateChoosed = chooseWellPlate();
+//
+//           if (plateChoosed != null & plateChoosed != "cancel"){
+//               String path = FileDialog.xmlFileChooserDialog("Load plate configuration file :");
+//
+//               if (plateChoosed == "384") {
+//                   well_plate_type = 384;
+//                   rootField_xmlWellFile.setText(path);
+//                //
+//               }
+//               else if (plateChoosed =="96"){
+//                   well_plate_type = 96;
+//                   rootField_xmlWellFile.setText(path);
+//               }
+//
+//           }//else ReportingUtils.showMessage(" Please Choose a plate ");
+//       });
+//
+//       browseRootButton_plate.setMargin(new Insets(2, 5, 2, 5));
+//       browseRootButton_plate.setFont(new Font("Dialog", Font.PLAIN, 10));
+//       browseRootButton_plate.setText("...");
+//       browseRootButton_plate.setBounds(145, 70, 40, 24);
+//       positionsPanel_.add(browseRootButton_plate);
+//       browseRootButton_plate.setToolTipText("Load well map configuration");
 
        //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
       // Positions (XY) panel
-      listButton_ = new JButton();
-      listButton_.addActionListener(e->{
-          String file = rootField_xmlWellFile.getText();
-
-          if (file.equals("")){
-              ReportingUtils.showMessage(" Please Choose well map configuration file ");
-          }
-          else {
-              boolean valide = FOV_control.valideXml( FOV_Controller.readXmlFile(file, well_plate_type));
-              if (valide){
-            //   JFrame frame_ = new FOV_GUI(RappGui.getInstance(), core);
-            //   frame_.setVisible(true);
-              }else {
-                  ReportingUtils.showMessage(" Please Choose a correct xml configuration file to load Well Map");
-              }
-
-          }
-      });
-
-      listButton_.setToolTipText("Open XY list dialog");
-      listButton_.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "Resources/camera.png"));
-      listButton_.setText("Edit position list...");
-      listButton_.setMargin(new Insets(2, 5, 2, 5));
-      listButton_.setFont(new Font("Dialog", Font.PLAIN, 10));
-      listButton_.setBounds(25, 120, 136, 26);
-      positionsPanel_.add(listButton_);
+//      listButton_ = new JButton();
+//      listButton_.addActionListener(e->{
+//          String file = rootField_xmlWellFile.getText();
+//
+//          if (file.equals("")){
+//              ReportingUtils.showMessage(" Please Choose well map configuration file ");
+//          }
+//          else {
+//              boolean valide = FOV_control.valideXml( FOV_Controller.readXmlFile(file, well_plate_type));
+//              if (valide){
+//            //   JFrame frame_ = new FOV_GUI(RappGui.getInstance(), core);
+//            //   frame_.setVisible(true);
+//              }else {
+//                  ReportingUtils.showMessage(" Please Choose a correct xml configuration file to load Well Map");
+//              }
+//
+//          }
+//      });
+//
+//      listButton_.setToolTipText("Open XY list dialog");
+//      listButton_.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "Resources/camera.png"));
+//      listButton_.setText("Edit position list...");
+//      listButton_.setMargin(new Insets(2, 5, 2, 5));
+//      listButton_.setFont(new Font("Dialog", Font.PLAIN, 10));
+//      listButton_.setBounds(25, 120, 136, 26);
+//      positionsPanel_.add(listButton_);
 
 
 //      fullWellListe_jcb = new JCheckBox();

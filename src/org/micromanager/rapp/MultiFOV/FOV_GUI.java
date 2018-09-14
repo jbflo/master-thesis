@@ -69,13 +69,14 @@ public class FOV_GUI extends JInternalFrame {
 
 
         txt_plate_Label = new JLabel();
-        txt_plate_Label.setFont(new Font("Arial", Font.PLAIN, 10));
+        txt_plate_Label.setFont(new Font("Arial", Font.PLAIN, 12));
+        txt_plate_Label.setForeground(Color.white);
         txt_plate_Label.setText("Plate Format :");
         txt_plate_Label.setBounds(220, 2, 150, 26);
         main_well_panel.add(txt_plate_Label);
 
         plateIDCombo_ = new JComboBox();
-        plateIDCombo_.setBounds(220, 30, 150, 26);
+        plateIDCombo_.setBounds(220, 30, 150, 24);
         main_well_panel.add(plateIDCombo_);
 
         plateIDCombo_.addItem(FOV_Controller.MATRI_6_WELL);
@@ -109,13 +110,13 @@ public class FOV_GUI extends JInternalFrame {
                 }//else ReportingUtils.showMessage(" Please Choose a plate ");
 
                 if (file.equals("")){
-                    ReportingUtils.showMessage(" Please Choose well map configuration file ");
+                    ReportingUtils.showMessage(" Please Choose well map configuration file before");
                 }
                 else {
                     boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFile(file, well_plate_type));
                     if (valide){
                         well_panel = new wellPanel(FOV_GUI.this);
-                        well_panel.setBounds(0, 70,590, 410);
+                        well_panel.setBounds(0, 70,600, 410);
                         well_panel.setBackground(Color.decode("#edf3f3"));
                         main_well_panel.add(well_panel);
                         well_panel.repaint();
@@ -130,23 +131,22 @@ public class FOV_GUI extends JInternalFrame {
         });
 
         txt_pos_Label = new JLabel();
-        txt_pos_Label.setFont(new Font("Arial", Font.PLAIN, 10));
+        txt_pos_Label.setFont(new Font("Arial", Font.PLAIN, 12));
+        txt_pos_Label.setForeground(Color.white);
         txt_pos_Label.setText("Load plate configuration file :");
-        txt_pos_Label.setBounds(10, 2, 150, 26);
+        txt_pos_Label.setBounds(10, 2, 160, 26);
         main_well_panel.add(txt_pos_Label);
 
         rootField_xmlWellFile = new JTextField();
         rootField_xmlWellFile.setFont(new Font("Arial", Font.PLAIN, 10));
-        rootField_xmlWellFile.setBounds(57, 35, 130, 22);
+        rootField_xmlWellFile.setBounds(60, 30, 140, 24);
         rootField_xmlWellFile.setEditable(false);
         main_well_panel.add(rootField_xmlWellFile);
 
         browseRootButton_plate = new JButton();
         browseRootButton_plate.addActionListener(e->{
-
-                String path = FileDialog.xmlFileChooserDialog("Load plate configuration file :");
-
-                rootField_xmlWellFile.setText(path);
+            String path = FileDialog.xmlFileChooserDialog("Load plate configuration file :");
+            rootField_xmlWellFile.setText(path);
 
 
         });
@@ -154,7 +154,7 @@ public class FOV_GUI extends JInternalFrame {
         browseRootButton_plate.setMargin(new Insets(2, 5, 2, 5));
         browseRootButton_plate.setFont(new Font("Dialog", Font.PLAIN, 10));
         browseRootButton_plate.setText("...");
-        browseRootButton_plate.setBounds(10, 35, 40, 24);
+        browseRootButton_plate.setBounds(10, 30, 45, 24);
         main_well_panel.add(browseRootButton_plate);
         browseRootButton_plate.setToolTipText("Load well map configuration");
 
@@ -164,23 +164,15 @@ public class FOV_GUI extends JInternalFrame {
         xyPos_panel.setBackground(Color.decode("#edf3f3"));
 
         about_btn = new JButton();
-        about_btn.setText("About...");
-        about_btn.setBounds(20, 485, 120, 30);
+        about_btn.setText("Calibrate XY...");
+        about_btn.setBounds(380, 30, 120, 24);
         main_well_panel.add(about_btn);
         about_btn.addActionListener(evt->{
 
-//            String msg = ("Cell Killing Interface\r\n\r\n" +
-//                    "From The KnopLab (ZMBH) .\r\n" +
-//                    "We present a tool for an automation position of the camera stage setup capable\n" +
-//                    "of ......... \r\n");
-//
-//            dlgAbout = new AboutGui(parent_, msg);
-//            dlgAbout.setVisible(true);
-            // FOVTableModel_.getWholeData();
         });
 
         JSplitPane splitPaneBody = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, main_well_panel, xyPos_panel);
-        splitPaneBody.setDividerLocation(590);
+        splitPaneBody.setDividerLocation(600);
         this.add(splitPaneBody,BorderLayout.CENTER);
 
         //setDefaultCloseOperation(0);
