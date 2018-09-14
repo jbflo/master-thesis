@@ -925,7 +925,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                 IJ.run(impproc, "Find Maxima...", "noise=20 output=List exclude");
             }
 
-        }else if (Algo == ""){
+        }else if (Algo == "Analyze Particles"){
 
             IJ.run(impproc,"Threshold...", "Default B&W");
             if (kill){
@@ -981,7 +981,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         if(path !=null && save){
             IJ.save(impproc, path+ "_"+"Segmented.tif");
         }
-
+         impproc.close();
         return new ArrayList[]{xTab, yTab};
     }
 
