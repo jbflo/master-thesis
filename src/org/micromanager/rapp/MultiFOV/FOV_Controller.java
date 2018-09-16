@@ -2,12 +2,16 @@ package org.micromanager.rapp.MultiFOV;
 
 import mmcorej.CMMCore;
 import org.micromanager.api.ScriptInterface;
+import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.RappPlugin;
+import org.micromanager.utils.MMScriptException;
+import org.micromanager.utils.ReportingUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.geom.Point2D;
@@ -17,6 +21,7 @@ import java.util.ArrayList;
 public class FOV_Controller {
 
     private CMMCore core_ = new CMMCore();
+    private ScriptInterface app_ =  RappPlugin.getScripI();
     private static final FOV_Controller fINSTANCE =  new FOV_Controller();
     private static int wellPlateID;
     private static int numColumns_;
@@ -46,13 +51,18 @@ public class FOV_Controller {
     private static double sizeXFOV_ ;
     private static double sizeYFOV_ ;
 
-    public static final String MATRI_6_WELL= "6WELL";
-    public static final String MATRI_12_WELL= "12WELL";
-    public static final String MATRI_24_WELL= "24WELL";
-    public static final String MATRI_48_WELL= "48WELL";
-    public static final String MATRI_96_WELL= "96WELL";
-    public static final String MATRI_384_WELL= "384WELL";
-    public static final String SLIDE_HOLDER ="SLIDES";
+    private static double wellXOff;
+    private static double wellYOff;
+
+    public static final  String MATRI_6_WELL= "6WELL";
+    public static final  String MATRI_12_WELL= "12WELL";
+    public static final  String MATRI_24_WELL= "24WELL";
+    public static final  String MATRI_48_WELL= "48WELL";
+    public static final  String MATRI_96_WELL= "96WELL";
+    public static final  String MATRI_384_WELL= "384WELL";
+    public static final  String SLIDE_HOLDER ="SLIDES";
+
+
    // public static final String IBIDI_24_WELL = "Ibidi-24WELL";
     public static final String DEFAULT_XYSTAGE_NAME = "XYStage";
     public static final String CUSTOM = "CUSTOM";
@@ -65,8 +75,8 @@ public class FOV_Controller {
 
 
 
-    public FOV_Controller( CMMCore core) {
-
+    public FOV_Controller( CMMCore core, ScriptInterface app) {
+        this.app_ = app;
         this.core_ = core;
 
     }
@@ -95,6 +105,43 @@ public class FOV_Controller {
                 System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
                // Node node_ = doc.getElementsByTagName("WellParam").item(node_index);
+//                NodeList node_listeWelltypes = doc.getElementsByTagName("WellTypes");
+//
+//                if (node_listeWelltypes.getLength() == 0){
+//                    return false;
+//                }
+//
+//                for (int tmp = 0; tmp < node_listeWelltypes.getLength(); tmp++) {
+//
+//                    Node nNode_types = node_listeWelltypes.item(tmp);
+//
+//                    if (nNode_types.getNodeType() == Node.ELEMENT_NODE) {
+//                        Element eElement_types = (Element) nNode_types;
+//
+//                        //MATRI_6_WELL = (eElement_types.;
+//                        MATRI_12_WELL = (eElement_types.getElementsByTagName("numColumns_").item(0).getTextContent());
+//                        MATRI_24_WELL = eElement_types.getElementsByTagName("numRows_").item(0).getTextContent();
+//                        MATRI_48_WELL = (eElement_types.getElementsByTagName("squareSize").item(0).getTextContent());
+//                        space = Integer.parseInt(eElement_types.getElementsByTagName("space").item(0).getTextContent());
+//
+//                        sizeXUm_ = Double.parseDouble(eElement_types.getElementsByTagName("sizeXUm_").item(0).getTextContent());
+//                        sizeYUm_ = Double.parseDouble(eElement_types.getElementsByTagName("sizeYUm_").item(0).getTextContent());
+//
+//
+//                        if (Integer.parseInt(eElement_types.getAttribute("id")) == wellNumber) {
+//
+//
+//                            System.out.println("----------------------------");
+//                            System.out.println("Well Types: " + eElement_types.getAttribute("id"));
+//                            System.out.println("colSize : " + numColumns_);
+//                            System.out.println("rowSize : " + numRows_);
+//                            System.out.println("squareSize : " + squareSize);
+//                            System.out.println("space : " + space);
+//
+//                            //  return true;
+//                        } //else return false;
+//                    }
+//                }
 
                 NodeList node_liste = doc.getElementsByTagName("WellParam");
 
@@ -102,11 +149,14 @@ public class FOV_Controller {
                     return false;
                 }
 
-                System.out.println("----------------------------" + wellNumber);
+
+                /////////////////////////////////////////////////////////////////////
+
+
                 for (int temp = 0; temp < node_liste.getLength(); temp++) {
 
                     Node nNode = node_liste.item(temp);
-
+                    System.out.println("----------------------------" + nNode.getTextContent());
                     if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                         Element eElement = (Element) nNode;
                         if (Integer.parseInt(eElement.getAttribute("id")) == wellNumber ){
@@ -157,28 +207,70 @@ public class FOV_Controller {
 
     }
 
-    public static int getWellPlateID (){
+    public void calibrateXY(){
+
+        ArrayList[] posXY = this.positionlists();
+
+        if (posXY[0].size() == 0) {
+            ReportingUtils.showMessage("Could not Calibrate Stage Due to 0 position list," +
+                    " Please go to Stage position tab to add some position" +
+                    " Or disable multi position (X,Y) Panel "
+            );
+        }else {
+
+        int ret = JOptionPane.showConfirmDialog(RappGui.getInstance(), "Manually position the XY stage over the center of the well A01 and press OK",
+                "XYStage origin setup", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (ret == JOptionPane.OK_OPTION) {
+            try {
+                double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
+                double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
+                Point2D.Double cornet_pos ;
+
+//                cornet_pos = core_.getXYStagePosition();
+//                wellXOff = (x_pos_ini + cornet_pos.getX()) ;
+//                wellYOff = (-y_pos_ini + cornet_pos.getY()) ;
+//                System.out.println("Xoff = " +wellXOff + "__ Yoff= " + wellYOff);
+
+                Thread.sleep(1000 );
+
+                app_.setXYOrigin(this.getFirstWellOffX(), this.getFirstWellOffY());
+                //regenerate();
+                Point2D.Double pt = app_.getXYStagePosition();
+                JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + pt.x + "," + pt.y);
+             //   JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " +wellXOff + "," + wellYOff);
+            } catch (Exception e) {
+                //displayError(e.getMessage());
+                e.printStackTrace();
+            }
+          }
+        }
+
+    }
+
+    public  int getWellPlateID (){
         return wellPlateID;
     }
 
-    public static int getcolSize() {
+    public  int getcolSize() {
         return numColumns_;
     }
 
-    public static int getrowSize() {
+    public  int getrowSize() {
         return numRows_;
     }
 
-    public static int getSquareSize() {
+    public  int getSquareSize() {
         return squareSize;
     }
 
-    public static int getWellSpace() {
+    public  int getWellSpace() {
         return space;
     }
 
-    public String getPlateName(){return plateName;}
+    public  String getPlateName(){return plateName;}
 
+    public double getWellOffX(){return wellXOff;}
+    public double getWellOffY(){return wellYOff;}
 
     public double getPlateLength(){return sizeXUm_;}
     public double getPlateHeight(){return sizeYUm_;}
@@ -259,7 +351,7 @@ public class FOV_Controller {
         System.out.println( " Xcord : "+ xTab );
         System.out.println(" Ycord  : "+ yTab );
 
-            return new ArrayList[]{xTab   , yTab};
+        return new ArrayList[]{xTab   , yTab};
 
     }
 

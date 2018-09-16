@@ -13,7 +13,7 @@ public class wellPanel extends JPanel  {
     static FOV_GUI parent_;
 
 
-    private static final wellPanel fINSTANCE =  new wellPanel(parent_);
+    private static final wellPanel fINSTANCE =  new wellPanel( parent_);
     Color bgColor = Color.LIGHT_GRAY;  // Panel's background color
     Point selectionStart_ = new Point();
     Point selectionEnd_ = new Point();
@@ -22,18 +22,25 @@ public class wellPanel extends JPanel  {
     ArrayList<ArrayList<Boolean>> wellsSelected_;
     Color transRed = new Color(128, 0, 0, 64);
 
-    static FOV_Controller FOV_control;
+    static FOV_Controller FOV_control ;
+
+    public static wellPanel getInstance() {
+        return fINSTANCE;
+    }
+
+
+    private int wellplate;
+    private int col ;
+    private int row ;
+
+    //int square = 20;
+    private int square ;
+    //int space = 3;
+    private int space ;
+
     //int col = 24; // pp_.getColCount();
     // int row = 16; // pp_.getRowCount();
 
-    private int wellplate = FOV_Controller.getWellPlateID();
-    private int col = FOV_Controller.getcolSize();
-    private int row = FOV_Controller.getrowSize();
-
-     //int square = 20;
-    private int square = FOV_Controller.getSquareSize();
-     //int space = 3;
-    private int space = FOV_Controller.getWellSpace();
 
     int ccolS = 0;
     int rrowS = 0;
@@ -42,11 +49,20 @@ public class wellPanel extends JPanel  {
 
     int outerAccess = 0;
 
-    public static wellPanel getInstance() {
-        return fINSTANCE;
-    }
+
+
 
    public wellPanel(FOV_GUI parent){
+
+       FOV_control = FOV_Controller.getInstance();
+
+       wellplate = FOV_control.getWellPlateID();
+       col = FOV_control.getcolSize();
+       row = FOV_control.getrowSize();
+       //int square = 20;
+       square = FOV_control.getSquareSize();
+       //int space = 3;
+       space = FOV_control.getWellSpace();
 
     //   initComponents();
        //pp_ = WellClass.getInstance();
@@ -54,7 +70,6 @@ public class wellPanel extends JPanel  {
        selectionEnd_ = new Point();
        selection_ = new Rectangle();
 
-       FOV_control = FOV_Controller.getInstance();
 
 //      wellsSelected_ = new ArrayList<ArrayList<Boolean>>();
 
@@ -71,12 +86,22 @@ public class wellPanel extends JPanel  {
                isSelecting_ = false;
                selectionEnd_ = e.getPoint();
                outerAccess = 0;
+              // We got the new Value of the plate reloaded
+               wellplate = FOV_control.getWellPlateID();
+               col = FOV_control.getcolSize();
+               row = FOV_control.getrowSize();
+
+               square = FOV_control.getSquareSize();
+               space = FOV_control.getWellSpace();
+
                checkStartEnd();
                getSelectedWells();
                repaint();
            }
 
+
        });
+
    }
 
     private void checkStartEnd() {
@@ -92,6 +117,7 @@ public class wellPanel extends JPanel  {
             selectionEnd_.y = ySta;
             selectionStart_.y = yEnd;
         }
+
     }
 
 
@@ -104,6 +130,7 @@ public class wellPanel extends JPanel  {
         drawWellMap(g);
         System.out.println("In paintComponent");
         System.out.println("column start: " + ccolS);
+
     }
 
     private void drawWellMap(Graphics g) {
@@ -117,7 +144,6 @@ public class wellPanel extends JPanel  {
 //          //  square = 10;
             generateWellMap(g, square, space, col, row, wellplate);
      //   }
-
     }
 
     private void getSelectedWells() {
@@ -174,15 +200,17 @@ public class wellPanel extends JPanel  {
                 g.setFont(new Font("Arial Black", Font.PLAIN, 8));
             }
             String cc = Integer.toString(i);
-            g.drawString(cc, (i-1)*(square+space)+square*7/6,square*3/4);
+            g.drawString(cc, (i-1)*(square+space)+square*7/5,square*3/4);
         }
 
         // paint row header
         for(int ii=1; ii<=row; ii++){
             g.setFont(new Font("Arial Black", Font.PLAIN, 10));
             String rr = xyzFunctions.convertNumToAlph(ii);
-            g.drawString(rr, 0,(ii-1)*(square+space)+square*7/4);
+            //g.drawString(rr, 0,(ii-1)*(square+space)+square*7/4);
+            g.drawString(rr, square -15,(ii-1)*(square+space)+square*7/4);
         }
+
     }
 
     public void drawFromOutsideClass(int startCol, int stopCol, int startRow, int stopRow){

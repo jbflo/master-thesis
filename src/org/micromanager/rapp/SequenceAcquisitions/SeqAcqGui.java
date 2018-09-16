@@ -200,7 +200,11 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
    protected static boolean saveMultiTiff_ = true;
    private SnapLiveManager SnapLiveManager_;
    private CMMCore core_;
+   private static SeqAcqGui appInterface_;
 
+    public static SeqAcqGui getInstance() {
+        return appInterface_;
+    }
 
    public final void createChannelTable() {
       model_ = new ChannelTableModel(studio_, acqEng_, exposurePrefs_, colorPrefs_, options_);
@@ -293,6 +297,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
    }
 
    public final void createEmptyPanels() {
+
       panelList_ = new ArrayList<JPanel>();
 
       channelsPanel_ = (CheckBoxPanel) createPanel("Channels", 3, 1, 705, 170, true);
@@ -302,12 +307,12 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
 
       // framesPanel_ = (CheckBoxPanel) createPanel("Time points", 5, 308, 220, 451, true); // (text, left, top, right, bottom)
       savePanel_ = (CheckBoxPanel) createPanel("Save images", 3, 175, 510, 290, true);
-      positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 175, 705, 435, true);
+      positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 175, 705, 290, true);
   //   afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
 
-      summaryPanel_ = createPanel("Summary", 710, 350, 885, 570);
+      summaryPanel_ = createPanel("Summary", 515, 290, 705, 455);
       // acquisitionOrderPanel_ = createPanel("Acquisition order", 515, 300, 705, 435);
-      commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",1, 300, 510,435,false);
+      commentsPanel_ = (ComponentTitledPanel) createPanel("Acquisition Comments",3, 290, 510,385,false);
    }
 
    private void createToolTips() {
@@ -379,7 +384,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
       options_ = options;
       SnapLiveManager_ = new SnapLiveManager((MMStudio) studio_, core_);
 
-      FOV_Controller  FOV_control = new FOV_Controller(core);
+      FOV_Controller  FOV_control = new FOV_Controller(core, gui);
 
       Preferences root = Preferences.userNodeForPackage(this.getClass());
       acqPrefs_ = root.node(root.absolutePath() + "/" + ACQ_SETTINGS_NODE);
@@ -1086,9 +1091,9 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
 
      // buttonPanel.add(closeButton);
       progressBar = new JProgressBar(0, 100);
-      progressBar.setPreferredSize(new Dimension(180, 40));
+      //progressBar.setPreferredSize(new Dimension(180, 40));
       this.add(progressBar);
-      progressBar.setBounds(30, 445, 320, 60);
+      progressBar.setBounds(20, 395, 120, 60);
       progressBar.setValue(0);
       progressBar.setStringPainted(true);
 
@@ -1099,7 +1104,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
       taskOutput.setLineWrap(true);
       taskOutput.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
       JScrollPane jScrollPane_ = new JScrollPane(taskOutput);
-      jScrollPane_.setBounds(385, 445, 320, 60);
+      jScrollPane_.setBounds(155, 395, 330, 60);
       jScrollPane_.setViewportView(taskOutput);
       this.add(jScrollPane_);
 

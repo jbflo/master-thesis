@@ -48,13 +48,7 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
     private static CMMCore core_;
     private MMStudio studio_;
 
-    public static CMMCore getMMcore(){
-        return  core_;
-    }
 
-    public static ScriptInterface getScripI(){
-        return app_;
-    }
 
     @Override // MM
     public void dispose() {
@@ -70,6 +64,14 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
         studio_ = (MMStudio) app_;
         core_ = app_.getMMCore();
 
+    }
+
+    public static CMMCore getMMcore(){
+        return  core_;
+    }
+
+    public static ScriptInterface getScripI(){
+        return app_;
     }
 
     @Override // MM

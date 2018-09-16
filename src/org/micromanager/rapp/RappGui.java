@@ -258,6 +258,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         left_box.add(acquisitionOption_btn);
         acquisitionOption_btn.addActionListener(e -> {
+            SeqAcqGui.updateGUIContents();
             asButtonPanel.setVisible(true);
             right_box_shoot.setVisible(false);
             right_box_setup.setVisible(false);
@@ -274,7 +275,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                 learnOption_btn.setSelected(false);
                 shootOption_btn.setSelected(false);
 
-                RappGui.getInstance().setSize(1150, 700);
+                RappGui.getInstance().setSize(1150, 660);
             }
         });
 
@@ -763,7 +764,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         /////////////////////////////////// #Image Viewer Center Panel# //////////////////////////////////////////JPanel centerPanel = new JPanel();
 
         rightPanel.add(right_box_fov);
-        right_box_fov.setPreferredSize(new Dimension(910, 575));   // vertical box
+        right_box_fov.setPreferredSize(new Dimension(910, 545));   // vertical box
         right_box_fov.setVisible(false);
 
         right_box_fov.setBorder(BorderFactory.createTitledBorder(
@@ -775,7 +776,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         try {
             if (fov_gui_ == null) {
-                fov_gui_ = (new FOV_GUI(this, core));
+                fov_gui_ = (new FOV_GUI(this, core, app));
             }
             fov_gui_.setPreferredSize(new Dimension(900, 545));
             fov_gui_.setVisible(true);
@@ -792,7 +793,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         //////////////////////////////////////# Imaging # ///////////////////////////////////////////////
 
         rightPanel.add(asButtonPanel);
-        asButtonPanel.setPreferredSize(new Dimension(910, 545));   // vertical box
+        asButtonPanel.setPreferredSize(new Dimension(910, 500));   // vertical box
         asButtonPanel.setVisible(false);
         asButtonPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Imaging Options",0,0,Font.getFont("arial"),  Color.decode("#34495e")));
@@ -805,7 +806,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             if (acquisition_ == null) {
                 acquisition_ = (new SeqAcqGui(engine_, this.mainPrefs_, studio_, this.options_, core));
             }
-            acquisition_.setPreferredSize(new Dimension(900, 545));
+            acquisition_.setPreferredSize(new Dimension(900, 500));
             acquisition_.setVisible(true);
             asButtonPanel.add(acquisition_);
             acquisition_.repaint();

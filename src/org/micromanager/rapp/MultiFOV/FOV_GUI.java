@@ -1,6 +1,7 @@
 package org.micromanager.rapp.MultiFOV;
 
 import mmcorej.CMMCore;
+import org.micromanager.api.ScriptInterface;
 import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqGui;
 import org.micromanager.rapp.utils.AboutGui;
@@ -24,7 +25,7 @@ public class FOV_GUI extends JInternalFrame {
 
     private final JLabel txt_pos_Label;
     private final JLabel txt_plate_Label;
-    private JButton about_btn ;
+    private JButton calibrateXY_btn ;
     public static JTextField rootField_xmlWellFile;
     private  final JButton browseRootButton_plate;
     private JComboBox plateIDCombo_;
@@ -33,13 +34,15 @@ public class FOV_GUI extends JInternalFrame {
     private wellPanel well_panel;
 
     protected static int well_plate_type;
-    private  CMMCore core_ = new CMMCore();
+    private  CMMCore core_ ;
+    private  ScriptInterface app_;
 
 
     // Constructor to setup the UI components and event handlers
-    public FOV_GUI(RappGui parent, CMMCore core) {
+    public FOV_GUI(RappGui parent, CMMCore core, ScriptInterface app) {
         parent_ = parent;
         core_ = core;
+        app_ = app;
        // getContentPane().setLayout(null);
 
         // Set JFrame Form and Location
@@ -47,26 +50,13 @@ public class FOV_GUI extends JInternalFrame {
         bi.setNorthPane(null);
         setLocation(0,0);
 
-        FOV_control = FOV_Controller.getInstance();
+        FOV_control = new FOV_Controller(core_, app_);
 
         FOVTableModel FOVTableModel_ = new FOVTableModel(FOV_control);
 
         main_well_panel = new JPanel();
         main_well_panel.setLayout(null);
         main_well_panel.setBackground(Color.decode("#34495e"));
-
-
-
-//        title_lbl = new JLabel(" Interface for controlling Stage position ");
-//        title_lbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
-//        title_lbl.setForeground(Color.decode("#dfe8f0"));
-//        title_lbl.setBounds(70, 25,500, 30);
-//        main_well_panel.add(title_lbl);
-
-
-
-
-
 
         txt_plate_Label = new JLabel();
         txt_plate_Label.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -101,11 +91,24 @@ public class FOV_GUI extends JInternalFrame {
                     if (plateChoosed == "384WELL") {
                         well_plate_type = 384;
 
-                        //
                     }
                     else if (plateChoosed =="96WELL"){
                         well_plate_type = 96;
                     }
+                    else if (plateChoosed =="6WELL"){
+                        well_plate_type = 6;
+                    }
+                    else if (plateChoosed =="12WELL"){
+                        well_plate_type = 12;
+                    }
+                    else if (plateChoosed =="24WELL"){
+                        well_plate_type = 24;
+                    } else if (plateChoosed =="48WELL"){
+                        well_plate_type = 48;
+                    }else if (plateChoosed =="SLIDES"){
+                        well_plate_type = 1;
+                    }
+
 
                 }//else ReportingUtils.showMessage(" Please Choose a plate ");
 
@@ -163,12 +166,12 @@ public class FOV_GUI extends JInternalFrame {
         posPanel xyPos_panel = new posPanel(this, core_);
         xyPos_panel.setBackground(Color.decode("#edf3f3"));
 
-        about_btn = new JButton();
-        about_btn.setText("Calibrate XY...");
-        about_btn.setBounds(380, 30, 120, 24);
-        main_well_panel.add(about_btn);
-        about_btn.addActionListener(evt->{
-
+        calibrateXY_btn = new JButton();
+        calibrateXY_btn.setText("Calibrate XY...");
+        calibrateXY_btn.setBounds(380, 30, 120, 24);
+        main_well_panel.add(calibrateXY_btn);
+        calibrateXY_btn.addActionListener(evt->{
+            FOV_control.calibrateXY();
         });
 
         JSplitPane splitPaneBody = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, main_well_panel, xyPos_panel);

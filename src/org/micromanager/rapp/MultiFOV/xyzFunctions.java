@@ -18,7 +18,9 @@ public class xyzFunctions {
 
     private FOV_GUI parent_;
     private CMMCore core_;
+
     static FOV_Controller FOV_control;
+
     private static final xyzFunctions fINSTANCE =  new xyzFunctions();
     public static int genMode = 0;
     
