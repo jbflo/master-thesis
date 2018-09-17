@@ -157,7 +157,7 @@ public class SeqAcqController implements AcquisitionEngine {
                             int progress = 0;
                             SeqAcqGui.taskOutput.setText("");
                             RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                            SeqAcqGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                         //   SeqAcqGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                             String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
 
                             ArrayList[] posXY = FOV_control.positionlists();
@@ -368,7 +368,7 @@ public class SeqAcqController implements AcquisitionEngine {
                         } finally {
                             SwingUtilities.invokeLater(() -> SeqAcqGui.progressBar.setIndeterminate(false));
                             RappGui.getInstance().setCursor(null); // turn off the wait cursor
-                            SeqAcqGui.getInstance().setCursor(null); // turn off the wait cursor
+                            //SeqAcqGui.getInstance().setCursor(null); // turn off the wait cursor
                             SeqAcqGui.acquireButton_.setEnabled(true); // Activate the Button again
                             isRunning_.set(false);
                             stopAcqRequested_.set(false);
