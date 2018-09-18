@@ -974,14 +974,16 @@ public class RappController extends  MMFrame implements OnStateListener {
 
             IJ.run("Draw");
         }
-       // impproc.setRoi(r);
+        // impproc.setRoi(r);
         System.out.println( " Xcord "+ xTab);
         System.out.println(" Ycord "+ yTab);
         impproc.updateAndRepaintWindow();
+        System.out.println("Save?" +save + "Path"+ path);
         if(path !=null && save){
             IJ.save(impproc, path+ "_"+"Segmented.tif");
+            impproc.close();
         }
-         impproc.close();
+
         return new ArrayList[]{xTab, yTab};
     }
 

@@ -62,6 +62,8 @@ public class FOV_Controller {
     public static final  String MATRI_384_WELL= "384WELL";
     public static final  String SLIDE_HOLDER ="SLIDES";
 
+    public static  ArrayList<String> wellTypes = new ArrayList<>();
+
 
    // public static final String IBIDI_24_WELL = "Ibidi-24WELL";
     public static final String DEFAULT_XYSTAGE_NAME = "XYStage";
@@ -105,43 +107,22 @@ public class FOV_Controller {
                 System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
                // Node node_ = doc.getElementsByTagName("WellParam").item(node_index);
-//                NodeList node_listeWelltypes = doc.getElementsByTagName("WellTypes");
-//
-//                if (node_listeWelltypes.getLength() == 0){
-//                    return false;
-//                }
-//
-//                for (int tmp = 0; tmp < node_listeWelltypes.getLength(); tmp++) {
-//
-//                    Node nNode_types = node_listeWelltypes.item(tmp);
-//
-//                    if (nNode_types.getNodeType() == Node.ELEMENT_NODE) {
-//                        Element eElement_types = (Element) nNode_types;
-//
-//                        //MATRI_6_WELL = (eElement_types.;
-//                        MATRI_12_WELL = (eElement_types.getElementsByTagName("numColumns_").item(0).getTextContent());
-//                        MATRI_24_WELL = eElement_types.getElementsByTagName("numRows_").item(0).getTextContent();
-//                        MATRI_48_WELL = (eElement_types.getElementsByTagName("squareSize").item(0).getTextContent());
-//                        space = Integer.parseInt(eElement_types.getElementsByTagName("space").item(0).getTextContent());
-//
-//                        sizeXUm_ = Double.parseDouble(eElement_types.getElementsByTagName("sizeXUm_").item(0).getTextContent());
-//                        sizeYUm_ = Double.parseDouble(eElement_types.getElementsByTagName("sizeYUm_").item(0).getTextContent());
-//
-//
-//                        if (Integer.parseInt(eElement_types.getAttribute("id")) == wellNumber) {
-//
-//
-//                            System.out.println("----------------------------");
-//                            System.out.println("Well Types: " + eElement_types.getAttribute("id"));
-//                            System.out.println("colSize : " + numColumns_);
-//                            System.out.println("rowSize : " + numRows_);
-//                            System.out.println("squareSize : " + squareSize);
-//                            System.out.println("space : " + space);
-//
-//                            //  return true;
-//                        } //else return false;
-//                    }
-//                }
+                NodeList node_listeWelltypes = doc.getElementsByTagName("WellTypes");
+                if (node_listeWelltypes.getLength() == 0){
+                    return false;
+                }
+                for (int tmp = 0; tmp < node_listeWelltypes.getLength(); tmp++) {
+                    Node nNode_types = node_listeWelltypes.item(tmp);
+                  //  if (nNode_types.getNodeType() == Node.ELEMENT_NODE) {
+                        Element eElement_types = (Element) nNode_types;
+                        System.out.println(eElement_types.getAttribute("id"));
+                        System.out.println("sortSize :" + nNode_types.getTextContent().length());
+                        System.out.println("sort :" + nNode_types.getTextContent().charAt(1));
+
+                        wellTypes.add( eElement_types.getElementsByTagName("well_1").item(0).getTextContent());
+                  //  }
+                }
+                System.out.println("Solve : "+wellTypes);
 
                 NodeList node_liste = doc.getElementsByTagName("WellParam");
 
@@ -156,7 +137,7 @@ public class FOV_Controller {
                 for (int temp = 0; temp < node_liste.getLength(); temp++) {
 
                     Node nNode = node_liste.item(temp);
-                    System.out.println("----------------------------" + nNode.getTextContent());
+                   // System.out.println("----------------------------" + nNode.getTextContent());
                     if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                         Element eElement = (Element) nNode;
                         if (Integer.parseInt(eElement.getAttribute("id")) == wellNumber ){
@@ -182,12 +163,6 @@ public class FOV_Controller {
                             sizeXFOV_ = Double.parseDouble(eElement.getElementsByTagName("sizeXFOV_").item(0).getTextContent());;
                             sizeYFOV_ = Double.parseDouble(eElement.getElementsByTagName("sizeYFOV_").item(0).getTextContent());;
 
-                            System.out.println("----------------------------");
-                            System.out.println("Well Types: " +eElement.getAttribute("id"));
-                            System.out.println("colSize : " + numColumns_);
-                            System.out.println("rowSize : " + numRows_);
-                            System.out.println("squareSize : " + squareSize);
-                            System.out.println("space : " + space);
 
                           //  return true;
                         } //else return false;

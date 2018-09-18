@@ -312,7 +312,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
-                                        ArrayList[] ll = rappController_ref.imageSegmentation(image_dup, path_seq, algo, presetConfig.KillCell, false);
+                                        ArrayList[] ll = rappController_ref.imageSegmentation(image_dup, path_seq, algo, presetConfig.KillCell, saveFiles_);
 
                                         if (presetConfig.KillCell) {
                                             app_.enableLiveMode(true); //  Open the live mode before shooting
@@ -496,7 +496,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
-                                        ArrayList[] ll = rappController_ref.imageSegmentation(image_dup, path_seq, algo, presetConfig.KillCell, false);
+                                        ArrayList[] ll = rappController_ref.imageSegmentation(image_dup, path_seq, algo, presetConfig.KillCell, saveFiles_);
 
                                         if (presetConfig.KillCell) {
                                             app_.enableLiveMode(true); //  Open the live mode before shooting

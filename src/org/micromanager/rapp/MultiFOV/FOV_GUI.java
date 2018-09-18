@@ -11,6 +11,7 @@ import org.micromanager.utils.ReportingUtils;
 import javax.swing.*;
 import java.awt.*;        // Using AWT's Graphics and Color
 import java.awt.event.*;  // Using AWT's event classes and listener interfaces
+import java.util.ArrayList;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -69,14 +70,19 @@ public class FOV_GUI extends JInternalFrame {
         plateIDCombo_.setBounds(220, 30, 150, 24);
         main_well_panel.add(plateIDCombo_);
 
-        plateIDCombo_.addItem(FOV_Controller.MATRI_6_WELL);
-        plateIDCombo_.addItem(FOV_Controller.MATRI_12_WELL);
-        plateIDCombo_.addItem(FOV_Controller.MATRI_24_WELL);
-        plateIDCombo_.addItem(FOV_Controller.MATRI_24_WELL);
-        plateIDCombo_.addItem(FOV_Controller.MATRI_48_WELL);
-        plateIDCombo_.addItem(FOV_Controller.MATRI_96_WELL);
-        plateIDCombo_.addItem(FOV_Controller.MATRI_384_WELL);
-        plateIDCombo_.addItem(FOV_Controller.SLIDE_HOLDER);
+        // here we add all the plate type from the XML fILE ,  to the JComboBox
+//        ArrayList plateListe = FOV_Controller.wellTypes;
+//        if(plateListe.size() != 0) {
+//            boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFile(file, well_plate_type));
+//            plateIDCombo_.addItem(plateListe.iterator().next());
+//        }
+//        plateIDCombo_.addItem(FOV_Controller.MATRI_12_WELL);
+//        plateIDCombo_.addItem(FOV_Controller.MATRI_24_WELL);
+//        plateIDCombo_.addItem(FOV_Controller.MATRI_24_WELL);
+//        plateIDCombo_.addItem(FOV_Controller.MATRI_48_WELL);
+//        plateIDCombo_.addItem(FOV_Controller.MATRI_96_WELL);
+//        plateIDCombo_.addItem(FOV_Controller.MATRI_384_WELL);
+//        plateIDCombo_.addItem(FOV_Controller.SLIDE_HOLDER);
 
 
         plateIDCombo_.addActionListener(new ActionListener() {
@@ -85,12 +91,12 @@ public class FOV_GUI extends JInternalFrame {
                 String file = rootField_xmlWellFile.getText();
 
                 String plateChoosed = (String) plateIDCombo_.getSelectedItem();
+                int plateID = (int) plateIDCombo_.getSelectedIndex();
 
                 if (plateChoosed != null ){
 
                     if (plateChoosed == "384WELL") {
                         well_plate_type = 384;
-
                     }
                     else if (plateChoosed =="96WELL"){
                         well_plate_type = 96;
@@ -150,8 +156,15 @@ public class FOV_GUI extends JInternalFrame {
         browseRootButton_plate.addActionListener(e->{
             String path = FileDialog.xmlFileChooserDialog("Load plate configuration file :");
             rootField_xmlWellFile.setText(path);
-
-
+            ArrayList plateListe = FOV_Controller.wellTypes;
+           // if(plateListe.size() != 0) {
+                boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFile(path, 1));
+                if (valide) {
+                    for(int i = 0; i< plateListe.size(); i ++) {
+                        plateIDCombo_.addItem(plateListe.get(i));
+                    }
+                }
+          //  }
         });
 
         browseRootButton_plate.setMargin(new Insets(2, 5, 2, 5));

@@ -96,6 +96,7 @@ public class SBSPlate {
    }
 
    public final void initialize(String id) {
+
       /* // SDS definition, does not seem to be adhered to
          // replaced with definition below
         if (id.equals(SBS_24_WELL)){
