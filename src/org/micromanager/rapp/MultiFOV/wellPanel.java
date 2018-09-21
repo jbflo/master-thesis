@@ -1,9 +1,13 @@
 package org.micromanager.rapp.MultiFOV;
 
+import mmcorej.CMMCore;
+import org.micromanager.api.ScriptInterface;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class wellPanel extends JPanel  {
@@ -12,15 +16,21 @@ public class wellPanel extends JPanel  {
      */
     static FOV_GUI parent_;
 
-
-    private static final wellPanel fINSTANCE =  new wellPanel( parent_);
+    private static CMMCore core_ ;
+    private ScriptInterface app_;
+    private static final wellPanel fINSTANCE =  new wellPanel( parent_, core_);
     Color bgColor = Color.LIGHT_GRAY;  // Panel's background color
-    Point selectionStart_ = new Point();
-    Point selectionEnd_ = new Point();
+    private  Point selectionStart_ ;
+    private  Point selectionEnd_ ;
+    private  ArrayList<Point> selection_list;
     Rectangle selection_ = new Rectangle();
+
     boolean isSelecting_ = false;
     ArrayList<ArrayList<Boolean>> wellsSelected_;
     Color transRed = new Color(128, 0, 0, 64);
+
+    public enum Tool {SELECT, MOVE}
+    private Tool mode_;
 
     static FOV_Controller FOV_control ;
 
@@ -29,7 +39,7 @@ public class wellPanel extends JPanel  {
     }
 
 
-    private int wellplate;
+    private String wellplate;
     private int col ;
     private int row ;
 
@@ -52,10 +62,10 @@ public class wellPanel extends JPanel  {
 
 
 
-   public wellPanel(FOV_GUI parent){
-
+   public wellPanel(FOV_GUI parent , CMMCore core){
+       core_ = core;
+       mode_ = Tool.SELECT;
        FOV_control = FOV_Controller.getInstance();
-
        wellplate = FOV_control.getWellPlateID();
        col = FOV_control.getcolSize();
        row = FOV_control.getrowSize();
@@ -63,28 +73,44 @@ public class wellPanel extends JPanel  {
        square = FOV_control.getSquareSize();
        //int space = 3;
        space = FOV_control.getWellSpace();
-
-    //   initComponents();
-       //pp_ = WellClass.getInstance();
+       // initComponents();
+       // pp_ = WellClass.getInstance();
        selectionStart_ = new Point();
        selectionEnd_ = new Point();
+       selection_list = new ArrayList<Point>();
        selection_ = new Rectangle();
 
-
-//      wellsSelected_ = new ArrayList<ArrayList<Boolean>>();
+//     wellsSelected_ = new ArrayList<ArrayList<Boolean>>();
 
        parent_ = parent;
        addMouseListener(new MouseAdapter() {
 
            @Override
+           public void mouseClicked(final MouseEvent e){
+               if (e.isControlDown()) {
+                   selection_list.add(e.getPoint());
+                   isSelecting_ = true;
+               }
+           }
+
+           @Override
            public void mousePressed(MouseEvent e) {
+               selection_list.add(e.getPoint());
+               if (e.isControlDown()){
+                   selectionStart_ = selection_list.get(0);
+               } else
                selectionStart_ = e.getPoint();
                isSelecting_ = true;
            }
+
            @Override
            public void mouseReleased(MouseEvent e) {
                isSelecting_ = false;
-               selectionEnd_ = e.getPoint();
+               if (e.isControlDown()){
+                   selectionEnd_ = selection_list.get(selection_list.size() - 1);
+               }else
+                selectionEnd_ = e.getPoint();
+
                outerAccess = 0;
               // We got the new Value of the plate reloaded
                wellplate = FOV_control.getWellPlateID();
@@ -107,6 +133,7 @@ public class wellPanel extends JPanel  {
     private void checkStartEnd() {
         int xEnd = selectionEnd_.x;
         int yEnd = selectionEnd_.y;
+
         int xSta = selectionStart_.x;
         int ySta = selectionStart_.y;
         if (xEnd < xSta) {
@@ -117,10 +144,7 @@ public class wellPanel extends JPanel  {
             selectionEnd_.y = ySta;
             selectionStart_.y = yEnd;
         }
-
     }
-
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -130,7 +154,6 @@ public class wellPanel extends JPanel  {
         drawWellMap(g);
         System.out.println("In paintComponent");
         System.out.println("column start: " + ccolS);
-
     }
 
     private void drawWellMap(Graphics g) {
@@ -142,15 +165,16 @@ public class wellPanel extends JPanel  {
 //        }
 //        else{
 //          //  square = 10;
-            generateWellMap(g, square, space, col, row, wellplate);
+            System.out.println("Kisa" + wellplate);
+            generateWellMap(g, square, space, col, row);
      //   }
     }
 
     private void getSelectedWells() {
-
         // get start well
         ccolS = (selectionStart_.x-square)/(square+space)+1;
         rrowS = (selectionStart_.y-square)/(square+space)+1;
+
 //                String rr = xyzFunctions.convertNumToAlph(rrowS);
 //                String startWell = Integer.toString(ccolS);
 //                startWell = rr.concat(startWell);
@@ -165,15 +189,37 @@ public class wellPanel extends JPanel  {
         int dRow = rrowE - rrowS+1;
 
 
+
         ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, ccolS, rrowS, genMode);
         posPanel.tableModel_.addWholeData(fovs);
+
+         System.out.println("mode:" + mode_.toString());
+
+        if (mode_ == Tool.MOVE) {
+            Point2D.Double Calibrated_pt = FOV_control.calibrateXY();
+            ArrayList[] posXY = FOV_control.positionlists();
+
+            double x_pos =  (double) posXY[0].get(0); //store each element as a double in the array
+            double y_pos = (double) posXY[1].get(0); //store each element as a double in the array
+
+            double xxPos = -x_pos+ Calibrated_pt.getX();
+            double yyPos = y_pos+ Calibrated_pt.getY();
+
+            try{
+                System.out.println("xx = " + xxPos + "__ yy= " +yyPos);
+                core_.setXYPosition(xxPos, yyPos);
+            }
+            catch (Exception e){
+              e.printStackTrace();
+            }
+        }
 
         FOV_control.getWholeData(fovs);
         System.out.println("Values : " + dCol + " _ " + dRow + " _ " +ccolS + " _ " +rrowS+ " _ " + genMode);
 
     }
 
-    private void generateWellMap(Graphics g, int square, int space, int col, int row, int wellPlate) {
+    private void generateWellMap(Graphics g, int square, int space, int col, int row) {
         int xx = 0;
         int yy = 0;
         // paint squares
@@ -194,11 +240,8 @@ public class wellPanel extends JPanel  {
 
         // paint column header
         for(int i=1; i<=col; i++){
-            if(wellPlate == 96){
-                g.setFont(new Font("Arial Black", Font.PLAIN, 10));
-            } else{
-                g.setFont(new Font("Arial Black", Font.PLAIN, 8));
-            }
+            g.setFont(new Font("Arial Black", Font.PLAIN, 9));
+
             String cc = Integer.toString(i);
             g.drawString(cc, (i-1)*(square+space)+square*7/5,square*3/4);
         }
@@ -211,6 +254,14 @@ public class wellPanel extends JPanel  {
             g.drawString(rr, square -15,(ii-1)*(square+space)+square*7/4);
         }
 
+    }
+
+    public void setTool(Tool t) {
+        mode_ = t;
+        if (mode_ == Tool.MOVE)
+            setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        else
+            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void drawFromOutsideClass(int startCol, int stopCol, int startRow, int stopRow){

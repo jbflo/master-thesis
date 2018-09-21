@@ -38,6 +38,7 @@ public class posPanel extends JPanel {
      */
     public posPanel(FOV_GUI parent_ , CMMCore core) {
 
+        core_ = core;
         this.setLayout(null);
 
         FOV_control = FOV_Controller.getInstance();

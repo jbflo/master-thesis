@@ -187,14 +187,11 @@ public class Galvo implements RappDevice {
 
    @Override
    public void turnOn() {
-      galvoExecutor_.submit(new Runnable() {
-         @Override
-         public void run() {
-            try {
-               mmc_.setGalvoIlluminationState(galvo_, true);
-            } catch (Exception ex) {
-               ReportingUtils.showError(ex);
-            }
+      galvoExecutor_.submit(()->{
+         try {
+            mmc_.setGalvoIlluminationState(galvo_, true);
+         } catch (Exception ex) {
+            ReportingUtils.showError(ex);
          }
       });
       for (OnStateListener listener:onStateListeners_) {

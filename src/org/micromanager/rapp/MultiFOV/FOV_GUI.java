@@ -2,6 +2,7 @@ package org.micromanager.rapp.MultiFOV;
 
 import mmcorej.CMMCore;
 import org.micromanager.api.ScriptInterface;
+import org.micromanager.rapp.FOVGenerator.PlatePanel;
 import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqGui;
 import org.micromanager.rapp.utils.AboutGui;
@@ -30,6 +31,7 @@ public class FOV_GUI extends JInternalFrame {
     public static JTextField rootField_xmlWellFile;
     private  final JButton browseRootButton_plate;
     private JComboBox plateIDCombo_;
+
     private static RappGui parent_ = RappGui.getInstance();
     protected AboutGui  dlgAbout;
     private wellPanel well_panel;
@@ -91,49 +93,47 @@ public class FOV_GUI extends JInternalFrame {
                 String file = rootField_xmlWellFile.getText();
 
                 String plateChoosed = (String) plateIDCombo_.getSelectedItem();
-                int plateID = (int) plateIDCombo_.getSelectedIndex();
-
-                if (plateChoosed != null ){
-
-                    if (plateChoosed == "384WELL") {
-                        well_plate_type = 384;
-                    }
-                    else if (plateChoosed =="96WELL"){
-                        well_plate_type = 96;
-                    }
-                    else if (plateChoosed =="6WELL"){
-                        well_plate_type = 6;
-                    }
-                    else if (plateChoosed =="12WELL"){
-                        well_plate_type = 12;
-                    }
-                    else if (plateChoosed =="24WELL"){
-                        well_plate_type = 24;
-                    } else if (plateChoosed =="48WELL"){
-                        well_plate_type = 48;
-                    }else if (plateChoosed =="SLIDES"){
-                        well_plate_type = 1;
-                    }
-
-
-                }//else ReportingUtils.showMessage(" Please Choose a plate ");
+//                int plateID = (int) plateIDCombo_.getSelectedIndex();
+//
+//                if (plateChoosed != null ){
+//
+//                    if (plateChoosed == "384WELL") {
+//                        well_plate_type = 384;
+//                    }
+//                    else if (plateChoosed =="96WELL"){
+//                        well_plate_type = 96;
+//                    }
+//                    else if (plateChoosed =="6WELL"){
+//                        well_plate_type = 6;
+//                    }
+//                    else if (plateChoosed =="12WELL"){
+//                        well_plate_type = 12;
+//                    }
+//                    else if (plateChoosed =="24WELL"){
+//                        well_plate_type = 24;
+//                    } else if (plateChoosed =="48WELL"){
+//                        well_plate_type = 48;
+//                    }else if (plateChoosed =="SLIDES"){
+//                        well_plate_type = 1;
+//                    }
+//
+//
+//                } //else ReportingUtils.showMessage(" Please Choose a plate ");
 
                 if (file.equals("")){
                     ReportingUtils.showMessage(" Please Choose well map configuration file before");
                 }
                 else {
-                    boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFile(file, well_plate_type));
+                    boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFile(file, plateChoosed));
                     if (valide){
-                        well_panel = new wellPanel(FOV_GUI.this);
+                        well_panel = new wellPanel(FOV_GUI.this, core_);
                         well_panel.setBounds(0, 70,600, 410);
                         well_panel.setBackground(Color.decode("#edf3f3"));
                         main_well_panel.add(well_panel);
                         well_panel.repaint();
-
                     }else {
                         ReportingUtils.showMessage(" Please Choose a correct xml configuration file to load Well Map");
                     }
-
                 }
 
             }
@@ -157,14 +157,13 @@ public class FOV_GUI extends JInternalFrame {
             String path = FileDialog.xmlFileChooserDialog("Load plate configuration file :");
             rootField_xmlWellFile.setText(path);
             ArrayList plateListe = FOV_Controller.wellTypes;
-           // if(plateListe.size() != 0) {
-                boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFile(path, 1));
+            plateIDCombo_.removeAllItems();
+                boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFileOnce(path));
                 if (valide) {
                     for(int i = 0; i< plateListe.size(); i ++) {
                         plateIDCombo_.addItem(plateListe.get(i));
                     }
                 }
-          //  }
         });
 
         browseRootButton_plate.setMargin(new Insets(2, 5, 2, 5));
@@ -187,13 +186,36 @@ public class FOV_GUI extends JInternalFrame {
             FOV_control.calibrateXY();
         });
 
+        ButtonGroup toolButtonGroup = new ButtonGroup();
+
+        rdbtnSelectWells_ = new JRadioButton("Select Wells");
+        rdbtnSelectWells_.setBounds(10, 485, 120, 24);
+        toolButtonGroup.add(rdbtnSelectWells_);
+        main_well_panel.add(rdbtnSelectWells_);
+        rdbtnSelectWells_.addActionListener(arg0->{
+            if (rdbtnSelectWells_.isSelected()) {
+                well_panel.setTool(wellPanel.Tool.SELECT);
+            }
+        });
+
+        rdbtnMoveStage_ = new JRadioButton("Move Stage");
+        toolButtonGroup.add(rdbtnMoveStage_);
+        rdbtnMoveStage_.setBounds(140, 485, 120, 24);
+        toolButtonGroup.add(rdbtnMoveStage_);
+        main_well_panel.add(rdbtnMoveStage_);
+        rdbtnMoveStage_.addActionListener(e->{
+            if (rdbtnMoveStage_.isSelected()) {
+                well_panel.setTool(wellPanel.Tool.MOVE);
+            }
+        });
+
         JSplitPane splitPaneBody = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, main_well_panel, xyPos_panel);
         splitPaneBody.setDividerLocation(600);
         this.add(splitPaneBody,BorderLayout.CENTER);
 
         //setDefaultCloseOperation(0);
         setTitle("Set Multi");
-        setSize(900, 445);
+       // setSize(900, 445);
         setResizable(false);
         //  setLocationRelativeTo(null);  // center the application window
         setVisible(true);

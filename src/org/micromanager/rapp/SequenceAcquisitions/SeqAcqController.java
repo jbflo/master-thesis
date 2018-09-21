@@ -157,9 +157,8 @@ public class SeqAcqController implements AcquisitionEngine {
                             int progress = 0;
                             SeqAcqGui.taskOutput.setText("");
                             RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                         //   SeqAcqGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                         // SeqAcqGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                             String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
-
                             ArrayList[] posXY = FOV_control.positionlists();
 
                             if (posXY[0].size() == 0) {
@@ -174,23 +173,26 @@ public class SeqAcqController implements AcquisitionEngine {
                             double[] x_pos = new double[posXY[0].size()];
                             double[] y_pos = new double[posXY[1].size()];
 
-                            double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
-                            double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
+//                            double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
+//                            double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
 
-                            Point2D.Double cornet_pos ;
+                           // Point2D.Double cornet_pos ;
+                            Point2D.Double xyOff  = new Point2D.Double();
 
-                            double defXoff = 0 ;
-                            double defyoff = 0;
+//                            double defXoff = 0 ;
+//                            double defyoff = 0;
 
                             try {
 
-                                cornet_pos = core_.getXYStagePosition();
+                                xyOff = FOV_control.calibrateXY();
 
-                                defXoff = (x_pos_ini + cornet_pos.getX()) ;
+//                                cornet_pos = core_.getXYStagePosition();
+//
+//                                defXoff = (x_pos_ini + cornet_pos.getX()) ;
+//
+//                                defyoff = (-y_pos_ini + cornet_pos.getY()) ;
 
-                                defyoff = (-y_pos_ini + cornet_pos.getY()) ;
-
-                                System.out.println("Xoff = " +defXoff + "__ Yoff= " + defyoff);
+                                System.out.println("Xoff = " +xyOff.getX() + "__ Yoff= " + xyOff.getY());
 
                                 Thread.sleep(1000 );
 
@@ -203,7 +205,6 @@ public class SeqAcqController implements AcquisitionEngine {
                             }
 
                             for (int i =0 ; i < posXY[0].size(); i++){
-
 
                             for (ChannelSpec presetConfig : channels) {
 
@@ -225,16 +226,15 @@ public class SeqAcqController implements AcquisitionEngine {
                                 System.out.println("X = " + x_pos[i] + "__ Y= " + y_pos[i]);
 
                                 try {
-
                                     System.out.println("Curent : " + i);
-                                    System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
-                                    double xxPos = -x_pos[i]+ defXoff;
-                                    double yxxPos = y_pos[i]+ defyoff;
+                                 //   System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
 
-                                    System.out.println("xx = " + xxPos + "__ yy= " +yxxPos);
-                                    core_.setXYPosition(xxPos,yxxPos);
+                                    double xxPos = -x_pos[i]+ xyOff.getX();
+                                    double yyPos = y_pos[i]+ xyOff.getY();
+
+                                    System.out.println("xx = " + xxPos + "__ yy= " +yyPos);
+                                    core_.setXYPosition(xxPos, yyPos);
                                    // core_.setRelativeXYPosition(x_pos[i]- defXoff, y_pos[i] - defyoff );
-
                                     Thread.sleep(1000 );
                                 } catch (Exception e) {
                                     e.printStackTrace();

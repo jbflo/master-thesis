@@ -444,6 +444,7 @@ public class SiteGenerator extends MMFrame implements ParentPlateGUI, MMPlugin {
             }
          }
       });
+
       toolButtonGroup.add(rdbtnMoveStage_);
       rdbtnSelectWells_.setSelected(false);
       springLayout.putConstraint(SpringLayout.NORTH, rdbtnMoveStage_, 2, SpringLayout.SOUTH, rdbtnSelectWells_);
@@ -785,6 +786,7 @@ public class SiteGenerator extends MMFrame implements ParentPlateGUI, MMPlugin {
               Integer.parseInt(columnsField_.getText()),
               Xspacing,Yspacing, useSnake_.isSelected());
       plate_.initialize((String) plateIDCombo_.getSelectedItem());
+
       try {
          platePanel_.refreshImagingSites(sites);
       } catch (HCSException e) {

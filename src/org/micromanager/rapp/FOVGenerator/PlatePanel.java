@@ -236,11 +236,13 @@ public class PlatePanel extends JPanel {
 
          try {
             app_.setXYStagePosition(pt.x, pt.y);
+
             if (gui_.useThreePtAF() && gui_.getThreePointZPos(pt.x, pt.y) != null)
                app_.setStagePosition(gui_.getThreePointZPos(pt.x, pt.y));
             
             xyStagePos_ = app_.getXYStagePosition();
             zStagePos_ = app_.getMMCore().getPosition(app_.getMMCore().getFocusDevice());
+
             gui_.updateStagePositions(xyStagePos_.x, xyStagePos_.y, zStagePos_, well, "undefined");
             refreshStagePosition();
             repaint();

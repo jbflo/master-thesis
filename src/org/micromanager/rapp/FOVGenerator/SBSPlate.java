@@ -243,7 +243,6 @@ public class SBSPlate {
       } catch (IOException e) {
          throw new HCSException(e);
       }
-
    }
 
    public void save(String path) throws HCSException {

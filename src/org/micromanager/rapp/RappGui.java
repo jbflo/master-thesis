@@ -405,11 +405,11 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         right_box_setup.add(new JLabel("<html><font size='4' color='white'>Laser Exposure Time (ms) :</font></html>"),gbc);
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font size='4'  color='white'>Turn Laser Illumination ON/OFF, MM Side  :</font></html>"), gbc);
+        right_box_setup.add(new JLabel("<html><font size='4'  color='white'>Turn ON/OFF Plugin :</font></html>"), gbc);
 //        gbc.gridy++;
-//        right_box_setup.add(new JLabel("<html><font size='4' color='white'>Calibration Delays (ms)    :</font></html>"), gbc);
+//        right_box_setup.add(new JLabel("<html><font size='4' color='white'>Calibration Delays (ms)  :</font></html>"), gbc);
         gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font size='4'  color='white'>Start Calibration :</font></html>"),gbc);
+        right_box_setup.add(new JLabel("<html><font size='4'  color='white'>Start spot Calibration :</font></html>"),gbc);
         gbc.gridy++;
         right_box_setup.add( new JSeparator(SwingConstants.HORIZONTAL),  gbc, 1); this.right_box_setup.getComponent(1).setPreferredSize(new Dimension(150,10));
         gbc.gridy++;

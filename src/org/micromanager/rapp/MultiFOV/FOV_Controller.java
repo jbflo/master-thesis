@@ -6,10 +6,7 @@ import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.RappPlugin;
 import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
@@ -23,7 +20,7 @@ public class FOV_Controller {
     private CMMCore core_ = new CMMCore();
     private ScriptInterface app_ =  RappPlugin.getScripI();
     private static final FOV_Controller fINSTANCE =  new FOV_Controller();
-    private static int wellPlateID;
+    private static String wellPlateID;
     private static int numColumns_;
     private static int numRows_;
     private static int squareSize;
@@ -54,18 +51,10 @@ public class FOV_Controller {
     private static double wellXOff;
     private static double wellYOff;
 
-    public static final  String MATRI_6_WELL= "6WELL";
-    public static final  String MATRI_12_WELL= "12WELL";
-    public static final  String MATRI_24_WELL= "24WELL";
-    public static final  String MATRI_48_WELL= "48WELL";
-    public static final  String MATRI_96_WELL= "96WELL";
-    public static final  String MATRI_384_WELL= "384WELL";
-    public static final  String SLIDE_HOLDER ="SLIDES";
 
     public static  ArrayList<String> wellTypes = new ArrayList<>();
 
-
-   // public static final String IBIDI_24_WELL = "Ibidi-24WELL";
+    // public static final String IBIDI_24_WELL = "Ibidi-24WELL";
     public static final String DEFAULT_XYSTAGE_NAME = "XYStage";
     public static final String CUSTOM = "CUSTOM";
     private static final String METADATA_SITE_PREFIX = "Site";
@@ -91,7 +80,46 @@ public class FOV_Controller {
         return fINSTANCE;
     }
 
-    public static boolean readXmlFile (String filePath, int wellNumber) {
+
+    public static boolean readXmlFileOnce (String filePath) {
+        try {
+
+            File fXmlFile = new File(filePath);
+
+            if(fXmlFile.exists()){
+                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(fXmlFile);
+                doc.getDocumentElement().normalize();
+                System.out.println("Root element : " + doc.getDocumentElement().getNodeName());
+                // Node node_ = doc.getElementsByTagName("WellParam").item(node_index);
+                Element plate = doc.getDocumentElement();
+                NodeList listaPlate = plate.getElementsByTagName("plate");
+                int tam = listaPlate.getLength();
+                wellTypes.clear();
+                System.out.println("size : "+ tam);
+
+                for (int i = 0; i < tam; i++) {
+                    Element elem = (Element) listaPlate.item(i);
+                    System.out.println("elem : " + elem.getTextContent());
+                    wellTypes.add(elem.getTextContent());
+                }
+
+                return true;
+            } else return false;
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+
+        }
+
+    }
+
+
+    public static boolean readXmlFile (String filePath, String plateName) {
         try {
 
             File fXmlFile = new File(filePath);
@@ -104,25 +132,7 @@ public class FOV_Controller {
 
                 doc.getDocumentElement().normalize();
 
-                System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
-               // Node node_ = doc.getElementsByTagName("WellParam").item(node_index);
-                NodeList node_listeWelltypes = doc.getElementsByTagName("WellTypes");
-                if (node_listeWelltypes.getLength() == 0){
-                    return false;
-                }
-                for (int tmp = 0; tmp < node_listeWelltypes.getLength(); tmp++) {
-                    Node nNode_types = node_listeWelltypes.item(tmp);
-                  //  if (nNode_types.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eElement_types = (Element) nNode_types;
-                        System.out.println(eElement_types.getAttribute("id"));
-                        System.out.println("sortSize :" + nNode_types.getTextContent().length());
-                        System.out.println("sort :" + nNode_types.getTextContent().charAt(1));
-
-                        wellTypes.add( eElement_types.getElementsByTagName("well_1").item(0).getTextContent());
-                  //  }
-                }
-                System.out.println("Solve : "+wellTypes);
+                System.out.println("Root element : " + doc.getDocumentElement().getNodeName());
 
                 NodeList node_liste = doc.getElementsByTagName("WellParam");
 
@@ -133,37 +143,30 @@ public class FOV_Controller {
 
                 /////////////////////////////////////////////////////////////////////
 
-
                 for (int temp = 0; temp < node_liste.getLength(); temp++) {
 
                     Node nNode = node_liste.item(temp);
                    // System.out.println("----------------------------" + nNode.getTextContent());
                     if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                         Element eElement = (Element) nNode;
-                        if (Integer.parseInt(eElement.getAttribute("id")) == wellNumber ){
-
-                            wellPlateID = Integer.parseInt(eElement.getAttribute("id"));
+                        if (eElement.getAttribute("id").equals(plateName)){
+                            System.out.println("plate:" + plateName);
+                            System.out.println("Equal to "+ eElement.getAttribute("id"));
+                            wellPlateID = eElement.getAttribute("id");
                             numColumns_ = Integer.parseInt(eElement.getElementsByTagName("numColumns_").item(0).getTextContent());
-                            numRows_ = Integer.parseInt(eElement.getElementsByTagName("numRows_").item(0).getTextContent());
+                            numRows_   = Integer.parseInt(eElement.getElementsByTagName("numRows_").item(0).getTextContent());
                             squareSize = Integer.parseInt(eElement.getElementsByTagName("squareSize").item(0).getTextContent());
-                            space = Integer.parseInt(eElement.getElementsByTagName("space").item(0).getTextContent());
-
-                            sizeXUm_  = Double.parseDouble(eElement.getElementsByTagName("sizeXUm_").item(0).getTextContent());
-                            sizeYUm_ = Double.parseDouble(eElement.getElementsByTagName("sizeYUm_").item(0).getTextContent());
-
+                            space      = Integer.parseInt(eElement.getElementsByTagName("space").item(0).getTextContent());
+                            sizeXUm_   = Double.parseDouble(eElement.getElementsByTagName("sizeXUm_").item(0).getTextContent());
+                            sizeYUm_   = Double.parseDouble(eElement.getElementsByTagName("sizeYUm_").item(0).getTextContent());
                             wellSizeX_ = Double.parseDouble(eElement.getElementsByTagName("wellSizeX_").item(0).getTextContent());;
                             wellSizeY_ = Double.parseDouble(eElement.getElementsByTagName("wellSizeY_").item(0).getTextContent());;
-
                             firstWellX_ = Double.parseDouble(eElement.getElementsByTagName("firstWellX_").item(0).getTextContent());;
                             firstWellY_ = Double.parseDouble(eElement.getElementsByTagName("firstWellY_").item(0).getTextContent());;
-
                             wellSpacingX_ = Double.parseDouble(eElement.getElementsByTagName("wellSpacingX_").item(0).getTextContent());;
                             wellSpacingY_= Double.parseDouble(eElement.getElementsByTagName("wellSpacingY_").item(0).getTextContent());;
-
                             sizeXFOV_ = Double.parseDouble(eElement.getElementsByTagName("sizeXFOV_").item(0).getTextContent());;
                             sizeYFOV_ = Double.parseDouble(eElement.getElementsByTagName("sizeYFOV_").item(0).getTextContent());;
-
-
                           //  return true;
                         } //else return false;
 
@@ -182,10 +185,10 @@ public class FOV_Controller {
 
     }
 
-    public void calibrateXY(){
+    public Point2D.Double calibrateXY(){
 
         ArrayList[] posXY = this.positionlists();
-
+        Point2D.Double pointOff_ = new Point2D.Double();
         if (posXY[0].size() == 0) {
             ReportingUtils.showMessage("Could not Calibrate Stage Due to 0 position list," +
                     " Please go to Stage position tab to add some position" +
@@ -201,28 +204,31 @@ public class FOV_Controller {
                 double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
                 Point2D.Double cornet_pos ;
 
-//                cornet_pos = core_.getXYStagePosition();
-//                wellXOff = (x_pos_ini + cornet_pos.getX()) ;
-//                wellYOff = (-y_pos_ini + cornet_pos.getY()) ;
-//                System.out.println("Xoff = " +wellXOff + "__ Yoff= " + wellYOff);
+                cornet_pos = core_.getXYStagePosition();
+                wellXOff = (x_pos_ini + cornet_pos.getX()) ;
+                wellYOff = (-y_pos_ini + cornet_pos.getY()) ;
+                System.out.println("Xoff = " +wellXOff + "__ Yoff= " + wellYOff);
 
-                Thread.sleep(1000 );
+                pointOff_.x = wellXOff;
+                pointOff_.y = wellYOff;
 
-                app_.setXYOrigin(this.getFirstWellOffX(), this.getFirstWellOffY());
-                //regenerate();
-                Point2D.Double pt = app_.getXYStagePosition();
-                JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + pt.x + "," + pt.y);
-             //   JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " +wellXOff + "," + wellYOff);
+              //  Thread.sleep(1000 );
+//                app_.setXYOrigin(this.getFirstWellOffX(), this.getFirstWellOffY());
+                 //regenerate();
+     //           Point2D.Double pt = app_.getXYStagePosition();
+         //       JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + pt.x + "," + pt.y);
+                 JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " +wellXOff + "," + wellYOff);
+                 return pointOff_;
             } catch (Exception e) {
                 //displayError(e.getMessage());
                 e.printStackTrace();
             }
           }
         }
-
+       return null;
     }
 
-    public  int getWellPlateID (){
+    public  String getWellPlateID (){
         return wellPlateID;
     }
 
