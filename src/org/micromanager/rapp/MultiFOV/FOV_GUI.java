@@ -2,7 +2,6 @@ package org.micromanager.rapp.MultiFOV;
 
 import mmcorej.CMMCore;
 import org.micromanager.api.ScriptInterface;
-import org.micromanager.rapp.FOVGenerator.PlatePanel;
 import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqGui;
 import org.micromanager.rapp.utils.AboutGui;
@@ -28,6 +27,7 @@ public class FOV_GUI extends JInternalFrame {
     private final JLabel txt_pos_Label;
     private final JLabel txt_plate_Label;
     private JButton calibrateXY_btn ;
+    private JButton putStageInFirstWell;
     public static JTextField rootField_xmlWellFile;
     private  final JButton browseRootButton_plate;
     private JComboBox plateIDCombo_;
@@ -78,6 +78,7 @@ public class FOV_GUI extends JInternalFrame {
 //            boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFile(file, well_plate_type));
 //            plateIDCombo_.addItem(plateListe.iterator().next());
 //        }
+
 //        plateIDCombo_.addItem(FOV_Controller.MATRI_12_WELL);
 //        plateIDCombo_.addItem(FOV_Controller.MATRI_24_WELL);
 //        plateIDCombo_.addItem(FOV_Controller.MATRI_24_WELL);
@@ -116,8 +117,6 @@ public class FOV_GUI extends JInternalFrame {
 //                    }else if (plateChoosed =="SLIDES"){
 //                        well_plate_type = 1;
 //                    }
-//
-//
 //                } //else ReportingUtils.showMessage(" Please Choose a plate ");
 
                 if (file.equals("")){
@@ -135,7 +134,6 @@ public class FOV_GUI extends JInternalFrame {
                         ReportingUtils.showMessage(" Please Choose a correct xml configuration file to load Well Map");
                     }
                 }
-
             }
         });
 
@@ -180,32 +178,42 @@ public class FOV_GUI extends JInternalFrame {
 
         calibrateXY_btn = new JButton();
         calibrateXY_btn.setText("Calibrate XY...");
-        calibrateXY_btn.setBounds(380, 30, 120, 24);
+        calibrateXY_btn.setBounds(384, 30, 120, 24);
         main_well_panel.add(calibrateXY_btn);
         calibrateXY_btn.addActionListener(evt->{
             FOV_control.calibrateXY();
         });
 
+        putStageInFirstWell = new JButton();
+        putStageInFirstWell.setText("Move Stage to Well A1...");
+        putStageInFirstWell.setBounds(270,484 , 160, 24);
+        main_well_panel.add(putStageInFirstWell);
+        putStageInFirstWell.addActionListener(evt->{
+            FOV_control.moveStageToA1();
+        });
+
         ButtonGroup toolButtonGroup = new ButtonGroup();
 
         rdbtnSelectWells_ = new JRadioButton("Select Wells");
-        rdbtnSelectWells_.setBounds(10, 485, 120, 24);
+        rdbtnSelectWells_.setBounds(10, 484, 120, 24);
         toolButtonGroup.add(rdbtnSelectWells_);
         main_well_panel.add(rdbtnSelectWells_);
         rdbtnSelectWells_.addActionListener(arg0->{
             if (rdbtnSelectWells_.isSelected()) {
                 well_panel.setTool(wellPanel.Tool.SELECT);
+                System.out.println("Select");
             }
         });
 
         rdbtnMoveStage_ = new JRadioButton("Move Stage");
         toolButtonGroup.add(rdbtnMoveStage_);
-        rdbtnMoveStage_.setBounds(140, 485, 120, 24);
+        rdbtnMoveStage_.setBounds(140, 483, 120, 24);
         toolButtonGroup.add(rdbtnMoveStage_);
         main_well_panel.add(rdbtnMoveStage_);
         rdbtnMoveStage_.addActionListener(e->{
             if (rdbtnMoveStage_.isSelected()) {
                 well_panel.setTool(wellPanel.Tool.MOVE);
+                System.out.println("Move");
             }
         });
 

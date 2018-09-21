@@ -4,7 +4,6 @@ import mmcorej.CMMCore;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.RappPlugin;
-import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
 import org.w3c.dom.*;
 
@@ -185,7 +184,7 @@ public class FOV_Controller {
 
     }
 
-    public Point2D.Double calibrateXY(){
+    public void calibrateXY(){
 
         ArrayList[] posXY = this.positionlists();
         Point2D.Double pointOff_ = new Point2D.Double();
@@ -196,7 +195,7 @@ public class FOV_Controller {
             );
         }else {
 
-        int ret = JOptionPane.showConfirmDialog(RappGui.getInstance(), "Manually position the XY stage over the center of the well A01 and press OK",
+        int ret = JOptionPane.showConfirmDialog(RappGui.getInstance(), "Manually position the XY stage over the corner (top left) of the well A1 and press OK",
                 "XYStage origin setup", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
         if (ret == JOptionPane.OK_OPTION) {
             try {
@@ -218,14 +217,43 @@ public class FOV_Controller {
      //           Point2D.Double pt = app_.getXYStagePosition();
          //       JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + pt.x + "," + pt.y);
                  JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " +wellXOff + "," + wellYOff);
-                 return pointOff_;
             } catch (Exception e) {
                 //displayError(e.getMessage());
                 e.printStackTrace();
             }
           }
         }
-       return null;
+    }
+
+    public Point2D.Double getXYOffset(){
+
+        Point2D.Double pointOff_ = new Point2D.Double();
+
+        pointOff_.x = wellXOff;
+        pointOff_.y = wellYOff;
+
+        return pointOff_;
+
+    }
+
+    public void moveStageToA1 (){
+        try{
+
+            double xoff = 41150;
+            double yoff = -43735;
+
+            double xpos = 12.18 * 1000;
+            double ypos = 8.74 * 1000;
+
+            core_.setXYPosition(xpos+xoff ,ypos+yoff);
+
+            JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set to Well A1: " +
+                    "If Not: Manually position the XY stage over the corner top left of the well A1 and press Calibrate XY...\"" );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public  String getWellPlateID (){

@@ -64,7 +64,7 @@ public class wellPanel extends JPanel  {
 
    public wellPanel(FOV_GUI parent , CMMCore core){
        core_ = core;
-       mode_ = Tool.SELECT;
+       mode_ = Tool.MOVE;
        FOV_control = FOV_Controller.getInstance();
        wellplate = FOV_control.getWellPlateID();
        col = FOV_control.getcolSize();
@@ -169,6 +169,14 @@ public class wellPanel extends JPanel  {
             generateWellMap(g, square, space, col, row);
      //   }
     }
+    public void setTool(Tool t) {
+        mode_ = t;
+        System.out.println("mode2:" + mode_.toString());
+        if (mode_ == Tool.MOVE)
+            setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        else
+            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
 
     private void getSelectedWells() {
         // get start well
@@ -193,10 +201,13 @@ public class wellPanel extends JPanel  {
         ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, ccolS, rrowS, genMode);
         posPanel.tableModel_.addWholeData(fovs);
 
-         System.out.println("mode:" + mode_.toString());
+        FOV_control.getWholeData(fovs);
+
+        System.out.println("mode:" + mode_.toString());
 
         if (mode_ == Tool.MOVE) {
-            Point2D.Double Calibrated_pt = FOV_control.calibrateXY();
+
+            Point2D.Double Calibrated_pt = FOV_control.getXYOffset();
             ArrayList[] posXY = FOV_control.positionlists();
 
             double x_pos =  (double) posXY[0].get(0); //store each element as a double in the array
@@ -214,7 +225,6 @@ public class wellPanel extends JPanel  {
             }
         }
 
-        FOV_control.getWholeData(fovs);
         System.out.println("Values : " + dCol + " _ " + dRow + " _ " +ccolS + " _ " +rrowS+ " _ " + genMode);
 
     }
@@ -256,13 +266,7 @@ public class wellPanel extends JPanel  {
 
     }
 
-    public void setTool(Tool t) {
-        mode_ = t;
-        if (mode_ == Tool.MOVE)
-            setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-        else
-            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-    }
+
 
     public void drawFromOutsideClass(int startCol, int stopCol, int startRow, int stopRow){
         ccolS = startCol;

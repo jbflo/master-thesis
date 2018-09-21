@@ -184,7 +184,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
                             try {
 
-                                xyOff = FOV_control.calibrateXY();
+                                xyOff = FOV_control.getXYOffset();
 
 //                                cornet_pos = core_.getXYStagePosition();
 //
@@ -192,9 +192,9 @@ public class SeqAcqController implements AcquisitionEngine {
 //
 //                                defyoff = (-y_pos_ini + cornet_pos.getY()) ;
 
-                                System.out.println("Xoff = " +xyOff.getX() + "__ Yoff= " + xyOff.getY());
+                               // System.out.println("Xoff = " +xyOff.getX() + "__ Yoff= " + xyOff.getY());
 
-                                Thread.sleep(1000 );
+                              //  Thread.sleep(1000 );
 
                             } catch (Exception e) {
 

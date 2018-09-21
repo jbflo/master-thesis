@@ -1311,94 +1311,41 @@ public class RappController extends  MMFrame implements OnStateListener {
 
         app_.enableLiveMode(true);
 
-        //=  IJ.openImage(path.concat("Resources/img.tif")); ;
-//         JFileChooser fileChooser = new JFileChooser();
-//         fileChooser.setDialogTitle("Specify a file to save");
-//         File fileToSave = null;
-//         int userSelection = fileChooser.showSaveDialog(this);
-//         if (userSelection == JFileChooser.APPROVE_OPTION) {
-//              fileToSave = fileChooser.getSelectedFile();
-//             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-//         }
-
+        IJ.openImage(path.concat("Resources/img.tif")); ;
+         JFileChooser fileChooser = new JFileChooser();
+         fileChooser.setDialogTitle("Specify a file to save");
+         File fileToSave = null;
+         int userSelection = fileChooser.showSaveDialog(this);
+         if (userSelection == JFileChooser.APPROVE_OPTION) {
+              fileToSave = fileChooser.getSelectedFile();
+             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+         }
          //write image
          try{
 
-             PositionList list =  app_.getPositionList();
+             ImagePlus iPlus = IJ.getImage();
+             iPlus.show();
 
+             String path = fileDialog_.ChooseDirectoryDialog();
+             if(path != null) {
+                 IJ.saveAs(iPlus, ".tif", path +core_.getCurrentConfig(core_.getChannelGroup()));
+            }
 
-//             MultiStagePosition mps = new MultiStagePosition();
-//             for(int i = 0; i < mps.size(); ++i) {
-//                 try {
-//                     StagePosition sp = mps.get(i);
-////                     if (sp.numAxes == 1) {
-////                         System.out.println("name: " + sp.stageName + " posx"+ sp.x);
-////                         core_.setPosition(sp.stageName, sp.x);
-////                     } else if (sp.numAxes == 2) {
-//                         System.out.println("Size: " + mps.size());
-//                         System.out.println("name: " + sp.stageName + " posx"+ sp.x + " posy"+ sp.y);
-//                         core_.setXYPosition(sp.stageName, sp.x, sp.y);
-//                   //  }
-//
-//                     core_.waitForDevice(sp.stageName);
-//                 } catch (Exception var4) {
-//                     throw new Exception("XY stage error");
-//                 }
-//             }
+             app_.snapSingleImage();
+             core_.snapImage();
+             TaggedImage tmp = core_.getTaggedImage();
+             app_.openAcquisition(fileToSave.getAbsolutePath(),fileToSave.getAbsolutePath(), 2,1,1,3,true,false );
 
-             //core_.setOriginX();
-            double xoff = 41150;
-            double yoff = -43735;
-
-         //   double defXoff = 1wellx - xStagepos;
-          //   double defyoff = 1welly - yStagepos ;
-
-            double xpos = 12.18 * 1000;
-            double ypos = 8.74 * 1000;
-
-
-            core_.setXYPosition(xpos+xoff ,ypos+yoff);
-
-        //     core_.setRelativeXYPosition(xpos+xoff, ypos+yoff);
-
-             core_.setXYPosition(xpos + xoff ,ypos + yoff);
-
-          //   core_.setRelativeXYPosition(xpos+xoff, ypos+yoff);
-
-
-          //   core_.setXYPosition(55061.30082047731,-37577.600559949875);
-          System.out.println("pos: " +core_.getXYStagePosition());
-
-
-
-
-
-
-//             ImagePlus iPlus = IJ.getImage();
-//             iPlus.show();
-//
-//
-//             String path = fileDialog_.ChooseDirectoryDialog();
-//             if(path != null) {
-//                 IJ.saveAs(iPlus, ".tif", path +core_.getCurrentConfig(core_.getChannelGroup()));
-//             }
-
-
-            // app_.snapSingleImage();
-             // core_.snapImage();
-//             TaggedImage tmp = core_.getTaggedImage();
-//             app_.openAcquisition(fileToSave.getAbsolutePath(),fileToSave.getAbsolutePath(), 2,1,1,3,true,false );
-//
-//             System.out.println(app_.getPositionList().getNumberOfPositions());
-//             iPlus = IJ.getImage();
-//             if (iPlus.getStackSize() <= 1) {
-//                 IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
-//             }else{
-//                 for (int i=0; i< iPlus.getStackSize(); i++){
-//                     IJ.save(iPlus, fileToSave.getAbsolutePath() + ".ome.tif");
-//                 }
-//             }
-//             System.out.println(iPlus.getStackSize());
+             System.out.println(app_.getPositionList().getNumberOfPositions());
+             iPlus = IJ.getImage();
+            if (iPlus.getStackSize() <= 1) {
+                 IJ.save(iPlus, fileToSave.getAbsolutePath() + ".tif");
+             }else {
+                 for (int i=0; i< iPlus.getStackSize(); i++){
+                     IJ.save(iPlus, fileToSave.getAbsolutePath() + ".ome.tif");
+                }
+            }
+            System.out.println(iPlus.getStackSize());
          } catch (Exception e) {
              e.printStackTrace();
          }
