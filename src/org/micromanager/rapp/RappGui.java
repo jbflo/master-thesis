@@ -22,7 +22,6 @@ import org.micromanager.MMStudio;
 import org.micromanager.SnapLiveManager;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.internalinterfaces.LiveModeListener;
-import org.micromanager.rapp.CellSegmentation.CellPointInternalFrame;
 import org.micromanager.rapp.MultiFOV.FOV_GUI;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqController;
 import org.micromanager.rapp.SequenceAcquisitions.SeqAcqGui;
@@ -58,9 +57,6 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     private Preferences mainPrefs_;
     private MMOptions options_;
     private SeqAcqGui acquisition_;
-    // private SimpleObjectProperty<SeqAcqGui> acquisition_ = new SimpleObjectProperty<>(this, "acquisition_");
-    private CellPointInternalFrame tablePointFrame;
-    private static ImageViewer imageViewer_;
     private static FOV_GUI fov_gui_;
     private static RappGui appInterface_;
     public static RappGui getInstance() {
@@ -71,7 +67,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     private URL default_path = this.getClass().getResource("");
     public String path = default_path.toString().substring(6);
     private JPanel right_box_setup = new JPanel();
-    private JInternalFrame right_box_fov  = new JInternalFrame();;
+    private JInternalFrame right_box_fov  = new JInternalFrame();
     private JPanel right_box_shoot = new JPanel();
     public  JLabel spiner = new JLabel("nothing");
     private SpinnerModel model_forExposure = new SpinnerNumberModel(100, 0, 999999, 1);
@@ -370,14 +366,11 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         left_box.add(about_btn);
         about_btn.addActionListener(e->{
 
-
-         String msg =  ("Cell Killing Interface\r\n\r\n" +
+            String msg =  ("Cell Killing Interface\r\n\r\n" +
                     "From The KnopLab (ZMBH) .\r\n" +
                     "We present a tool for an automation of a fluorescence microscopy setup capable\n" +
                     "of selective cell isolation based on UV lasers. \r\n"+
-
                     "THIS SOFTWARE IS PROVIDED IN THE HOPE THAT IT MAY BE USEFUL, WITHOUT ANY REPRESENTATIONS OR WARRANTIES, INCLUDING WITHOUT LIMITATION THE WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL AUTHOR BE LIABLE FOR INDIRECT, EXEMPLARY, PUNITIVE, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING FROM USE OF THIS SOFTWARE, REGARDLESS OF THE FORM OF ACTION, AND WHETHER OR NOT THE AUTHOR HAS BEEN INFORMED OF, OR OTHERWISE MIGHT HAVE ANTICIPATED, THE POSSIBILITY OF SUCH DAMAGES.\r\n\r\n");
-
             dlgAbout = new AboutGui(this, msg);
             dlgAbout.setVisible(true);
 
@@ -394,18 +387,19 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         right_box_setup.setPreferredSize(new Dimension(490, 430));
         rightPanel.add(right_box_setup);
+        right_box_setup.setVisible(true);
         right_box_setup.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(8, 8, 8, 8);
         gbc.anchor = GridBagConstraints.EAST;
-        right_box_setup.setVisible(false);
+       // right_box_setup.setVisible(false);
 
 
         right_box_setup.add(new JLabel("<html><font size='4' color='white'>Laser Exposure Time (ms) :</font></html>"),gbc);
-        gbc.gridy++;
-        right_box_setup.add(new JLabel("<html><font size='4'  color='white'>Turn ON/OFF Plugin :</font></html>"), gbc);
+      //  gbc.gridy++;
+    //    right_box_setup.add(new JLabel("<html><font size='4'  color='white'>Turn ON/OFF Plugin :</font></html>"), gbc);
 //        gbc.gridy++;
 //        right_box_setup.add(new JLabel("<html><font size='4' color='white'>Calibration Delays (ms)  :</font></html>"), gbc);
         gbc.gridy++;
@@ -436,14 +430,14 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         });
 
-        gbc.gridy++;
+        //gbc.gridy++;
          /////////////  # Set illumination, Use to Turn On AND Off the Device # //////////////
-        right_box_setup.add( lightOnOff_jbtn, gbc);
+       // right_box_setup.add( lightOnOff_jbtn, gbc);
         lightOnOff_jbtn.setPreferredSize(new Dimension(150, 30));
         lightOnOff_jbtn.setBackground(Color.decode("#68C3A3"));
         lightOnOff_jbtn.addActionListener(e -> {
             if (lightOnOff_jbtn.isSelected()){
-                lightOnOff_jbtn.setText("Off Light");
+                lightOnOff_jbtn.setText("Light Off");
                 lightOnOff_jbtn.setUI(new MetalToggleButtonUI() {
                     @Override
                     protected Color getSelectColor() {
@@ -453,7 +447,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                 rappController_ref.setOnState(true);
                 //LiveModeButton.col
             }else {
-                lightOnOff_jbtn.setText("Open Light");
+                lightOnOff_jbtn.setText("Light On");
                 lightOnOff_jbtn.setBackground(Color.decode("#68C3A3"));
                 rappController_ref.setOnState(false);
             }
@@ -769,7 +763,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         right_box_fov.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Stage Position List",0,0,Font.getFont("arial"),  Color.decode("#34495e")));
-        right_box_fov.setVisible(true);
+        //right_box_fov.setVisible(true);
         BasicInternalFrameUI right_box_fov_bi = (BasicInternalFrameUI) right_box_fov.getUI();
         right_box_fov_bi.setNorthPane(null);
         right_box_fov.setBackground(Color.decode("#34495e"));
@@ -797,7 +791,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         asButtonPanel.setVisible(false);
         asButtonPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Imaging Options",0,0,Font.getFont("arial"),  Color.decode("#34495e")));
-        asButtonPanel.setVisible(true);
+        //asButtonPanel.setVisible(true);
         BasicInternalFrameUI AsButtonPanel_bi = (BasicInternalFrameUI) asButtonPanel.getUI();
         AsButtonPanel_bi.setNorthPane(null);
         asButtonPanel.setBackground(Color.decode("#34495e"));
@@ -827,7 +821,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         splitPaneTop.setContinuousLayout(false);
 
        // this.setBackground(Color.blue);
-        this.setSize(1150, 700);
+       // this.setSize(1150, 700);
         this.setVisible(true);
 
         /// Avoid all App Close when close the Plugin GUI

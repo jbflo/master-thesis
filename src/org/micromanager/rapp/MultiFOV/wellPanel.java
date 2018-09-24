@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class wellPanel extends JPanel  {
     /**
@@ -29,8 +30,10 @@ public class wellPanel extends JPanel  {
     ArrayList<ArrayList<Boolean>> wellsSelected_;
     Color transRed = new Color(128, 0, 0, 64);
 
-    public enum Tool {SELECT, MOVE}
-    private Tool mode_;
+//    public enum Tool {SELECT, MOVE}
+//    private Tool mode_;
+
+    public static AtomicBoolean stageAction_move = new AtomicBoolean(false);
 
     static FOV_Controller FOV_control ;
 
@@ -64,7 +67,6 @@ public class wellPanel extends JPanel  {
 
    public wellPanel(FOV_GUI parent , CMMCore core){
        core_ = core;
-       mode_ = Tool.MOVE;
        FOV_control = FOV_Controller.getInstance();
        wellplate = FOV_control.getWellPlateID();
        col = FOV_control.getcolSize();
@@ -169,43 +171,34 @@ public class wellPanel extends JPanel  {
             generateWellMap(g, square, space, col, row);
      //   }
     }
-    public void setTool(Tool t) {
-        mode_ = t;
-        System.out.println("mode2:" + mode_.toString());
-        if (mode_ == Tool.MOVE)
-            setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-        else
-            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-    }
 
     private void getSelectedWells() {
         // get start well
-        ccolS = (selectionStart_.x-square)/(square+space)+1;
-        rrowS = (selectionStart_.y-square)/(square+space)+1;
+        ccolS = (selectionStart_.x -15-square)/(square+space)+1;
+        rrowS = (selectionStart_.y-10-square)/(square+space)+1;
 
 //                String rr = xyzFunctions.convertNumToAlph(rrowS);
 //                String startWell = Integer.toString(ccolS);
 //                startWell = rr.concat(startWell);
 
         // get end well
-        ccolE = (selectionEnd_.x-square)/(square+space)+1;
-        rrowE = (selectionEnd_.y-square)/(square+space)+1;
+        ccolE = (selectionEnd_.x- 15-square)/(square+space)+1;
+        rrowE = (selectionEnd_.y -10-square)/(square+space)+1;
 
         // generate FOVs and populate list
         int genMode = xyzFunctions.genMode;
         int dCol = ccolE - ccolS+1;
         int dRow = rrowE - rrowS+1;
 
-
-
         ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, ccolS, rrowS, genMode);
+
         posPanel.tableModel_.addWholeData(fovs);
 
         FOV_control.getWholeData(fovs);
 
-        System.out.println("mode:" + mode_.toString());
+        System.out.println("mode_:" + stageAction_move.get());
 
-        if (mode_ == Tool.MOVE) {
+        if (stageAction_move.get()) {
 
             Point2D.Double Calibrated_pt = FOV_control.getXYOffset();
             ArrayList[] posXY = FOV_control.positionlists();
@@ -242,18 +235,21 @@ public class wellPanel extends JPanel  {
                 }
                 xx = (i-1)*(square+space)+square;
                 yy = (ii-1)*(square+space)+square;
-                g.drawRect(xx,yy,square,square);
-                g.drawLine((int) (xx+0.5*square), (int) (yy+0.5*square),(int) (xx+0.5*square),(int) (yy+0.5*square));
+                g.drawRect(xx+15,yy+10,square,square);
+                g.setFont(new Font("Arial Black", Font.PLAIN, 8));
+                g.setColor(Color.GREEN);
+                g.drawLine((int) ((xx+15)*square), (int) ((yy+10)*square),(int) ((xx+15)*square),(int) ((yy+10)*square));
             }
         }
         g.setColor(Color.DARK_GRAY);
 
         // paint column header
         for(int i=1; i<=col; i++){
-            g.setFont(new Font("Arial Black", Font.PLAIN, 9));
+            g.setFont(new Font("Arial Black", Font.PLAIN, 10));
 
             String cc = Integer.toString(i);
-            g.drawString(cc, (i-1)*(square+space)+square*7/5,square*3/4);
+            g.drawString(cc, (i-1)*(square+space)+(square+10)*7/5,square-5);
+        //  g.drawString(cc, square-20,square-20);
         }
 
         // paint row header
@@ -261,7 +257,7 @@ public class wellPanel extends JPanel  {
             g.setFont(new Font("Arial Black", Font.PLAIN, 10));
             String rr = xyzFunctions.convertNumToAlph(ii);
             //g.drawString(rr, 0,(ii-1)*(square+space)+square*7/4);
-            g.drawString(rr, square -15,(ii-1)*(square+space)+square*7/4);
+            g.drawString(rr, square -10,(ii-1)*(square+space)+(square+10)*7/5);
         }
 
     }

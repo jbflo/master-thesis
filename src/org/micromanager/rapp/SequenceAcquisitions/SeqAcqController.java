@@ -220,6 +220,14 @@ public class SeqAcqController implements AcquisitionEngine {
                                     break;
                                 }
 
+                                if (xyOff == null) {
+                                    ReportingUtils.showMessage("Acquisition Stop. Stage Calibration parameters are null,  Please go to stage panel to stage XX stage Calibration" +
+                                            "Or Disable Multi-position panel");
+                                    stopAcqRequested_.set(true);
+                                    isRunning_.set(false);
+                                    break;
+                                }
+
                                 x_pos[i] = (double) posXY[0].get(i); //store each element as a double in the array
                                 y_pos[i] = (double) posXY[1].get(i); //store each element as a double in the array
 

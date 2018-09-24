@@ -35,9 +35,6 @@ public class FOV_Controller {
     private static double wellSizeX_ ;
     private static double wellSizeY_ ;
 
-    double xWell = 2900;
-    double yWell = 2900;
-
     private static double firstWellX_ ;
     private static double firstWellY_ ;
 
@@ -190,12 +187,11 @@ public class FOV_Controller {
         Point2D.Double pointOff_ = new Point2D.Double();
         if (posXY[0].size() == 0) {
             ReportingUtils.showMessage("Could not Calibrate Stage Due to 0 position list," +
-                    " Please go to Stage position tab to add some position" +
-                    " Or disable multi position (X,Y) Panel "
+                    " Please select the well A1 before starting Stage Calibration"
             );
         }else {
 
-        int ret = JOptionPane.showConfirmDialog(RappGui.getInstance(), "Manually position the XY stage over the corner (top left) of the well A1 and press OK",
+        int ret = JOptionPane.showConfirmDialog(RappGui.getInstance(), "Press the 'Move Stage to Well A1... ' Button or Manually position the XY stage over the corner (top left) of the well A1 and press OK",
                 "XYStage origin setup", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
         if (ret == JOptionPane.OK_OPTION) {
             try {

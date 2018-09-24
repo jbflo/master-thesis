@@ -195,12 +195,13 @@ public class FOV_GUI extends JInternalFrame {
         ButtonGroup toolButtonGroup = new ButtonGroup();
 
         rdbtnSelectWells_ = new JRadioButton("Select Wells");
+        rdbtnSelectWells_.setSelected(true);
         rdbtnSelectWells_.setBounds(10, 484, 120, 24);
         toolButtonGroup.add(rdbtnSelectWells_);
         main_well_panel.add(rdbtnSelectWells_);
         rdbtnSelectWells_.addActionListener(arg0->{
             if (rdbtnSelectWells_.isSelected()) {
-                well_panel.setTool(wellPanel.Tool.SELECT);
+                wellPanel.stageAction_move.set(false);
                 System.out.println("Select");
             }
         });
@@ -212,7 +213,7 @@ public class FOV_GUI extends JInternalFrame {
         main_well_panel.add(rdbtnMoveStage_);
         rdbtnMoveStage_.addActionListener(e->{
             if (rdbtnMoveStage_.isSelected()) {
-                well_panel.setTool(wellPanel.Tool.MOVE);
+                wellPanel.stageAction_move.set(true);
                 System.out.println("Move");
             }
         });

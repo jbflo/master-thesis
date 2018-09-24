@@ -283,8 +283,8 @@ public class xyzFunctions {
         double wellSpaceY = FOV_control.getWellSpacingY();
         double wellOffX = FOV_control.getFirstWellOffX();
         double wellOffY = FOV_control.getFirstWellOffY();
-        double FOVx = FOV_control.getFOVsizeX();
-        double FOVy = FOV_control.getFOVsizeY();
+        double FOV_sizex = FOV_control.getFOVsizeX();
+        double FOV_sizey = FOV_control.getFOVsizeY();
         double wellX = FOV_control.getWellSizeX();
         double wellY = FOV_control.getWellSizeY();
         
@@ -314,18 +314,18 @@ public class xyzFunctions {
         } else{
             for (int i = 1; i <= dCol; i++){
                 for (int ii = 1; ii <= dRow; ii++){
-                    int countX = (int) (wellX/FOVx+0.5);
-                    int countY = (int) (wellY/FOVy+0.5);
-                    double newFOVx = countX*FOVx;
-                    double newFOVy = countX*FOVy;
-                    double diffX = newFOVx-FOVx;
-                    double diffY = newFOVy-FOVy;
+                    int countX = (int) (wellX/FOV_sizex+0.5);
+                    int countY = (int) (wellY/FOV_sizey+0.5);
+                    double newFOVx = countX*FOV_sizex;
+                    double newFOVy = countX*FOV_sizey;
+                    double diffX = newFOVx-FOV_sizex;
+                    double diffY = newFOVy-FOV_sizey;
 
                     for (int iii = 1; iii <= countX; iii++){
                         for (int iiii = 1; iiii <= countY; iiii++){
                             FOV FOVtoAdd = new FOV(0,0,0,"A1");
-                            xF = wellOffX+(i-2+startCol)*wellSpaceX+(wellX-diffX)*0.5+(iii-1)*FOVx;
-                            yF = wellOffY+(ii-2+startRow)*wellSpaceY+(wellY-diffY)*0.5+(iiii-1)*FOVy;
+                            xF = wellOffX+(i-2+startCol)*wellSpaceX+(wellX-diffX)*0.5+(iii-1)*FOV_sizex;
+                            yF = wellOffY+(ii-2+startRow)*wellSpaceY+(wellY-diffY)*0.5+(iiii-1)*FOV_sizey;
                             FOVtoAdd.setX(xF);
                             FOVtoAdd.setY(yF);
                             String rr = xyzFunctions.convertNumToAlph(ii+startRow-1);

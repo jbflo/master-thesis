@@ -123,7 +123,7 @@ public class posPanel extends JPanel {
             tableModel_.clearAllData();
           //  ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, startCol, startRow, genMode);
 
-            ArrayList<FOV> fovs = xyzFunctions.generateFOVs(24, 16, 1, 1, 0);
+            ArrayList<FOV> fovs = xyzFunctions.generateFOVs(FOV_control.getcolSize(), FOV_control.getrowSize(), 1, 1, genMode);
 //          fovs = xyzFunctions.concatLists(preFovs, fovs);
             fovs = xyzFunctions.sortList(fovs);
             tableModel_.addWholeData(fovs);
