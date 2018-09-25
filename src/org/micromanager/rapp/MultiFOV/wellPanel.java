@@ -4,6 +4,7 @@ import mmcorej.CMMCore;
 import org.micromanager.api.ScriptInterface;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,6 +33,8 @@ public class wellPanel extends JPanel  {
 
 //    public enum Tool {SELECT, MOVE}
 //    private Tool mode_;
+
+    static DefaultTableModel model = new javax.swing.table.DefaultTableModel();
 
     public static AtomicBoolean stageAction_move = new AtomicBoolean(false);
 
@@ -193,6 +196,9 @@ public class wellPanel extends JPanel  {
         ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, ccolS, rrowS, genMode);
 
         posPanel.tableModel_.addWholeData(fovs);
+
+
+       // posPanel.tableModel_.data.setModel(model); //f.data is the JTable
 
         FOV_control.getWholeData(fovs);
 

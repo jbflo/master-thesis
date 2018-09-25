@@ -321,7 +321,7 @@ public class xyzFunctions {
                     double diffX = newFOVx-FOV_sizex;
                     double diffY = newFOVy-FOV_sizey;
 
-                    for (int iii = 1; iii <= countX; iii++){
+                    for (int iii = 1; iii <= countX; iii++) {
                         for (int iiii = 1; iiii <= countY; iiii++){
                             FOV FOVtoAdd = new FOV(0,0,0,"A1");
                             xF = wellOffX+(i-2+startCol)*wellSpaceX+(wellX-diffX)*0.5+(iii-1)*FOV_sizex;

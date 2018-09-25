@@ -66,6 +66,7 @@ public class FOVTableModel extends AbstractTableModel {
         return fov;
     }
 
+
     @Override
     public Class getColumnClass(int column) {
         switch (column) {
