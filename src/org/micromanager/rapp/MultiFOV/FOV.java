@@ -174,7 +174,6 @@ public class FOV implements Comparable<FOV> {
         if (thisX == otherX & thisY == otherY){
             return true;
         }
-        
         return false;
     }
 
@@ -191,5 +190,4 @@ public class FOV implements Comparable<FOV> {
         return "FOV: Well = " + this.well_ + ", x = " + this.x_ 
                 + ", y = " + this.y_ + ", z = " + this.z_;
     }
-
 }

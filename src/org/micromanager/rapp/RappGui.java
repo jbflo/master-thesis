@@ -141,7 +141,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
            e.printStackTrace();
         }
 
-        this.setTitle("Rapp UGA-42 Control");
+        this.setTitle("Rapp Plugin(UGA-42 Control)");
 
         ImageIcon icon = new ImageIcon(path.concat("Resources/camera.png"));
         this.setIconImage(icon.getImage());
@@ -646,8 +646,6 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         });
 
 
-
-
         /// # Set Camera Exposure Time Event  # ///
        // gbc.gridy++;
 //        JButton shootOnLearningP_btn = new JButton("Shoot on Learning");
@@ -753,8 +751,6 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 //            ReportingUtils.showError(var2, "\nFrame invalid or corrupted settings.\nTry resetting .");
 //        }
 
-
-
         /////////////////////////////////// #Image Viewer Center Panel# //////////////////////////////////////////JPanel centerPanel = new JPanel();
 
         rightPanel.add(right_box_fov);
@@ -781,8 +777,6 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         } catch (Exception var2) {
             ReportingUtils.showError(var2, "\nAcquistion window failed to open due to invalid or corrupted settings.\nTry resetting registry settings to factory defaults (Menu Tools|Options).");
         }
-
-
 
         //////////////////////////////////////# Imaging # ///////////////////////////////////////////////
 
@@ -812,8 +806,6 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         ///////////////////////// # Utilities # /////////////////////////////////////////////////////////
 
-
-
         splitPaneTop.setDividerLocation(80);
         splitPaneBody.setDividerLocation(200);
         this.add(splitPaneTop,BorderLayout.CENTER);
@@ -821,6 +813,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         splitPaneTop.setContinuousLayout(false);
 
        // this.setBackground(Color.blue);
+        this.setSize(730, 590);
        // this.setSize(1150, 700);
         this.setVisible(true);
 
