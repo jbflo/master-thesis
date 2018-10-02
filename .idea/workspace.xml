@@ -8,10 +8,28 @@
   <component name="ChangeListManager">
     <list default="true" id="e3bd16c0-5336-44c0-8d6f-2b586ae6e16d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOVTableModel.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOVTableModel.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/xyzFunctions.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/xyzFunctions.java" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_Controller.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_Controller.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_GUI$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_GUI$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_GUI.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_GUI.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$2.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$3.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$3.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$5.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$5.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$6.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$6.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$7.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$7.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$8.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$8.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$1.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$2.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.class" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
+      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,11 +48,11 @@
       <content type="file-editors">
         <state>
           <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-            <file leaf-file-name="SBSPlate.java" pinned="false" current-in-tab="true">
+            <file leaf-file-name="SBSPlate.java" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SBSPlate.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="612">
-                    <caret line="529" column="25" lean-forward="false" selection-start-line="529" selection-start-column="25" selection-end-line="529" selection-end-column="25" />
+                  <state relative-caret-position="9303">
+                    <caret line="501" column="0" lean-forward="false" selection-start-line="501" selection-start-column="0" selection-end-line="501" selection-end-column="0" />
                     <folding />
                   </state>
                 </provider>
@@ -50,11 +68,11 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="PlatePanel.java" pinned="false" current-in-tab="false">
+            <file leaf-file-name="PlatePanel.java" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/PlatePanel.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="3045">
-                    <caret line="176" column="17" lean-forward="false" selection-start-line="176" selection-start-column="17" selection-end-line="176" selection-end-column="17" />
+                  <state relative-caret-position="294">
+                    <caret line="41" column="41" lean-forward="false" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
                     <folding />
                   </state>
                 </provider>
@@ -117,14 +135,52 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="xyzFunctions.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/xyzFunctions.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5670">
+              <caret line="280" column="22" lean-forward="false" selection-start-line="280" selection-start-column="22" selection-end-line="280" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SeqAcqController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="243">
+              <caret line="246" column="45" lean-forward="false" selection-start-line="246" selection-start-column="45" selection-end-line="246" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Galvo.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/utils/Galvo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5313">
+              <caret line="283" column="54" lean-forward="false" selection-start-line="283" selection-start-column="54" selection-end-line="283" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="FOV_Controller.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="47">
-              <caret line="305" column="54" lean-forward="false" selection-start-line="305" selection-start-column="54" selection-end-line="305" selection-end-column="54" />
+            <state relative-caret-position="4914">
+              <caret line="248" column="25" lean-forward="false" selection-start-line="248" selection-start-column="25" selection-end-line="248" selection-end-column="25" />
               <folding>
-                <element signature="e#9950#9951#0" expanded="true" />
-                <element signature="e#9984#9985#0" expanded="true" />
+                <element signature="e#11011#11012#0" expanded="true" />
+                <element signature="e#11045#11046#0" expanded="true" />
+                <element signature="e#11077#11078#0" expanded="true" />
+                <element signature="e#11111#11112#0" expanded="true" />
+                <element signature="e#11143#11144#0" expanded="true" />
+                <element signature="e#11174#11175#0" expanded="true" />
+                <element signature="e#11209#11210#0" expanded="true" />
+                <element signature="e#11242#11243#0" expanded="true" />
+                <element signature="e#11276#11277#0" expanded="true" />
+                <element signature="e#11304#11305#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -133,75 +189,49 @@
       <file leaf-file-name="FOV_GUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="197" column="42" lean-forward="false" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
+            <state relative-caret-position="4116">
+              <caret line="209" column="43" lean-forward="false" selection-start-line="209" selection-start-column="43" selection-end-line="209" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xyzFunctions.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/xyzFunctions.java">
+      <file leaf-file-name="SequenceSettings.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SequenceSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="280" column="22" lean-forward="false" selection-start-line="280" selection-start-column="22" selection-end-line="280" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChannelSpec.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelSpec.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
+            <state relative-caret-position="126">
               <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SeqAcqController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
+      <file leaf-file-name="SeqAcqGui.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="415">
-              <caret line="269" column="35" lean-forward="false" selection-start-line="269" selection-start-column="35" selection-end-line="269" selection-end-column="35" />
+            <state relative-caret-position="2436">
+              <caret line="172" column="11" lean-forward="false" selection-start-line="172" selection-start-column="11" selection-end-line="172" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FOVTableModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOVTableModel.java">
+      <file leaf-file-name="RappGui.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="96" column="16" lean-forward="false" selection-start-line="96" selection-start-column="16" selection-end-line="96" selection-end-column="16" />
-              <folding>
-                <element signature="e#2378#2379#0" expanded="true" />
-                <element signature="e#2406#2407#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="posPanel.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="104" column="2" lean-forward="true" selection-start-line="104" selection-start-column="2" selection-end-line="104" selection-end-column="2" />
+            <state relative-caret-position="1512">
+              <caret line="118" column="9" lean-forward="false" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FOV.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV.java">
+      <file leaf-file-name="AnalysisPlugin.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/LineageTracker/AnalysisPlugin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2836">
-              <caret line="175" column="9" lean-forward="false" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
-              <folding>
-                <element signature="e#1944#1945#0" expanded="true" />
-                <element signature="e#1980#1981#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="483">
+              <caret line="28" column="33" lean-forward="false" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -209,8 +239,8 @@
       <file leaf-file-name="wellPanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="197" column="12" lean-forward="false" selection-start-line="197" selection-start-column="12" selection-end-line="197" selection-end-column="12" />
+            <state relative-caret-position="4116">
+              <caret line="208" column="60" lean-forward="false" selection-start-line="208" selection-start-column="60" selection-end-line="208" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -300,7 +330,6 @@
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellEditor.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellRenderer.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/utils/AcqOrderMode.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/BLframe.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/utils/FileDialog.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/WellClass.java" />
@@ -310,21 +339,22 @@
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/utils/AboutGui.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/MultiFOV_GUI.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SBSPlate.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/utils/Galvo.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/PlatePanel.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SiteGenerator.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/xyzFunctions.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOVTableModel.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
       </list>
     </option>
   </component>
@@ -338,7 +368,7 @@
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1616" />
-    <option name="height" value="876" />
+    <option name="height" value="916" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -355,7 +385,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -477,8 +506,9 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -689,7 +719,6 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="simpleUML" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7718509" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25135136" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18365385" sideWeight="0.5025707" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288423" sideWeight="0.49449036" order="2" side_tool="false" content_ui="tabs" />
@@ -697,7 +726,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16645244" sideWeight="0.49596775" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17416452" sideWeight="0.49596775" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Learn" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.49449036" order="3" side_tool="false" content_ui="tabs" />
@@ -711,6 +740,7 @@
       <window_info id="Analyze Dataflow to" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25135136" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -780,7 +810,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/BLrun.java" />
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/SnapDisplayImage.java" />
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/TableModel.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -853,24 +882,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1365">
           <caret line="97" column="31" lean-forward="false" selection-start-line="97" selection-start-column="31" selection-end-line="97" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21945">
-          <caret line="1111" column="32" lean-forward="false" selection-start-line="1111" selection-start-column="32" selection-end-line="1111" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8169">
-          <caret line="426" column="17" lean-forward="false" selection-start-line="426" selection-start-column="17" selection-end-line="426" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -898,13 +909,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/utils/Galvo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3696">
-          <caret line="202" column="25" lean-forward="false" selection-start-line="202" selection-start-column="25" selection-end-line="202" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="353">
@@ -917,10 +921,91 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="346">
           <caret line="598" column="18" lean-forward="false" selection-start-line="598" selection-start-column="18" selection-end-line="598" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6048">
+          <caret line="357" column="7" lean-forward="false" selection-start-line="357" selection-start-column="7" selection-end-line="357" selection-end-column="7" />
           <folding>
-            <element signature="e#20050#20051#0" expanded="false" />
-            <element signature="e#20100#20101#0" expanded="false" />
+            <marker date="1537556259485" expanded="true" signature="57507:57560" ph="//..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelSpec.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3171">
+          <caret line="175" column="9" lean-forward="false" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="68" column="43" lean-forward="false" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOVTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1722">
+          <caret line="96" column="16" lean-forward="false" selection-start-line="96" selection-start-column="16" selection-end-line="96" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1974">
+          <caret line="104" column="2" lean-forward="false" selection-start-line="104" selection-start-column="2" selection-end-line="104" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4515">
+          <caret line="252" column="23" lean-forward="false" selection-start-line="252" selection-start-column="23" selection-end-line="252" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SequenceSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2436">
+          <caret line="172" column="11" lean-forward="false" selection-start-line="172" selection-start-column="11" selection-end-line="172" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SBSPlate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9303">
+          <caret line="501" column="0" lean-forward="false" selection-start-line="501" selection-start-column="0" selection-end-line="501" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SiteGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1008">
+          <caret line="89" column="36" lean-forward="false" selection-start-line="89" selection-start-column="36" selection-end-line="89" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -963,151 +1048,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/ArrayList.java">
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/LineageTracker/AnalysisPlugin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="456" column="19" lean-forward="false" selection-start-line="456" selection-start-column="19" selection-end-line="456" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6048">
-          <caret line="357" column="7" lean-forward="false" selection-start-line="357" selection-start-column="7" selection-end-line="357" selection-end-column="7" />
-          <folding>
-            <marker date="1537556259485" expanded="true" signature="57507:57560" ph="//..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/PlatePanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3045">
-          <caret line="176" column="17" lean-forward="false" selection-start-line="176" selection-start-column="17" selection-end-line="176" selection-end-column="17" />
+        <state relative-caret-position="483">
+          <caret line="28" column="33" lean-forward="false" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SiteGenerator.java">
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/xyzFunctions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1008">
-          <caret line="89" column="36" lean-forward="false" selection-start-line="89" selection-start-column="36" selection-end-line="89" selection-end-column="36" />
+        <state relative-caret-position="5670">
+          <caret line="280" column="22" lean-forward="false" selection-start-line="280" selection-start-column="22" selection-end-line="280" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/utils/Galvo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5313">
+          <caret line="283" column="54" lean-forward="false" selection-start-line="283" selection-start-column="54" selection-end-line="283" selection-end-column="54" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12516">
-          <caret line="646" column="0" lean-forward="false" selection-start-line="646" selection-start-column="0" selection-end-line="646" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2268#2269#0" expanded="false" />
-            <element signature="e#2304#2305#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/LineageTracker/AnalysisPlugin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="121" column="0" lean-forward="false" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="197" column="42" lean-forward="false" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
+        <state relative-caret-position="1512">
+          <caret line="118" column="9" lean-forward="false" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SBSPlate.java">
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/PlatePanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="529" column="25" lean-forward="false" selection-start-line="529" selection-start-column="25" selection-end-line="529" selection-end-column="25" />
+        <state relative-caret-position="294">
+          <caret line="41" column="41" lean-forward="false" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelSpec.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2836">
-          <caret line="175" column="9" lean-forward="false" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
-          <folding>
-            <element signature="e#1944#1945#0" expanded="true" />
-            <element signature="e#1980#1981#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="68" column="43" lean-forward="false" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="47">
-          <caret line="305" column="54" lean-forward="false" selection-start-line="305" selection-start-column="54" selection-end-line="305" selection-end-column="54" />
-          <folding>
-            <element signature="e#9950#9951#0" expanded="true" />
-            <element signature="e#9984#9985#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/xyzFunctions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="280" column="22" lean-forward="false" selection-start-line="280" selection-start-column="22" selection-end-line="280" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="269" column="35" lean-forward="false" selection-start-line="269" selection-start-column="35" selection-end-line="269" selection-end-column="35" />
+        <state relative-caret-position="184">
+          <caret line="105" column="13" lean-forward="false" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="197" column="12" lean-forward="false" selection-start-line="197" selection-start-column="12" selection-end-line="197" selection-end-column="12" />
+        <state relative-caret-position="4116">
+          <caret line="208" column="60" lean-forward="false" selection-start-line="208" selection-start-column="60" selection-end-line="208" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOVTableModel.java">
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="96" column="16" lean-forward="false" selection-start-line="96" selection-start-column="16" selection-end-line="96" selection-end-column="16" />
+        <state relative-caret-position="4116">
+          <caret line="209" column="43" lean-forward="false" selection-start-line="209" selection-start-column="43" selection-end-line="209" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4914">
+          <caret line="248" column="25" lean-forward="false" selection-start-line="248" selection-start-column="25" selection-end-line="248" selection-end-column="25" />
           <folding>
-            <element signature="e#2378#2379#0" expanded="true" />
-            <element signature="e#2406#2407#0" expanded="true" />
+            <element signature="e#11011#11012#0" expanded="true" />
+            <element signature="e#11045#11046#0" expanded="true" />
+            <element signature="e#11077#11078#0" expanded="true" />
+            <element signature="e#11111#11112#0" expanded="true" />
+            <element signature="e#11143#11144#0" expanded="true" />
+            <element signature="e#11174#11175#0" expanded="true" />
+            <element signature="e#11209#11210#0" expanded="true" />
+            <element signature="e#11242#11243#0" expanded="true" />
+            <element signature="e#11276#11277#0" expanded="true" />
+            <element signature="e#11304#11305#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java">
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="104" column="2" lean-forward="true" selection-start-line="104" selection-start-column="2" selection-end-line="104" selection-end-column="2" />
+        <state relative-caret-position="243">
+          <caret line="246" column="45" lean-forward="false" selection-start-line="246" selection-start-column="45" selection-end-line="246" selection-end-column="45" />
           <folding />
         </state>
       </provider>

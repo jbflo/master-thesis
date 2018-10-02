@@ -95,9 +95,6 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
     MMStudio studio_;
     protected AboutGui  dlgAbout;
 
-
-
-
      /**
      * Constructor. Creates the main window for the Projector plugin. we use this Class for the main interface
      */

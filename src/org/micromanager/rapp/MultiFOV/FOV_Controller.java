@@ -47,10 +47,15 @@ public class FOV_Controller {
     private static double wellXOff;
     private static double wellYOff;
 
+    public static Point2D.Double cornet_off1 = new Point2D.Double();
+    public static Point2D.Double cornet_off2 ;
+    public static Point2D.Double cornet_off3 ;
+    public static Point2D.Double cornet_off4 ;
 
     public static  ArrayList<String> wellTypes = new ArrayList<>();
 
     // public static final String IBIDI_24_WELL = "Ibidi-24WELL";
+
     public static final String DEFAULT_XYSTAGE_NAME = "XYStage";
     public static final String CUSTOM = "CUSTOM";
     private static final String METADATA_SITE_PREFIX = "Site";
@@ -113,7 +118,6 @@ public class FOV_Controller {
         }
 
     }
-
 
     public static boolean readXmlFile (String filePath, String plateName) {
         try {
@@ -181,7 +185,11 @@ public class FOV_Controller {
 
     }
 
-    public void calibrateXY(){
+
+
+
+
+    public Point2D.Double calibrateXY(){
 
         ArrayList[] posXY = this.positionlists();
         Point2D.Double pointOff_ = new Point2D.Double();
@@ -200,8 +208,10 @@ public class FOV_Controller {
                 Point2D.Double cornet_pos ;
 
                 cornet_pos = core_.getXYStagePosition();
+
                 wellXOff = (x_pos_ini + cornet_pos.getX()) ;
                 wellYOff = (-y_pos_ini + cornet_pos.getY()) ;
+
                 System.out.println("Xoff = " +wellXOff + "__ Yoff= " + wellYOff);
 
                 pointOff_.x = wellXOff;
@@ -212,13 +222,17 @@ public class FOV_Controller {
                  //regenerate();
      //           Point2D.Double pt = app_.getXYStagePosition();
          //       JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + pt.x + "," + pt.y);
-                 JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " +wellXOff + "," + wellYOff);
+                  JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " +wellXOff + "," + wellYOff);
+                  return pointOff_;
             } catch (Exception e) {
                 //displayError(e.getMessage());
                 e.printStackTrace();
+                return null;
             }
           }
+
         }
+        return pointOff_;
     }
 
     public Point2D.Double getXYOffset(){
@@ -230,6 +244,27 @@ public class FOV_Controller {
 
         return pointOff_;
 
+    }
+
+    public static double getAngle() {
+        // NOTE: Remember that most math has the Y axis as positive above the X.
+        // However, for screens we have Y as positive below. For this reason,
+        // the Y values are inverted to get the expected results.
+        final double deltaY = (cornet_off1.y - cornet_off2.y);
+        final double deltaX = (cornet_off2.x - cornet_off1.x);
+        final double result = Math.toRadians(Math.atan2(deltaY, deltaX));
+        //return (result < 0) ? (360d + result) : result;
+        return result;
+    }
+
+    public Point2D.Double computeXYStagepos(){
+        try {
+            Math.cos(Math.toRadians(354));
+            return core_.getXYStagePosition();
+        } catch (Exception x){
+            x.printStackTrace();
+            return null;
+        }
     }
 
     public void moveStageToA1 (){

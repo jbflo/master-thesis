@@ -201,7 +201,6 @@ public interface AcquisitionEngine {
      * Returns whether channels will be included in the acquired dimensions.
      */
     boolean isKillCellEnabled();
-
     /*
      * Sets whether channels are to be included in the settings. If this
      * value is set to false, then only a single channel is acquired, with
@@ -411,13 +410,10 @@ public interface AcquisitionEngine {
     * Returns true if autofocus is requested for the acquisition.
     */
    boolean isAutoFocusEnabled();
-
-
     /*
     * @Deprecated
     */
     void setSingleWindow(boolean selected);
-
    /*
     * @Deprecated
     */

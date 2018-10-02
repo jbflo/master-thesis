@@ -85,11 +85,11 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
    //private final JComboBox zValCombo_;
    private static final JTextField nameField_ = new JTextField();
    private static final JTextField rootField_ =new JTextField();
-   private final JTextField rootField_2;
-   public static JTextField rootField_xmlWellFile;
-   private static  JTextArea summaryTextArea_;
-//   private final JComboBox timeUnitCombo_;
-//   private final JFormattedTextField interval_;
+   private final  JTextField rootField_2;
+   public static  JTextField rootField_xmlWellFile;
+   private static JTextArea summaryTextArea_;
+  // private final JComboBox timeUnitCombo_;
+  // private final JFormattedTextField interval_;
   // private final JFormattedTextField zStep_;
   // private final JFormattedTextField zTop_;
   // private final JFormattedTextField zBottom_;
@@ -131,7 +131,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
    protected static JTextArea taskOutput;
    private static  AcqOrderMode[] acqOrderModes_;
    private AdvancedOptionsDialog advancedOptionsWindow_;
-   //persistent properties (app settings);
+   // persistent properties (app settings);
    private static final String ACQ_FILE_DIR = "dir";
    private static final String ACQ_INTERVAL = "acqInterval";
    private static final String ACQ_TIME_UNIT = "acqTimeInit";
@@ -184,7 +184,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
  //  private static final CardLayout framesSubPanelLayout_;
    private static final String DEFAULT_FRAMES_PANEL_NAME = "Default frames panel";
    private static final String OVERRIDE_FRAMES_PANEL_NAME = "Override frames panel";
-   protected JPanel buttonPanel;
+   protected JPanel buttonPanel ;
    private static CheckBoxPanel channelsPanel_;
    private static CheckBoxPanel segmentationPanel_;
    protected static CheckBoxPanel positionsPanel_;
