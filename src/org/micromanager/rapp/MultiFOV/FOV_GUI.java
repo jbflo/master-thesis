@@ -202,25 +202,25 @@ public class FOV_GUI extends JInternalFrame {
         });
 
         calibrateXY2_btn = new JButton();
-        calibrateXY2_btn.setText("XY3");
-        calibrateXY2_btn.setBounds(425, 15, 35, 24);
+        calibrateXY2_btn.setText("XY2");
+        calibrateXY2_btn.setBounds(385, 40, 35, 24);
         main_well_panel.add(calibrateXY2_btn);
         calibrateXY2_btn.addActionListener(evt->{
-            int calib2 = JOptionPane.showConfirmDialog(RappGui.getInstance(), " Manually position the XY stage over the corner (top Right) of the well A1 and press OK",
-                    "XYStage origin setup 3", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (calib2 == JOptionPane.OK_OPTION) {
+            int calib3 = JOptionPane.showConfirmDialog(RappGui.getInstance(), " Manually position the XY stage over the corner (bottom left) of the well A1 and press OK",
+                    "XYStage origin setup 2", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (calib3 == JOptionPane.OK_OPTION) {
                 FOV_Controller.cornet_off2 = FOV_control.calibrateXY();
             }
         });
 
         calibrateXY3_btn = new JButton();
-        calibrateXY3_btn.setText("XY2");
-        calibrateXY3_btn.setBounds(385, 40, 35, 24);
+        calibrateXY3_btn.setText("XY3");
+        calibrateXY3_btn.setBounds(425, 15, 35, 24);
         main_well_panel.add(calibrateXY3_btn);
         calibrateXY3_btn.addActionListener(evt->{
-            int calib3 = JOptionPane.showConfirmDialog(RappGui.getInstance(), " Manually position the XY stage over the corner (bottom left) of the well A1 and press OK",
-                    "XYStage origin setup 2", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (calib3 == JOptionPane.OK_OPTION) {
+            int calib2 = JOptionPane.showConfirmDialog(RappGui.getInstance(), " Manually position the XY stage over the corner (top Right) of the well A1 and press OK",
+                    "XYStage origin setup 3", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (calib2 == JOptionPane.OK_OPTION) {
                 FOV_Controller.cornet_off3 = FOV_control.calibrateXY();
             }
         });
@@ -230,7 +230,7 @@ public class FOV_GUI extends JInternalFrame {
         calibrateXY4_btn.setBounds(425, 40, 35, 24);
         main_well_panel.add(calibrateXY4_btn);
         calibrateXY4_btn.addActionListener(evt->{
-            int calib3 = JOptionPane.showConfirmDialog(RappGui.getInstance(), " Manually position the XY stage over the corner (bottom left) of the well A1 and press OK",
+            int calib3 = JOptionPane.showConfirmDialog(RappGui.getInstance(), " Manually position the XY stage over the corner (bottom Right) of the well A1 and press OK",
                     "XYStage origin setup 2", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
             if (calib3 == JOptionPane.OK_OPTION) {
                 FOV_Controller.cornet_off4 = FOV_control.calibrateXY();

@@ -48,9 +48,9 @@ public class FOV_Controller {
     private static double wellYOff;
 
     public static Point2D.Double cornet_off1 = new Point2D.Double();
-    public static Point2D.Double cornet_off2 ;
-    public static Point2D.Double cornet_off3 ;
-    public static Point2D.Double cornet_off4 ;
+    public static Point2D.Double cornet_off2 = new Point2D.Double();
+    public static Point2D.Double cornet_off3 = new Point2D.Double();
+    public static Point2D.Double cornet_off4 = new Point2D.Double();
 
     public static  ArrayList<String> wellTypes = new ArrayList<>();
 
