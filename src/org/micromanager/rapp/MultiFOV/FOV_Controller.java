@@ -187,9 +187,6 @@ public class FOV_Controller {
     }
 
 
-
-
-
     public Point2D.Double calibrateXY(){
 
         ArrayList[] posXY = this.positionlists();
@@ -247,6 +244,7 @@ public class FOV_Controller {
 
     }
 
+
     public static double getAngle() {
         // NOTE: Remember that most math has the Y axis as positive above the X.
         // However, for screens we have Y as positive below. For this reason,
@@ -271,16 +269,22 @@ public class FOV_Controller {
     public void moveStageToA1 (){
         try{
 
-            double xoff = 41150;
-            double yoff = -43735;
+//            double xoff = 41150;
+//            double yoff = -43735;
+//
+//            double xpos = 12.18 * 1000;
+//            double ypos = 8.74 * 1000;
+//
+//            core_.setXYPosition(xpos+xoff ,ypos+yoff);
+//
+//            JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set to Well A1: " +
+//                    "If Not: Manually position the XY stage over the corner top left of the well A1 and press Calibrate XY...\"" );
 
-            double xpos = 12.18 * 1000;
-            double ypos = 8.74 * 1000;
+            System.out.println(core_.getAutoFocusOffset());
 
-            core_.setXYPosition(xpos+xoff ,ypos+yoff);
+            core_.setAutoFocusOffset(9.9);
 
-            JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set to Well A1: " +
-                    "If Not: Manually position the XY stage over the corner top left of the well A1 and press Calibrate XY...\"" );
+            System.out.println(core_.getAutoFocusOffset());
 
         } catch (Exception e) {
             e.printStackTrace();

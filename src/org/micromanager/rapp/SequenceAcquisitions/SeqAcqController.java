@@ -173,8 +173,8 @@ public class SeqAcqController implements AcquisitionEngine {
                             double[] x_pos = new double[posXY[0].size()];
                             double[] y_pos = new double[posXY[1].size()];
 
-//                            double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
-//                            double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
+//                          double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
+//                          double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
 
                            // Point2D.Double cornet_pos ;
                             Point2D.Double xyOff  = new Point2D.Double();
@@ -187,18 +187,12 @@ public class SeqAcqController implements AcquisitionEngine {
                                 xyOff = FOV_control.getXYOffset();
 
 //                                cornet_pos = core_.getXYStagePosition();
-//
 //                                defXoff = (x_pos_ini + cornet_pos.getX()) ;
-//
 //                                defyoff = (-y_pos_ini + cornet_pos.getY()) ;
-
                                // System.out.println("Xoff = " +xyOff.getX() + "__ Yoff= " + xyOff.getY());
-
                               //  Thread.sleep(1000 );
 
                             } catch (Exception e) {
-
-
                                 e.printStackTrace();
                                 stopAcqRequested_.set(true);
                                 isRunning_.set(false);
@@ -254,8 +248,11 @@ public class SeqAcqController implements AcquisitionEngine {
                                     // Try to use Auto Focus Here
                                     //core_.setAutoFocusDevice(core_.getAutoFocusDevice());
 
-                                    core_.getAutoFocusOffset();
+                                    System.out.println(core_.getAutoFocusOffset());
+
                                     core_.setAutoFocusOffset(9.9);
+
+                                    System.out.println(core_.getAutoFocusOffset());
 
                                    // core_.setRelativeXYPosition(x_pos[i]- defXoff, y_pos[i] - defyoff );
                                     Thread.sleep(1000 );
