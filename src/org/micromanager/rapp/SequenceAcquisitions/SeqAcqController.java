@@ -251,6 +251,12 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                     System.out.println("xx = " + xxPos + "__ yy= " +yyPos);
                                     core_.setXYPosition(xxPos, yyPos);
+                                    // Try to use Auto Focus Here
+                                    //core_.setAutoFocusDevice(core_.getAutoFocusDevice());
+
+                                    core_.getAutoFocusOffset();
+                                    core_.setAutoFocusOffset(9.9);
+
                                    // core_.setRelativeXYPosition(x_pos[i]- defXoff, y_pos[i] - defyoff );
                                     Thread.sleep(1000 );
                                 } catch (Exception e) {

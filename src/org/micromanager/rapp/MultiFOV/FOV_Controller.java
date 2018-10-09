@@ -52,6 +52,7 @@ public class FOV_Controller {
     public static Point2D.Double cornet_off3 = new Point2D.Double();
     public static Point2D.Double cornet_off4 = new Point2D.Double();
 
+    
     public static  ArrayList<String> wellTypes = new ArrayList<>();
 
     // public static final String IBIDI_24_WELL = "Ibidi-24WELL";
