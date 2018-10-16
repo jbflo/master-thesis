@@ -94,7 +94,8 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
 
         try {
             form_ = RappGui.showAppInterface(core_, app_);
-            studio_.addMMBackgroundListener(form_);
+            app_.addMMBackgroundListener(form_);
+            app_.addMMListener(form_);
         } catch (Exception e) {
             ReportingUtils.showMessage("Please Try Again! The Gui Couldn't load properly");
             e.printStackTrace();

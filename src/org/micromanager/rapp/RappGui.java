@@ -20,6 +20,7 @@ import mmcorej.CMMCore;
 import org.micromanager.MMOptions;
 import org.micromanager.MMStudio;
 import org.micromanager.SnapLiveManager;
+import org.micromanager.api.MMListenerInterface;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.internalinterfaces.LiveModeListener;
 import org.micromanager.rapp.MultiFOV.FOV_GUI;
@@ -53,7 +54,7 @@ import java.util.prefs.Preferences;
  * @author FLorial
  */
 
-public class RappGui extends JFrame implements LiveModeListener, ActionListener, PropertyChangeListener {
+public class RappGui extends JFrame implements LiveModeListener, ActionListener, PropertyChangeListener, MMListenerInterface {
     private Preferences mainPrefs_;
     private MMOptions options_;
     private SeqAcqGui acquisition_;
@@ -888,6 +889,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             GUIUtils.recallPosition(appInterface_);
         }
         appInterface_.setVisible(true);
+
         return appInterface_;
     }
 
@@ -1005,6 +1007,51 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
+    }
+
+    @Override
+    public void propertiesChangedAlert() {
+
+    }
+
+    @Override
+    public void propertyChangedAlert(String s, String s1, String s2) {
+
+    }
+
+    @Override
+    public void configGroupChangedAlert(String s, String s1) {
+
+    }
+
+    @Override
+    public void systemConfigurationLoaded() {
+
+    }
+
+    @Override
+    public void pixelSizeChangedAlert(double v) {
+
+    }
+
+    @Override
+    public void stagePositionChangedAlert(String s, double v) {
+
+    }
+
+    @Override
+    public void xyStagePositionChanged(String s, double v, double v1) {
+
+    }
+
+    @Override
+    public void exposureChanged(String s, double v) {
+
+    }
+
+    @Override
+    public void slmExposureChanged(String s, double v) {
 
     }
 }

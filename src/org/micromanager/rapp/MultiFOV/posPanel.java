@@ -42,14 +42,16 @@ public class posPanel extends JPanel {
         this.setLayout(null);
 
         FOV_control = FOV_Controller.getInstance();
-       // wMap_ = wellMap.getInstance();
+        // wMap_ = wellMap.getInstance();
         wellPanel_ = wellPanel.getInstance();
 
         SelectFOVsBottom = new javax.swing.JButton();
+
 //        StartFOVField = new javax.swing.JTextField();
 //        StopFOVField = new javax.swing.JTextField();
 //        jLabel3 = new javax.swing.JLabel();
 //        jLabel4 = new javax.swing.JLabel();
+
         fovTablePanel = new javax.swing.JPanel();
         fullWellCombo = new javax.swing.JComboBox();
         deleteAllFOVs_btn = new javax.swing.JButton();
@@ -57,39 +59,19 @@ public class posPanel extends JPanel {
 
         setControlDefaults();
 
-       // this.add(contetentPanel);
-
-        fullWellCombo.setBounds(23, 430, 100, 30 );
+        fullWellCombo.setBounds(1, 207, 85, 30 );
         this.add(fullWellCombo);
 
-        SelectFOVsBottom.setBounds(165, 430, 100, 30 );
+        SelectFOVsBottom.setBounds(90, 207, 90, 30 );
         this.add(SelectFOVsBottom);
 
-
-        deleteAllFOVs_btn.setBounds(155, 470, 120, 30 );
+        deleteAllFOVs_btn.setBounds(184, 207, 103, 30 );
         this.add(deleteAllFOVs_btn);
 
-        deleteSlectFOV_btn.setBounds(10, 470, 130,30);
-        this.add(deleteSlectFOV_btn);
+//        deleteSlectFOV_btn.setBounds(10, 270, 130,30);
+//        this.add(deleteSlectFOV_btn);
 
-
-//        jLabel3.setBounds(10, 420, 40, 30 );
-//        this.add(jLabel3);
-
-
-//        StartFOVField.setBounds(40, 420, 30, 30 );
-//        this.add(StartFOVField);
-
-
-//        jLabel4.setBounds(10, 460, 40, 30 );
-//        this.add(jLabel4);
-
-
-//        StopFOVField.setBounds(40, 460, 30, 30 );
-//        this.add(StopFOVField);
-
-
-        fovTablePanel.setBounds(3, 20, 280, 400 );
+        fovTablePanel.setBounds(1, 3, 280, 200 );
         this.add(fovTablePanel);
 
         SelectFOVsBottom.setText("Add All FOVs");

@@ -258,10 +258,10 @@ public class wellPanel extends JPanel  {
 
         // paint column header
         for(int i=1; i<=col; i++){
-            g.setFont(new Font("Arial Black", Font.PLAIN, 10));
+            g.setFont(new Font("Arial Black", Font.PLAIN, 8));
 
             String cc = Integer.toString(i);
-            g.drawString(cc, (i-1)*(square+space)+(square+10)*7/5,square-5);
+            g.drawString(cc, (i-1)*(square+space)+(square+9)*7/5,square+2);
         //  g.drawString(cc, square-20,square-20);
         }
 
@@ -270,7 +270,7 @@ public class wellPanel extends JPanel  {
             g.setFont(new Font("Arial Black", Font.PLAIN, 10));
             String rr = xyzFunctions.convertNumToAlph(ii);
             //g.drawString(rr, 0,(ii-1)*(square+space)+square*7/4);
-            g.drawString(rr, square -10,(ii-1)*(square+space)+(square+10)*7/5);
+            g.drawString(rr, square -7,(ii-1)*(square+space)+(square+10)*7/5);
         }
 
     }

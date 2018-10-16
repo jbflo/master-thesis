@@ -773,7 +773,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
       updateGroupsCombo();
 
       channelGroupCombo_.addActionListener(new ActionListener() {
-
          @Override
          public void actionPerformed(ActionEvent arg0) {
             String newGroup = (String) channelGroupCombo_.getSelectedItem();
@@ -792,6 +791,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
             }
          }
       });
+
       channelGroupCombo_.setBounds(100, 140, 150, 22);
       channelsPanel_.add(channelGroupCombo_);
 

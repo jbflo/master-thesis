@@ -11,6 +11,8 @@ import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.geom.Point2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -187,47 +189,105 @@ public class FOV_Controller {
     }
 
 
-    public Point2D.Double calibrateXY(){
+    public Point2D.Double calibrateXY() {
 
         ArrayList[] posXY = this.positionlists();
         Point2D.Double pointOff_ = new Point2D.Double();
+
+
+
         if (posXY[0].size() == 0) {
-            ReportingUtils.showMessage("Could not Calibrate Stage Due to 0 position list," +
-                    " Please select the well A1 before starting Stage Calibration"
+            ReportingUtils.showMessage("Could not Calibrate Stage Due to 0 position list," + " Please select the well A1 before starting Stage Calibration"
             );
-        }else {
+        } else {
 
-        int ret = JOptionPane.showConfirmDialog(RappGui.getInstance(), "Press the 'Move Stage to Well A1... ' Button or Manually position the XY stage over the corner (top left) of the well A1 and press OK",
-                "XYStage origin setup", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (ret == JOptionPane.OK_OPTION) {
-            try {
-                double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
-                double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
-                Point2D.Double cornet_pos ;
+            JDialog dialog = new JDialog(RappGui.getInstance(), "XYStage Calibration Process Step 1", false);
+            JDialog dialog2 = new JDialog(RappGui.getInstance(), "XYStage Calibration Process Step 2", false);
 
-                cornet_pos = core_.getXYStagePosition();
+            dialog.setVisible(true);
+            JOptionPane  jop1 = new JOptionPane( "Please Select the case A1 from the grid " +
+                    "then Manually position the XY stage over the corner (top left) of the well A1 and press OK",
+                  JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
 
-                wellXOff = (x_pos_ini + cornet_pos.getX()) ;
-                wellYOff = (-y_pos_ini + cornet_pos.getY()) ;
+            JOptionPane  jop2 = new JOptionPane( "Please Select the last case From the first Cologne of the grid (Should be AF1 for 1536_well) " +
+                    "Then Manually position the XY stage over the corner (bottom left) the last well of the first cologne  and press OK and press OK",
+                    JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
 
-                System.out.println("Xoff = " +wellXOff + "__ Yoff= " + wellYOff);
+            dialog.setContentPane(jop1);
+            jop1.addPropertyChangeListener(evt->{
+                try {
+                    if (jop1.getValue().equals(JOptionPane.OK_OPTION)) {
+                        double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
+                        double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
+                        Point2D.Double cornet_pos;
 
-                pointOff_.x = wellXOff;
-                pointOff_.y = wellYOff;
+                        cornet_pos = core_.getXYStagePosition();
 
-              //  Thread.sleep(1000 );
-//                app_.setXYOrigin(this.getFirstWellOffX(), this.getFirstWellOffY());
-                 //regenerate();
-     //           Point2D.Double pt = app_.getXYStagePosition();
-         //       JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + pt.x + "," + pt.y);
-                  JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " +wellXOff + "," + wellYOff);
-                  return pointOff_;
-            } catch (Exception e) {
-                //displayError(e.getMessage());
-                e.printStackTrace();
-                return null;
-            }
-          }
+                        wellXOff = (x_pos_ini + cornet_pos.getX());
+                        wellYOff = (-y_pos_ini + cornet_pos.getY());
+
+                        System.out.println("Xoff = " + wellXOff + "__ Yoff= " + wellYOff);
+                        cornet_off1.setLocation(wellXOff, wellYOff);
+
+                        pointOff_.x = wellXOff;
+                        pointOff_.y = wellYOff;
+
+                        dialog2.setVisible(true);
+                        dialog.setVisible(false);
+                    }
+                    //else dialog.dispose();
+
+
+                        //  Thread.sleep(1000 );
+                        //  app_.setXYOrigin(this.getFirstWellOffX(), this.getFirstWellOffY());
+                        //  regenerate();
+                        //           Point2D.Double pt = app_.getXYStagePosition();
+                        //       JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + pt.x + "," + pt.y);
+                        //   JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + wellXOff + "," + wellYOff);
+                        //  return pointOff_;
+
+                    } catch (Exception e) {
+                        //displayError(e.getMessage());
+                        dialog.dispose();
+                        e.printStackTrace();
+                        //  return null;
+                    }
+
+            });
+
+            dialog2.setContentPane(jop2);
+            jop2.addPropertyChangeListener(evt->{
+                try {
+
+                    if (jop2.getValue().equals(JOptionPane.OK_OPTION)) {
+                        double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
+                        double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
+                        Point2D.Double cornet_pos;
+                            cornet_pos = core_.getXYStagePosition();
+                            wellXOff = (x_pos_ini + cornet_pos.getX());
+                            wellYOff = (-y_pos_ini + cornet_pos.getY());
+                            cornet_off2.setLocation(wellXOff, wellYOff);
+                        dialog2.setVisible(false);
+
+                        JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + wellXOff + "," + wellYOff);
+                    }
+
+                } catch (Exception e) {
+                    //displayError(e.getMessage());
+                    e.printStackTrace();
+                    //  return null;
+                }finally {
+              //      dialog.dispose();
+                //    dialog2.dispose();
+                }
+
+            });
+
+            dialog.pack();
+            dialog.setLocationRelativeTo(RappGui.getInstance());
+            dialog2.pack();
+            dialog2.setLocationRelativeTo(RappGui.getInstance());
+
 
         }
         return pointOff_;

@@ -20,10 +20,7 @@ public class FOV_GUI extends JInternalFrame {
     protected JPanel main_well_panel;
     FOV_Controller FOV_control;
 
-    private JButton calibrateXY1_btn ;
-    private JButton calibrateXY2_btn ;
-    private JButton calibrateXY3_btn ;
-    private JButton calibrateXY4_btn ;
+    private stageControl myFrame_;
 
     private JLabel title_lbl;
     private JRadioButton rdbtnSelectWells_;
@@ -31,6 +28,7 @@ public class FOV_GUI extends JInternalFrame {
 
     private final JLabel txt_pos_Label;
     private final JLabel txt_plate_Label;
+    private final JLabel txt_calirate_Label;
     private JButton calibrateXY_btn ;
     private JButton putStageInFirstWell;
     public static JTextField rootField_xmlWellFile;
@@ -99,32 +97,8 @@ public class FOV_GUI extends JInternalFrame {
                 String file = rootField_xmlWellFile.getText();
 
                 String plateChoosed = (String) plateIDCombo_.getSelectedItem();
-//                int plateID = (int) plateIDCombo_.getSelectedIndex();
-//
-//                if (plateChoosed != null ){
-//
-//                    if (plateChoosed == "384WELL") {
-//                        well_plate_type = 384;
-//                    }
-//                    else if (plateChoosed =="96WELL"){
-//                        well_plate_type = 96;
-//                    }
-//                    else if (plateChoosed =="6WELL"){
-//                        well_plate_type = 6;
-//                    }
-//                    else if (plateChoosed =="12WELL"){
-//                        well_plate_type = 12;
-//                    }
-//                    else if (plateChoosed =="24WELL"){
-//                        well_plate_type = 24;
-//                    } else if (plateChoosed =="48WELL"){
-//                        well_plate_type = 48;
-//                    }else if (plateChoosed =="SLIDES"){
-//                        well_plate_type = 1;
-//                    }
-//                } //else ReportingUtils.showMessage(" Please Choose a plate ");
 
-                if (file.equals("")){
+                if (file.equals("")) {
                     ReportingUtils.showMessage(" Please Choose well map configuration file before");
                 }
                 else {
@@ -178,64 +152,34 @@ public class FOV_GUI extends JInternalFrame {
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
-        posPanel xyPos_panel = new posPanel(this, core_);
-        xyPos_panel.setBackground(Color.decode("#edf3f3"));
+        txt_calirate_Label = new JLabel();
+        txt_calirate_Label.setFont(new Font("Arial", Font.PLAIN, 12));
+        txt_calirate_Label.setForeground(Color.white);
+        txt_calirate_Label.setText("XY Stage Calibbration Process :");
+        txt_calirate_Label.setBounds(410, 2, 160, 26);
+        main_well_panel.add(txt_calirate_Label);
 
         calibrateXY_btn = new JButton();
         calibrateXY_btn.setText("Calibrate XY...");
-        calibrateXY_btn.setBounds(470, 30, 120, 24);
+        calibrateXY_btn.setBounds(430, 30, 120, 24);
         main_well_panel.add(calibrateXY_btn);
         calibrateXY_btn.addActionListener(evt->{
             FOV_control.calibrateXY();
         });
 
-        calibrateXY1_btn = new JButton();
-        calibrateXY1_btn.setText("XY1");
-        calibrateXY1_btn.setBounds(385, 15, 35, 24);
-        main_well_panel.add(calibrateXY1_btn);
-        calibrateXY1_btn.addActionListener(evt->{
-            int calib1 = JOptionPane.showConfirmDialog(RappGui.getInstance(), " Manually position the XY stage over the corner (top left) of the well A1 and press OK",
-                    "XYStage origin setup 1", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (calib1 == JOptionPane.OK_OPTION) {
-                FOV_Controller.cornet_off1 = FOV_control.calibrateXY();
-            }
-        });
 
-        calibrateXY2_btn = new JButton();
-        calibrateXY2_btn.setText("XY2");
-        calibrateXY2_btn.setBounds(385, 40, 35, 24);
-        main_well_panel.add(calibrateXY2_btn);
-        calibrateXY2_btn.addActionListener(evt->{
-            int calib3 = JOptionPane.showConfirmDialog(RappGui.getInstance(), " Manually position the XY stage over the corner (bottom left) of the well A1 and press OK",
-                    "XYStage origin setup 2", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (calib3 == JOptionPane.OK_OPTION) {
-                FOV_Controller.cornet_off2 = FOV_control.calibrateXY();
-            }
-        });
 
-        calibrateXY3_btn = new JButton();
-        calibrateXY3_btn.setText("XY3");
-        calibrateXY3_btn.setBounds(425, 15, 35, 24);
-        main_well_panel.add(calibrateXY3_btn);
-        calibrateXY3_btn.addActionListener(evt->{
-            int calib2 = JOptionPane.showConfirmDialog(RappGui.getInstance(), " Manually position the XY stage over the corner (top Right) of the well A1 and press OK",
-                    "XYStage origin setup 3", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (calib2 == JOptionPane.OK_OPTION) {
-                FOV_Controller.cornet_off3 = FOV_control.calibrateXY();
-            }
-        });
+        posPanel xyPos_panel = new posPanel(this, core_);
+        xyPos_panel.setBackground(Color.decode("#edf3f3"));
 
-        calibrateXY4_btn = new JButton();
-        calibrateXY4_btn.setText("XY4");
-        calibrateXY4_btn.setBounds(425, 40, 35, 24);
-        main_well_panel.add(calibrateXY4_btn);
-        calibrateXY4_btn.addActionListener(evt->{
-            int calib3 = JOptionPane.showConfirmDialog(RappGui.getInstance(), " Manually position the XY stage over the corner (bottom Right) of the well A1 and press OK",
-                    "XYStage origin setup 2", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (calib3 == JOptionPane.OK_OPTION) {
-                FOV_Controller.cornet_off4 = FOV_control.calibrateXY();
-            }
-        });
+        if (myFrame_ == null) {
+            myFrame_ = new stageControl(app_);
+            // myFrame_.setBackground(app_.getBackgroundColor());
+        }
+        myFrame_.initialize();
+        myFrame_.setVisible(true);
+        myFrame_.setBounds(1,240, 400, 349 );
+        xyPos_panel.add(myFrame_);
 
         putStageInFirstWell = new JButton();
         putStageInFirstWell.setText("Move Stage to Well A1...");
@@ -278,7 +222,7 @@ public class FOV_GUI extends JInternalFrame {
         //setDefaultCloseOperation(0);
         setTitle("Set Multi");
        // setSize(900, 445);
-        setResizable(false);
+       // setResizable(false);
         //  setLocationRelativeTo(null);  // center the application window
         setVisible(true);
     }
