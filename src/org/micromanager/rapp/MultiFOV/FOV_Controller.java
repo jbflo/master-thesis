@@ -264,9 +264,10 @@ public class FOV_Controller {
                         double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
                         Point2D.Double cornet_pos;
                             cornet_pos = core_.getXYStagePosition();
-                            wellXOff = (x_pos_ini + cornet_pos.getX());
-                            wellYOff = (-y_pos_ini + cornet_pos.getY());
-                            cornet_off2.setLocation(wellXOff, wellYOff);
+                          double  wellXOff1 = (x_pos_ini + cornet_pos.getX());
+                          double wellYOff1 = (-y_pos_ini + cornet_pos.getY());
+
+                          cornet_off2.setLocation(wellXOff1, wellYOff1);
                         dialog2.setVisible(false);
 
                         JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + wellXOff + "," + wellYOff);

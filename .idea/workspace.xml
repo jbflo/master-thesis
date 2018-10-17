@@ -7,42 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3bd16c0-5336-44c0-8d6f-2b586ae6e16d" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/stageControl.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_Controller.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_Controller.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_GUI$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_GUI.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$2.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$3.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$3.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$4.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$4.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$5.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$5.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/wellPanel.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/wellPanel.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$2.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$3.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$3.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4$1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$5.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$5.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$6.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$6.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$7.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$7.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$8.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$8.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappPlugin$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappPlugin$1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappPlugin.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappPlugin.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$1.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$2.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$2.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$3.class" afterPath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$3.class" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java" />
       <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,89 +20,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/RappPlugin$MM.coverage" NAME="MM Coverage Results" MODIFIED="1537528244882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/RappPlugin$Test.coverage" NAME="Test Coverage Results" MODIFIED="1520372486528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-  </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-            <file leaf-file-name="SBSPlate.java" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SBSPlate.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="495">
-                    <caret line="191" column="24" lean-forward="false" selection-start-line="191" selection-start-column="24" selection-end-line="191" selection-end-column="24" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="SiteGenerator.java" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SiteGenerator.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="-677">
-                    <caret line="56" column="35" lean-forward="false" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="35" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="PlatePanel.java" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/PlatePanel.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="462">
-                    <caret line="49" column="30" lean-forward="false" selection-start-line="49" selection-start-column="30" selection-end-line="49" selection-end-column="30" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="PositionList.class" pinned="false" current-in-tab="false">
-              <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/PositionList.class">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="2205">
-                    <caret line="126" column="15" lean-forward="false" selection-start-line="126" selection-start-column="15" selection-end-line="126" selection-end-column="15" />
-                    <folding>
-                      <marker date="1536960112000" expanded="false" signature="0:104" ph="/.../" />
-                      <marker date="1536960112000" expanded="false" signature="144:616" ph="..." />
-                      <marker date="1536960112000" expanded="true" signature="2018:2025" ph="{}" />
-                      <marker date="1536960112000" expanded="true" signature="2088:2342" ph="{...}" />
-                      <marker date="1536960112000" expanded="false" signature="2402:2413" ph=" { " />
-                      <marker date="1536960112000" expanded="false" signature="2443:2449" ph=" }" />
-                      <marker date="1536960112000" expanded="false" signature="2512:2523" ph=" { " />
-                      <marker date="1536960112000" expanded="false" signature="2556:2562" ph=" }" />
-                      <marker date="1536960112000" expanded="true" signature="2604:2826" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="2879:2997" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="3054:3204" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="3255:3490" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="3544:3768" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="3831:4060" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="4129:4294" ph="{...}" />
-                      <marker date="1536960112000" expanded="false" signature="4333:4344" ph=" { " />
-                      <marker date="1536960112000" expanded="false" signature="4374:4380" ph=" }" />
-                      <marker date="1536960112000" expanded="true" signature="4418:4496" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="4538:4691" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="4753:4940" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="4989:5237" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="5287:5478" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="5542:7559" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="7632:9601" ph="{...}" />
-                      <marker date="1536960112000" expanded="false" signature="9636:9647" ph=" { " />
-                      <marker date="1536960112000" expanded="false" signature="9680:9686" ph=" }" />
-                      <marker date="1536960112000" expanded="true" signature="9737:9960" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="10009:10247" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="10302:10605" ph="{...}" />
-                      <marker date="1536960112000" expanded="true" signature="10660:11324" ph="{...}" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
+    <SUITE FILE_PATH="coverage/RappPlugin$MM.coverage" NAME="MM Coverage Results" MODIFIED="1537528244882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="ExportToHTMLSettings">
     <option name="printScope" value="4" />
@@ -151,29 +37,29 @@
       <file leaf-file-name="SeqAcqController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="236" column="8" lean-forward="false" selection-start-line="236" selection-start-column="8" selection-end-line="236" selection-end-column="8" />
+            <state relative-caret-position="474">
+              <caret line="236" column="80" lean-forward="false" selection-start-line="236" selection-start-column="80" selection-end-line="236" selection-end-column="80" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FOV_Controller.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FOV_Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5334">
-              <caret line="270" column="0" lean-forward="false" selection-start-line="270" selection-start-column="0" selection-end-line="270" selection-end-column="0" />
+            <state relative-caret-position="554">
+              <caret line="308" column="28" lean-forward="false" selection-start-line="308" selection-start-column="28" selection-end-line="308" selection-end-column="28" />
               <folding>
-                <element signature="e#14029#14030#0" expanded="true" />
-                <element signature="e#14063#14064#0" expanded="true" />
-                <element signature="e#14095#14096#0" expanded="true" />
-                <element signature="e#14129#14130#0" expanded="true" />
-                <element signature="e#14161#14162#0" expanded="true" />
-                <element signature="e#14192#14193#0" expanded="true" />
-                <element signature="e#14227#14228#0" expanded="true" />
-                <element signature="e#14260#14261#0" expanded="true" />
-                <element signature="e#14294#14295#0" expanded="true" />
-                <element signature="e#14322#14323#0" expanded="true" />
+                <element signature="e#14043#14044#0" expanded="true" />
+                <element signature="e#14077#14078#0" expanded="true" />
+                <element signature="e#14109#14110#0" expanded="true" />
+                <element signature="e#14143#14144#0" expanded="true" />
+                <element signature="e#14175#14176#0" expanded="true" />
+                <element signature="e#14206#14207#0" expanded="true" />
+                <element signature="e#14241#14242#0" expanded="true" />
+                <element signature="e#14274#14275#0" expanded="true" />
+                <element signature="e#14308#14309#0" expanded="true" />
+                <element signature="e#14336#14337#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -182,7 +68,7 @@
       <file leaf-file-name="RappPlugin.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
+            <state relative-caret-position="1680">
               <caret line="116" column="5" lean-forward="false" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
               <folding />
             </state>
@@ -202,7 +88,7 @@
       <file leaf-file-name="FOV_GUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
+            <state relative-caret-position="171">
               <caret line="180" column="31" lean-forward="false" selection-start-line="180" selection-start-column="31" selection-end-line="180" selection-end-column="31" />
               <folding />
             </state>
@@ -212,25 +98,18 @@
       <file leaf-file-name="stageControl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/stageControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="212" column="36" lean-forward="false" selection-start-line="212" selection-start-column="36" selection-end-line="212" selection-end-column="36" />
+            <state relative-caret-position="260">
+              <caret line="224" column="38" lean-forward="false" selection-start-line="224" selection-start-column="38" selection-end-line="224" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1834#1850#0" expanded="true" />
-                <element signature="e#1920#1936#0" expanded="true" />
-                <element signature="e#8513#8602#0" expanded="true" />
                 <element signature="e#12301#12302#0" expanded="true" />
                 <element signature="e#12374#12375#0" expanded="true" />
                 <element signature="e#13085#13086#0" expanded="true" />
                 <element signature="e#13161#13162#0" expanded="true" />
                 <element signature="e#13342#13343#0" expanded="true" />
                 <element signature="e#13419#13420#0" expanded="true" />
-                <element signature="e#13484#13686#0" expanded="true" />
-                <element signature="e#13685#13686#0" expanded="true" />
                 <element signature="e#13959#13960#0" expanded="true" />
                 <element signature="e#14035#14036#0" expanded="true" />
-                <element signature="e#14099#14300#0" expanded="true" />
-                <element signature="e#14299#14300#0" expanded="true" />
                 <element signature="e#15010#15011#0" expanded="true" />
                 <element signature="e#15088#15089#0" expanded="true" />
                 <element signature="e#15806#15807#0" expanded="true" />
@@ -273,16 +152,10 @@
                 <element signature="e#38991#38992#0" expanded="true" />
                 <element signature="e#39172#39173#0" expanded="true" />
                 <element signature="e#39249#39250#0" expanded="true" />
-                <element signature="e#39314#39499#0" expanded="true" />
-                <element signature="e#39498#39499#0" expanded="true" />
                 <element signature="e#39666#39667#0" expanded="true" />
                 <element signature="e#39744#39745#0" expanded="true" />
-                <element signature="e#39810#39995#0" expanded="true" />
-                <element signature="e#39994#39995#0" expanded="true" />
                 <element signature="e#40244#40245#0" expanded="true" />
                 <element signature="e#40321#40322#0" expanded="true" />
-                <element signature="e#40386#40571#0" expanded="true" />
-                <element signature="e#40570#40571#0" expanded="true" />
                 <element signature="e#41255#41256#0" expanded="true" />
                 <element signature="e#41330#41331#0" expanded="true" />
                 <element signature="e#41893#41894#0" expanded="true" />
@@ -296,7 +169,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="posPanel.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="posPanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="374">
@@ -309,7 +182,7 @@
       <file leaf-file-name="SeqAcqGui.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
+            <state relative-caret-position="6900">
               <caret line="403" column="23" lean-forward="false" selection-start-line="403" selection-start-column="6" selection-end-line="403" selection-end-column="23" />
               <folding />
             </state>
@@ -319,8 +192,8 @@
       <file leaf-file-name="wellPanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5312">
-              <caret line="265" column="9" lean-forward="false" selection-start-line="265" selection-start-column="9" selection-end-line="265" selection-end-column="9" />
+            <state relative-caret-position="742">
+              <caret line="222" column="10" lean-forward="false" selection-start-line="222" selection-start-column="10" selection-end-line="222" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -427,14 +300,14 @@
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/PlatePanel.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java" />
-        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/stageControl.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java" />
         <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
+        <option value="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java" />
       </list>
     </option>
   </component>
@@ -445,10 +318,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1767" />
-    <option name="y" value="-22" />
-    <option name="width" value="1612" />
-    <option name="height" value="867" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="2576" />
+    <option name="height" value="1416" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -465,6 +338,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -540,10 +417,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -746,42 +619,41 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1592" y="-8" width="2064" height="1128" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <layout>
-      <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4246507" sideWeight="0.49449036" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="simpleUML" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7718509" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25135136" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18365385" sideWeight="0.5025707" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288423" sideWeight="0.49449036" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22782259" sideWeight="0.4974293" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7237354" sideWeight="0.4974293" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18163672" sideWeight="0.49596775" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18282989" sideWeight="0.49596775" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Learn" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.49449036" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48918918" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15768462" sideWeight="0.50403225" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4246507" sideWeight="0.49449036" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Stack Trace To UML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Analyze Dataflow to" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296371" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="simpleUML" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7718509" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5055096" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3266129" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UML design tool window" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984033" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4248072" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -990,46 +862,46 @@
     </entry>
     <entry file="jar://C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/MMJ_.jar!/org/micromanager/api/PositionList.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2205">
+        <state relative-caret-position="2100">
           <caret line="126" column="15" lean-forward="false" selection-start-line="126" selection-start-column="15" selection-end-line="126" selection-end-column="15" />
           <folding>
-            <marker date="1536960112000" expanded="false" signature="0:104" ph="/.../" />
-            <marker date="1536960112000" expanded="false" signature="144:616" ph="..." />
-            <marker date="1536960112000" expanded="true" signature="2018:2025" ph="{}" />
-            <marker date="1536960112000" expanded="true" signature="2088:2342" ph="{...}" />
-            <marker date="1536960112000" expanded="false" signature="2402:2413" ph=" { " />
-            <marker date="1536960112000" expanded="false" signature="2443:2449" ph=" }" />
-            <marker date="1536960112000" expanded="false" signature="2512:2523" ph=" { " />
-            <marker date="1536960112000" expanded="false" signature="2556:2562" ph=" }" />
-            <marker date="1536960112000" expanded="true" signature="2604:2826" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="2879:2997" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="3054:3204" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="3255:3490" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="3544:3768" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="3831:4060" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="4129:4294" ph="{...}" />
-            <marker date="1536960112000" expanded="false" signature="4333:4344" ph=" { " />
-            <marker date="1536960112000" expanded="false" signature="4374:4380" ph=" }" />
-            <marker date="1536960112000" expanded="true" signature="4418:4496" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="4538:4691" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="4753:4940" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="4989:5237" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="5287:5478" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="5542:7559" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="7632:9601" ph="{...}" />
-            <marker date="1536960112000" expanded="false" signature="9636:9647" ph=" { " />
-            <marker date="1536960112000" expanded="false" signature="9680:9686" ph=" }" />
-            <marker date="1536960112000" expanded="true" signature="9737:9960" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="10009:10247" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="10302:10605" ph="{...}" />
-            <marker date="1536960112000" expanded="true" signature="10660:11324" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1439569898000" expanded="false" signature="144:587" ph="..." />
+            <marker date="1439569898000" expanded="true" signature="1965:1972" ph="{}" />
+            <marker date="1439569898000" expanded="true" signature="2035:2289" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="2349:2360" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2390:2396" ph=" }" />
+            <marker date="1439569898000" expanded="false" signature="2459:2470" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="2503:2509" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="2551:2773" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="2826:2944" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3001:3151" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3202:3437" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3491:3715" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="3778:4007" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="4076:4241" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="4280:4291" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="4321:4327" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="4365:4443" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="4485:4638" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="4700:4887" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="4936:5184" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="5234:5425" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="5489:7506" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="7579:9548" ph="{...}" />
+            <marker date="1439569898000" expanded="false" signature="9583:9594" ph=" { " />
+            <marker date="1439569898000" expanded="false" signature="9627:9633" ph=" }" />
+            <marker date="1439569898000" expanded="true" signature="9684:9907" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="9956:10194" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="10249:10552" ph="{...}" />
+            <marker date="1439569898000" expanded="true" signature="10607:11271" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/PlatePanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
+        <state relative-caret-position="440">
           <caret line="49" column="30" lean-forward="false" selection-start-line="49" selection-start-column="30" selection-end-line="49" selection-end-column="30" />
           <folding />
         </state>
@@ -1037,16 +909,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SiteGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-677">
+        <state relative-caret-position="300">
           <caret line="56" column="35" lean-forward="false" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="236" column="8" lean-forward="false" selection-start-line="236" selection-start-column="8" selection-end-line="236" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -1079,14 +943,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/beans/PropertyChangeSupport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="334" column="0" lean-forward="false" selection-start-line="334" selection-start-column="0" selection-end-line="334" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/beans/PropertyChangeSupport.java" />
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/FOVGenerator/SBSPlate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -1095,62 +952,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5334">
-          <caret line="270" column="0" lean-forward="false" selection-start-line="270" selection-start-column="0" selection-end-line="270" selection-end-column="0" />
-          <folding>
-            <element signature="e#14029#14030#0" expanded="true" />
-            <element signature="e#14063#14064#0" expanded="true" />
-            <element signature="e#14095#14096#0" expanded="true" />
-            <element signature="e#14129#14130#0" expanded="true" />
-            <element signature="e#14161#14162#0" expanded="true" />
-            <element signature="e#14192#14193#0" expanded="true" />
-            <element signature="e#14227#14228#0" expanded="true" />
-            <element signature="e#14260#14261#0" expanded="true" />
-            <element signature="e#14294#14295#0" expanded="true" />
-            <element signature="e#14322#14323#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
+        <state relative-caret-position="6900">
           <caret line="403" column="23" lean-forward="false" selection-start-line="403" selection-start-column="6" selection-end-line="403" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java">
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5312">
-          <caret line="265" column="9" lean-forward="false" selection-start-line="265" selection-start-column="9" selection-end-line="265" selection-end-column="9" />
+        <state relative-caret-position="1680">
+          <caret line="116" column="5" lean-forward="false" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="67" column="39" lean-forward="false" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="765" column="13" lean-forward="false" selection-start-line="765" selection-start-column="13" selection-end-line="765" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="180" column="31" lean-forward="false" selection-start-line="180" selection-start-column="31" selection-end-line="180" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/stageControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="212" column="36" lean-forward="false" selection-start-line="212" selection-start-column="36" selection-end-line="212" selection-end-column="36" />
+        <state relative-caret-position="260">
+          <caret line="224" column="38" lean-forward="false" selection-start-line="224" selection-start-column="38" selection-end-line="224" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1834#1850#0" expanded="true" />
-            <element signature="e#1920#1936#0" expanded="true" />
-            <element signature="e#8513#8602#0" expanded="true" />
             <element signature="e#12301#12302#0" expanded="true" />
             <element signature="e#12374#12375#0" expanded="true" />
             <element signature="e#13085#13086#0" expanded="true" />
             <element signature="e#13161#13162#0" expanded="true" />
             <element signature="e#13342#13343#0" expanded="true" />
             <element signature="e#13419#13420#0" expanded="true" />
-            <element signature="e#13484#13686#0" expanded="true" />
-            <element signature="e#13685#13686#0" expanded="true" />
             <element signature="e#13959#13960#0" expanded="true" />
             <element signature="e#14035#14036#0" expanded="true" />
-            <element signature="e#14099#14300#0" expanded="true" />
-            <element signature="e#14299#14300#0" expanded="true" />
             <element signature="e#15010#15011#0" expanded="true" />
             <element signature="e#15088#15089#0" expanded="true" />
             <element signature="e#15806#15807#0" expanded="true" />
@@ -1193,16 +1048,10 @@
             <element signature="e#38991#38992#0" expanded="true" />
             <element signature="e#39172#39173#0" expanded="true" />
             <element signature="e#39249#39250#0" expanded="true" />
-            <element signature="e#39314#39499#0" expanded="true" />
-            <element signature="e#39498#39499#0" expanded="true" />
             <element signature="e#39666#39667#0" expanded="true" />
             <element signature="e#39744#39745#0" expanded="true" />
-            <element signature="e#39810#39995#0" expanded="true" />
-            <element signature="e#39994#39995#0" expanded="true" />
             <element signature="e#40244#40245#0" expanded="true" />
             <element signature="e#40321#40322#0" expanded="true" />
-            <element signature="e#40386#40571#0" expanded="true" />
-            <element signature="e#40570#40571#0" expanded="true" />
             <element signature="e#41255#41256#0" expanded="true" />
             <element signature="e#41330#41331#0" expanded="true" />
             <element signature="e#41893#41894#0" expanded="true" />
@@ -1215,35 +1064,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java">
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="116" column="5" lean-forward="false" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
+        <state relative-caret-position="474">
+          <caret line="236" column="80" lean-forward="false" selection-start-line="236" selection-start-column="80" selection-end-line="236" selection-end-column="80" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java">
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="765" column="13" lean-forward="false" selection-start-line="765" selection-start-column="13" selection-end-line="765" selection-end-column="13" />
+        <state relative-caret-position="742">
+          <caret line="222" column="10" lean-forward="false" selection-start-line="222" selection-start-column="10" selection-end-line="222" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java">
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="180" column="31" lean-forward="false" selection-start-line="180" selection-start-column="31" selection-end-line="180" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="67" column="39" lean-forward="false" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
-          <folding />
+        <state relative-caret-position="554">
+          <caret line="308" column="28" lean-forward="false" selection-start-line="308" selection-start-column="28" selection-end-line="308" selection-end-column="28" />
+          <folding>
+            <element signature="e#14043#14044#0" expanded="true" />
+            <element signature="e#14077#14078#0" expanded="true" />
+            <element signature="e#14109#14110#0" expanded="true" />
+            <element signature="e#14143#14144#0" expanded="true" />
+            <element signature="e#14175#14176#0" expanded="true" />
+            <element signature="e#14206#14207#0" expanded="true" />
+            <element signature="e#14241#14242#0" expanded="true" />
+            <element signature="e#14274#14275#0" expanded="true" />
+            <element signature="e#14308#14309#0" expanded="true" />
+            <element signature="e#14336#14337#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
