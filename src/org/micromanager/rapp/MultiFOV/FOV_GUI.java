@@ -178,7 +178,7 @@ public class FOV_GUI extends JInternalFrame {
         }
         myFrame_.initialize();
         myFrame_.setVisible(true);
-        myFrame_.setBounds(1,240, 400, 349 );
+        myFrame_.setBounds(1,260, 400, 349 );
         xyPos_panel.add(myFrame_);
 
         putStageInFirstWell = new JButton();
