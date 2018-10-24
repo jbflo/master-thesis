@@ -12,7 +12,6 @@ public class SequenceSettings {
     public ArrayList<ChannelSpec> channels = new ArrayList();
     public boolean keepShutterOpenChannels = false;
     public boolean useAutofocus = false;
-    public int skipAutofocusCount = 0;
     public boolean save = false;
     public String root = null;
     public String prefix = null;
@@ -21,7 +20,6 @@ public class SequenceSettings {
     public boolean usePositionList = false;
     public boolean useSegmentation = false;
     public boolean killCell = false;
-    public boolean imagePlate = false;
     public int numberOfXWells = 1;
     public int numberOfYWells = 1;
     public double wellDistance = 0;

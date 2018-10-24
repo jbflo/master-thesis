@@ -107,7 +107,6 @@ import org.micromanager.rapp.RappGui;
             currentZDrive_ = prefs_.get(CURRENTZDRIVE, currentZDrive_);
 
             initComponents();
-
             frameLayout_ = this.getContentPane().getLayout();
 
             setLocation(0, 0);

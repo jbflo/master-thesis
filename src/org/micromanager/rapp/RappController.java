@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
-//FILE:          RappPlugin.java
-//PROJECT:       Micro-Manager Laser Automated Plugin
+//FILE:          RappControlleer.java
+//PROJECT:       Micro-Manager Laser Automated Plugin (Laser control, Image Acquisition,  image Segmentation )
 //SUBSYSTEM:     RAPP plugin
 //-----------------------------------------------------------------------------
 //AUTHOR:        FLorial,
@@ -107,6 +107,12 @@ public class RappController extends  MMFrame implements OnStateListener {
 //        return fINSTANCE;
 //    }
 
+    /** Constructor
+     *
+     * @param core
+     * @param app
+     * @throws Exception
+     */
 
     public RappController( CMMCore core, ScriptInterface app) throws Exception {
         app_ = app;
@@ -115,7 +121,6 @@ public class RappController extends  MMFrame implements OnStateListener {
         camera = core_.getCameraDevice();
         String slm = core_.getSLMDevice();
         galvo = core_.getGalvoDevice();
-
         if (slm.length() > 0) {
             dev_ = new SLM(core_, 20);
         } else if (galvo.length() > 0) {
@@ -123,16 +128,9 @@ public class RappController extends  MMFrame implements OnStateListener {
         } else {
             dev_ = null;
         }
-
         loadMapping();
         pointAndShootMouseListener = createPointAndShootMouseListenerInstance();
-
-        Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
-            @Override
-            public void eventDispatched(AWTEvent e) {
-                enablePointAndShootMode(pointAndShooteModeOn_.get());
-            }
-        }, AWTEvent.WINDOW_EVENT_MASK);
+        Toolkit.getDefaultToolkit().addAWTEventListener(e->enablePointAndShootMode(pointAndShooteModeOn_.get()), AWTEvent.WINDOW_EVENT_MASK);
         isSLM_ = dev_ instanceof SLM;
     }
 
@@ -834,6 +832,8 @@ public class RappController extends  MMFrame implements OnStateListener {
                                 try {
                                     if (devP != null) {
                                         displaySpot(devP.x, devP.y);
+                                        Thread.sleep(dev_.getExposure());
+                                        displaySpot(0, 0);
                                     }else ReportingUtils.showError("Please Try Again! Your click return Null");
 
                                     returnShutter(originalShutterState);
@@ -898,11 +898,11 @@ public class RappController extends  MMFrame implements OnStateListener {
                                 //core_.setGalvoIlluminationState(galvo,true);
                                 //core_.waitForDevice(galvo);
                             } else ReportingUtils.showError("Please Try Again! Galvo problem");
-                            Thread.sleep(dev_.getExposure());
                             displaySpot(devP.x, devP.y);
+                            Thread.sleep(dev_.getExposure());
                             returnShutter(originalShutterState);
                             returnChannel(originalConfig);
-                            Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
+                           // Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
                         } catch (Exception ec) {
                             ReportingUtils.showError(ec);
                         }
@@ -911,14 +911,20 @@ public class RappController extends  MMFrame implements OnStateListener {
 
         }).run();
     }
+
+    public int compare(Point2D o1, Point2D o2) {
+        return Double.compare(o1.getX(), o2.getX());
+    }
+
 ///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
-    public ArrayList[] imageSegmentation(ImagePlus impproc, String path, String Algo,  boolean kill , boolean save) {
+    public  List<Point2D.Double> imageSegmentation(ImagePlus impproc, String path, String Algo,  boolean kill , boolean save) {
 
         impproc.show();
         impproc.updateAndRepaintWindow();
 
         if (Algo == "Find Peak"){
             IJ.run(impproc, "Gaussian Blur...", "sigma=5");
+           // IJ.run(impproc,"Gamma", "Value=5.00");
             if (kill){
                 IJ.run(impproc, "Find Maxima...", "noise=20 output=List add");
             }else {
@@ -939,11 +945,12 @@ public class RappController extends  MMFrame implements OnStateListener {
 
         ij.measure.ResultsTable resTab = Analyzer.getResultsTable();
         int resCount = resTab.getCounter();
-        ArrayList xTab = new ArrayList();
-        ArrayList yTab = new ArrayList();
-        double[] x = new double[resCount];
-        double[] y = new double[resCount];
+//        ArrayList xTab = new ArrayList();
+//        ArrayList yTab = new ArrayList();
+//        double[] x = new double[resCount];
+//        double[] y = new double[resCount];
         Roi[] r = new Roi[resCount];
+        List<Point2D.Double> list = new ArrayList<Point2D.Double>();
         RoiManager rm = RoiManager.getInstance();
         ImageProcessor ip = impproc.getProcessor();
         String text="0";
@@ -957,26 +964,20 @@ public class RappController extends  MMFrame implements OnStateListener {
 
             double xx = resTab.getValueAsDouble(0, i);
             double yy = resTab.getValueAsDouble(1, i);
-            xTab.add(xx);
-            yTab.add(yy);
-            x[i]=xx;
-            y[i]=yy;
-            text = String.valueOf(i) ;
-            r[i]= new Roi(xx-5,yy-5,10,10);
-            impproc.setRoi(new Roi(xx-5,yy-5,10,10));
 
-            ip = impproc.getProcessor();
-            Font font = new Font("SansSerif", Font.PLAIN, 32);
-            ip.setFont(font);
-            ip.setColor(new Color(255, 255, 0));
-            ip.drawString(text, (int) xx, (int)yy);
-            impproc.updateAndDraw();
+//            xTab.add(xx);
+//            yTab.add(yy);
 
-            IJ.run("Draw");
+
+            list.add(new Point2D.Double(xx,yy));
+//            x[i]=xx;
+//            y[i]=yy;
+
+
         }
         // impproc.setRoi(r);
-        System.out.println( " Xcord "+ xTab);
-        System.out.println(" Ycord "+ yTab);
+//        System.out.println( " Xcord "+ xTab);
+//        System.out.println(" Ycord "+ yTab);
         impproc.updateAndRepaintWindow();
         System.out.println("Save?" +save + "Path"+ path);
         if(path !=null && save){
@@ -984,18 +985,39 @@ public class RappController extends  MMFrame implements OnStateListener {
             impproc.close();
         }
 
-        return new ArrayList[]{xTab, yTab};
+
+        list.sort(Comparator.comparingDouble(Point2D.Double::getX));
+        int index = 1;
+        for(Point2D.Double elem :list){
+
+            text = String.valueOf(index) ;
+            r[index]= new Roi(elem.getX()-5,elem.getY()-5,10,10);
+            impproc.setRoi(new Roi(elem.getX()-5,elem.getY()-5,10,10));
+
+            ip = impproc.getProcessor();
+            Font font = new Font("SansSerif", Font.PLAIN, 32);
+            ip.setFont(font);
+            ip.setColor(new Color(255, 255, 0));
+            ip.drawString(text, (int) elem.getX(), (int)elem.getY());
+            impproc.updateAndDraw();
+
+            IJ.run("Draw");
+
+            index += 1;
+        }
+
+        return list;
     }
 
-    public void shootFromSegmentationListPoint(ArrayList[] segmentatio_pt, long laser_exp) {
+    public void shootFromSegmentationListPoint(List<Point2D.Double> segmentation_pt, long laser_exp) {
 
         //sort(segmentatio_pt);
-        if (segmentatio_pt.length != 0 ) {
+        if (segmentation_pt.size() != 0 ) {
             //Roi[] roiArray = rm.;
 
-            ImagePlus iplus_ = IJ.getImage();
-            double[] failsArrayX =  new double[segmentatio_pt[0].size()];
-            double[] failsArrayY =  new double[segmentatio_pt[1].size()];
+
+//            double[] failsArrayX =  new double[segmentation_pt.];
+//            double[] failsArrayY =  new double[segmentation_pt[1].size()];
 
             if (defaultGroupConfig_ != null && defaultConfPrest_ != null){
                 System.out.println(defaultGroupConfig_ + "__" + defaultConfPrest_);
@@ -1008,26 +1030,26 @@ public class RappController extends  MMFrame implements OnStateListener {
 
             }else System.out.println("___"); // Don't need to do anything
 
-            System.out.println(" SIze: "+ segmentatio_pt[1].size());
-            System.out.println(" Val: "+ segmentatio_pt.toString());
-            for (int i =0 ; i < segmentatio_pt[0].size(); i++)
+//            System.out.println(" SIze: "+ segmentation_pt[1].size());
+//            System.out.println(" Val: "+ segmentation_pt.toString());
+            for (Point2D.Double elem : segmentation_pt)
             {
                 if (SeqAcqController.stopAcqRequested_.get()) {
                    // ReportingUtils.showMessage("Acquisition Stop.");
                     break;
                 }
-                //iterate over the elements of the list
-                System.out.println( " Xval" + segmentatio_pt[0].get(i).toString());
-                System.out.println(" Yval" + segmentatio_pt[1].get(i).toString());
+//                //iterate over the elements of the list
+                System.out.println( " Xval" + elem.getX());
+                System.out.println(" Yval" + elem.getY());
 
-                System.out.println("_________________________________");
-
-                failsArrayX[i] = (double) segmentatio_pt[0].get(i); //store each element as a double in the array
-                failsArrayY[i] = (double) segmentatio_pt[1].get(i); //store each element as a double in the array
+//                System.out.println("_________________________________");
+//
+//                failsArrayX[i] = (double) segmentation_pt[0].get(i); //store each element as a double in the array
+//                failsArrayY[i] = (double) segmentation_pt[1].get(i); //store each element as a double in the array
 
                 //failsArrayX[i] = Double.parseDouble(segmentatio_pt[0].get(i).toString()); //store each element as a double in the array
                 //failsArrayY[i] = Double.parseDouble(segmentatio_pt[1].get(i).toString()); //store each element as a double in the array
-                  Point2D.Double devP = transformPoint(loadMapping(), new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+                  Point2D.Double devP = transformPoint(loadMapping(), elem);
                 //final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), iplus_,
                     //    new Point2D.Double(failsArrayX[i], failsArrayY[i]));
              //   System.out.println(devP);

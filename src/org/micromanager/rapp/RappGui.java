@@ -43,10 +43,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.prefs.Preferences;
 
@@ -620,7 +622,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                         image_dup_ori.setTitle("Img_Segmented_"+ algo);
                         image_dup_ori.show();
 
-                        ArrayList[] ll = rappController_ref.imageSegmentation(image_dup_ori, "",  algo, true, false);
+                        List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_dup_ori, "",  algo, true, false);
                         rappController_ref.shootFromSegmentationListPoint(ll, Long.parseLong(exposureT_laser_spinner.getValue().toString()));
                     } else ReportingUtils.showMessage(" No Image were chosen ");
                 }
@@ -636,7 +638,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                     ImagePlus image_dup = iPlus.duplicate();
                     image_dup.setTitle("Img_Segmented_"+ algo);
                     image_dup.show();
-                    ArrayList[] ll = rappController_ref.imageSegmentation(image_dup,  "",  algo, true, false);
+                    List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_dup,  "",  algo, true, false);
                     rappController_ref.shootFromSegmentationListPoint(ll, Long.parseLong(exposureT_laser_spinner.getValue().toString()));
                 }
 
@@ -997,7 +999,6 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                 return (b? Color.decode("#d35400") :Color.decode("#d35400") );
             }
         });
-
     }
 
     @Override

@@ -263,7 +263,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                 app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
                                 // Make sure the chanel was set
                                 core_.waitForConfig(chanelGroup_, presetConfig.config.toString());
-                                Thread.sleep(1000 + (long) presetConfig.exposure);
+                              //  Thread.sleep(1000 + (long) presetConfig.exposure);
 
                                 // Take an image from the live view
                                 iPlus = IJ.getImage();
@@ -282,7 +282,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                     ImagePlus image_dup = iPlus.duplicate();
                                     image_dup.setTitle("_Segmented_" + presetConfig.config);
 
-                                    ArrayList[] ll = rappController_ref.imageSegmentation(image_dup, "", algo, presetConfig.KillCell, saveFiles_);
+                                    List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_dup, "", algo, presetConfig.KillCell, saveFiles_);
                                     if (presetConfig.KillCell) {
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
                                         rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
@@ -298,9 +298,9 @@ public class SeqAcqController implements AcquisitionEngine {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
                                         ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
 
-                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config.toString() +"_POS_" +  i  );
+                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config +"_POS_" +  i  );
 
-                                        ArrayList[] ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
+                                        List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
                                         System.out.println(presetConfig.KillCell);
                                         if (presetConfig.KillCell) {
                                             app_.enableLiveMode(true); //  Open the live mode before shooting
@@ -314,7 +314,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                     // We Open the Original Image
                                     ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
-                                    image_.setTitle(dirName_ + "_" + presetConfig.config.toString() +"_POS_" +  i  );
+                                    image_.setTitle(dirName_ + "_" + presetConfig.config +"_POS_" +  i  );
                                     image_.show();
 
                                     // We Duplicate the original image , and segmented the duplicate one
@@ -324,7 +324,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
-                                        ArrayList[] ll = rappController_ref.imageSegmentation(image_dup, path_seq, algo, presetConfig.KillCell, saveFiles_);
+                                        List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_dup, path_seq, algo, presetConfig.KillCell, saveFiles_);
 
                                         if (presetConfig.KillCell) {
                                             app_.enableLiveMode(true); //  Open the live mode before shooting
@@ -350,6 +350,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // After the loop we saves all the Images as a stack Image.
                                 Thread.sleep(500); // we wait to be sure the live view is turn off.
                                 IJ.run("Images to Stack", "name=Stack title=[] use");
+                                IJ.run("Delete Slice");
                                 IJ.saveAs("Tiff", rootName_ + "\\" + dirName_ + "_" + "Stack" + ".tif");
                             }
 
@@ -360,10 +361,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                 BufferedWriter writer = new BufferedWriter(new FileWriter(path_summary + "comment.txt"));
                                 writer.write(summaryTxt());
                                 System.out.println(summaryTxt());
-
                                 writer.close();
-
-
                             }
 
                             JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
@@ -447,15 +445,10 @@ public class SeqAcqController implements AcquisitionEngine {
                                 app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
                                 // Make sure the chanel was set
                                 core_.waitForConfig(chanelGroup_, presetConfig.config.toString());
-                                Thread.sleep(1000 + (long) presetConfig.exposure);
+                              //  Thread.sleep(1000 + (long) presetConfig.exposure);
 
                                 // Take an image from the live view
                                 iPlus = IJ.getImage();
-                                //   Thread.sleep(1000);
-
-//                                if (channels.subList(0, channels.size()).get(0).config.equals(presetConfig.config)) {
-//                                    System.out.println("You Are :" + presetConfig.config);
-//                                }
 
                                 // if the Images was not save , we do the segmentation for the image in Memory
                                 if (!saveFiles_ && presetConfig.useSegmentation) {
@@ -466,7 +459,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                     ImagePlus image_dup = iPlus.duplicate();
                                     image_dup.setTitle("_Segmented_" + presetConfig.config);
 
-                                    ArrayList[] ll = rappController_ref.imageSegmentation(image_dup, "", algo, presetConfig.KillCell, saveFiles_);
+                                    List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_dup, "", algo, presetConfig.KillCell, saveFiles_);
                                     if (presetConfig.KillCell) {
                                         app_.enableLiveMode(true); //  Open the live mode before shooting
                                         rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
@@ -484,7 +477,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                         image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config.toString()  );
 
-                                        ArrayList[] ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
+                                        List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
                                         System.out.println(presetConfig.KillCell);
                                         if (presetConfig.KillCell) {
                                             app_.enableLiveMode(true); //  Open the live mode before shooting
@@ -508,7 +501,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
-                                        ArrayList[] ll = rappController_ref.imageSegmentation(image_dup, path_seq, algo, presetConfig.KillCell, saveFiles_);
+                                        List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_dup, path_seq, algo, presetConfig.KillCell, saveFiles_);
 
                                         if (presetConfig.KillCell) {
                                             app_.enableLiveMode(true); //  Open the live mode before shooting
@@ -528,12 +521,12 @@ public class SeqAcqController implements AcquisitionEngine {
 
 
                         if (saveFiles_ && SeqAcqGui.saveMultiTiff_ && !stopAcqRequested_.get()) {
-
                             // We turn off the live view to avoid adding wrong images
                             app_.enableLiveMode(false); // Make sure the Live Mode is off
                             // After the loop we saves all the Images as a stack Image.
                             Thread.sleep(500); // we wait to be sure the live view is turn off.
                             IJ.run("Images to Stack", "name=Stack title=[] use");
+                            IJ.run("Delete Slice");
                             IJ.saveAs("Tiff", rootName_ + "\\" + dirName_ + "_" + "Stack" + ".tif");
                         }
 
