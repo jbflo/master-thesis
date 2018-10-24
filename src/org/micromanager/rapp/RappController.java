@@ -978,12 +978,6 @@ public class RappController extends  MMFrame implements OnStateListener {
         // impproc.setRoi(r);
 //        System.out.println( " Xcord "+ xTab);
 //        System.out.println(" Ycord "+ yTab);
-        impproc.updateAndRepaintWindow();
-        System.out.println("Save?" +save + "Path"+ path);
-        if(path !=null && save){
-            IJ.save(impproc, path+ "_"+"Segmented.tif");
-            impproc.close();
-        }
 
 
         list.sort(Comparator.comparingDouble(Point2D.Double::getX));
@@ -991,7 +985,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         for(Point2D.Double elem :list){
 
             text = String.valueOf(index) ;
-            r[index]= new Roi(elem.getX()-5,elem.getY()-5,10,10);
+         //   r[index]= new Roi(elem.getX()-5,elem.getY()-5,10,10);
             impproc.setRoi(new Roi(elem.getX()-5,elem.getY()-5,10,10));
 
             ip = impproc.getProcessor();
@@ -1005,6 +999,13 @@ public class RappController extends  MMFrame implements OnStateListener {
 
             index += 1;
         }
+        impproc.updateAndRepaintWindow();
+        System.out.println("Save?" +save + "Path"+ path);
+        if(path !=null && save){
+            IJ.save(impproc, path+ "_"+"Segmented.tif");
+            impproc.close();
+        }
+
 
         return list;
     }
