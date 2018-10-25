@@ -490,6 +490,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             String GroupConfN = Objects.requireNonNull(groupConfList_jcb.getSelectedItem()).toString();
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(rappController_ref.getConfigPreset(GroupConfN));
             DefaultComboBoxModel<String> model2 = new DefaultComboBoxModel<>(rappController_ref.getConfigPreset(GroupConfN));
+            model.addElement(null);
             presetConfList_jcb.setModel(model);
     //      Sequence_jcb.setModel(model2);
     //      Sequence_jcb.addItem("Apply ALL Sequence");
@@ -508,12 +509,12 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         presetConfList_jcb.setPreferredSize(new Dimension(150, 30));
         presetConfList_jcb.addActionListener(e -> {
             // here we set the default chanel, so when we run the acquisition the chanel change from fluorescence to BF
-            rappController_ref.setTargetingChannel(presetConfList_jcb.getSelectedItem().toString());
+           // rappController_ref.setTargetingChannel(presetConfList_jcb.getSelectedItem().toString());
 
             String GroupConfN = Objects.requireNonNull(groupConfList_jcb.getSelectedItem()).toString();
             String PresetName = Objects.requireNonNull(presetConfList_jcb.getSelectedItem()).toString();
             // # Here we Apply the settings form the Group configuration
-            rappController_ref.ChangeConfigSet(GroupConfN, PresetName);
+            rappController_ref.setDefaultGroupConfig(GroupConfN, PresetName);
         });
         gbc.gridy++;
 

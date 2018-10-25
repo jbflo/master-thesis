@@ -222,6 +222,7 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
     }*/
 
+
     /**
      * Sets the targeting channel. channelName should be
      * a channel from the current ChannelGroup.
@@ -825,8 +826,8 @@ public class RappController extends  MMFrame implements OnStateListener {
                     final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), canvas.getImage(),
                             new Point2D.Double(pOffscreen.x, pOffscreen.y));
                     System.out.println(devP);
-                    final Configuration originalConfig = prepareChannel();
-                    final boolean originalShutterState = prepareShutter();
+                   // final Configuration originalConfig = prepareChannel();
+                  //  final boolean originalShutterState = prepareShutter();
                     makeRunnableAsync(
                             () -> {
                                 try {
@@ -836,8 +837,8 @@ public class RappController extends  MMFrame implements OnStateListener {
                                         displaySpot(0, 0);
                                     }else ReportingUtils.showError("Please Try Again! Your click return Null");
 
-                                    returnShutter(originalShutterState);
-                                    returnChannel(originalConfig);
+                          //          returnShutter(originalShutterState);
+                         //           returnChannel(originalConfig);
                                 } catch (Exception e1) {
                                     ReportingUtils.showError(e1);
                                 }
@@ -886,8 +887,9 @@ public class RappController extends  MMFrame implements OnStateListener {
                                 new Point2D.Double(failsArrayX[i], failsArrayY[i]));
                         System.out.println(devP);
 
-                        final Configuration originalConfig = prepareChannel();
-                        final boolean originalShutterState = prepareShutter();
+                      //  final Configuration originalConfig = prepareChannel();
+                      //  final boolean originalShutterState = prepareShutter();
+
                         try {
                             Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
                             if (galvoPos != devP) {
@@ -900,8 +902,8 @@ public class RappController extends  MMFrame implements OnStateListener {
                             } else ReportingUtils.showError("Please Try Again! Galvo problem");
                             displaySpot(devP.x, devP.y);
                             Thread.sleep(dev_.getExposure());
-                            returnShutter(originalShutterState);
-                            returnChannel(originalConfig);
+                        //    returnShutter(originalShutterState);
+                        //    returnChannel(originalConfig);
                            // Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
                         } catch (Exception ec) {
                             ReportingUtils.showError(ec);
@@ -1149,15 +1151,26 @@ public class RappController extends  MMFrame implements OnStateListener {
         return conf_preset.toArray();
     }
 
-    public void ChangeConfigSet(String groupName, String configName) {
+    /**
+     * Sets the targeting channel. channelName should be
+     * a channel from the current ChannelGroup.
+     */
+    public void setDefaultGroupConfig(String groupName, String configName) {
             try {
                 core_.waitForDevice(core_.getCameraDevice());
                 if (groupName != null && configName != null){
                     core_.setConfig(groupName, configName);
                     defaultGroupConfig_ = groupName;
                     defaultConfPrest_ = configName;
-                    //System.out.println(defaultGroupConfig_ + "__" + defaultConfPrest_);
+                    System.out.println(defaultGroupConfig_ + "__" + defaultConfPrest_);
                 }
+                else  {
+                    defaultGroupConfig_ = null;
+                    defaultConfPrest_ = null;
+                    System.out.println(defaultGroupConfig_ + "__" + defaultConfPrest_);
+                }
+
+
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 ReportingUtils.showError("Please Try Again! were unable to change Configuration preset");
