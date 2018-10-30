@@ -259,12 +259,12 @@ public class FOV_Controller {
                 try {
 
                     if (jop2.getValue().equals(JOptionPane.OK_OPTION)) {
-                        double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
-                        double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
-                        Point2D.Double cornet_pos;
-                        cornet_pos = core_.getXYStagePosition();
-                        double  wellXOff1 = (x_pos_ini + cornet_pos.getX());
-                        double wellYOff1 = (-y_pos_ini + cornet_pos.getY());
+                        double x_pos_ini2 = (double) posXY[0].get(0); //store each element as a double in the array
+                        double y_pos_ini2 = (double) posXY[1].get(0); //store each element as a double in the array
+                        Point2D.Double cornet_pos2;
+                        cornet_pos2 = core_.getXYStagePosition();
+                        double  wellXOff1 = (x_pos_ini2 + cornet_pos2.getX());
+                        double wellYOff1 = (-y_pos_ini2 + cornet_pos2.getY());
 
                         cornet_off2.setLocation(wellXOff1, wellYOff1);
                         dialog2.setVisible(false);

@@ -212,12 +212,11 @@ public class wellPanel extends JPanel  {
             double x_pos =  (double) posXY[0].get(0); //store each element as a double in the array
             double y_pos = (double) posXY[1].get(0); //store each element as a double in the array
 
-
-          //  double x1 = (Math.cos(FOV_Controller.getAngle()) * x_pos) - (Math.sin(FOV_Controller.getAngle()) * y_pos);
-         //   double y2 = (Math.sin(FOV_Controller.getAngle()) * x_pos) + ( Math.cos(FOV_Controller.getAngle()) * y_pos);
-
+            // here we try to get the position, if the plate is rotate
+           // double x1 = (Math.cos(FOV_Controller.getAngle()) * x_pos) - (Math.sin(FOV_Controller.getAngle()) * y_pos);
+           // double y2 = (Math.sin(FOV_Controller.getAngle()) * x_pos) + ( Math.cos(FOV_Controller.getAngle()) * y_pos);
           //  double xxPos = -x1+ Calibrated_pt.getX();
-        //    double yyPos = y2+ Calibrated_pt.getY();
+          //  double yyPos = y2+ Calibrated_pt.getY();
 
             double xxPos = -x_pos+ Calibrated_pt.getX();
             double yyPos = y_pos+ Calibrated_pt.getY();
