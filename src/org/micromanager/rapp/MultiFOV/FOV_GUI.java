@@ -156,7 +156,7 @@ public class FOV_GUI extends JInternalFrame {
         txt_calirate_Label.setFont(new Font("Arial", Font.PLAIN, 12));
         txt_calirate_Label.setForeground(Color.white);
         txt_calirate_Label.setText("XY Stage Calibbration Process :");
-        txt_calirate_Label.setBounds(410, 2, 160, 26);
+        txt_calirate_Label.setBounds(400, 2, 160, 26);
         main_well_panel.add(txt_calirate_Label);
 
         calibrateXY_btn = new JButton();

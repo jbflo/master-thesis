@@ -197,7 +197,8 @@ public class FOV_Controller {
 
 
         if (posXY[0].size() == 0) {
-            ReportingUtils.showMessage("Could not Calibrate Stage Due to 0 position list," + " Please select the well A1 before starting Stage Calibration"
+            ReportingUtils.showMessage("Could not Calibrate Stage Due to 0 position list," +
+                    " Please Load the plate then select the well A1 before starting Stage Calibration"
             );
         } else {
 
@@ -220,9 +221,7 @@ public class FOV_Controller {
                         double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
                         double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
                         Point2D.Double cornet_pos;
-
                         cornet_pos = core_.getXYStagePosition();
-
                         wellXOff = (x_pos_ini + cornet_pos.getX());
                         wellYOff = (-y_pos_ini + cornet_pos.getY());
 
@@ -263,11 +262,11 @@ public class FOV_Controller {
                         double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
                         double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
                         Point2D.Double cornet_pos;
-                            cornet_pos = core_.getXYStagePosition();
-                          double  wellXOff1 = (x_pos_ini + cornet_pos.getX());
-                          double wellYOff1 = (-y_pos_ini + cornet_pos.getY());
+                        cornet_pos = core_.getXYStagePosition();
+                        double  wellXOff1 = (x_pos_ini + cornet_pos.getX());
+                        double wellYOff1 = (-y_pos_ini + cornet_pos.getY());
 
-                          cornet_off2.setLocation(wellXOff1, wellYOff1);
+                        cornet_off2.setLocation(wellXOff1, wellYOff1);
                         dialog2.setVisible(false);
 
                         JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set at position: " + wellXOff + "," + wellYOff);
@@ -313,8 +312,9 @@ public class FOV_Controller {
         final double deltaY = (cornet_off1.y - cornet_off2.y);
         final double deltaX = (cornet_off2.x - cornet_off1.x);
         final double result = Math.toRadians(Math.atan2(deltaY, deltaX));
-        //return (result < 0) ? (360d + result) : result;
-        return result;
+        System.out.println("The Angle is :" + result);
+        return (result < 0) ? (360d + result) : result;
+      //  return result;
     }
 
     public Point2D.Double computeXYStagepos(){
@@ -332,12 +332,9 @@ public class FOV_Controller {
 
 //            double xoff = 41150;
 //            double yoff = -43735;
-//
 //            double xpos = 12.18 * 1000;
 //            double ypos = 8.74 * 1000;
-//
 //            core_.setXYPosition(xpos+xoff ,ypos+yoff);
-//
 //            JOptionPane.showMessageDialog(RappGui.getInstance(), "XY Stage set to Well A1: " +
 //                    "If Not: Manually position the XY stage over the corner top left of the well A1 and press Calibrate XY...\"" );
 

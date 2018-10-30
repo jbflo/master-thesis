@@ -947,10 +947,6 @@ public class RappController extends  MMFrame implements OnStateListener {
 
         ij.measure.ResultsTable resTab = Analyzer.getResultsTable();
         int resCount = resTab.getCounter();
-//        ArrayList xTab = new ArrayList();
-//        ArrayList yTab = new ArrayList();
-//        double[] x = new double[resCount];
-//        double[] y = new double[resCount];
         Roi[] r = new Roi[resCount];
         List<Point2D.Double> list = new ArrayList<Point2D.Double>();
         RoiManager rm = RoiManager.getInstance();
@@ -967,10 +963,6 @@ public class RappController extends  MMFrame implements OnStateListener {
             double xx = resTab.getValueAsDouble(0, i);
             double yy = resTab.getValueAsDouble(1, i);
 
-//            xTab.add(xx);
-//            yTab.add(yy);
-
-
             list.add(new Point2D.Double(xx,yy));
 //            x[i]=xx;
 //            y[i]=yy;
@@ -978,8 +970,6 @@ public class RappController extends  MMFrame implements OnStateListener {
 
         }
         // impproc.setRoi(r);
-//        System.out.println( " Xcord "+ xTab);
-//        System.out.println(" Ycord "+ yTab);
 
 
         list.sort(Comparator.comparingDouble(Point2D.Double::getX));
@@ -1014,15 +1004,13 @@ public class RappController extends  MMFrame implements OnStateListener {
 
     public void shootFromSegmentationListPoint(List<Point2D.Double> segmentation_pt, long laser_exp) {
 
-        //sort(segmentatio_pt);
         if (segmentation_pt.size() != 0 ) {
             //Roi[] roiArray = rm.;
-
 
 //            double[] failsArrayX =  new double[segmentation_pt.];
 //            double[] failsArrayY =  new double[segmentation_pt[1].size()];
 
-            if (defaultGroupConfig_ != null && defaultConfPrest_ != null){
+            if (defaultGroupConfig_ != null && defaultConfPrest_ != " "){
                 System.out.println(defaultGroupConfig_ + "__" + defaultConfPrest_);
                 try {
                     core_.setConfig(defaultGroupConfig_, defaultConfPrest_);
@@ -1030,11 +1018,9 @@ public class RappController extends  MMFrame implements OnStateListener {
                 }catch (Exception ex){
                     ReportingUtils.showError("Unable to change Default Configuration Group Name and Preset ");
                 }
-
             }else System.out.println("___"); // Don't need to do anything
 
-//            System.out.println(" SIze: "+ segmentation_pt[1].size());
-//            System.out.println(" Val: "+ segmentation_pt.toString());
+
             for (Point2D.Double elem : segmentation_pt)
             {
                 if (SeqAcqController.stopAcqRequested_.get()) {
@@ -1057,8 +1043,6 @@ public class RappController extends  MMFrame implements OnStateListener {
                     //    new Point2D.Double(failsArrayX[i], failsArrayY[i]));
              //   System.out.println(devP);
 
-                final Configuration originalConfig = prepareChannel();
-                final boolean originalShutterState = prepareShutter();
                 try {
                     Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
 //                            if (galvoPos != devP){
@@ -1069,9 +1053,7 @@ public class RappController extends  MMFrame implements OnStateListener {
 //                                //core_.setGalvoIlluminationState(galvo,true);
 //                                //core_.waitForDevice(galvo);
 //                            }else ReportingUtils.showError("Please Try Again! Galvo problem");//
-                    this.setExposure(laser_exp);
-                    returnShutter(originalShutterState);
-                    returnChannel(originalConfig);
+                    this.setExposure(laser_exp); // this does not work on UGA-42
                     displaySpot(devP.x, devP.y);
                     Thread.sleep( laser_exp); // Do Nothing and let the spot in this position the value of laser_exp
 
@@ -1158,7 +1140,7 @@ public class RappController extends  MMFrame implements OnStateListener {
     public void setDefaultGroupConfig(String groupName, String configName) {
             try {
                 core_.waitForDevice(core_.getCameraDevice());
-                if (groupName != null && configName != null){
+                if (groupName != null && configName != " "){
                     core_.setConfig(groupName, configName);
                     defaultGroupConfig_ = groupName;
                     defaultConfPrest_ = configName;

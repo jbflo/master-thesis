@@ -490,7 +490,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             String GroupConfN = Objects.requireNonNull(groupConfList_jcb.getSelectedItem()).toString();
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(rappController_ref.getConfigPreset(GroupConfN));
             DefaultComboBoxModel<String> model2 = new DefaultComboBoxModel<>(rappController_ref.getConfigPreset(GroupConfN));
-            model.addElement(null);
+            model.addElement(" ");
             presetConfList_jcb.setModel(model);
     //      Sequence_jcb.setModel(model2);
     //      Sequence_jcb.addItem("Apply ALL Sequence");
