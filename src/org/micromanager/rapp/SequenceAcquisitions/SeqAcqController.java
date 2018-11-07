@@ -197,6 +197,9 @@ public class SeqAcqController implements AcquisitionEngine {
                                 stopAcqRequested_.set(true);
                                 isRunning_.set(false);
                             }
+                     //       app_.getAutofocusManager().getDevice().
+
+                       //     getAutofocus().enableContinuousFocus(true);
 
                             for (int i =0 ; i < posXY[0].size(); i++){
 
@@ -266,6 +269,8 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Make sure the chanel was set
                                 core_.waitForConfig(chanelGroup_, presetConfig.config);
 
+                                app_.getAutofocus().fullFocus();
+                                core_.waitForDevice(core_.getAutoFocusDevice());
                                 // Take an image from the live view
                                  iPlus = IJ.getImage();
 
@@ -369,6 +374,11 @@ public class SeqAcqController implements AcquisitionEngine {
                                     " We are Sorry about that"
                             );
                         } finally {
+                            try {
+                                app_.getAutofocus().enableContinuousFocus(false);
+                            } catch (MMException e) {
+                                e.printStackTrace();
+                            }
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
