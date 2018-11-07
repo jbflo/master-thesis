@@ -75,9 +75,11 @@ public class posPanel extends JPanel {
         this.add(fovTablePanel);
 
         SelectFOVsBottom.setText("Add All FOVs");
-        SelectFOVsBottom.addActionListener(evt->{
-            //String startF = StartFOVField.getText().toUpperCase();
-            // StartFOVField.setText(startF);
+        SelectFOVsBottom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                //String startF = StartFOVField.getText().toUpperCase();
+                // StartFOVField.setText(startF);
 
 //            int wellplate = FOV_Controller.getWellPlateID();
 //
@@ -100,18 +102,19 @@ public class posPanel extends JPanel {
 //            int dCol = stopCol - startCol + 1;
 //            int dRow = stopRow - startRow + 1;
 //            FOV_control.getFirstWellOffX();
-            genMode = fullWellCombo.getSelectedIndex();
-            ArrayList<FOV> preFovs = new ArrayList<FOV>(tableModel_.getData());
-            tableModel_.clearAllData();
-          //  ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, startCol, startRow, genMode);
+                genMode = fullWellCombo.getSelectedIndex();
+                ArrayList<FOV> preFovs = new ArrayList<FOV>(tableModel_.getData());
+                tableModel_.clearAllData();
+                //  ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, startCol, startRow, genMode);
 
-            ArrayList<FOV> fovs = xyzFunctions.generateFOVs(FOV_control.getcolSize(), FOV_control.getrowSize(), 1, 1, genMode);
-            fovs = xyzFunctions.concatLists(preFovs, fovs);
-            fovs = xyzFunctions.sortList(fovs);
-            tableModel_.addWholeData(fovs);
-           // wellPanel_.drawFromOutsideClass(1, 24, 1, 16);
-            FOV_control.getWholeData(fovs);
-        } );
+                ArrayList<FOV> fovs = xyzFunctions.generateFOVs(FOV_control.getcolSize(), FOV_control.getrowSize(), 1, 1, genMode);
+                fovs = xyzFunctions.concatLists(preFovs, fovs);
+                fovs = xyzFunctions.sortList(fovs);
+                tableModel_.addWholeData(fovs);
+                // wellPanel_.drawFromOutsideClass(1, 24, 1, 16);
+                FOV_control.getWholeData(fovs);
+            }
+        });
 
 //        StartFOVField.setText("A1");
 //        StartFOVField.addActionListener(new java.awt.event.ActionListener() {
@@ -141,13 +144,21 @@ public class posPanel extends JPanel {
         });
 
         deleteAllFOVs_btn.setText("Delete all FOVs");
-        deleteAllFOVs_btn.addActionListener((ActionListener) evt->deleteFOVsButtonActionPerformed(evt));
+        deleteAllFOVs_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                posPanel.this.deleteFOVsButtonActionPerformed(evt);
+            }
+        });
 
         deleteSlectFOV_btn.setText("Delete Seleted FOVs");
-        deleteSlectFOV_btn.addActionListener(evt->{
+        deleteSlectFOV_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
 
-            //deleteFOVsButtonActionPerformed(evt);
+                //deleteFOVsButtonActionPerformed(evt);
 
+            }
         });
 
 

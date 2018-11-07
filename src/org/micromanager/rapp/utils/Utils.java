@@ -10,8 +10,10 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.Polygon;
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,6 +41,27 @@ public class Utils {
    public static String[]  getSegmenterAlgoListe(){
 
       return new String[]{" ", "Find Peak", "Analyse Particles"};
+   }
+
+   // rearrangement to minimise a metric (the distance between consecutive points).
+   public static void rebuild(List<Point2D.Double> l) {
+      for (int i = 0; i < l.size() - 1; i++) {
+         Point2D.Double a = l.get(i);
+         // Find the closest.
+         int closest = i;
+         double howClose = Double.MAX_VALUE;
+         for (int j = i + 1; j < l.size(); j++) {
+            double howFar = a.distance(l.get(j));
+            if (howFar < howClose) {
+               closest = j;
+               howClose = howFar;
+            }
+         }
+         if (closest != i + 1) {
+            // Swap it in.
+            Collections.swap(l, i + 1, closest);
+         }
+      }
    }
 
 

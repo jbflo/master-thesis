@@ -1004,12 +1004,15 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
       updateSavingTypeButtons();
 
 
-       segmentationPanel_.addActionListener(e -> {
-           if (!segmentationPanel_.isSelected()) {
-             acqEng_.enableKillCell(false) ;
-             acqEng_.enableSegmentation(false);
+       segmentationPanel_.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               if (!segmentationPanel_.isSelected()) {
+                   acqEng_.enableKillCell(false);
+                   acqEng_.enableSegmentation(false);
+               }
+               applySettings();
            }
-           applySettings();
        });
 
       choose_segmenter = new JLabel();
@@ -1021,7 +1024,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
 
       String ListSegmenterAlgogGroup[] = Utils.getSegmenterAlgoListe();
       // / Liste of available Segmeter Algo
-      listOfsegmenter_jcb = new JComboBox<>(ListSegmenterAlgogGroup);
+      listOfsegmenter_jcb = new JComboBox(ListSegmenterAlgogGroup);
       listOfsegmenter_jcb.setFont(new Font("", Font.PLAIN, 10));
       listOfsegmenter_jcb.setBounds(10, 60, 160, 22);
       segmentationPanel_.add(listOfsegmenter_jcb);
@@ -1113,16 +1116,19 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
       acquireButton_.addActionListener(RappGui.getInstance());
       acquireButton_.setMargin(new Insets(-9, -9, -9, -9));
       acquireButton_.setFont(new Font("Arial", Font.BOLD, 12));
-      acquireButton_.addActionListener(e -> {
-         AbstractCellEditor ae = (AbstractCellEditor) channelTable_.getCellEditor();
-         if (ae != null) {
-            ae.stopCellEditing();
-         }
-         // Instances of javax.swing.SwingWorker are not reusuable, so
-         // we create new instances as needed.
+      acquireButton_.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              AbstractCellEditor ae = (AbstractCellEditor) channelTable_.getCellEditor();
+              if (ae != null) {
+                  ae.stopCellEditing();
+              }
+              // Instances of javax.swing.SwingWorker are not reusuable, so
+              // we create new instances as needed.
 
-         runAcquisition();
+              SeqAcqGui.this.runAcquisition();
 
+          }
       });
 
       acquireButton_.setText("Run Sequence!");
@@ -1192,9 +1198,24 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
       // -------------------
 
       // add update event listeners
-      positionsPanel_.addActionListener(arg0 -> applySettings());
-      displayModeCombo_.addActionListener(e -> applySettings());
-      acqOrderBox_.addActionListener(e -> applySettings());
+      positionsPanel_.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent arg0) {
+              applySettings();
+          }
+      });
+      displayModeCombo_.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              applySettings();
+          }
+      });
+      acqOrderBox_.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              applySettings();
+          }
+      });
 
       // load acquistion settings
       loadAcqSettings();

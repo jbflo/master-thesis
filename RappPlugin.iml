@@ -13,37 +13,10 @@
       <excludeFolder url="file://$MODULE_DIR$/src/org/micromanager/rapp/dialogs" />
     </content>
     <content url="file://$MODULE_DIR$/src/Tutorial/SlideExplorer" />
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="ij" level="project" />
     <orderEntry type="library" name="Micro-Manager" level="project" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/jai-1_1_2_01/lib/jai-core-1.1.3-alpha.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/jdk1.3.1_28/jre/lib/images/jai_codec-1.1.3-alpha.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/jai-1_1_2_01/lib/jai_codec-1.1.3-alpha.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -66,6 +39,5 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="commons-io-2.6" level="project" />
-    <orderEntry type="library" name="CellXJ1" level="project" />
   </component>
 </module>

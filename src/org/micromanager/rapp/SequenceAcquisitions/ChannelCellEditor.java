@@ -6,6 +6,7 @@ import org.micromanager.utils.ReportingUtils;
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -67,8 +68,11 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
       } else if (colIndex != 2 && colIndex != 3) {
          if (colIndex == 4 || colIndex ==5 ) {
          checkBox_.setSelected((Boolean) value);
-         checkBox_.addActionListener(e -> {
+         checkBox_.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                secAC.UpdateGui();
+            }
          });
 
          return checkBox_;
@@ -92,17 +96,20 @@ public class ChannelCellEditor extends AbstractCellEditor implements TableCellEd
          combo_.setSelectedItem(channel.config);
 
          // end editing on selection change
-         combo_.addActionListener(e -> {
+         combo_.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 //            channel_.color = new Color(colorPrefs_.getInt(
 //                    "Color_" + acqEng_.getChannelGroup() + "_" +
 //                            combo_.getSelectedItem(), Color.white.getRGB()));
-            channel_.exposure = exposurePrefs_.getDouble(
-                    "Exposure_" + acqEng_.getChannelGroup() + "_" +
-                            combo_.getSelectedItem(), 10.0);
-            channel_.laser_exposure = exposurePrefs_.getDouble(
-                    "Exposure_" + acqEng_.getChannelGroup() + "_" +
-                            combo_.getSelectedItem(), 10.0);
-            this.fireEditingStopped();
+               channel_.exposure = exposurePrefs_.getDouble(
+                       "Exposure_" + acqEng_.getChannelGroup() + "_" +
+                               combo_.getSelectedItem(), 10.0);
+               channel_.laser_exposure = exposurePrefs_.getDouble(
+                       "Exposure_" + acqEng_.getChannelGroup() + "_" +
+                               combo_.getSelectedItem(), 10.0);
+               ChannelCellEditor.this.fireEditingStopped();
+            }
          });
 
          // Return the configured component

@@ -84,103 +84,102 @@ public class xyzFunctions {
 
     public static int convertAlphToNum(String WellR) {
         int out = 0;
-        if (null != WellR)switch (WellR) {
-            case "A":
-                out = 1;
-                break;
-            case "B":
-                out = 2;
-                break;
-            case "C":
-                out = 3;
-                break;
-            case "D":
-                out = 4;
-                break;
-            case "E":
-                out = 5;
-                break;
-            case "F":
-                out = 6;
-                break;
-            case "G":
-                out = 7;
-                break;
-            case "H":
-                out = 8;
-                break;
-            case "I":
-                out = 9;
-                break;
-            case "J":
-                out = 10;
-                break;
-            case "K":
-                out = 11;
-                break;
-            case "L":
-                out = 12;
-                break;
-            case "M":
-                out = 13;
-                break;
-            case "N":
-                out = 14;
-                break;
-            case "O":
-                out = 15;
-                break;
-            case "P":
-                out = 16;
-                break;
-            case "Q":
-                out = 17;
-                break;
-            case "R":
-                out = 18;
-                break;
-            case "S":
-                out = 19;
-                break;
-            case "T":
-                out = 20;
-                break;
-            case "U":
-                out = 21;
-                break;
-            case "V":
-                out = 22;
-                break;
-            case "W":
-                out = 23;
-                break;
-            case "X":
-                out = 24;
-                break;
-            case "Y":
-                out = 25;
-                break;
-            case "Z":
-                out = 26;
-                break;
-            case "AA":
-                out = 27;
-                break;
-            case "AB":
-                out = 28;
-                break;
-            case "AC":
-                out = 29;
-                break;
-            case "AD":
-                out = 30;
-                break;
-            case "AE":
-                out = 31;
-                break;
-            case "AF":
-                out = 32;
-                break;
+        if (null != WellR) if ("A".equals(WellR)) {
+            out = 1;
+
+        } else if ("B".equals(WellR)) {
+            out = 2;
+
+        } else if ("C".equals(WellR)) {
+            out = 3;
+
+        } else if ("D".equals(WellR)) {
+            out = 4;
+
+        } else if ("E".equals(WellR)) {
+            out = 5;
+
+        } else if ("F".equals(WellR)) {
+            out = 6;
+
+        } else if ("G".equals(WellR)) {
+            out = 7;
+
+        } else if ("H".equals(WellR)) {
+            out = 8;
+
+        } else if ("I".equals(WellR)) {
+            out = 9;
+
+        } else if ("J".equals(WellR)) {
+            out = 10;
+
+        } else if ("K".equals(WellR)) {
+            out = 11;
+
+        } else if ("L".equals(WellR)) {
+            out = 12;
+
+        } else if ("M".equals(WellR)) {
+            out = 13;
+
+        } else if ("N".equals(WellR)) {
+            out = 14;
+
+        } else if ("O".equals(WellR)) {
+            out = 15;
+
+        } else if ("P".equals(WellR)) {
+            out = 16;
+
+        } else if ("Q".equals(WellR)) {
+            out = 17;
+
+        } else if ("R".equals(WellR)) {
+            out = 18;
+
+        } else if ("S".equals(WellR)) {
+            out = 19;
+
+        } else if ("T".equals(WellR)) {
+            out = 20;
+
+        } else if ("U".equals(WellR)) {
+            out = 21;
+
+        } else if ("V".equals(WellR)) {
+            out = 22;
+
+        } else if ("W".equals(WellR)) {
+            out = 23;
+
+        } else if ("X".equals(WellR)) {
+            out = 24;
+
+        } else if ("Y".equals(WellR)) {
+            out = 25;
+
+        } else if ("Z".equals(WellR)) {
+            out = 26;
+
+        } else if ("AA".equals(WellR)) {
+            out = 27;
+
+        } else if ("AB".equals(WellR)) {
+            out = 28;
+
+        } else if ("AC".equals(WellR)) {
+            out = 29;
+
+        } else if ("AD".equals(WellR)) {
+            out = 30;
+
+        } else if ("AE".equals(WellR)) {
+            out = 31;
+
+        } else if ("AF".equals(WellR)) {
+            out = 32;
+
         }
         return out;
     }

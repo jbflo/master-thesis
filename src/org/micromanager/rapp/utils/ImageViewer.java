@@ -1,6 +1,8 @@
 package org.micromanager.rapp.utils;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URL;
 
@@ -89,7 +91,12 @@ public class ImageViewer extends JInternalFrame {
         jButton_Previous.setIcon(new ImageIcon(new_img_previous)); // NOI18N
         jButton_Previous.setText("Previous");
         jButton_Previous.setIconTextGap(0);
-        jButton_Previous.addActionListener(evt -> jButton_PreviousActionPerformed(evt));
+        jButton_Previous.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                ImageViewer.this.jButton_PreviousActionPerformed(evt);
+            }
+        });
 
         jButton_Last.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         ImageIcon icon_last= new ImageIcon(path.concat("Resources/Images/last.png"));
@@ -98,7 +105,12 @@ public class ImageViewer extends JInternalFrame {
         jButton_Last.setIcon(new ImageIcon(new_img_last)); // NOI18N
         jButton_Last.setText("Last");
         jButton_Last.setIconTextGap(0);
-        jButton_Last.addActionListener(evt -> jButton_LastActionPerformed(evt));
+        jButton_Last.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                ImageViewer.this.jButton_LastActionPerformed(evt);
+            }
+        });
 
 
         getContentPane().add(jLabel_Image);

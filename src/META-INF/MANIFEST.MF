@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
-Main-Class: Segmentation
+Class-Path: C:\Program Files\Micro-Manager-1.4\ij.jar
+Main-Class: ij.ImageJ
 

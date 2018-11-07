@@ -155,7 +155,10 @@ public class Galvo implements RappDevice {
             ReportingUtils.logError("Unable to get galvo X minimum");
          }
          return result;
-      } catch (InterruptedException | ExecutionException ex) {
+      } catch (InterruptedException ex) {
+         ReportingUtils.logError("Unable to get galvo X minimum");
+         return 0;
+      } catch (ExecutionException ex) {
          ReportingUtils.logError("Unable to get galvo X minimum");
          return 0;
       }
@@ -179,7 +182,10 @@ public class Galvo implements RappDevice {
             ReportingUtils.logError("Unable to get galvo Y minimum");
          }
          return result;
-      } catch (InterruptedException | ExecutionException ex) {
+      } catch (InterruptedException ex) {
+         ReportingUtils.logError("Unable to get galvo Y minimum");
+         return 0;
+      } catch (ExecutionException ex) {
          ReportingUtils.logError("Unable to get galvo Y minimum");
          return 0;
       }
@@ -187,11 +193,14 @@ public class Galvo implements RappDevice {
 
    @Override
    public void turnOn() {
-      galvoExecutor_.submit(()->{
-         try {
-            mmc_.setGalvoIlluminationState(galvo_, true);
-         } catch (Exception ex) {
-            ReportingUtils.showError(ex);
+      galvoExecutor_.submit(new Runnable() {
+         @Override
+         public void run() {
+            try {
+               mmc_.setGalvoIlluminationState(galvo_, true);
+            } catch (Exception ex) {
+               ReportingUtils.showError(ex);
+            }
          }
       });
       for (OnStateListener listener:onStateListeners_) {
@@ -201,11 +210,14 @@ public class Galvo implements RappDevice {
 
    @Override
    public void turnOff() {
-      galvoExecutor_.submit(() -> {
-         try {
-            mmc_.setGalvoIlluminationState(galvo_, false);
-         } catch (Exception ex) {
-            ReportingUtils.showError(ex);
+      galvoExecutor_.submit(new Runnable() {
+         @Override
+         public void run() {
+            try {
+               mmc_.setGalvoIlluminationState(galvo_, false);
+            } catch (Exception ex) {
+               ReportingUtils.showError(ex);
+            }
          }
       });
       for (OnStateListener listener:onStateListeners_) {
@@ -215,42 +227,45 @@ public class Galvo implements RappDevice {
 
    @Override
    public void loadRois(final List<FloatPolygon> rois) {
-      galvoExecutor_.submit(() -> {
-         try {
-            mmc_.deleteGalvoPolygons(galvo_);
-         } catch (Exception ex) {
-            ReportingUtils.logError(ex);
-         }
-         int roiCount = 0;
-         try {
-            for (FloatPolygon poly : rois) {
-               Point2D lastGalvoPoint = null;
-               for (int i = 0; i < poly.npoints; ++i) {
-                  Point2D.Double galvoPoint = new Point2D.Double(
-                          poly.xpoints[i], poly.ypoints[i]);
-                  if (i == 0) {
-                     lastGalvoPoint = galvoPoint;
+      galvoExecutor_.submit(new Runnable() {
+         @Override
+         public void run() {
+            try {
+               mmc_.deleteGalvoPolygons(galvo_);
+            } catch (Exception ex) {
+               ReportingUtils.logError(ex);
+            }
+            int roiCount = 0;
+            try {
+               for (FloatPolygon poly : rois) {
+                  Point2D lastGalvoPoint = null;
+                  for (int i = 0; i < poly.npoints; ++i) {
+                     Point2D.Double galvoPoint = new Point2D.Double(
+                             poly.xpoints[i], poly.ypoints[i]);
+                     if (i == 0) {
+                        lastGalvoPoint = galvoPoint;
+                     }
+                     mmc_.addGalvoPolygonVertex(galvo_, roiCount, galvoPoint.getX(),
+                             galvoPoint.getY());
+                     if (poly.npoints == 1) {
+                        ++roiCount;
+                     }
                   }
-                  mmc_.addGalvoPolygonVertex(galvo_, roiCount, galvoPoint.getX(),
-                          galvoPoint.getY());
-                  if (poly.npoints == 1) {
+                  if (poly.npoints > 1) {
+                     mmc_.addGalvoPolygonVertex(galvo_, roiCount,
+                             lastGalvoPoint.getX(), lastGalvoPoint.getY());
                      ++roiCount;
                   }
                }
-               if (poly.npoints > 1) {
-                  mmc_.addGalvoPolygonVertex(galvo_, roiCount,
-                          lastGalvoPoint.getX(), lastGalvoPoint.getY());
-                  ++roiCount;
-               }
+            } catch (Exception e) {
+               ReportingUtils.showError(e);
             }
-         } catch (Exception e) {
-            ReportingUtils.showError(e);
-         }
 
-         try {
-            mmc_.loadGalvoPolygons(galvo_);
-         } catch (Exception ex) {
-            ReportingUtils.showError(ex);
+            try {
+               mmc_.loadGalvoPolygons(galvo_);
+            } catch (Exception ex) {
+               ReportingUtils.showError(ex);
+            }
          }
       });
    }

@@ -23,8 +23,8 @@ import java.awt.geom.Point2D;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
+//import java.nio.file.Files;
+//import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -103,7 +103,7 @@ public class SeqAcqController implements AcquisitionEngine {
     }
 
 
-    protected boolean imagesSaving(){
+    private boolean imagesSaving(){
 
         if (saveFiles_) {
             File root = new File(rootName_);
@@ -126,14 +126,14 @@ public class SeqAcqController implements AcquisitionEngine {
         return saveFiles_;
     }
 
-    protected String runSeqAcquisitionMultiPos(SequenceSettings acquisitionSettings) {
+    private String runSeqAcquisitionMultiPos(SequenceSettings acquisitionSettings) {
         //app_.enableLiveMode(false);
-        ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
-        String chanelGroup_ = acquisitionSettings.channelGroup;
+        final ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
+        final String chanelGroup_ = acquisitionSettings.channelGroup;
 
         try {
             core_.waitForDevice(core_.getCameraDevice());
-            Thread.sleep(100); // wait and start acquisition
+           // Thread.sleep(100); // wait and start acquisition
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,11 +153,14 @@ public class SeqAcqController implements AcquisitionEngine {
                         try {
                             SeqAcqGui.acquireButton_.setEnabled(false);
                             isRunning_.set(true);
+
                             ImagePlus iPlus;
                             int progress = 0;
+
                             SeqAcqGui.taskOutput.setText("");
                             RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                          // SeqAcqGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
                             String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
                             ArrayList[] posXY = FOV_control.positionlists();
 
@@ -183,15 +186,12 @@ public class SeqAcqController implements AcquisitionEngine {
 //                            double defyoff = 0;
 
                             try {
-
                                 xyOff = FOV_control.getXYOffset();
-
 //                                cornet_pos = core_.getXYStagePosition();
 //                                defXoff = (x_pos_ini + cornet_pos.getX()) ;
 //                                defyoff = (-y_pos_ini + cornet_pos.getY()) ;
                                // System.out.println("Xoff = " +xyOff.getX() + "__ Yoff= " + xyOff.getY());
                               //  Thread.sleep(1000 );
-
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 stopAcqRequested_.set(true);
@@ -222,8 +222,8 @@ public class SeqAcqController implements AcquisitionEngine {
                                     break;
                                 }
 
-                                x_pos[i] = (double) posXY[0].get(i); //store each element as a double in the array
-                                y_pos[i] = (double) posXY[1].get(i); //store each element as a double in the array
+                                x_pos[i] = Double.parseDouble( posXY[0].get(i).toString()); //store each element as a double in the array
+                                y_pos[i] = Double.parseDouble(posXY[1].get(i).toString()); //store each element as a double in the array
 
                                 System.out.println("X = " + x_pos[i] + "__ Y= " + y_pos[i]);
 
@@ -234,18 +234,20 @@ public class SeqAcqController implements AcquisitionEngine {
                                     // x' = cos(a) * x - sin(a) * y
                                     // y' = sin(a) * x + cos(a) * y
 
-                                //    double x1 = (Math.cos(FOV_Controller.getAngle()) * x_pos[i]) - (Math.sin(FOV_Controller.getAngle()) * y_pos[i]);
-                               //     double y2 = (Math.sin(FOV_Controller.getAngle()) * x_pos[i]) + ( Math.cos(FOV_Controller.getAngle()) * y_pos[i]);
+                                  //   double x1 = (Math.cos(FOV_Controller.getAngle()) * x_pos[i]) - (Math.sin(FOV_Controller.getAngle()) * y_pos[i]);
+                                 //    double y2 = (Math.sin(FOV_Controller.getAngle()) * x_pos[i]) + ( Math.cos(FOV_Controller.getAngle()) * y_pos[i]);
 
                                 //    double xxPos = -x1+ xyOff.getX();
                                //     double yyPos = y2+ xyOff.getY();
 
-                                   double xxPos = -x_pos[i]+ xyOff.getX();
+                                    double xxPos = -x_pos[i]+ xyOff.getX();
                                     double yyPos = y_pos[i]+ xyOff.getY();
 
                                     System.out.println("xx = " + xxPos + "__ yy= " +yyPos);
+
                                     core_.setXYPosition(xxPos, yyPos);
                                     core_.waitForDevice(core_.getXYStageDevice());
+
                                    // core_.setRelativeXYPosition(x_pos[i]- defXoff, y_pos[i] - defyoff );
                                   //  Thread.sleep(1000 );
                                 } catch (Exception e) {
@@ -255,23 +257,17 @@ public class SeqAcqController implements AcquisitionEngine {
                                     break;
                                 }
 
-
-                                //app_.enableLiveMode(false); // Make sure the Live Mode is off
+                                // app_.enableLiveMode(false); // Make sure the Live Mode is off
                                 // Then Change The Chanel Config (Preset )
+
                                 core_.setConfig(chanelGroup_, presetConfig.config);
                                 // Set the Chanel Exposure Time
                                 app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
                                 // Make sure the chanel was set
-                                core_.waitForConfig(chanelGroup_, presetConfig.config.toString());
-                              //  Thread.sleep(1000 + (long) presetConfig.exposure);
+                                core_.waitForConfig(chanelGroup_, presetConfig.config);
 
                                 // Take an image from the live view
-                                iPlus = IJ.getImage();
-                                //   Thread.sleep(1000);
-
-//                                if (channels.subList(0, channels.size()).get(0).config.equals(presetConfig.config)) {
-//                                    System.out.println("You Are :" + presetConfig.config);
-//                                }
+                                 iPlus = IJ.getImage();
 
                                 // if the Images was not save , we do the segmentation for the image in Memory
                                 if (!saveFiles_ && presetConfig.useSegmentation) {
@@ -289,17 +285,15 @@ public class SeqAcqController implements AcquisitionEngine {
                                     }
                                 }
 
+                                // Module where the user Save the images separately
                                 if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
                                     // The acquires Images are saving as separate Image.
                                     iPlus.setTitle(dirName_ + "_" + presetConfig.config.toLowerCase() + "_POS_" +  i );
                                     IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
-
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
                                         ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
-
                                         image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config +"_POS_" +  i  );
-
                                         List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
                                         System.out.println(presetConfig.KillCell);
                                         if (presetConfig.KillCell) {
@@ -307,11 +301,11 @@ public class SeqAcqController implements AcquisitionEngine {
                                             rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
                                         }
                                     }
-
-                                } else if (saveFiles_ && SeqAcqGui.saveMultiTiff_) {
+                                }
+                                // Module where the user Save the images as a Stack.
+                                else if (saveFiles_ && SeqAcqGui.saveMultiTiff_) {
                                     // we save The acquires images  as separate Image first and open it.
                                     IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() +"_POS_" +  i +  ".tif");
-
                                     // We Open the Original Image
                                     ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
                                     image_.setTitle(dirName_ + "_" + presetConfig.config +"_POS_" +  i  );
@@ -320,7 +314,6 @@ public class SeqAcqController implements AcquisitionEngine {
                                     // We Duplicate the original image , and segmented the duplicate one
                                     ImagePlus image_dup = iPlus.duplicate();
                                     image_dup.setTitle(dirName_ + "_Segmented_" + presetConfig.config +"_POS_" +  i  );
-
 
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
@@ -343,30 +336,30 @@ public class SeqAcqController implements AcquisitionEngine {
                             }
                         }
 
-                            if (saveFiles_ && SeqAcqGui.saveMultiTiff_ && !stopAcqRequested_.get()) {
+                        if (saveFiles_ && SeqAcqGui.saveMultiTiff_ && !stopAcqRequested_.get()) {
 
-                                // We turn off the live view to avoid adding wrong images
-                                app_.enableLiveMode(false); // Make sure the Live Mode is off
-                                // After the loop we saves all the Images as a stack Image.
-                                Thread.sleep(500); // we wait to be sure the live view is turn off.
-                                IJ.run("Images to Stack", "name=Stack title=[] use");
-                                IJ.run("Delete Slice");
-                                IJ.saveAs("Tiff", rootName_ + "\\" + dirName_ + "_" + "Stack" + ".tif");
-                            }
+                            // We turn off the live view to avoid adding wrong images
+                            app_.enableLiveMode(false); // Make sure the Live Mode is off
+                            // After the loop we saves all the Images as a stack Image.
+                            Thread.sleep(500); // we wait to be sure the live view is turn off.
+                            IJ.run("Images to Stack", "name=Stack title=[] use");
+                            IJ.run("Delete Slice");
+                            IJ.saveAs("Tiff", rootName_ + "\\" + dirName_ + "_" + "Stack" + ".tif");
+                        }
 
-                            if (saveFiles_ && !stopAcqRequested_.get()){
-                                // We save the comment text and the summary of the current sequence in a txt FIle
-                                String path_summary = rootName_ + "\\" + dirName_ +"_";
+                        if (saveFiles_ && !stopAcqRequested_.get()){
+                            // We save the comment text and the summary of the current sequence in a txt FIle
+                            String path_summary = rootName_ + "\\" + dirName_ +"_";
 
-                                BufferedWriter writer = new BufferedWriter(new FileWriter(path_summary + "comment.txt"));
-                                writer.write(summaryTxt());
-                                System.out.println(summaryTxt());
-                                writer.close();
-                            }
+                            BufferedWriter writer = new BufferedWriter(new FileWriter(path_summary + "comment.txt"));
+                            writer.write(summaryTxt());
+                            System.out.println(summaryTxt());
+                            writer.close();
+                        }
 
-                            JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
-                                    + (!stopAcqRequested_.get() ? "finished." : "canceled."));
-                            System.out.println(core_.getCurrentConfig("Channel"));
+                        JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
+                                + (!stopAcqRequested_.get() ? "finished." : "canceled."));
+                        System.out.println(core_.getCurrentConfig("Channel"));
 
                         } catch (Exception e) {
                             //ReportingUtils.showError(e);
@@ -376,7 +369,12 @@ public class SeqAcqController implements AcquisitionEngine {
                                     " We are Sorry about that"
                             );
                         } finally {
-                            SwingUtilities.invokeLater(() -> SeqAcqGui.progressBar.setIndeterminate(false));
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    SeqAcqGui.progressBar.setIndeterminate(false);
+                                }
+                            });
                             RappGui.getInstance().setCursor(null); // turn off the wait cursor
                             //SeqAcqGui.getInstance().setCursor(null); // turn off the wait cursor
                             SeqAcqGui.acquireButton_.setEnabled(true); // Activate the Button again
@@ -394,8 +392,8 @@ public class SeqAcqController implements AcquisitionEngine {
 
     protected String runSeqAcquisitionSinglePos(SequenceSettings acquisitionSettings) {
         //app_.enableLiveMode(false);
-        ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
-        String chanelGroup_ = acquisitionSettings.channelGroup;
+        final ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
+        final String chanelGroup_ = acquisitionSettings.channelGroup;
 
         try {
             core_.waitForDevice(core_.getCameraDevice());
@@ -435,9 +433,6 @@ public class SeqAcqController implements AcquisitionEngine {
                                     break;
                                 }
 
-
-
-
                                 //app_.enableLiveMode(false); // Make sure the Live Mode is off
                                 // Then Change The Chanel Config (Preset )
                                 core_.setConfig(chanelGroup_, presetConfig.config);
@@ -445,17 +440,14 @@ public class SeqAcqController implements AcquisitionEngine {
                                 app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
                                 // Make sure the chanel was set
                                 core_.waitForConfig(chanelGroup_, presetConfig.config.toString());
-                              //  Thread.sleep(1000 + (long) presetConfig.exposure);
 
                                 // Take an image from the live view
                                 iPlus = IJ.getImage();
-
                                 // if the Images was not save , we do the segmentation for the image in Memory
                                 if (!saveFiles_ && presetConfig.useSegmentation) {
                                     ImagePlus image_dup_ori = iPlus.duplicate();
                                     image_dup_ori.setTitle("Img_Original_" + presetConfig.config + "_" + algo);
                                     image_dup_ori.show();
-
                                     ImagePlus image_dup = iPlus.duplicate();
                                     image_dup.setTitle("_Segmented_" + presetConfig.config);
 
@@ -470,13 +462,10 @@ public class SeqAcqController implements AcquisitionEngine {
                                     // The acquires Images are saving as separate Image.
                                     iPlus.setTitle(dirName_ + "_" + presetConfig.config.toLowerCase() );
                                     IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config +  ".tif");
-
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
                                         ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config  + ".tif");
-
-                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config.toString()  );
-
+                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config);
                                         List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
                                         System.out.println(presetConfig.KillCell);
                                         if (presetConfig.KillCell) {
@@ -551,7 +540,12 @@ public class SeqAcqController implements AcquisitionEngine {
                                 " We are Sorry about that"
                         );
                     } finally {
-                        SwingUtilities.invokeLater(() -> SeqAcqGui.progressBar.setIndeterminate(false));
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                SeqAcqGui.progressBar.setIndeterminate(false);
+                            }
+                        });
                         RappGui.getInstance().setCursor(null); // turn off the wait cursor
                         SeqAcqGui.acquireButton_.setEnabled(true); // Activate the Button again
                         isRunning_.set(false);

@@ -75,21 +75,6 @@ public class FOV_GUI extends JInternalFrame {
         plateIDCombo_.setBounds(220, 30, 150, 24);
         main_well_panel.add(plateIDCombo_);
 
-        // here we add all the plate type from the XML fILE ,  to the JComboBox
-//        ArrayList plateListe = FOV_Controller.wellTypes;
-//        if(plateListe.size() != 0) {
-//            boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFile(file, well_plate_type));
-//            plateIDCombo_.addItem(plateListe.iterator().next());
-//        }
-
-//        plateIDCombo_.addItem(FOV_Controller.MATRI_12_WELL);
-//        plateIDCombo_.addItem(FOV_Controller.MATRI_24_WELL);
-//        plateIDCombo_.addItem(FOV_Controller.MATRI_24_WELL);
-//        plateIDCombo_.addItem(FOV_Controller.MATRI_48_WELL);
-//        plateIDCombo_.addItem(FOV_Controller.MATRI_96_WELL);
-//        plateIDCombo_.addItem(FOV_Controller.MATRI_384_WELL);
-//        plateIDCombo_.addItem(FOV_Controller.SLIDE_HOLDER);
-
 
         plateIDCombo_.addActionListener(new ActionListener() {
             @Override
@@ -130,17 +115,20 @@ public class FOV_GUI extends JInternalFrame {
         main_well_panel.add(rootField_xmlWellFile);
 
         browseRootButton_plate = new JButton();
-        browseRootButton_plate.addActionListener(e->{
-            String path = FileDialog.xmlFileChooserDialog("Load plate configuration file :");
-            rootField_xmlWellFile.setText(path);
-            ArrayList plateListe = FOV_Controller.wellTypes;
-            plateIDCombo_.removeAllItems();
-                boolean valide = FOV_Controller.valideXml( FOV_Controller.readXmlFileOnce(path));
+        browseRootButton_plate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String path = FileDialog.xmlFileChooserDialog("Load plate configuration file :");
+                rootField_xmlWellFile.setText(path);
+                ArrayList plateListe = FOV_Controller.wellTypes;
+                plateIDCombo_.removeAllItems();
+                boolean valide = FOV_Controller.valideXml(FOV_Controller.readXmlFileOnce(path));
                 if (valide) {
-                    for(int i = 0; i< plateListe.size(); i ++) {
-                        plateIDCombo_.addItem(plateListe.get(i));
+                    for (Object aPlateListe : plateListe) {
+                        plateIDCombo_.addItem(aPlateListe.toString());
                     }
                 }
+            }
         });
 
         browseRootButton_plate.setMargin(new Insets(2, 5, 2, 5));
@@ -163,11 +151,12 @@ public class FOV_GUI extends JInternalFrame {
         calibrateXY_btn.setText("Calibrate XY...");
         calibrateXY_btn.setBounds(430, 30, 120, 24);
         main_well_panel.add(calibrateXY_btn);
-        calibrateXY_btn.addActionListener(evt->{
-            FOV_control.calibrateXY();
+        calibrateXY_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                FOV_control.calibrateXY();
+            }
         });
-
-
 
         posPanel xyPos_panel = new posPanel(this, core_);
         xyPos_panel.setBackground(Color.decode("#edf3f3"));
@@ -185,8 +174,11 @@ public class FOV_GUI extends JInternalFrame {
         putStageInFirstWell.setText("Move Stage to Well A1...");
         putStageInFirstWell.setBounds(270,484 , 160, 24);
         main_well_panel.add(putStageInFirstWell);
-        putStageInFirstWell.addActionListener(evt->{
-            FOV_control.moveStageToA1();
+        putStageInFirstWell.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                FOV_control.moveStageToA1();
+            }
         });
 
         ButtonGroup toolButtonGroup = new ButtonGroup();
@@ -196,10 +188,13 @@ public class FOV_GUI extends JInternalFrame {
         rdbtnSelectWells_.setBounds(10, 484, 120, 24);
         toolButtonGroup.add(rdbtnSelectWells_);
         main_well_panel.add(rdbtnSelectWells_);
-        rdbtnSelectWells_.addActionListener(arg0->{
-            if (rdbtnSelectWells_.isSelected()) {
-                wellPanel.stageAction_move.set(false);
-                System.out.println("Select");
+        rdbtnSelectWells_.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if (rdbtnSelectWells_.isSelected()) {
+                    wellPanel.stageAction_move.set(false);
+                    System.out.println("Select");
+                }
             }
         });
 
@@ -208,10 +203,13 @@ public class FOV_GUI extends JInternalFrame {
         rdbtnMoveStage_.setBounds(140, 483, 120, 24);
         toolButtonGroup.add(rdbtnMoveStage_);
         main_well_panel.add(rdbtnMoveStage_);
-        rdbtnMoveStage_.addActionListener(e->{
-            if (rdbtnMoveStage_.isSelected()) {
-                wellPanel.stageAction_move.set(true);
-                System.out.println("Move");
+        rdbtnMoveStage_.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (rdbtnMoveStage_.isSelected()) {
+                    wellPanel.stageAction_move.set(true);
+                    System.out.println("Move");
+                }
             }
         });
 
@@ -221,8 +219,8 @@ public class FOV_GUI extends JInternalFrame {
 
         //setDefaultCloseOperation(0);
         setTitle("Set Multi");
-       // setSize(900, 445);
-       // setResizable(false);
+        // setSize(900, 445);
+        // setResizable(false);
         //  setLocationRelativeTo(null);  // center the application window
         setVisible(true);
     }

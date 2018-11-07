@@ -12,8 +12,8 @@
 
 package org.micromanager.rapp;
 
-import com.knoplab.segmenter.Cell;
-import com.knoplab.segmenter.Segmentation;
+//import com.knoplab.segmenter.Cell;
+//import com.knoplab.segmenter.Segmentation;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -65,6 +65,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.prefs.Preferences;
 
 import static java.util.Arrays.sort;
+import static java.util.Collections.*;
 
 /**
  * This Class is approximately use as a Controller for the Rapp plugin. Contains logic for calibration,
@@ -96,7 +97,7 @@ public class RappController extends  MMFrame implements OnStateListener {
     private String camera;
     private String galvo;
     public boolean bleechingComp=false;
-    public List<Point2D.Double> roiPointClick = new ArrayList<>();
+    public List<Point2D.Double> roiPointClick = new ArrayList();
     public Point2D.Double roiTemp  = new Point2D.Double();
     FileDialog fileDialog_ = new FileDialog();
 
@@ -130,7 +131,12 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
         loadMapping();
         pointAndShootMouseListener = createPointAndShootMouseListenerInstance();
-        Toolkit.getDefaultToolkit().addAWTEventListener(e->enablePointAndShootMode(pointAndShooteModeOn_.get()), AWTEvent.WINDOW_EVENT_MASK);
+        Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
+            @Override
+            public void eventDispatched(AWTEvent e) {
+                RappController.this.enablePointAndShootMode(pointAndShooteModeOn_.get());
+            }
+        }, AWTEvent.WINDOW_EVENT_MASK);
         isSLM_ = dev_ instanceof SLM;
     }
 
@@ -751,23 +757,24 @@ public class RappController extends  MMFrame implements OnStateListener {
 
 
     // Returns true if a particular image is mirrored.
-    private static boolean isImageMirrored(ImagePlus imgp) {
-        try {
-            String mirrorString = VirtualAcquisitionDisplay.getDisplay(imgp)
-                    .getCurrentMetadata().getString("ImageFlipper-Mirror");
-            return (mirrorString.contentEquals("On"));
-        } catch (JSONException | NullPointerException e) {
-            return false;
-        }
+    private static boolean isImageMirrored(ImagePlus imgp) throws JSONException, NullPointerException {
+        String mirrorString = VirtualAcquisitionDisplay.getDisplay(imgp)
+                .getCurrentMetadata().getString("ImageFlipper-Mirror");
+        return (mirrorString.contentEquals("On"));
     }
 
     // Flips a point if it has been mirrored.
     private static Point2D.Double mirrorIfNecessary(Point2D.Double pOffscreen, ImagePlus imgp) {
-        if (isImageMirrored(imgp)) {
-            return new Point2D.Double(imgp.getWidth() - pOffscreen.x, pOffscreen.y);
-        } else {
-            return pOffscreen;
+        try {
+            if (isImageMirrored(imgp)) {
+                return new Point2D.Double(imgp.getWidth() - pOffscreen.x, pOffscreen.y);
+            } else {
+                return pOffscreen;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     // Transform and mirror (if necessary) a point on an image to
@@ -829,18 +836,21 @@ public class RappController extends  MMFrame implements OnStateListener {
                    // final Configuration originalConfig = prepareChannel();
                   //  final boolean originalShutterState = prepareShutter();
                     makeRunnableAsync(
-                            () -> {
-                                try {
-                                    if (devP != null) {
-                                        displaySpot(devP.x, devP.y);
-                                        Thread.sleep(dev_.getExposure());
-                                        displaySpot(0, 0);
-                                    }else ReportingUtils.showError("Please Try Again! Your click return Null");
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        if (devP != null) {
+                                            displaySpot(devP.x, devP.y);
+                                            Thread.sleep(dev_.getExposure());
+                                            displaySpot(0, 0);
+                                        } else ReportingUtils.showError("Please Try Again! Your click return Null");
 
-                          //          returnShutter(originalShutterState);
-                         //           returnChannel(originalConfig);
-                                } catch (Exception e1) {
-                                    ReportingUtils.showError(e1);
+                                        //          returnShutter(originalShutterState);
+                                        //           returnChannel(originalConfig);
+                                    } catch (Exception e1) {
+                                        ReportingUtils.showError(e1);
+                                    }
                                 }
                             }).run();
                 }
@@ -851,74 +861,78 @@ public class RappController extends  MMFrame implements OnStateListener {
     ///////////////////////////////# Read the all The Marked ROis and Shoot on Them #///////////////////////////
     public void createMultiPointAndShootFromRoeList() {
         makeRunnableAsync(
-            () -> {
-                ImagePlus image;
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        ImagePlus image;
 
-                RoiManager rm = RoiManager.getInstance();
+                        RoiManager rm = RoiManager.getInstance();
 
 
-                if (rm != null) {
-                    int roiCount = rm.getCount();
-                    Roi[] roiArray =   rm.getSelectedRoisAsArray();
-                    image = IJ.getImage();
-                    ArrayList widthRoiPosArray = new ArrayList(roiCount);
-                    ArrayList heightRoiPosArray = new ArrayList(roiCount);
-                    ArrayList xcRoiPosArray = new ArrayList(roiCount);
-                    ArrayList ycRoiPosArray = new ArrayList(roiCount);
+                        if (rm != null) {
+                            int roiCount = rm.getCount();
+                            Roi[] roiArray = rm.getSelectedRoisAsArray();
+                            image = IJ.getImage();
+                            ArrayList widthRoiPosArray = new ArrayList(roiCount);
+                            ArrayList heightRoiPosArray = new ArrayList(roiCount);
+                            ArrayList xcRoiPosArray = new ArrayList(roiCount);
+                            ArrayList ycRoiPosArray = new ArrayList(roiCount);
 
-                    if (roiCount != 0){
-                        for (int i = 0; i < roiCount; i++) {
-                            widthRoiPosArray.add(roiArray[i].getFloatWidth());
-                            heightRoiPosArray.add(roiArray[i].getFloatHeight());
-                            xcRoiPosArray.add(roiArray[i].getXBase() + Math.round(roiArray[i].getFloatWidth() / 2));
-                            ycRoiPosArray.add(roiArray[i].getYBase() + Math.round(roiArray[i].getFloatHeight() / 2));
-                        }
-                    }  else ReportingUtils.showError("Please set / Add Rois Manager before Shooting  ");
+                            if (roiCount != 0) {
+                                for (int i = 0; i < roiCount; i++) {
+                                    widthRoiPosArray.add(roiArray[i].getFloatWidth());
+                                    heightRoiPosArray.add(roiArray[i].getFloatHeight());
+                                    xcRoiPosArray.add(roiArray[i].getXBase() + Math.round(roiArray[i].getFloatWidth() / 2));
+                                    ycRoiPosArray.add(roiArray[i].getYBase() + Math.round(roiArray[i].getFloatHeight() / 2));
+                                }
+                            } else ReportingUtils.showError("Please set / Add Rois Manager before Shooting  ");
 
-                    double[] failsArrayX = new double[xcRoiPosArray.size()];
-                    double[] failsArrayY = new double[ycRoiPosArray.size()];
-                    System.out.println(xcRoiPosArray.size());
+                            double[] failsArrayX = new double[xcRoiPosArray.size()];
+                            double[] failsArrayY = new double[ycRoiPosArray.size()];
+                            System.out.println(xcRoiPosArray.size());
 
-                    for (int i = 0; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
-                        failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
-                        failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
+                            for (int i = 0; i < xcRoiPosArray.size(); i++) { //iterate over the elements of the list
+                                failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
+                                failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
 
-                        final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), image,
-                                new Point2D.Double(failsArrayX[i], failsArrayY[i]));
-                        System.out.println(devP);
+                                final Point2D.Double devP = transformAndMirrorPoint(RappController.this.loadMapping(), image,
+                                        new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+                                System.out.println(devP);
 
-                      //  final Configuration originalConfig = prepareChannel();
-                      //  final boolean originalShutterState = prepareShutter();
+                                //  final Configuration originalConfig = prepareChannel();
+                                //  final boolean originalShutterState = prepareShutter();
 
-                        try {
-                            Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
-                            if (galvoPos != devP) {
-                                // core_.setGalvoIlluminationState(galvo, false);
-                                Thread.sleep(200);
-                                core_.setGalvoPosition(galvo, devP.x, devP.y);
-                                Thread.sleep(200);
-                                //core_.setGalvoIlluminationState(galvo,true);
-                                //core_.waitForDevice(galvo);
-                            } else ReportingUtils.showError("Please Try Again! Galvo problem");
-                            displaySpot(devP.x, devP.y);
-                            Thread.sleep(dev_.getExposure());
-                        //    returnShutter(originalShutterState);
-                        //    returnChannel(originalConfig);
-                           // Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
-                        } catch (Exception ec) {
-                            ReportingUtils.showError(ec);
-                        }
+                                try {
+                                    Point2D.Double galvoPos = core_.getGalvoPosition(galvo);
+                                    if (galvoPos != devP) {
+                                        // core_.setGalvoIlluminationState(galvo, false);
+                                        Thread.sleep(200);
+                                        core_.setGalvoPosition(galvo, devP.x, devP.y);
+                                        Thread.sleep(200);
+                                        //core_.setGalvoIlluminationState(galvo,true);
+                                        //core_.waitForDevice(galvo);
+                                    } else ReportingUtils.showError("Please Try Again! Galvo problem");
+                                    RappController.this.displaySpot(devP.x, devP.y);
+                                    Thread.sleep(dev_.getExposure());
+                                    //    returnShutter(originalShutterState);
+                                    //    returnChannel(originalConfig);
+                                    // Thread.sleep(1000); // Do Nothing for 1000 ms (4s)
+                                } catch (Exception ec) {
+                                    ReportingUtils.showError(ec);
+                                }
+                            }
+                        } else ReportingUtils.showError("Please set / Add Rois Manager before Shooting  ");
+
                     }
-                }  else ReportingUtils.showError("Please set / Add Rois Manager before Shooting  ");
-
-        }).run();
+                }).run();
     }
 
     public int compare(Point2D o1, Point2D o2) {
         return Double.compare(o1.getX(), o2.getX());
     }
 
-///////////////////////////////# Receive All The Point from the Machine Learning P and Shoot on them #///////////////////////////
+
+    /////////////////////////////// # here we take the image from the acquisition and # ///////////////////////////
     public  List<Point2D.Double> imageSegmentation(ImagePlus impproc, String path, String Algo,  boolean kill , boolean save) {
 
         impproc.show();
@@ -972,9 +986,21 @@ public class RappController extends  MMFrame implements OnStateListener {
         // impproc.setRoi(r);
 
 
-        list.sort(Comparator.comparingDouble(Point2D.Double::getX));
+    //   list.sort(Comparator.comparingDouble(Point2D.Double::getX));
+
+       // Collections.sort
+       // (list, Comparator.comparingDouble(Point2D.Double::getX));
+
+        System.out.println("Before: " + list);
+
+        List<Point2D.Double> rebuild = new ArrayList(list);
+        rebuild.add(0, new Point2D.Double(0, 0));
+        Utils.rebuild(rebuild);
+        rebuild.remove(0);
+        System.out.println("Rebuilt: " + rebuild);
+
         int index = 1;
-        for(Point2D.Double elem :list){
+        for(Point2D.Double elem :rebuild){
 
             text = String.valueOf(index) ;
          //   r[index]= new Roi(elem.getX()-5,elem.getY()-5,10,10);
@@ -999,27 +1025,28 @@ public class RappController extends  MMFrame implements OnStateListener {
         }
 
 
-        return list;
+        return rebuild;
     }
 
     public void shootFromSegmentationListPoint(List<Point2D.Double> segmentation_pt, long laser_exp) {
 
         if (segmentation_pt.size() != 0 ) {
             //Roi[] roiArray = rm.;
-
 //            double[] failsArrayX =  new double[segmentation_pt.];
 //            double[] failsArrayY =  new double[segmentation_pt[1].size()];
 
+            // here we set the Default Chanel
+            // The User should choose Bright Field to Avoid Cell Bleaching
             if (defaultGroupConfig_ != null && defaultConfPrest_ != " "){
                 System.out.println(defaultGroupConfig_ + "__" + defaultConfPrest_);
                 try {
                     core_.setConfig(defaultGroupConfig_, defaultConfPrest_);
                     app_.setChannelExposureTime(defaultGroupConfig_, defaultConfPrest_, 10);
+                    core_.waitForConfig(defaultGroupConfig_, defaultConfPrest_);
                 }catch (Exception ex){
                     ReportingUtils.showError("Unable to change Default Configuration Group Name and Preset ");
                 }
             }else System.out.println("___"); // Don't need to do anything
-
 
             for (Point2D.Double elem : segmentation_pt)
             {
@@ -1270,17 +1297,17 @@ public class RappController extends  MMFrame implements OnStateListener {
 
         TaggedImage image = new TaggedImage(pixelArray, summary);
 
-        try {
-            Segmentation seg = new Segmentation(xmlPath, image);
-            Cell cell;
-            System.out.println("Has next? " + seg.hasNext());
-            while (seg.hasNext()) {
-                cell = seg.next();
-                System.out.println(cell.getCenterX() + ":" + cell.getCenterY());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+////            Segmentation seg = new Segmentation(xmlPath, image);
+////            Cell cell;
+////            System.out.println("Has next? " + seg.hasNext());
+////            while (seg.hasNext()) {
+////                cell = seg.next();
+////                System.out.println(cell.getCenterX() + ":" + cell.getCenterY());
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     public ArrayList[] findCells(ImagePlus impOrg) {

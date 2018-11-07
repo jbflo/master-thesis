@@ -781,6 +781,7 @@ import org.micromanager.rapp.RappGui;
                                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGap(0, 16, Short.MAX_VALUE))
             );
+
             xyPanel_Layout.setVerticalGroup(
                     xyPanel_Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(xyPanel_Layout.createSequentialGroup()

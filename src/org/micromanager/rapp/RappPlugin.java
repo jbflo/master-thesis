@@ -18,23 +18,16 @@ package org.micromanager.rapp;
 import ij.IJ;
 import ij.plugin.frame.RoiManager;
 import mmcorej.CMMCore;
-import mmcorej.TaggedImage;
 import org.micromanager.MMStudio;
-import org.micromanager.acquisition.AcquisitionEngine;
-import org.micromanager.acquisition.AcquisitionWrapperEngine;
 import org.micromanager.api.MMListenerInterface;
 import org.micromanager.api.MMPlugin;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.internalinterfaces.LiveModeListener;
 import org.micromanager.utils.GUIUtils;
-import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
-
-import javax.swing.*;
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.*;
 import java.awt.event.ItemEvent;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /////////////////  Micro-Manager Package ////////////////////////
 
@@ -63,7 +56,6 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
         app_ = app;
         studio_ = (MMStudio) app_;
         core_ = app_.getMMCore();
-
     }
 
     public static CMMCore getMMcore(){
@@ -76,10 +68,8 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
 
     @Override // MM
     public void show() {
-        /// (Try) calling the Interface Class on Package TestGui
+        /// (Try) Make sure there is a Camera or a Galvo Device connected
         try {
-
-
             if (core_.getCameraDevice().length()==0 && core_.getGalvoDevice().length()==0 ) {
                 ReportingUtils.showMessage("Please load a Camera Devices " +
                         "And a Galvo-based phototargeting device : Rapp UGA-42  " +
@@ -89,8 +79,6 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-
-
 
         try {
             form_ = RappGui.showAppInterface(core_, app_);
@@ -124,7 +112,7 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
 
     @Override
     public String getInfo() {
-        return "Interface for controlling microscope and laser system";
+        return "Interface for controlling microscope and laser system : For Cell Killing Project";
     }
 
     @Override
@@ -139,8 +127,7 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
 
 
     @Override
-    public void liveModeEnabled(boolean b) {
-
+    public void liveModeEnabled(final boolean b) {
         RappGui.getInstance().LiveMode_btn.setSelected(b);
         RappGui.getInstance().LiveMode_btn.setText(  b ? "Stop Live View" : "Start Live View" );
         RappGui.getInstance().LiveMode_btn.setBackground(b? Color.decode("#d35400") :Color.decode("#d35400") );

@@ -74,18 +74,13 @@ public class wellPanel extends JPanel  {
        wellplate = FOV_control.getWellPlateID();
        col = FOV_control.getcolSize();
        row = FOV_control.getrowSize();
-       //int square = 20;
        square = FOV_control.getSquareSize();
-       //int space = 3;
        space = FOV_control.getWellSpace();
        // initComponents();
-       // pp_ = WellClass.getInstance();
        selectionStart_ = new Point();
        selectionEnd_ = new Point();
        selection_list = new ArrayList<Point>();
        selection_ = new Rectangle();
-
-//     wellsSelected_ = new ArrayList<ArrayList<Boolean>>();
 
        parent_ = parent;
        addMouseListener(new MouseAdapter() {
@@ -125,9 +120,10 @@ public class wellPanel extends JPanel  {
                square = FOV_control.getSquareSize();
                space = FOV_control.getWellSpace();
 
+               repaint();
                checkStartEnd();
                getSelectedWells();
-               repaint();
+
            }
 
 
@@ -209,8 +205,8 @@ public class wellPanel extends JPanel  {
             Point2D.Double Calibrated_pt = FOV_control.getXYOffset();
             ArrayList[] posXY = FOV_control.positionlists();
 
-            double x_pos =  (double) posXY[0].get(0); //store each element as a double in the array
-            double y_pos = (double) posXY[1].get(0); //store each element as a double in the array
+            double x_pos =  Double.parseDouble(posXY[0].get(0).toString()); //store each element as a double in the array
+            double y_pos = Double.parseDouble(posXY[1].get(0).toString()); //store each element as a double in the array
 
             // here we try to get the position, if the plate is rotate
            // double x1 = (Math.cos(FOV_Controller.getAngle()) * x_pos) - (Math.sin(FOV_Controller.getAngle()) * y_pos);
