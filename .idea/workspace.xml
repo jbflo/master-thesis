@@ -7,188 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3bd16c0-5336-44c0-8d6f-2b586ae6e16d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/MicroManagerPlugin.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RappPlugin_jar.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/CellXJ.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/CellXJ1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/RappPlugin.iml" afterPath="$PROJECT_DIR$/RappPlugin.iml" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/out/production/RappPlugin/META-INF/MANIFEST.MF" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/AFPlane.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/HCSAbout$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/HCSAbout.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/HCSException.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/ParentPlateGUI.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/PlatePanel$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/PlatePanel$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/PlatePanel$3.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/PlatePanel$DrawingParams.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/PlatePanel$Tool.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/PlatePanel$WellBox.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/PlatePanel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SBSPlate$Well.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SBSPlate.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$10.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$11.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$12.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$13.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$14.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$15.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$3.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$4.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$5.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$6.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$7.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$8.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator$9.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/SiteGenerator.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/TestSBSPlate.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/FOVGenerator/WellPositionList.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOVTableModel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_Controller.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_GUI$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/FOV_GUI.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/TableModel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/WellComparator.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/WellComparatorSen.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/XComparator.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$3.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$4.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel$5.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/posPanel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$10.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$11.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$12.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$13.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$14.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$15.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$16.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$17.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$18.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$19.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$20.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$21.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$22.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$23.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$24.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$25.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$26.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$27.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$28.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$29.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$3.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$30.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$31.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$32.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$33.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$34.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$35.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$4.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$5.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$6.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$7.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$8.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$9.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl$StageThread.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/stageControl.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/wellPanel$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/wellPanel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/MultiFOV/xyzFunctions.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$3.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$4$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController$4.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappController.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$3.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$4.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$5.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$6.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$7.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui$8.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappGui.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappPlugin$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/RappPlugin.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/AcquisitionEngine.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/ChannelCellEditor.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/ChannelCellRenderer.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/ChannelSpec.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/ChannelTableModel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$1$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$10.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$11.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$12.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$13.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$14.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$15.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$16.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$17.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$3.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$4.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$5.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$6.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$7.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$8.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$9.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$CheckBoxPanel$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$CheckBoxPanel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$ComponentTitledPanel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui$LabelPanel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/SequenceAcquisitions/SequenceSettings.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/AboutGui$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/AboutGui.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/AcqOrderMode.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/FileDialog.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Galvo$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Galvo$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Galvo$3.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Galvo$4.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Galvo$5.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Galvo$6.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Galvo$7.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Galvo$8.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Galvo$9.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Galvo.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/ImageViewer$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/ImageViewer$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/ImageViewer.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/OnStateListener.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/RappDevice.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/SLM.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/RappPlugin/org/micromanager/rapp/utils/Utils.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_Controller.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/FOV_GUI.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/posPanel.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/stageControl.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/stageControl.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/wellPanel.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/xyzFunctions.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/xyzFunctions.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappGui.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/RappPlugin.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellEditor.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/ChannelCellEditor.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/utils/Galvo.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/utils/Galvo.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/utils/ImageViewer.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/utils/ImageViewer.java" />
-      <change beforePath="$PROJECT_DIR$/src/org/micromanager/rapp/utils/Utils.java" afterPath="$PROJECT_DIR$/src/org/micromanager/rapp/utils/Utils.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -216,8 +35,8 @@
       <file leaf-file-name="SeqAcqController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="163" column="64" lean-forward="false" selection-start-line="163" selection-start-column="64" selection-end-line="163" selection-end-column="64" />
+            <state relative-caret-position="411">
+              <caret line="158" column="0" lean-forward="true" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -225,17 +44,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Galvo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/utils/Galvo.java">
+      <file leaf-file-name="stageControl.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/stageControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4326">
-              <caret line="232" column="15" lean-forward="false" selection-start-line="232" selection-start-column="15" selection-end-line="232" selection-end-column="15" />
-              <folding />
+            <state relative-caret-position="273">
+              <caret line="906" column="58" lean-forward="true" selection-start-line="906" selection-start-column="17" selection-end-line="906" selection-end-column="58" />
+              <folding>
+                <element signature="e#8512#8601#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RappController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RappController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/RappController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="199">
@@ -1002,14 +823,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/stageControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="735" column="54" lean-forward="false" selection-start-line="735" selection-start-column="54" selection-end-line="735" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/TableModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
@@ -1158,16 +971,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="163" column="64" lean-forward="false" selection-start-line="163" selection-start-column="64" selection-end-line="163" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqGui.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1191,6 +994,26 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#41754#41770#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/SequenceAcquisitions/SeqAcqController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="158" column="0" lean-forward="true" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/micromanager/rapp/MultiFOV/stageControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="906" column="58" lean-forward="true" selection-start-line="906" selection-start-column="17" selection-end-line="906" selection-end-column="58" />
+          <folding>
+            <element signature="e#8512#8601#0" expanded="true" />
           </folding>
         </state>
       </provider>
