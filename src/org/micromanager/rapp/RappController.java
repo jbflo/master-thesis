@@ -830,8 +830,9 @@ public class RappController extends  MMFrame implements OnStateListener {
                     ImageCanvas canvas = (ImageCanvas) e.getSource();
                     Point pOffscreen = new Point(canvas.offScreenX(p.x), canvas.offScreenY(p.y));
                     System.out.println(pOffscreen.x + "_" + pOffscreen.y );
-                    final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), canvas.getImage(),
-                            new Point2D.Double(pOffscreen.x, pOffscreen.y));
+//                    final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), canvas.getImage(),
+//                            new Point2D.Double(pOffscreen.x, pOffscreen.y));
+                    final Point2D.Double devP = transformPoint(loadMapping(), new Point2D.Double(pOffscreen.x, pOffscreen.y));
                     System.out.println(devP);
                    // final Configuration originalConfig = prepareChannel();
                   //  final boolean originalShutterState = prepareShutter();
@@ -868,6 +869,16 @@ public class RappController extends  MMFrame implements OnStateListener {
 
                         RoiManager rm = RoiManager.getInstance();
 
+                        if (defaultGroupConfig_ != null && defaultConfPrest_ != " "){
+                            System.out.println(defaultGroupConfig_ + "__" + defaultConfPrest_);
+                            try {
+                                core_.setConfig(defaultGroupConfig_, defaultConfPrest_);
+                                app_.setChannelExposureTime(defaultGroupConfig_, defaultConfPrest_, 10);
+                                core_.waitForConfig(defaultGroupConfig_, defaultConfPrest_);
+                            }catch (Exception ex){
+                                ReportingUtils.showError("Unable to change Default Configuration Group Name and Preset ");
+                            }
+                        }else System.out.println("___"); // Don't need to do anything
 
                         if (rm != null) {
                             int roiCount = rm.getCount();
@@ -895,8 +906,9 @@ public class RappController extends  MMFrame implements OnStateListener {
                                 failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
                                 failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
 
-                                final Point2D.Double devP = transformAndMirrorPoint(RappController.this.loadMapping(), image,
-                                        new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+//                                final Point2D.Double devP = transformAndMirrorPoint(RappController.this.loadMapping(), image,
+//                                        new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+                                final Point2D.Double devP = transformPoint(loadMapping(), new Point2D.Double(failsArrayX[i], failsArrayY[i]));
                                 System.out.println(devP);
 
                                 //  final Configuration originalConfig = prepareChannel();

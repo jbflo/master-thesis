@@ -199,7 +199,9 @@ public class SeqAcqController implements AcquisitionEngine {
                             }
                      //       app_.getAutofocusManager().getDevice().
 
-                       //     getAutofocus().enableContinuousFocus(true);
+                            // core_.setAutoFocusDevice();
+                            //     getAutofocus().enableContinuousFocus(true);
+
 
                             for (int i =0 ; i < posXY[0].size(); i++){
 
@@ -269,7 +271,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Make sure the chanel was set
                                 core_.waitForConfig(chanelGroup_, presetConfig.config);
 
-                                app_.getAutofocus().fullFocus();
+                              //  app_.getAutofocus().fullFocus();
                                 core_.waitForDevice(core_.getAutoFocusDevice());
                                 // Take an image from the live view
                                  iPlus = IJ.getImage();
