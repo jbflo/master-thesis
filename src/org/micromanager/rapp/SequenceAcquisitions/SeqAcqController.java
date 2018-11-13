@@ -475,10 +475,18 @@ public class SeqAcqController implements AcquisitionEngine {
                         }
                         //       app_.getAutofocusManager().getDevice().
 
-                        // core_.setAutoFocusDevice();
+                       //  core_.setAutoFocusDevice(core_.getAutoFocusDevice());
+
+                        String[] afDevices = app_.getAutofocusManager().getAfDevices();
+                        for ( int i =  0 ; i < afDevices.length ; i++  ){
+                            System.out.println("Devices: " +afDevices[i]);
+                        }
+
+                      //
+                       // app_.getAutofocusManager().getDevice().fullFocus();
+                        core_.setAutoFocusDevice("HardwareFocusExtender");
+                        System.out.println("Devices: "+ core_.getAutoFocusDevice());
                         app_.getAutofocus().enableContinuousFocus(isAutoFocusEnabled());
-                        ///  app_.getAutofocusManager().getDevice().fullFocus();
-                       //  app_.getAutofocus().fullFocus();
 
                         int totalProgress = posXY[0].size() * channels.size();
                         int progress = 0;
