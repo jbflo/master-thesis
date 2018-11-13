@@ -51,6 +51,7 @@ public class SeqAcqController implements AcquisitionEngine {
     private boolean useMultiPosition_;
     private boolean keepShutterOpenForChannels_;
     private boolean useWholePlateImaging_;
+    private boolean useColocalisationKilling;
     private int numberWellsX_;
     private int numberWellsY_;
     private double wellWidth_;
@@ -79,9 +80,12 @@ public class SeqAcqController implements AcquisitionEngine {
 
     public String acquire() {
        // return this.runAcquisition(this.getSequenceSettings(), this.acqManager_);
-        if (useMultiPosition_){
+        if (useMultiPosition_ ){
             return this.runSeqAcquisitionMultiPos(this.getSequenceSettings());
-        }else {
+        } else if (useColocalisationKilling){
+            return this.runSeqAcquisitionMultiPosColocalisation(this.getSequenceSettings());
+        }
+        else {
             return this.runSeqAcquisitionSinglePos(this.getSequenceSettings());
         }
     }
@@ -126,14 +130,14 @@ public class SeqAcqController implements AcquisitionEngine {
         return saveFiles_;
     }
 
-    private String runSeqAcquisitionMultiPos(SequenceSettings acquisitionSettings) {
+    private String runSeqAcquisitionMultiPosColocalisation(SequenceSettings acquisitionSettings) {
         //app_.enableLiveMode(false);
         final ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
         final String chanelGroup_ = acquisitionSettings.channelGroup;
 
         try {
             core_.waitForDevice(core_.getCameraDevice());
-           // Thread.sleep(100); // wait and start acquisition
+            // Thread.sleep(100); // wait and start acquisition
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,65 +149,65 @@ public class SeqAcqController implements AcquisitionEngine {
         saveFiles_ = this.imagesSaving();
         if (!isRunning_.get()) {
 
-                stopAcqRequested_.set(false);
-                SeqAcqGui.progressBar.setIndeterminate(true);
-                Thread th = new Thread("Sequence Acquisition thread") {
-                    @Override
-                    public void run() {
-                        try {
-                            SeqAcqGui.acquireButton_.setEnabled(false);
-                            isRunning_.set(true);
+            stopAcqRequested_.set(false);
+            SeqAcqGui.progressBar.setIndeterminate(true);
+            Thread th = new Thread("Sequence Acquisition thread") {
+                @Override
+                public void run() {
+                    try {
+                        SeqAcqGui.acquireButton_.setEnabled(false);
+                        isRunning_.set(true);
 
-                            ImagePlus iPlus;
-                            int progress = 0;
+                        ImagePlus iPlus;
+                        int progress = 0;
 
-                            SeqAcqGui.taskOutput.setText("");
-                            RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                         // SeqAcqGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                        SeqAcqGui.taskOutput.setText("");
+                        RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                        // SeqAcqGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-                            String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
-                            ArrayList[] posXY = FOV_control.positionlists();
+                        String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
+                        ArrayList[] posXY = FOV_control.positionlists();
 
-                            if (posXY[0].size() == 0) {
-                                stopAcqRequested_.set(true);
-                                isRunning_.set(false);
-                                ReportingUtils.showMessage("Acquisition Stop Due to 0 position list," +
-                                        " Please go to Stage position tab to add some position" +
-                                        " Or disable multi position (X,Y) Panel "
-                                );
-                            }
+                        if (posXY[0].size() == 0) {
+                            stopAcqRequested_.set(true);
+                            isRunning_.set(false);
+                            ReportingUtils.showMessage("Acquisition Stop Due to 0 position list," +
+                                    " Please go to Stage position tab to add some position" +
+                                    " Or disable multi position (X,Y) Panel "
+                            );
+                        }
 
-                            double[] x_pos = new double[posXY[0].size()];
-                            double[] y_pos = new double[posXY[1].size()];
+                        double[] x_pos = new double[posXY[0].size()];
+                        double[] y_pos = new double[posXY[1].size()];
 
 //                          double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
 //                          double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
 
-                           // Point2D.Double cornet_pos ;
-                            Point2D.Double xyOff  = new Point2D.Double();
+                        // Point2D.Double cornet_pos ;
+                        Point2D.Double xyOff  = new Point2D.Double();
 
 //                            double defXoff = 0 ;
 //                            double defyoff = 0;
 
-                            try {
-                                xyOff = FOV_control.getXYOffset();
+                        try {
+                            xyOff = FOV_control.getXYOffset();
 //                                cornet_pos = core_.getXYStagePosition();
 //                                defXoff = (x_pos_ini + cornet_pos.getX()) ;
 //                                defyoff = (-y_pos_ini + cornet_pos.getY()) ;
-                               // System.out.println("Xoff = " +xyOff.getX() + "__ Yoff= " + xyOff.getY());
-                              //  Thread.sleep(1000 );
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                stopAcqRequested_.set(true);
-                                isRunning_.set(false);
-                            }
-                     //       app_.getAutofocusManager().getDevice().
+                            // System.out.println("Xoff = " +xyOff.getX() + "__ Yoff= " + xyOff.getY());
+                            //  Thread.sleep(1000 );
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            stopAcqRequested_.set(true);
+                            isRunning_.set(false);
+                        }
+                        //       app_.getAutofocusManager().getDevice().
 
-                            // core_.setAutoFocusDevice();
-                            //     getAutofocus().enableContinuousFocus(true);
+                        // core_.setAutoFocusDevice();
+                        //     getAutofocus().enableContinuousFocus(true);
 
 
-                            for (int i =0 ; i < posXY[0].size(); i++){
+                        for (int i =0 ; i < posXY[0].size(); i++){
 
                             for (ChannelSpec presetConfig : channels) {
 
@@ -234,16 +238,16 @@ public class SeqAcqController implements AcquisitionEngine {
 
                                 try {
                                     System.out.println("Curent : " + i);
-                                 //   System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
+                                    //   System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
 
                                     // x' = cos(a) * x - sin(a) * y
                                     // y' = sin(a) * x + cos(a) * y
 
-                                  //   double x1 = (Math.cos(FOV_Controller.getAngle()) * x_pos[i]) - (Math.sin(FOV_Controller.getAngle()) * y_pos[i]);
-                                 //    double y2 = (Math.sin(FOV_Controller.getAngle()) * x_pos[i]) + ( Math.cos(FOV_Controller.getAngle()) * y_pos[i]);
+                                    //   double x1 = (Math.cos(FOV_Controller.getAngle()) * x_pos[i]) - (Math.sin(FOV_Controller.getAngle()) * y_pos[i]);
+                                    //    double y2 = (Math.sin(FOV_Controller.getAngle()) * x_pos[i]) + ( Math.cos(FOV_Controller.getAngle()) * y_pos[i]);
 
-                                //    double xxPos = -x1+ xyOff.getX();
-                               //     double yyPos = y2+ xyOff.getY();
+                                    //    double xxPos = -x1+ xyOff.getX();
+                                    //     double yyPos = y2+ xyOff.getY();
 
                                     double xxPos = -x_pos[i]+ xyOff.getX();
                                     double yyPos = y_pos[i]+ xyOff.getY();
@@ -253,8 +257,8 @@ public class SeqAcqController implements AcquisitionEngine {
                                     core_.setXYPosition(xxPos, yyPos);
                                     core_.waitForDevice(core_.getXYStageDevice());
 
-                                   // core_.setRelativeXYPosition(x_pos[i]- defXoff, y_pos[i] - defyoff );
-                                  //  Thread.sleep(1000 );
+                                    // core_.setRelativeXYPosition(x_pos[i]- defXoff, y_pos[i] - defyoff );
+                                    //  Thread.sleep(1000 );
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     stopAcqRequested_.set(true);
@@ -271,10 +275,10 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Make sure the chanel was set
                                 core_.waitForConfig(chanelGroup_, presetConfig.config);
 
-                              //  app_.getAutofocus().fullFocus();
+                                //  app_.getAutofocus().fullFocus();
                                 core_.waitForDevice(core_.getAutoFocusDevice());
                                 // Take an image from the live view
-                                 iPlus = IJ.getImage();
+                                iPlus = IJ.getImage();
 
                                 // if the Images was not save , we do the segmentation for the image in Memory
                                 if (!saveFiles_ && presetConfig.useSegmentation) {
@@ -368,38 +372,315 @@ public class SeqAcqController implements AcquisitionEngine {
                                 + (!stopAcqRequested_.get() ? "finished." : "canceled."));
                         System.out.println(core_.getCurrentConfig("Channel"));
 
-                        } catch (Exception e) {
-                            //ReportingUtils.showError(e);
+                    } catch (Exception e) {
+                        //ReportingUtils.showError(e);
+                        e.printStackTrace();
+                        ReportingUtils.showMessage("Acquisition Stop Due to some Error," +
+                                " Please check your input data. " +
+                                " We are Sorry about that"
+                        );
+                    } finally {
+                        try {
+                            app_.getAutofocus().enableContinuousFocus(false);
+                        } catch (MMException e) {
                             e.printStackTrace();
-                            ReportingUtils.showMessage("Acquisition Stop Due to some Error," +
-                                    " Please check your input data. " +
-                                    " We are Sorry about that"
-                            );
-                        } finally {
-                            try {
-                                app_.getAutofocus().enableContinuousFocus(false);
-                            } catch (MMException e) {
-                                e.printStackTrace();
-                            }
-                            SwingUtilities.invokeLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    SeqAcqGui.progressBar.setIndeterminate(false);
-                                }
-                            });
-                            RappGui.getInstance().setCursor(null); // turn off the wait cursor
-                            //SeqAcqGui.getInstance().setCursor(null); // turn off the wait cursor
-                            SeqAcqGui.acquireButton_.setEnabled(true); // Activate the Button again
-                            isRunning_.set(false);
-                            stopAcqRequested_.set(false);
                         }
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                SeqAcqGui.progressBar.setIndeterminate(false);
+                            }
+                        });
+                        RappGui.getInstance().setCursor(null); // turn off the wait cursor
+                        //SeqAcqGui.getInstance().setCursor(null); // turn off the wait cursor
+                        SeqAcqGui.acquireButton_.setEnabled(true); // Activate the Button again
+                        isRunning_.set(false);
+                        stopAcqRequested_.set(false);
                     }
-                };
-                th.start();
+                }
+            };
+            th.start();
 
         }
         return null;
     }
+
+    private String runSeqAcquisitionMultiPos(SequenceSettings acquisitionSettings) {
+
+        final ArrayList<ChannelSpec> channels =  acquisitionSettings.channels;
+        final String chanelGroup_ = acquisitionSettings.channelGroup;
+
+        try {
+            core_.waitForDevice(core_.getCameraDevice());
+            // Thread.sleep(100); // wait and start acquisition
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        saveFiles_ = this.imagesSaving();
+        if (!isRunning_.get()) {
+
+            stopAcqRequested_.set(false);
+            SeqAcqGui.progressBar.setIndeterminate(true);
+            Thread th = new Thread("Sequence Acquisition thread") {
+                @Override
+                public void run() {
+                    try {
+                        SeqAcqGui.acquireButton_.setEnabled(false);
+                        isRunning_.set(true);
+
+                        ImagePlus iPlus; // variable that will stock the current image
+
+
+                        SeqAcqGui.taskOutput.setText("");
+                        RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                        // SeqAcqGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+                        String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
+                        ArrayList[] posXY = FOV_control.positionlists();
+
+                        if (posXY[0].size() == 0) {
+                            stopAcqRequested_.set(true);
+                            isRunning_.set(false);
+                            ReportingUtils.showMessage("Acquisition Stop Due to 0 position list," +
+                                    " Please go to Stage position tab to add some position" +
+                                    " Or disable multi position (X,Y) Panel "
+                            );
+                        }
+
+                        double[] x_pos = new double[posXY[0].size()];
+                        double[] y_pos = new double[posXY[1].size()];
+
+//                          double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
+//                          double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
+
+                        // Point2D.Double cornet_pos ;
+                        Point2D.Double xyOff  = new Point2D.Double();
+
+//                            double defXoff = 0 ;
+//                            double defyoff = 0;
+
+                        try {
+                            xyOff = FOV_control.getXYOffset();
+//                                cornet_pos = core_.getXYStagePosition();
+//                                defXoff = (x_pos_ini + cornet_pos.getX()) ;
+//                                defyoff = (-y_pos_ini + cornet_pos.getY()) ;
+                            // System.out.println("Xoff = " +xyOff.getX() + "__ Yoff= " + xyOff.getY());
+                            //  Thread.sleep(1000 );
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            stopAcqRequested_.set(true);
+                            isRunning_.set(false);
+                        }
+                        //       app_.getAutofocusManager().getDevice().
+
+                        // core_.setAutoFocusDevice();
+                        app_.getAutofocus().enableContinuousFocus(isAutoFocusEnabled());
+                        ///  app_.getAutofocusManager().getDevice().fullFocus();
+                       //  app_.getAutofocus().fullFocus();
+
+                        int totalProgress = posXY[0].size() * channels.size();
+                        int progress = 0;
+                        for (int i =0 ; i < posXY[0].size(); i++){
+
+                            for (ChannelSpec presetConfig : channels) {
+
+                                if (stopAcqRequested_.get()) {
+                                    //ReportingUtils.showMessage("Acquisition Stop.");
+                                    break;
+                                }
+                                if (presetConfig.useSegmentation && algo == " ") {
+                                    ReportingUtils.showMessage("Acquisition Stop. Please Choose a Segmenter Algo before running Acquisition or deselected" +
+                                            "Segmenter CheckBox form the Table ");
+                                    stopAcqRequested_.set(true);
+                                    isRunning_.set(false);
+                                    break;
+                                }
+
+                                if (xyOff == null) {
+                                    ReportingUtils.showMessage("Acquisition Stop. Stage Calibration parameters are null,  Please go to stage panel to stage XX stage Calibration" +
+                                            "Or Disable Multi-position panel");
+                                    stopAcqRequested_.set(true);
+                                    isRunning_.set(false);
+                                    break;
+                                }
+
+                                x_pos[i] = Double.parseDouble( posXY[0].get(i).toString()); //store each element as a double in the array
+                                y_pos[i] = Double.parseDouble(posXY[1].get(i).toString()); //store each element as a double in the array
+
+                                System.out.println("X = " + x_pos[i] + "__ Y= " + y_pos[i]);
+
+                                try {
+                                    System.out.println("Curent : " + i);
+                                    //   System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
+
+                                    // x' = cos(a) * x - sin(a) * y
+                                    // y' = sin(a) * x + cos(a) * y
+
+                                    //   double x1 = (Math.cos(FOV_Controller.getAngle()) * x_pos[i]) - (Math.sin(FOV_Controller.getAngle()) * y_pos[i]);
+                                    //    double y2 = (Math.sin(FOV_Controller.getAngle()) * x_pos[i]) + ( Math.cos(FOV_Controller.getAngle()) * y_pos[i]);
+
+                                    //    double xxPos = -x1+ xyOff.getX();
+                                    //     double yyPos = y2+ xyOff.getY();
+
+                                    double xxPos = -x_pos[i]+ xyOff.getX();
+                                    double yyPos = y_pos[i]+ xyOff.getY();
+
+                                    System.out.println("xx = " + xxPos + "__ yy= " +yyPos);
+
+                                    core_.setXYPosition(xxPos, yyPos);
+                                    core_.waitForDevice(core_.getXYStageDevice());
+
+                                    // core_.setRelativeXYPosition(x_pos[i]- defXoff, y_pos[i] - defyoff );
+                                    //  Thread.sleep(1000 );
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    stopAcqRequested_.set(true);
+                                    isRunning_.set(false);
+                                    break;
+                                }
+
+                                // app_.enableLiveMode(false); // Make sure the Live Mode is off
+                                // Then Change The Chanel Config (Preset )
+
+                                core_.setConfig(chanelGroup_, presetConfig.config);
+                                // Set the Chanel Exposure Time
+                                app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
+                                // Make sure the chanel was set
+                                core_.waitForConfig(chanelGroup_, presetConfig.config);
+
+                                //  app_.getAutofocus().fullFocus();
+                                core_.waitForDevice(core_.getAutoFocusDevice());
+                                // Take an image from the live view
+                                iPlus = IJ.getImage();
+
+                                // if the Images was not save , we do the segmentation for the image in Memory
+                                if (!saveFiles_ && presetConfig.useSegmentation) {
+                                    ImagePlus image_dup_ori = iPlus.duplicate();
+                                    image_dup_ori.setTitle("Img_Original_" + presetConfig.config + "_" + algo);
+                                    image_dup_ori.show();
+
+                                    ImagePlus image_dup = iPlus.duplicate();
+                                    image_dup.setTitle("_Segmented_" + presetConfig.config);
+
+                                    List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_dup, "", algo, presetConfig.KillCell, saveFiles_);
+                                    if (presetConfig.KillCell) {
+                                        app_.enableLiveMode(true); //  Open the live mode before shooting
+                                        rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
+                                    }
+                                }
+
+                                // Module where the user Save the images separately
+                                if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
+                                    // The acquires Images are saving as separate Image.
+                                    iPlus.setTitle(dirName_ + "_" + presetConfig.config.toLowerCase() + "_POS_" +  i );
+                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
+                                    if (presetConfig.useSegmentation) {
+                                        String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
+                                        ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
+                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config +"_POS_" +  i  );
+                                        List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
+                                        System.out.println(presetConfig.KillCell);
+                                        if (presetConfig.KillCell) {
+                                            app_.enableLiveMode(true); //  Open the live mode before shooting
+                                            rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
+                                        }
+                                    }
+                                }
+                                // Module where the user Save the images as a Stack.
+                                else if (saveFiles_ && SeqAcqGui.saveMultiTiff_) {
+                                    // we save The acquires images  as separate Image first and open it.
+                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() +"_POS_" +  i +  ".tif");
+                                    // We Open the Original Image
+                                    ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
+                                    image_.setTitle(dirName_ + "_" + presetConfig.config +"_POS_" +  i  );
+                                    image_.show();
+
+                                    // We Duplicate the original image , and segmented the duplicate one
+                                    ImagePlus image_dup = iPlus.duplicate();
+                                    image_dup.setTitle(dirName_ + "_Segmented_" + presetConfig.config +"_POS_" +  i  );
+
+                                    if (presetConfig.useSegmentation) {
+                                        String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
+                                        List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_dup, path_seq, algo, presetConfig.KillCell, saveFiles_);
+
+                                        if (presetConfig.KillCell) {
+                                            app_.enableLiveMode(true); //  Open the live mode before shooting
+                                            rappController_ref.shootFromSegmentationListPoint(ll, (long) presetConfig.laser_exposure);
+                                        }
+                                    }
+
+                                    // Here we delete the separate images
+                                    File file = new File(rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
+                                    file.delete();
+                                }
+
+                                progress += 100 / totalProgress;
+                                SeqAcqGui.progressBar.setValue(progress);
+                                SeqAcqGui.taskOutput.append(String.format("Completed %d%% of %d%% Sequence Task.\n", progress, totalProgress));
+                               // totalProgress -= 100 /totalProgress;
+                            }
+                        }
+
+                        if (saveFiles_ && SeqAcqGui.saveMultiTiff_ && !stopAcqRequested_.get()) {
+
+                            // We turn off the live view to avoid adding wrong images
+                            app_.enableLiveMode(false); // Make sure the Live Mode is off
+                            // After the loop we saves all the Images as a stack Image.
+                            Thread.sleep(500); // we wait to be sure the live view is turn off.
+                            IJ.run("Images to Stack", "name=Stack title=[] use");
+                            IJ.run("Delete Slice");
+                            IJ.saveAs("Tiff", rootName_ + "\\" + dirName_ + "_" + "Stack" + ".tif");
+                        }
+
+                        if (saveFiles_ && !stopAcqRequested_.get()){
+                            // We save the comment text and the summary of the current sequence in a txt FIle
+                            String path_summary = rootName_ + "\\" + dirName_ +"_";
+
+                            BufferedWriter writer = new BufferedWriter(new FileWriter(path_summary + "comment.txt"));
+                            writer.write(summaryTxt());
+                            System.out.println(summaryTxt());
+                            writer.close();
+                        }
+
+                        JOptionPane.showMessageDialog(IJ.getImage().getWindow(), "Sequence Acquisition "
+                                + (!stopAcqRequested_.get() ? "finished." : "canceled."));
+                        System.out.println(core_.getCurrentConfig("Channel"));
+
+                    } catch (Exception e) {
+                        //ReportingUtils.showError(e);
+                        e.printStackTrace();
+                        ReportingUtils.showMessage("Acquisition Stop Due to some Error," +
+                                " Please check your input data. " +
+                                " We are Sorry about that"
+                        );
+                    } finally {
+                        try {
+                            app_.getAutofocus().enableContinuousFocus(false);
+                        } catch (MMException e) {
+                            e.printStackTrace();
+                        }
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                SeqAcqGui.progressBar.setIndeterminate(false);
+                            }
+                        });
+                        RappGui.getInstance().setCursor(null); // turn off the wait cursor
+                        //SeqAcqGui.getInstance().setCursor(null); // turn off the wait cursor
+                        SeqAcqGui.acquireButton_.setEnabled(true); // Activate the Button again
+                        isRunning_.set(false);
+                        stopAcqRequested_.set(false);
+                    }
+                }
+            };
+            th.start();
+
+        }
+        return null;
+    }
+
 
 
     protected String runSeqAcquisitionSinglePos(SequenceSettings acquisitionSettings) {

@@ -159,16 +159,10 @@ public class wellPanel extends JPanel  {
 
     private void drawWellMap(Graphics g) {
 
-        // checks if is 96 or 382 well plate to adjust sqaure size
+        // checks if is 96 or 384 well plate to adjust sqaure size
         //(other plates will work as well, everything with more than 24 col will have small squares)
-//        if (col<=FOV_Controller.getcolSize()){
-//            generateWellMap(g, square, space, col, row, wellplate);
-//        }
-//        else{
-//          //  square = 10;
-            System.out.println("Kisa" + wellplate);
             generateWellMap(g, square, space, col, row);
-     //   }
+
     }
 
     private void getSelectedWells() {

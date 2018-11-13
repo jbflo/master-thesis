@@ -123,6 +123,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
 //   private final JLabel txt_pos_Label;
    private final JButton browseRootButton_;
    private final JButton browseRootButton_2;
+   private final JButton afButton_;
  //  private  final JButton browseRootButton_plate;
    private final JLabel displayMode_;
    //private final JCheckBox stackKeepShutterOpenCheckBox_;
@@ -189,7 +190,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
    private static CheckBoxPanel segmentationPanel_;
    protected static CheckBoxPanel positionsPanel_;
   // private JPanel acquisitionOrderPanel_;
-  // private CheckBoxPanel afPanel_;
+   private static CheckBoxPanel afPanel_;
    private JPanel summaryPanel_;
    private static CheckBoxPanel savePanel_;
    private ComponentTitledPanel commentsPanel_;
@@ -307,8 +308,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
 
       // framesPanel_ = (CheckBoxPanel) createPanel("Time points", 5, 308, 220, 451, true); // (text, left, top, right, bottom)
       savePanel_ = (CheckBoxPanel) createPanel("Save images", 3, 175, 510, 290, true);
-      positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 175, 705, 290, true);
-  //   afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 715, 295, 875, 295, true);
+      positionsPanel_ = (CheckBoxPanel) createPanel("Multiple positions (XY)", 515, 175, 705, 233, true);
+      afPanel_ = (CheckBoxPanel) createPanel("Autofocus", 515, 235, 705, 290, true);
 
       summaryPanel_ = createPanel("Summary", 515, 290, 705, 455);
       // acquisitionOrderPanel_ = createPanel("Acquisition order", 515, 300, 705, 435);
@@ -340,7 +341,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
               ;
       //acquisitionOrderPanel_.setToolTipText(acqOrderToolTip);
       acqOrderBox_.setToolTipText(acqOrderToolTip);
-      //afPanel_.setToolTipText("Toggle autofocus on/off");
+      afPanel_.setToolTipText("Toggle autofocus on/off");
       channelsPanel_.setToolTipText("Lets you acquire images in multiple channels (groups of "
               + "properties with multiple preset values");
       savePanel_.setToolTipText(TooltipTextMaker.addHTMLBreaksForTooltip("If the Save images option is selected, "
@@ -709,29 +710,29 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
 
       // Autofocus panel
 
-//      afPanel_.addActionListener(new ActionListener() {
-//
-//         @Override
-//         public void actionPerformed(ActionEvent arg0) {
-//            applySettings();
-//         }
-//      });
+      afPanel_.addActionListener(new ActionListener() {
 
-//      afButton_ = new JButton();
-//      afButton_.setToolTipText("Set autofocus options");
-//      afButton_.addActionListener(new ActionListener() {
-//
-//         @Override
-//         public void actionPerformed(ActionEvent arg0) {
-//            afOptions();
-//         }
-//      });
-//      afButton_.setText("Options...");
-//      afButton_.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "icons/wrench_orange.png"));
-//      afButton_.setMargin(new Insets(2, 5, 2, 5));
-//      afButton_.setFont(new Font("Dialog", Font.PLAIN, 10));
-//      afButton_.setBounds(32, 33, 100, 28);
-//      afPanel_.add(afButton_);
+         @Override
+         public void actionPerformed(ActionEvent arg0) {
+            applySettings();
+         }
+      });
+
+      afButton_ = new JButton();
+      afButton_.setToolTipText("Set autofocus options");
+      afButton_.addActionListener(new ActionListener() {
+
+         @Override
+         public void actionPerformed(ActionEvent arg0) {
+            afOptions();
+         }
+      });
+      afButton_.setText("Options...");
+      afButton_.setIcon(SwingResourceManager.getIcon(SeqAcqGui.class, "icons/wrench_orange.png"));
+      afButton_.setMargin(new Insets(2, 5, 2, 5));
+      afButton_.setFont(new Font("Dialog", Font.PLAIN, 10));
+      afButton_.setBounds(45, 25, 100, 28);
+      afPanel_.add(afButton_);
 
 
 //      final JLabel afSkipFrame1 = new JLabel();
@@ -756,6 +757,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
                segmentationPanel_.setSelected(false);
                positionsPanel_.setSelected(false);
                savePanel_.setSelected(false);
+               afPanel_.setSelected(false);
             }
             applySettings();
          }
@@ -1400,7 +1402,8 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
       acqEng_.setDisplayMode(acqPrefs_.getInt(ACQ_DISPLAY_MODE, acqEng_.getDisplayMode()));
       acqEng_.enableAutoFocus(acqPrefs_.getBoolean(ACQ_AF_ENABLE, acqEng_.isAutoFocusEnabled()));
       acqEng_.setChannelGroup(acqPrefs_.get(ACQ_CHANNEL_GROUP, acqEng_.getFirstConfigGroup()));
-     // afPanel_.setSelected(acqEng_.isAutoFocusEnabled());
+      afPanel_.setSelected(acqEng_.isAutoFocusEnabled());
+      afPanel_.repaint();
      // acqEng_.keepShutterOpenForChannels(acqPrefs_.getBoolean(ACQ_CHANNELS_KEEP_SHUTTER_OPEN, false));
       //acqEng_.keepShutterOpenForStack(acqPrefs_.getBoolean(ACQ_STACK_KEEP_SHUTTER_OPEN, false));
 
@@ -1895,7 +1898,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
      // slicesPanel_.setSelected(acqEng_.isZSliceSettingEnabled());
       positionsPanel_.setSelected(acqEng_.isMultiPositionEnabled());
       segmentationPanel_.setSelected(acqEng_.isDoSegmentationEnabled());
-      //afPanel_.setSelected(acqEng_.isAutoFocusEnabled());
+      afPanel_.setSelected(acqEng_.isAutoFocusEnabled());
 //      acqOrderBox_.setEnabled(positionsPanel_.isSelected() || framesPanel_.isSelected()
 //        || slicesPanel_.isSelected()      || channelsPanel_.isSelected());
       acqOrderBox_.setEnabled(positionsPanel_.isSelected() || segmentationPanel_.isSelected() ||  channelsPanel_.isSelected());
@@ -2048,7 +2051,7 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
 
       acqEng_.setComment(commentTextArea_.getText());
 
-     // acqEng_.enableAutoFocus(afPanel_.isSelected());
+      acqEng_.enableAutoFocus(afPanel_.isSelected());
 
       disableGUItoSettings_ = false;
       updateGUIContents();
