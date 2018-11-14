@@ -482,11 +482,13 @@ public class SeqAcqController implements AcquisitionEngine {
                             System.out.println("Devices: " +afDevices[i]);
                         }
 
-                      //
+                        app_.getAutofocusManager().selectDevice("HardwareFocusExtender");
                        // app_.getAutofocusManager().getDevice().fullFocus();
-                        core_.setAutoFocusDevice("HardwareFocusExtender");
-                        System.out.println("Devices: "+ core_.getAutoFocusDevice());
-                        app_.getAutofocus().enableContinuousFocus(isAutoFocusEnabled());
+
+                       // core_.setAutoFocusDevice("HardwareFocusExtender");
+                        System.out.println("Current Devices: "+ app_.getAutofocusManager().getDevice().getDeviceName());
+                      //  app_.getAutofocus().enableContinuousFocus(isAutoFocusEnabled());
+                      //  app_.getAutofocusManager().getDevice().enableContinuousFocus(isAutoFocusEnabled());
 
                         int totalProgress = posXY[0].size() * channels.size();
                         int progress = 0;
@@ -559,7 +561,11 @@ public class SeqAcqController implements AcquisitionEngine {
                                 core_.waitForConfig(chanelGroup_, presetConfig.config);
 
                                 //  app_.getAutofocus().fullFocus();
-                                core_.waitForDevice(core_.getAutoFocusDevice());
+                               // app_.getAutofocusManager().getDevice()
+
+
+                                app_.getAutofocusManager().getDevice().fullFocus();
+                                //01core_.waitForDevice(app_.getAutofocusManager().getDevice().getDeviceName());
                                 // Take an image from the live view
                                 iPlus = IJ.getImage();
 
@@ -664,11 +670,11 @@ public class SeqAcqController implements AcquisitionEngine {
                                 " We are Sorry about that"
                         );
                     } finally {
-                        try {
-                            app_.getAutofocus().enableContinuousFocus(false);
-                        } catch (MMException e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            app_.getAutofocus().enableContinuousFocus(false);
+//                        } catch (MMException e) {
+//                            e.printStackTrace();
+//                        }
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
