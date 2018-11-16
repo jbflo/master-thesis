@@ -28,7 +28,6 @@ public class FOV_Controller {
     private static int space;
 
     // all dimensions in µm
-    private static String plateName ;
 
     private static double sizeXUm_ ;
     private static double sizeYUm_ ;
@@ -57,8 +56,6 @@ public class FOV_Controller {
     
     public static  ArrayList<String> wellTypes = new ArrayList<String>();
 
-    // public static final String IBIDI_24_WELL = "Ibidi-24WELL";
-
     public static final String DEFAULT_XYSTAGE_NAME = "XYStage";
     public static final String CUSTOM = "CUSTOM";
     private static final String METADATA_SITE_PREFIX = "Site";
@@ -85,6 +82,7 @@ public class FOV_Controller {
     }
 
 
+    // This Fuction Read the giving XML file and return the list of Plate ID Name.
     public static boolean readXmlFileOnce (String filePath) {
         try {
 

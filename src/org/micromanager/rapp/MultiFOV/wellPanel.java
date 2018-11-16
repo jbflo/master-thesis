@@ -46,13 +46,10 @@ public class wellPanel extends JPanel  {
 
 
     private String wellplate;
-    private int col ;
-    private int row ;
-
-    //int square = 20;
-    private int square ;
-    //int space = 3;
-    private int space ;
+    private static int col ;
+    private static int row ;
+    private static int square ;
+    private static int space ;
 
     //int col = 24; // pp_.getColCount();
     // int row = 16; // pp_.getRowCount();

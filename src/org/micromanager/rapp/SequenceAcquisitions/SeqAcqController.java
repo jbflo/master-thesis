@@ -560,8 +560,8 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Make sure the chanel was set
                                 core_.waitForConfig(chanelGroup_, presetConfig.config);
 
-                                //  app_.getAutofocus().fullFocus();
-                               // app_.getAutofocusManager().getDevice()
+                                 //  app_.getAutofocus().fullFocus();
+                                // app_.getAutofocusManager().getDevice()
 
 
                                 app_.getAutofocusManager().getDevice().fullFocus();

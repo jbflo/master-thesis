@@ -58,13 +58,9 @@
       <element id="extracted-dir" path="C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/bigdataviewer-core-2.1.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/imglib2-ui-2.0.0-beta-29.jar" path-in-jar="/" />
       <element id="extracted-dir" path="C:/Program Files/Micro-Manager-1.4/plugins/Micro-Manager/imglib2-realtransform-2.0.0-beta-29.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/java-packages/commons-io-2.6.jar" path-in-jar="/" />
       <element id="extracted-dir" path="C:/Program Files/Micro-Manager-1.4/ij.jar" path-in-jar="/" />
       <element id="extracted-dir" path="C:/msys64/home/Hp/cellxpp/java/CellXJ.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$USER_HOME$/Documents/java-packages/commons-io-2.6.jar" path-in-jar="/" />
-      <element id="library" level="project" name="ij" />
-      <element id="library" level="project" name="Micro-Manager" />
-      <element id="library" level="project" name="commons-io-2.6" />
-      <element id="file-copy" path="C:/msys64/home/Hp/cellxpp/java/CellXJ.jar" />
     </root>
   </artifact>
 </component>

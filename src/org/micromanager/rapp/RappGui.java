@@ -138,7 +138,6 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
 
         try {
             setDefaultLookAndFeelDecorated(true);
-//            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
             UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
 
         } catch (ClassNotFoundException e) {

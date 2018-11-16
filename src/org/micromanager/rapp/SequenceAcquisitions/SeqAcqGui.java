@@ -2058,31 +2058,6 @@ public class SeqAcqGui extends JInternalFrame implements PropertyChangeListener 
    }
 
 
-    private String chooseWellPlate() {
-        int n = JOptionPane.showConfirmDialog(this,
-                "Do you Have a 384 well plate ?", "Choose Plate", JOptionPane.YES_NO_CANCEL_OPTION);
-        if (n == JOptionPane.YES_OPTION) {
-            return "384";
-        }else if (n == JOptionPane.CANCEL_OPTION) {
-            ReportingUtils.showMessage("Canceled : NO Plate were Chosen");
-            return "cancel" ;
-        }
-        else  {
-            int n1 = JOptionPane.showConfirmDialog(this,
-                    "Do you have a 96 well plate?", "Choose plate", JOptionPane.YES_NO_CANCEL_OPTION);
-            if (n1 == JOptionPane.YES_OPTION) {
-                return "96";
-            }
-            else if (n == JOptionPane.NO_OPTION) {
-                ReportingUtils.showMessage("Sorry: There is no Other Options, Please Try Again");
-                return "cancel" ;
-            }
-            else ReportingUtils.showMessage("Canceled : NO plate were Chosen");
-        }
-        return "cancel" ;
-
-    }
-
    /**
     * Save settings to application properties.
     *

@@ -36,7 +36,6 @@ public class FOV_GUI extends JInternalFrame {
     private JComboBox plateIDCombo_;
 
     private static RappGui parent_ = RappGui.getInstance();
-    protected AboutGui  dlgAbout;
     private wellPanel well_panel;
 
     protected static int well_plate_type;
@@ -49,8 +48,8 @@ public class FOV_GUI extends JInternalFrame {
         parent_ = parent;
         core_ = core;
         app_ = app;
-       // getContentPane().setLayout(null);
 
+       // getContentPane().setLayout(null);
         // Set JFrame Form and Location
         BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
         bi.setNorthPane(null);
@@ -215,10 +214,10 @@ public class FOV_GUI extends JInternalFrame {
 
         JSplitPane splitPaneBody = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, main_well_panel, xyPos_panel);
         splitPaneBody.setDividerLocation(600);
-        this.add(splitPaneBody,BorderLayout.CENTER);
+        getContentPane().add(splitPaneBody,BorderLayout.CENTER);
 
         //setDefaultCloseOperation(0);
-        setTitle("Set Multi");
+        //setTitle("Set Multi");
         // setSize(900, 445);
         // setResizable(false);
         //  setLocationRelativeTo(null);  // center the application window
