@@ -560,15 +560,18 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Make sure the chanel was set
                                 core_.waitForConfig(chanelGroup_, presetConfig.config);
 
+                                RappPlugin.studio_.autofocusNow();
+
                                  //  app_.getAutofocus().fullFocus();
                                 // app_.getAutofocusManager().getDevice()
 
 
-                                app_.getAutofocusManager().getDevice().fullFocus();
-                                //01core_.waitForDevice(app_.getAutofocusManager().getDevice().getDeviceName());
-                                // Take an image from the live view
+                               // app_.getAutofocusManager().getDevice().fullFocus();
+                             //   RappPlugin.studio_.getAutofocusManager().getDevice().wait();
+                              //  core_.waitForDevice(core_.getAutoFocusDevice());
+                             //   core_.waitForDevice(app_.getAutofocusManager().getDevice().getDeviceName());
+                                // Take an image from the live view0
                                 iPlus = IJ.getImage();
-
                                 // if the Images was not save , we do the segmentation for the image in Memory
                                 if (!saveFiles_ && presetConfig.useSegmentation) {
                                     ImagePlus image_dup_ori = iPlus.duplicate();

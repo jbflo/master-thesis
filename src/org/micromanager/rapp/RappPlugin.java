@@ -39,7 +39,7 @@ public class RappPlugin implements MMPlugin, MMListenerInterface, LiveModeListen
     public static final String tooltipDescription = "Automated cell recognition for killing and sorting ";
     private static ScriptInterface app_;
     private static CMMCore core_;
-    private MMStudio studio_;
+    public static MMStudio studio_;
 
 
 

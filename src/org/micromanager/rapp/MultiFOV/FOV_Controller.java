@@ -371,7 +371,7 @@ public class FOV_Controller {
         return space;
     }
 
-    public  String getPlateName(){return plateName;}
+    //public  String getPlateName(){return plateName;}
 
     public double getWellOffX(){return wellXOff;}
     public double getWellOffY(){return wellYOff;}
