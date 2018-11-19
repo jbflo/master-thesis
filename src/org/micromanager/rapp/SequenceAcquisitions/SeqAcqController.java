@@ -168,6 +168,8 @@ public class SeqAcqController implements AcquisitionEngine {
                         String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
                         ArrayList[] posXY = FOV_control.positionlists();
 
+                        List<Point2D.Double> posxy = FOV_control.pos_list();
+
                         if (posXY[0].size() == 0) {
                             stopAcqRequested_.set(true);
                             isRunning_.set(false);
@@ -207,8 +209,8 @@ public class SeqAcqController implements AcquisitionEngine {
                         //     getAutofocus().enableContinuousFocus(true);
 
 
-                        for (int i =0 ; i < posXY[0].size(); i++){
-
+                     //   for (int i =0 ; i < posXY[0].size(); i++){
+                            for(Point2D.Double elem :posxy){
                             for (ChannelSpec presetConfig : channels) {
 
                                 if (stopAcqRequested_.get()) {
@@ -231,13 +233,15 @@ public class SeqAcqController implements AcquisitionEngine {
                                     break;
                                 }
 
-                                x_pos[i] = Double.parseDouble( posXY[0].get(i).toString()); //store each element as a double in the array
-                                y_pos[i] = Double.parseDouble(posXY[1].get(i).toString()); //store each element as a double in the array
+                              //  x_pos[i] = Double.parseDouble( posXY[0].get(i).toString()); //store each element as a double in the array
+                            //    y_pos[i] = Double.parseDouble(posXY[1].get(i).toString()); //store each element as a double in the array
 
-                                System.out.println("X = " + x_pos[i] + "__ Y= " + y_pos[i]);
+                         //       System.out.println("X = " + x_pos[i] + "__ Y= " + y_pos[i]);
 
                                 try {
-                                    System.out.println("Curent : " + i);
+                                  //  System.out.println("Curent : " + i);
+                                    System.out.println("Curent : " + elem.x + "_" +elem.y);
+
                                     //   System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
 
                                     // x' = cos(a) * x - sin(a) * y
@@ -249,8 +253,10 @@ public class SeqAcqController implements AcquisitionEngine {
                                     //    double xxPos = -x1+ xyOff.getX();
                                     //     double yyPos = y2+ xyOff.getY();
 
-                                    double xxPos = -x_pos[i]+ xyOff.getX();
-                                    double yyPos = y_pos[i]+ xyOff.getY();
+                                 //   double xxPos = -x_pos[i]+ xyOff.getX();
+                                 //   double yyPos = y_pos[i]+ xyOff.getY();
+                                    double xxPos = -elem.x+ xyOff.getX();
+                                    double yyPos = elem.y+ xyOff.getY();
 
                                     System.out.println("xx = " + xxPos + "__ yy= " +yyPos);
 
@@ -299,12 +305,12 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Module where the user Save the images separately
                                 if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
                                     // The acquires Images are saving as separate Image.
-                                    iPlus.setTitle(dirName_ + "_" + presetConfig.config.toLowerCase() + "_POS_" +  i );
-                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
+                                    iPlus.setTitle(dirName_ + "_" + presetConfig.config.toLowerCase() + "_POS_" + elem.toString() );
+                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  elem.toString() + ".tif");
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
-                                        ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
-                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config +"_POS_" +  i  );
+                                        ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  elem.toString() + ".tif");
+                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config +"_POS_" +  elem.toString() );
                                         List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
                                         System.out.println(presetConfig.KillCell);
                                         if (presetConfig.KillCell) {
@@ -316,15 +322,15 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Module where the user Save the images as a Stack.
                                 else if (saveFiles_ && SeqAcqGui.saveMultiTiff_) {
                                     // we save The acquires images  as separate Image first and open it.
-                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() +"_POS_" +  i +  ".tif");
+                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() +"_POS_" + elem.toString() +  ".tif");
                                     // We Open the Original Image
                                     ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
-                                    image_.setTitle(dirName_ + "_" + presetConfig.config +"_POS_" +  i  );
+                                    image_.setTitle(dirName_ + "_" + presetConfig.config +"_POS_" +  elem.toString()  );
                                     image_.show();
 
                                     // We Duplicate the original image , and segmented the duplicate one
                                     ImagePlus image_dup = iPlus.duplicate();
-                                    image_dup.setTitle(dirName_ + "_Segmented_" + presetConfig.config +"_POS_" +  i  );
+                                    image_dup.setTitle(dirName_ + "_Segmented_" + presetConfig.config +"_POS_" +  elem.toString()  );
 
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
@@ -440,6 +446,8 @@ public class SeqAcqController implements AcquisitionEngine {
                         String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
                         ArrayList[] posXY = FOV_control.positionlists();
 
+                        List<Point2D.Double> posxy = FOV_control.pos_list();
+
                         if (posXY[0].size() == 0) {
                             stopAcqRequested_.set(true);
                             isRunning_.set(false);
@@ -484,7 +492,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
                         app_.getAutofocusManager().selectDevice("HardwareFocusExtender");
                        // app_.getAutofocusManager().getDevice().fullFocus();
-
+//                        core_.fullFocus();
                        // core_.setAutoFocusDevice("HardwareFocusExtender");
                         System.out.println("Current Devices: "+ app_.getAutofocusManager().getDevice().getDeviceName());
                       //  app_.getAutofocus().enableContinuousFocus(isAutoFocusEnabled());
@@ -492,8 +500,8 @@ public class SeqAcqController implements AcquisitionEngine {
 
                         int totalProgress = posXY[0].size() * channels.size();
                         int progress = 0;
-                        for (int i =0 ; i < posXY[0].size(); i++){
-
+                      //  for (int i =0 ; i < posXY[0].size(); i++){
+                        for(Point2D.Double elem : posxy){
                             for (ChannelSpec presetConfig : channels) {
 
                                 if (stopAcqRequested_.get()) {
@@ -516,13 +524,15 @@ public class SeqAcqController implements AcquisitionEngine {
                                     break;
                                 }
 
-                                x_pos[i] = Double.parseDouble( posXY[0].get(i).toString()); //store each element as a double in the array
-                                y_pos[i] = Double.parseDouble(posXY[1].get(i).toString()); //store each element as a double in the array
+                             //   x_pos[i] = Double.parseDouble( posXY[0].get(i).toString()); //store each element as a double in the array
+                            //    y_pos[i] = Double.parseDouble(posXY[1].get(i).toString()); //store each element as a double in the array
 
-                                System.out.println("X = " + x_pos[i] + "__ Y= " + y_pos[i]);
+                          //      System.out.println("X = " + x_pos[i] + "__ Y= " + y_pos[i]);
 
                                 try {
-                                    System.out.println("Curent : " + i);
+                                    System.out.println("Curent : " + elem.x + "_" +elem.y);
+                                    System.out.println("Sixe : " + posxy.size());
+
                                     //   System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
 
                                     // x' = cos(a) * x - sin(a) * y
@@ -534,8 +544,10 @@ public class SeqAcqController implements AcquisitionEngine {
                                     //    double xxPos = -x1+ xyOff.getX();
                                     //     double yyPos = y2+ xyOff.getY();
 
-                                    double xxPos = -x_pos[i]+ xyOff.getX();
-                                    double yyPos = y_pos[i]+ xyOff.getY();
+                                    //   double xxPos = -x_pos[i]+ xyOff.getX();
+                                    //   double yyPos = y_pos[i]+ xyOff.getY();
+                                    double xxPos = -elem.x+ xyOff.getX();
+                                    double yyPos = elem.y+ xyOff.getY();
 
                                     System.out.println("xx = " + xxPos + "__ yy= " +yyPos);
 
@@ -560,15 +572,31 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Make sure the chanel was set
                                 core_.waitForConfig(chanelGroup_, presetConfig.config);
 
-                                RappPlugin.studio_.autofocusNow();
+                                if (useAutoFocus_){
+                                    boolean lmo = app_.isLiveModeOn();
+                                    if (lmo) {
+                                        app_.enableLiveMode(false);
+                                    }
+                                    System.out.println("on Fucusing.... ");
+                              //      RappPlugin.studio_.autofocusNow();
+                                    System.out.println("Fucused ");
+                                    if (lmo) {
+                                        app_.enableLiveMode(true);
+                                    }
+
+                                }
+                              //   core_.fullFocus();
+                                // RappPlugin.studio_.autofocusNow();
 
                                  //  app_.getAutofocus().fullFocus();
                                 // app_.getAutofocusManager().getDevice()
 
-
+                                System.out.println("??" + core_.getFocusDevice());
+                                System.out.println("??" + core_.getAutoFocusDevice());
                                // app_.getAutofocusManager().getDevice().fullFocus();
-                             //   RappPlugin.studio_.getAutofocusManager().getDevice().wait();
-                              //  core_.waitForDevice(core_.getAutoFocusDevice());
+                              //   RappPlugin.studio_.getAutofocusManager().getDevice().wait();
+                                core_.waitForDevice(core_.getAutoFocusDevice());
+                                core_.waitForDevice(core_.getFocusDevice());
                              //   core_.waitForDevice(app_.getAutofocusManager().getDevice().getDeviceName());
                                 // Take an image from the live view0
                                 iPlus = IJ.getImage();
@@ -591,12 +619,12 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Module where the user Save the images separately
                                 if (saveFiles_ && !SeqAcqGui.saveMultiTiff_) {
                                     // The acquires Images are saving as separate Image.
-                                    iPlus.setTitle(dirName_ + "_" + presetConfig.config.toLowerCase() + "_POS_" +  i );
-                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
+                                    iPlus.setTitle(dirName_ + "_" + presetConfig.config.toLowerCase() + "_POS_" +  elem.toString() );
+                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  elem.toString() + ".tif");
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
-                                        ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  i + ".tif");
-                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config +"_POS_" +  i  );
+                                        ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config + "_POS_" +  elem.toString() + ".tif");
+                                        image_.setTitle(dirName_ + "_" + "_Segmented_" + presetConfig.config +"_POS_" +  elem.toString()  );
                                         List<Point2D.Double> ll = rappController_ref.imageSegmentation(image_, path_seq, algo, presetConfig.KillCell, saveFiles_);
                                         System.out.println(presetConfig.KillCell);
                                         if (presetConfig.KillCell) {
@@ -608,15 +636,15 @@ public class SeqAcqController implements AcquisitionEngine {
                                 // Module where the user Save the images as a Stack.
                                 else if (saveFiles_ && SeqAcqGui.saveMultiTiff_) {
                                     // we save The acquires images  as separate Image first and open it.
-                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() +"_POS_" +  i +  ".tif");
+                                    IJ.save(iPlus, rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() +"_POS_" +  elem.toString() +  ".tif");
                                     // We Open the Original Image
                                     ImagePlus image_ = IJ.openImage(rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase() + ".tif");
-                                    image_.setTitle(dirName_ + "_" + presetConfig.config +"_POS_" +  i  );
+                                    image_.setTitle(dirName_ + "_" + presetConfig.config +"_POS_" +  elem.toString()  );
                                     image_.show();
 
                                     // We Duplicate the original image , and segmented the duplicate one
                                     ImagePlus image_dup = iPlus.duplicate();
-                                    image_dup.setTitle(dirName_ + "_Segmented_" + presetConfig.config +"_POS_" +  i  );
+                                    image_dup.setTitle(dirName_ + "_Segmented_" + presetConfig.config +"_POS_" + elem.toString() );
 
                                     if (presetConfig.useSegmentation) {
                                         String path_seq = rootName_ + "\\" + dirName_ + "_" + presetConfig.config.toLowerCase();
@@ -633,10 +661,10 @@ public class SeqAcqController implements AcquisitionEngine {
                                     file.delete();
                                 }
 
-                                progress += 100 / totalProgress;
+                                progress = progress + 100 / totalProgress;
                                 SeqAcqGui.progressBar.setValue(progress);
                                 SeqAcqGui.taskOutput.append(String.format("Completed %d%% of %d%% Sequence Task.\n", progress, totalProgress));
-                               // totalProgress -= 100 /totalProgress;
+
                             }
                         }
 

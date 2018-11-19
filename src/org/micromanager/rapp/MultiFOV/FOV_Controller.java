@@ -1,9 +1,11 @@
 package org.micromanager.rapp.MultiFOV;
 
 import mmcorej.CMMCore;
+import ome.xml.model.Point;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.rapp.RappGui;
 import org.micromanager.rapp.RappPlugin;
+import org.micromanager.rapp.utils.Utils;
 import org.micromanager.utils.ReportingUtils;
 import org.w3c.dom.*;
 
@@ -15,6 +17,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FOV_Controller {
 
@@ -64,6 +67,7 @@ public class FOV_Controller {
 
     private static ArrayList<Double> xTab = new ArrayList<Double>();
     private static ArrayList<Double> yTab = new ArrayList<Double>();
+    private  static  List<Point2D.Double> list_pt = new ArrayList<Point2D.Double>();
 
 
 
@@ -406,6 +410,9 @@ public class FOV_Controller {
 
        ArrayList<Double> xTab_ = new ArrayList();
        ArrayList<Double> yTab_ = new ArrayList();
+
+
+
 //        Point2D.Double cornet_pos ;
 //        double defXoff = 0.0 ;
 //        double defyoff = 0.0 ;
@@ -429,6 +436,8 @@ public class FOV_Controller {
             double xx = fovs.get(i).getX();
             double yy = fovs.get(i).getY();
 
+            list_pt.add(new Point2D.Double(xx,yy));
+
             xTab_.add(xx);
             yTab_.add(yy);
 
@@ -446,6 +455,17 @@ public class FOV_Controller {
         System.out.println(" Ycord  : "+ yTab );
 
 
+    }
+
+
+    public List<Point2D.Double> pos_list (){
+
+        List<Point2D.Double> rebuild = new ArrayList(list_pt);
+        rebuild.add(0, new Point2D.Double(0, 0));
+        Utils.rebuild(rebuild);
+        rebuild.remove(0);
+
+        return rebuild;
     }
 
 
