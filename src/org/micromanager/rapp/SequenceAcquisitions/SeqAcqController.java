@@ -439,16 +439,16 @@ public class SeqAcqController implements AcquisitionEngine {
                         ImagePlus iPlus; // variable that will stock the current image
 
 
-                        SeqAcqGui.taskOutput.setText("");
+                        SeqAcqGui.taskOutput.setText(""); // we want the user to see the progress of the process
                         RappGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                         // SeqAcqGui.getInstance().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
                         String algo = SeqAcqGui.listOfsegmenter_jcb.getSelectedItem().toString();
-                        ArrayList[] posXY = FOV_control.positionlists();
+                   //     ArrayList[] posXY = FOV_control.positionlists();
 
-                        List<Point2D.Double> posxy = FOV_control.pos_list();
+                        List<Point2D.Double> pos_xy = FOV_control.pos_list();
 
-                        if (posXY[0].size() == 0) {
+                        if (pos_xy.size() == 0) {
                             stopAcqRequested_.set(true);
                             isRunning_.set(false);
                             ReportingUtils.showMessage("Acquisition Stop Due to 0 position list," +
@@ -457,8 +457,8 @@ public class SeqAcqController implements AcquisitionEngine {
                             );
                         }
 
-                        double[] x_pos = new double[posXY[0].size()];
-                        double[] y_pos = new double[posXY[1].size()];
+                       //  double[] x_pos = new double[posXY[0].size()];
+                       // double[] y_pos = new double[posXY[1].size()];
 
 //                          double x_pos_ini = (double) posXY[0].get(0); //store each element as a double in the array
 //                          double y_pos_ini = (double) posXY[1].get(0); //store each element as a double in the array
@@ -470,20 +470,14 @@ public class SeqAcqController implements AcquisitionEngine {
 //                            double defyoff = 0;
 
                         try {
+                            // we get the X Y offset from the XY_Calibration process
                             xyOff = FOV_control.getXYOffset();
-//                                cornet_pos = core_.getXYStagePosition();
-//                                defXoff = (x_pos_ini + cornet_pos.getX()) ;
-//                                defyoff = (-y_pos_ini + cornet_pos.getY()) ;
-                            // System.out.println("Xoff = " +xyOff.getX() + "__ Yoff= " + xyOff.getY());
-                            //  Thread.sleep(1000 );
                         } catch (Exception e) {
                             e.printStackTrace();
                             stopAcqRequested_.set(true);
                             isRunning_.set(false);
                         }
-                        //       app_.getAutofocusManager().getDevice().
 
-                       //  core_.setAutoFocusDevice(core_.getAutoFocusDevice());
 
                         String[] afDevices = app_.getAutofocusManager().getAfDevices();
                         for ( int i =  0 ; i < afDevices.length ; i++  ){
@@ -498,10 +492,10 @@ public class SeqAcqController implements AcquisitionEngine {
                       //  app_.getAutofocus().enableContinuousFocus(isAutoFocusEnabled());
                       //  app_.getAutofocusManager().getDevice().enableContinuousFocus(isAutoFocusEnabled());
 
-                        int totalProgress = posXY[0].size() * channels.size();
+                        int totalProgress = pos_xy.size() * channels.size();
                         int progress = 0;
                       //  for (int i =0 ; i < posXY[0].size(); i++){
-                        for(Point2D.Double elem : posxy){
+                        for(Point2D.Double elem : pos_xy){
                             for (ChannelSpec presetConfig : channels) {
 
                                 if (stopAcqRequested_.get()) {
@@ -524,14 +518,9 @@ public class SeqAcqController implements AcquisitionEngine {
                                     break;
                                 }
 
-                             //   x_pos[i] = Double.parseDouble( posXY[0].get(i).toString()); //store each element as a double in the array
-                            //    y_pos[i] = Double.parseDouble(posXY[1].get(i).toString()); //store each element as a double in the array
-
-                          //      System.out.println("X = " + x_pos[i] + "__ Y= " + y_pos[i]);
-
                                 try {
                                     System.out.println("Curent : " + elem.x + "_" +elem.y);
-                                    System.out.println("Sixe : " + posxy.size());
+                                    System.out.println("Sixe : " + pos_xy.size());
 
                                     //   System.out.println("Xoff = " + defXoff + "__ Yoff= " +defyoff);
 
@@ -544,18 +533,14 @@ public class SeqAcqController implements AcquisitionEngine {
                                     //    double xxPos = -x1+ xyOff.getX();
                                     //     double yyPos = y2+ xyOff.getY();
 
-                                    //   double xxPos = -x_pos[i]+ xyOff.getX();
-                                    //   double yyPos = y_pos[i]+ xyOff.getY();
-                                    double xxPos = -elem.x+ xyOff.getX();
-                                    double yyPos = elem.y+ xyOff.getY();
+                                    double xxPos = -elem.x + xyOff.getX();
+                                    double yyPos = elem.y + xyOff.getY();
 
                                     System.out.println("xx = " + xxPos + "__ yy= " +yyPos);
 
                                     core_.setXYPosition(xxPos, yyPos);
                                     core_.waitForDevice(core_.getXYStageDevice());
 
-                                    // core_.setRelativeXYPosition(x_pos[i]- defXoff, y_pos[i] - defyoff );
-                                    //  Thread.sleep(1000 );
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     stopAcqRequested_.set(true);
@@ -569,7 +554,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                 core_.setConfig(chanelGroup_, presetConfig.config);
                                 // Set the Chanel Exposure Time
                                 app_.setChannelExposureTime(chanelGroup_, presetConfig.config, presetConfig.exposure);
-                                // Make sure the chanel was set
+                                // Make sure the chanel was set by waiting
                                 core_.waitForConfig(chanelGroup_, presetConfig.config);
 
                                 if (useAutoFocus_){
@@ -578,14 +563,14 @@ public class SeqAcqController implements AcquisitionEngine {
                                         app_.enableLiveMode(false);
                                     }
                                     System.out.println("on Fucusing.... ");
-                              //      RappPlugin.studio_.autofocusNow();
+                                    RappPlugin.studio_.autofocusNow();
                                     System.out.println("Fucused ");
                                     if (lmo) {
                                         app_.enableLiveMode(true);
                                     }
 
                                 }
-                              //   core_.fullFocus();
+                                //   core_.fullFocus();
                                 // RappPlugin.studio_.autofocusNow();
 
                                  //  app_.getAutofocus().fullFocus();
@@ -597,9 +582,11 @@ public class SeqAcqController implements AcquisitionEngine {
                               //   RappPlugin.studio_.getAutofocusManager().getDevice().wait();
                                 core_.waitForDevice(core_.getAutoFocusDevice());
                                 core_.waitForDevice(core_.getFocusDevice());
-                             //   core_.waitForDevice(app_.getAutofocusManager().getDevice().getDeviceName());
+                             // core_.waitForDevice(app_.getAutofocusManager().getDevice().getDeviceName());
+
                                 // Take an image from the live view0
                                 iPlus = IJ.getImage();
+
                                 // if the Images was not save , we do the segmentation for the image in Memory
                                 if (!saveFiles_ && presetConfig.useSegmentation) {
                                     ImagePlus image_dup_ori = iPlus.duplicate();
@@ -633,6 +620,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                         }
                                     }
                                 }
+
                                 // Module where the user Save the images as a Stack.
                                 else if (saveFiles_ && SeqAcqGui.saveMultiTiff_) {
                                     // we save The acquires images  as separate Image first and open it.
