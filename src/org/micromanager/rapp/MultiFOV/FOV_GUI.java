@@ -166,7 +166,7 @@ public class FOV_GUI extends JInternalFrame {
         }
         myFrame_.initialize();
         myFrame_.setVisible(true);
-        myFrame_.setBounds(1,260, 400, 349 );
+        myFrame_.setBounds(1,160, 400, 349 );
         xyPos_panel.add(myFrame_);
 
         putStageInFirstWell = new JButton();
@@ -219,7 +219,7 @@ public class FOV_GUI extends JInternalFrame {
         //setDefaultCloseOperation(0);
         //setTitle("Set Multi");
         // setSize(900, 445);
-        // setResizable(false);
+         setResizable(true);
         //  setLocationRelativeTo(null);  // center the application window
         setVisible(true);
     }

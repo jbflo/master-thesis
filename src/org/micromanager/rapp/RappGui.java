@@ -197,7 +197,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         left_box.add(Box.createVerticalStrut(10));
 
         final JToggleButton setupOption_btn =  createJButton("Settings");
-        final JToggleButton learnOption_btn = createJButton("Stage Position");
+        final JToggleButton stage_position = createJButton("Stage Position");
         final JToggleButton shootOption_btn = createJButton("Point And Shoot");
         final JToggleButton acquisitionOption_btn = createJButton("Sequence Acquisition");
 
@@ -218,11 +218,11 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                     // We set the other button color just to distinguish
                     setupOption_btn.setForeground(Color.decode("#2980b9"));
                     shootOption_btn.setForeground(Color.decode("#ecf0f1"));
-                    learnOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    stage_position.setForeground(Color.decode("#ecf0f1"));
                     acquisitionOption_btn.setForeground(Color.decode("#ecf0f1"));
                     // we do have to set the other bButton selection to False
                     shootOption_btn.setSelected(false);
-                    learnOption_btn.setSelected(false);
+                    stage_position.setSelected(false);
                     acquisitionOption_btn.setSelected(false);
 
                     RappGui.getInstance().setSize(730, 590);
@@ -235,17 +235,18 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         left_box.add(Box.createVerticalStrut(15));
 
         // Leaning BUTTON, OPEN THE BOX OPTION TO MANAGE the MACHINE LEARNING PART
-        left_box.add(learnOption_btn);
-        learnOption_btn.addActionListener(new ActionListener() {
+        left_box.add(stage_position);
+        stage_position.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 right_box_fov.setVisible(true);
                 right_box_shoot.setVisible(false);
                 right_box_setup.setVisible(false);
                 asButtonPanel.setVisible(false);
-                if( learnOption_btn.isSelected() ){
+
+                if( stage_position.isSelected() ){
                     // We set the other button color just to distinguish
-                    learnOption_btn.setForeground(Color.decode("#2980b9"));
+                    stage_position.setForeground(Color.decode("#2980b9"));
                     shootOption_btn.setForeground(Color.decode("#ecf0f1"));
                     setupOption_btn.setForeground(Color.decode("#ecf0f1"));
                     acquisitionOption_btn.setForeground(Color.decode("#ecf0f1"));
@@ -254,7 +255,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                     setupOption_btn.setSelected(false);
                     acquisitionOption_btn.setSelected(false);
 
-                    RappGui.getInstance().setSize(1150, 700);
+                    RappGui.getInstance().setSize(1230, 700);
                     fov_gui_.repaint();
                 }
             }
@@ -275,11 +276,11 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                     // We set the other button color just to distinguish
                     acquisitionOption_btn.setForeground(Color.decode("#2980b9"));
                     setupOption_btn.setForeground(Color.decode("#ecf0f1"));
-                    learnOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    stage_position.setForeground(Color.decode("#ecf0f1"));
                     shootOption_btn.setForeground(Color.decode("#ecf0f1"));
                     // we do have to set the other bButton selection to False
                     setupOption_btn.setSelected(false);
-                    learnOption_btn.setSelected(false);
+                    stage_position.setSelected(false);
                     shootOption_btn.setSelected(false);
 
                     RappGui.getInstance().setSize(1150, 660);
@@ -301,11 +302,11 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
                 if( shootOption_btn.isSelected() ){
                     shootOption_btn.setForeground(Color.decode("#2980b9"));
                     setupOption_btn.setForeground(Color.decode("#ecf0f1"));
-                    learnOption_btn.setForeground(Color.decode("#ecf0f1"));
+                    stage_position.setForeground(Color.decode("#ecf0f1"));
                     acquisitionOption_btn.setForeground(Color.decode("#ecf0f1"));
                     // we do have to set the other Button selection to False
                     setupOption_btn.setSelected(false);
-                    learnOption_btn.setSelected(false);
+                    stage_position.setSelected(false);
                     acquisitionOption_btn.setSelected(false);
 
 
@@ -814,7 +815,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         /////////////////////////////////// #Image Viewer Center Panel# //////////////////////////////////////////JPanel centerPanel = new JPanel();
 
         rightPanel.add(right_box_fov);
-        right_box_fov.setPreferredSize(new Dimension(910, 545));   // vertical box
+        right_box_fov.setPreferredSize(new Dimension(990, 545));   // vertical box
         right_box_fov.setVisible(false);
 
         right_box_fov.setBorder(BorderFactory.createTitledBorder(
@@ -828,7 +829,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
             if (fov_gui_ == null) {
                 fov_gui_ = (new FOV_GUI(this, core, app));
             }
-            fov_gui_.setPreferredSize(new Dimension(900, 545));
+            fov_gui_.setPreferredSize(new Dimension(980, 545));
             fov_gui_.setVisible(true);
             right_box_fov.add(fov_gui_);
             fov_gui_.repaint();

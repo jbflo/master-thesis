@@ -299,8 +299,8 @@ public class xyzFunctions {
             for (int i = 1; i <= dCol; i++){
                 for (int ii = 1; ii <= dRow; ii++){
                     FOV FOVtoAdd = new FOV(0,0,0,"A1");
-                    xF = wellOffX+(i-2+startCol)*wellSpaceX+0.5*wellX;
-                    yF = wellOffY+(ii-2+startRow)*wellSpaceY+0.5*wellX;
+                    xF = wellOffX+ (i-2+startCol)* wellSpaceX + 0.1*wellX;
+                    yF = wellOffY+(ii-2+startRow)*wellSpaceY+0.1*wellX;
                     FOVtoAdd.setX(xF);
                     FOVtoAdd.setY(yF);
                     String rr = xyzFunctions.convertNumToAlph(ii+startRow-1);
@@ -313,8 +313,8 @@ public class xyzFunctions {
         } else{
             for (int i = 1; i <= dCol; i++){
                 for (int ii = 1; ii <= dRow; ii++){
-                    int countX = (int) (wellX/FOV_sizex+0.5);
-                    int countY = (int) (wellY/FOV_sizey+0.5);
+                    int countX = (int) (wellX/FOV_sizex+0.1);
+                    int countY = (int) (wellY/FOV_sizey+0.1);
                     double newFOVx = countX*FOV_sizex;
                     double newFOVy = countX*FOV_sizey;
                     double diffX = newFOVx-FOV_sizex;
@@ -323,8 +323,8 @@ public class xyzFunctions {
                     for (int iii = 1; iii <= countX; iii++) {
                         for (int iiii = 1; iiii <= countY; iiii++){
                             FOV FOVtoAdd = new FOV(0,0,0,"A1");
-                            xF = wellOffX+(i-2+startCol)*wellSpaceX+(wellX-diffX)*0.5+(iii-1)*FOV_sizex;
-                            yF = wellOffY+(ii-2+startRow)*wellSpaceY+(wellY-diffY)*0.5+(iiii-1)*FOV_sizey;
+                            xF = wellOffX+(i-2+startCol)*wellSpaceX+(wellX-diffX)*0.1+(iii-1)*FOV_sizex;
+                            yF = wellOffY+(ii-2+startRow)*wellSpaceY+(wellY-diffY)*0.1+(iiii-1)*FOV_sizey;
                             FOVtoAdd.setX(xF);
                             FOVtoAdd.setY(yF);
                             String rr = xyzFunctions.convertNumToAlph(ii+startRow-1);

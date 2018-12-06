@@ -59,19 +59,19 @@ public class posPanel extends JPanel {
 
         setControlDefaults();
 
-        fullWellCombo.setBounds(1, 207, 85, 30 );
+        fullWellCombo.setBounds(25, 117, 85, 30 );
         this.add(fullWellCombo);
 
-        SelectFOVsBottom.setBounds(90, 207, 90, 30 );
+        SelectFOVsBottom.setBounds(120, 117, 90, 30 );
         this.add(SelectFOVsBottom);
 
-        deleteAllFOVs_btn.setBounds(184, 207, 103, 30 );
+        deleteAllFOVs_btn.setBounds(220, 117, 103, 30 );
         this.add(deleteAllFOVs_btn);
 
 //        deleteSlectFOV_btn.setBounds(10, 270, 130,30);
 //        this.add(deleteSlectFOV_btn);
 
-        fovTablePanel.setBounds(1, 3, 280, 200 );
+        fovTablePanel.setBounds(40, 3, 280, 110 );
         this.add(fovTablePanel);
 
         SelectFOVsBottom.setText("Add All FOVs");
