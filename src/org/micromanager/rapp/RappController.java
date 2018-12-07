@@ -830,8 +830,8 @@ public class RappController extends  MMFrame implements OnStateListener {
                     ImageCanvas canvas = (ImageCanvas) e.getSource();
                     Point pOffscreen = new Point(canvas.offScreenX(p.x), canvas.offScreenY(p.y));
                     System.out.println(pOffscreen.x + "_" + pOffscreen.y );
-//                    final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), canvas.getImage(),
-//                            new Point2D.Double(pOffscreen.x, pOffscreen.y));
+             //      final Point2D.Double devP = transformAndMirrorPoint(loadMapping(), canvas.getImage(),
+             //               new Point2D.Double(pOffscreen.x, pOffscreen.y));
                     final Point2D.Double devP = transformPoint(loadMapping(), new Point2D.Double(pOffscreen.x, pOffscreen.y));
                     System.out.println(devP);
                    // final Configuration originalConfig = prepareChannel();
@@ -844,7 +844,7 @@ public class RappController extends  MMFrame implements OnStateListener {
                                         if (devP != null) {
                                             displaySpot(devP.x, devP.y);
                                             Thread.sleep(dev_.getExposure());
-                                            displaySpot(0, 0);
+                                          //  displaySpot(0, 0);
                                         } else ReportingUtils.showError("Please Try Again! Your click return Null");
 
                                         //          returnShutter(originalShutterState);
@@ -906,9 +906,9 @@ public class RappController extends  MMFrame implements OnStateListener {
                                 failsArrayX[i] = Double.parseDouble(xcRoiPosArray.get(i).toString()); //store each element as a double in the array
                                 failsArrayY[i] = Double.parseDouble(ycRoiPosArray.get(i).toString()); //store each element as a double in the array
 
-//                                final Point2D.Double devP = transformAndMirrorPoint(RappController.this.loadMapping(), image,
-//                                        new Point2D.Double(failsArrayX[i], failsArrayY[i]));
-                                final Point2D.Double devP = transformPoint(loadMapping(), new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+                            //   final Point2D.Double devP = transformAndMirrorPoint(RappController.this.loadMapping(), image,
+                        //               new Point2D.Double(failsArrayX[i], failsArrayY[i]));
+                               final Point2D.Double devP = transformPoint(loadMapping(), new Point2D.Double(failsArrayX[i], failsArrayY[i]));
                                 System.out.println(devP);
 
                                 //  final Configuration originalConfig = prepareChannel();

@@ -108,9 +108,10 @@ public class posPanel extends JPanel {
                 //  ArrayList<FOV> fovs = xyzFunctions.generateFOVs(dCol, dRow, startCol, startRow, genMode);
 
                 ArrayList<FOV> fovs = xyzFunctions.generateFOVs(FOV_control.getcolSize(), FOV_control.getrowSize(), 1, 1, genMode);
-                fovs = xyzFunctions.concatLists(preFovs, fovs);
+             //   fovs = xyzFunctions.concatLists(preFovs, fovs);
                 fovs = xyzFunctions.sortList(fovs);
                 tableModel_.addWholeData(fovs);
+
                 // wellPanel_.drawFromOutsideClass(1, 24, 1, 16);
                 FOV_control.getWholeData(fovs);
             }

@@ -947,8 +947,7 @@ public class SeqAcqController implements AcquisitionEngine {
 
     private long getTotalMB() {
         CMMCore core = this.app_.getMMCore();
-        long totalMB =  IJ.getImage().getWidth() * IJ.getImage().getHeight() * IJ.getImage().getBytesPerPixel() * (long)this.getTotalImages() / 1048576L;
-        //long totalMB = core.getImageWidth() * core.getImageHeight() * core.getBytesPerPixel() * (long)this.getTotalImages() / 1048576L;
+        long totalMB = core.getImageWidth() * core.getImageHeight() * core.getBytesPerPixel() * (long)this.getTotalImages() / 1048576L;
         return totalMB;
     }
 
@@ -1131,7 +1130,7 @@ public class SeqAcqController implements AcquisitionEngine {
     public String summaryTxt (){
         StringBuffer summary_txt  = new StringBuffer();
 
-        System.out.println("Are you null" + SeqAcqGui.commentTextArea_.getText());
+        //System.out.println("Are you null" + SeqAcqGui.commentTextArea_.getText());
         if(SeqAcqGui.commentTextArea_.getText() != null ){
             summary_txt.append(SeqAcqGui.commentTextArea_.getText() + " \r\n\r\n  ");
         }

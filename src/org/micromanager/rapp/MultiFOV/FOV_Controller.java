@@ -17,6 +17,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class FOV_Controller {
@@ -67,7 +68,7 @@ public class FOV_Controller {
 
     private static ArrayList<Double> xTab = new ArrayList<Double>();
     private static ArrayList<Double> yTab = new ArrayList<Double>();
-    private  static  List<Point2D.Double> list_pt = new ArrayList<Point2D.Double>();
+    private static  List<Point2D.Double> list_pt = new ArrayList<Point2D.Double>();
 
 
 
@@ -406,29 +407,11 @@ public class FOV_Controller {
         return isXmlFIleValide;
     }
 
-    public  void  getWholeData( ArrayList<FOV> fovs) {
+    public static void  getWholeData(  ArrayList<FOV> fovs) {
 
        ArrayList<Double> xTab_ = new ArrayList();
        ArrayList<Double> yTab_ = new ArrayList();
-
-
-
-//        Point2D.Double cornet_pos ;
-//        double defXoff = 0.0 ;
-//        double defyoff = 0.0 ;
-//
-//        try {
-//           cornet_pos = core_.getXYStagePosition();
-//           defXoff = xTab.get(0) - cornet_pos.getX();
-//           defyoff = yTab.get(0) - cornet_pos.getY() ;
-//       //    core_.setXYPosition((4)+defXoff ,(4)+defyoff);
-//            System.out.println("pos: " +core_.getXYStagePosition());
-//
-//            System.out.println( " OffsetTTT :  "+ defXoff);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+       List<Point2D.Double> listpt_ = new ArrayList<Point2D.Double>();
 
 
         for (int i = 0; i< fovs.size() ; i++){
@@ -436,7 +419,8 @@ public class FOV_Controller {
             double xx = fovs.get(i).getX();
             double yy = fovs.get(i).getY();
 
-            list_pt.add(new Point2D.Double(xx,yy));
+
+            listpt_.add(new Point2D.Double(xx,yy));
 
             xTab_.add(xx);
             yTab_.add(yy);
@@ -448,8 +432,8 @@ public class FOV_Controller {
 
         xTab = xTab_;
         yTab = yTab_;
-
-        System.out.println( " DataSize :"+ fovs.size());
+        list_pt = listpt_;
+        System.out.println( " DataSizelIST :"+ list_pt.size());
 
         System.out.println( " Xcord : "+ xTab );
         System.out.println(" Ycord  : "+ yTab );
@@ -460,12 +444,12 @@ public class FOV_Controller {
 
     public List<Point2D.Double> pos_list (){
 
-        List<Point2D.Double> rebuild = new ArrayList(list_pt);
-        rebuild.add(0, new Point2D.Double(0, 0));
-        Utils.rebuild(rebuild);
-        rebuild.remove(0);
+       // List<Point2D.Double> rebuild = new ArrayList(list_pt);
+        list_pt.add(0, new Point2D.Double(0, 0));
+        Utils.rebuild(list_pt);
+        list_pt.remove(0);
 
-        return rebuild;
+        return list_pt;
     }
 
 
