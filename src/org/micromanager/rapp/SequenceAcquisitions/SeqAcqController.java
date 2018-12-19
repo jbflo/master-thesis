@@ -253,7 +253,7 @@ public class SeqAcqController implements AcquisitionEngine {
                                     // y' = sin(a) * x + cos(a) * y
 
                                     //   double x1 = (Math.cos(FOV_Controller.getAngle()) * x_pos[i]) - (Math.sin(FOV_Controller.getAngle()) * y_pos[i]);
-                                    //    double y2 = (Math.sin(FOV_Controller.getAngle()) * x_pos[i]) + ( Math.cos(FOV_Controller.getAngle()) * y_pos[i]);
+                                    //   double y2 = (Math.sin(FOV_Controller.getAngle()) * x_pos[i]) + ( Math.cos(FOV_Controller.getAngle()) * y_pos[i]);
 
                                     //    double xxPos = -x1+ xyOff.getX();
                                     //     double yyPos = y2+ xyOff.getY();
