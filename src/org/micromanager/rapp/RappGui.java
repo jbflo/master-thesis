@@ -581,7 +581,7 @@ public class RappGui extends JFrame implements LiveModeListener, ActionListener,
         gbc1.insets = new Insets(8, 8, 8, 8);
         gbc1.anchor = GridBagConstraints.EAST;
 
-        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Point And Shoot Mode :</font></html>"), gbc1);
+        right_box_shoot.add(new JLabel("<html><font size='4' color='white'>Set Point And Shoot Mode to :</font></html>"), gbc1);
         gbc1.gridy++;
         right_box_shoot.add(new JLabel("<html><font size='4' color='white'>ROIs Manager   :</font></html>"), gbc1);
         gbc1.gridy++;
